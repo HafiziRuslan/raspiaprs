@@ -1,27 +1,22 @@
 #!/usr/bin/python3
-# pylint: disable=missing-docstring
 
 import json
 import logging
 import os
-import platform
 import sys
 import time
+import aprslib
+import humanize
+import datetime as dt
 
 from configparser import ConfigParser
 from io import StringIO
-
-import aprslib
-
-try:                            # Python 3
-  from urllib.request import urlopen
-except ImportError:             # Python 2
-  from urllib import urlopen
-
+from urllib.request import urlopen
 from aprslib.exceptions import ConnectionError
 
+# Default configuration file path
 CONFIG_FILE = "/etc/aprstar.conf"
-CONFIG_DEFAULT = u"""
+CONFIG_DEFAULT = """
 [APRS]
 call: N0CALL-1
 latitude: 0
@@ -31,21 +26,31 @@ symbol: n
 symbol_table: /
 """
 
+# Default paths for system files
 THERMAL_FILE = "/sys/class/thermal/thermal_zone0/temp"
 LOADAVG_FILE = "/proc/loadavg"
+CPUINFO_FILE = "/proc/cpuinfo"
+MEMINFO_FILE = "/proc/meminfo"
+OS_RELEASE_FILE = "/etc/os-release"
+PI_RELEASE_FILE = "/etc/pistar-release"
+MMDVMHOST_FILE = "/etc/mmdvmhost"
+
+# Default APRS server settings
+DEFAULT_HOST = "aprs.my"
 DEFAULT_PORT = 14580
 
-logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.INFO)
-
+# Set up logging
+logging.basicConfig(
+  filename="/var/log/aprstar.log",
+  format="%(asctime)s %(levelname)s: %(message)s",
+  datefmt="%H:%M:%S",
+  level=logging.INFO,
+)
 
 class Config(object):
-
   def __init__(self):
     parser = ConfigParser()
     parser.read_file(StringIO(CONFIG_DEFAULT))
-
     self._passcode = ""
     self._call = "NOCALL-1"
     self._longitude = 0.0
@@ -53,38 +58,36 @@ class Config(object):
     self._sleep = 900
     self._symbol = "n"
     self._symbol_table = "/"
-
     if not os.path.exists(CONFIG_FILE):
-      logging.info('Using default config')
+      logging.info("Using default config")
     else:
       try:
-        logging.info('Reading config file')
-        with open(CONFIG_FILE, 'r') as fdc:
-          parser.readfp(fdc)
-        logging.info('Config file %s read', CONFIG_FILE)
+        logging.info("Reading config file")
+        with open(CONFIG_FILE, "r") as fdc:
+          parser.read_file(fdc)
+        logging.info("Config file %s read", CONFIG_FILE)
       except (IOError, SystemError):
-        raise SystemError('No [APRS] section configured')
-
-    self.call = parser.get('APRS', 'call')
-    self.sleep = parser.get('APRS', 'sleep')
-    self.symbol_table = parser.get('APRS', 'symbol_table')
-    self.symbol = parser.get('APRS', 'symbol')
-
-    lat, lon = [float(parser.get('APRS', c)) for c in ('latitude', 'longitude')]
+        raise SystemError("No [APRS] section configured")
+    self.call = parser.get("APRS", "call")
+    self.sleep = parser.get("APRS", "sleep")
+    self.symbol_table = parser.get("APRS", "symbol_table")
+    self.symbol = parser.get("APRS", "symbol")
+    lat, lon = [float(parser.get("APRS", c)) for c in ("latitude", "longitude")]
     if not lat or not lon:
       self.latitude, self.longitude = get_coordinates()
     else:
       self.latitude, self.longitude = lat, lon
-
-    if parser.has_option('APRS', 'passcode'):
-      self.passcode = parser.get('APRS', 'passcode')
+    if parser.has_option("APRS", "passcode"):
+      self.passcode = parser.get("APRS", "passcode")
     else:
-      logging.warning('Generating passcode')
+      logging.warning("Generating passcode")
       self.passcode = aprslib.passcode(self.call)
 
   def __repr__(self):
-    return ("<Config> call: {0.call}, passcode: {0.passcode} - "
-            "{0.latitude}/{0.longitude}").format(self)
+    return (
+      "<Config> call: {0.call}, passcode: {0.passcode} - "
+      "{0.latitude}/{0.longitude}"
+    ).format(self)
 
   @property
   def call(self):
@@ -103,7 +106,7 @@ class Config(object):
     try:
       self._sleep = int(val)
     except ValueError:
-      logging.warning('Sleep value error using 600')
+      logging.warning("Sleep value error using 600")
       self._sleep = 600
 
   @property
@@ -146,11 +149,10 @@ class Config(object):
   def symbol_table(self, val):
     self._symbol_table = str(val)
 
-
 class Sequence(object):
   """Generate an APRS sequence number."""
   def __init__(self):
-    self.sequence_file = '/tmp/aprstar.sequence'
+    self.sequence_file = "/tmp/aprstar.sequence"
     try:
       with open(self.sequence_file) as fds:
         self._count = int(fds.readline())
@@ -159,7 +161,7 @@ class Sequence(object):
 
   def flush(self):
     try:
-      with open(self.sequence_file, 'w') as fds:
+      with open(self.sequence_file, "w") as fds:
         fds.write("{0:d}".format(self._count))
     except IOError:
       pass
@@ -175,9 +177,8 @@ class Sequence(object):
     self.flush()
     return self._count
 
-
 def get_coordinates():
-  logging.warning('Trying to figure out the coordinate using your IP address')
+  logging.warning("Trying to figure out the coordinate using your IP address")
   url = "http://ip-api.com/json/"
   try:
     response = urlopen(url)
@@ -187,9 +188,8 @@ def get_coordinates():
     logging.error(err)
     return (0, 0)
   else:
-    logging.warning('Position: %f, %f', data['lat'], data['lon'])
-    return data['lat'], data['lon']
-
+    logging.warning("Position: %f, %f", data["lat"], data["lon"])
+    return data["lat"], data["lon"]
 
 def get_load():
   try:
@@ -197,27 +197,21 @@ def get_load():
       loadstr = lfd.readline()
   except IOError:
     return 0
-
   try:
     load15 = float(loadstr.split()[1])
   except ValueError:
     return 0
-
   return int(load15 * 1000)
 
-
 def get_freemem():
-  proc_file = '/proc/meminfo'
   try:
-    with open(proc_file) as pfd:
+    with open(MEMINFO_FILE) as pfd:
       for line in pfd:
-        if 'MemFree' in line:
+        if "MemFree" in line:
           freemem = int(line.split()[1])
   except (IOError, ValueError):
     return 0
-
   return int(freemem / 1024)
-
 
 def get_temp():
   try:
@@ -228,17 +222,52 @@ def get_temp():
     temperature = 20000
   return temperature
 
+def get_osinfo():
+  parser = ConfigParser()
+  with open(OS_RELEASE_FILE) as osr:
+    for line in osr:
+      if "PRETTY_NAME" in line:
+        osname = line.split("=", 1)[1].strip().strip('"')
+  with open(CPUINFO_FILE) as cpu:
+    for line in cpu:
+      if "Model" in line:
+        modelname = line.split(":", 1)[1].strip().strip('"')
+  with open(PI_RELEASE_FILE, "r") as pir:
+    parser.read_file(pir)
+    piversion = parser.get("Pi-Star", "Version")
+    pikernel = parser.get("Pi-Star", "kernel")
+    pimmdvmhost = parser.get("Pi-Star", "MMDVMHost")
+  return (osname + " [" + pikernel + "]; " + modelname + "; Pi-Star " + piversion + " (" + pimmdvmhost + ")")
+
+def get_uptime():
+    with open("/proc/uptime") as upf:
+        uptime_seconds = float(upf.readline().split()[0])
+        uptime = dt.timedelta(seconds=uptime_seconds)
+        return "uptime: " + humanize.precisedelta(uptime, suppress=['seconds', 'milliseconds', 'microseconds'], format="%0.0f")
+
+def get_mmdvminfo():
+  parser = ConfigParser()
+  with open(MMDVMHOST_FILE, "r") as mmh:
+    parser.read_file(mmh)
+    rx = round(int(parser.get("Info", "RXFrequency")) / 1000000, 3)
+    tx = round(int(parser.get("Info", "TXFrequency")) / 1000000, 3)
+    if tx > rx:
+      shift = str(round(rx - tx, 1))
+    else:
+      shift = "+" + str(round(rx - tx, 1))
+    cc = parser.get("DMR", "ColorCode")
+  return (str(tx) + "MHz (" + shift + "MHz) DMRCC" + cc)
 
 def send_position(ais, config):
   packet = aprslib.packets.PositionReport()
   packet.fromcall = config.call
-  packet.tocall = 'APRS'
+  packet.tocall = "APRS"
   packet.symbol = config.symbol
   packet.symbol_table = config.symbol_table
   packet.timestamp = time.time()
   packet.latitude = config.latitude
   packet.longitude = config.longitude
-  packet.comment = "{} - https://github.com/0x9900/aprstar".format(platform.node())
+  packet.comment = get_osinfo() + "; " + get_uptime() + "; " + get_mmdvminfo()
   logging.info(str(packet))
   try:
     ais.sendall(packet)
@@ -248,13 +277,14 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APRS::{0:9s}:PARM.Temp,Load,FreeMem".format(config.call))
-    ais.sendall("{0}>APRS::{0:9s}:EQNS.0,0.001,0,0,0.001,0,0,1,0".format(config.call))
+    ais.sendall("{0}>APP720::{0:9s}:PARM.Temp,Load,FreeMem".format(config.call))
+    ais.sendall("{0}>APP720::{0:9s}:UNIT.degC,Pcnt,MByte".format(config.call))
+    ais.sendall("{0}>APP720::{0:9s}:EQNS.0,0.001,0,0,0.1,0,0,1,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
 def ais_connect(config):
-  ais = aprslib.IS(config.call, passwd=config.passcode, port=DEFAULT_PORT)
+  ais = aprslib.IS(config.call, passwd=config.passcode, host=DEFAULT_HOST, port=DEFAULT_PORT)
   for retry in range(5):
     try:
       ais.connect()
@@ -263,13 +293,12 @@ def ais_connect(config):
       time.sleep(10)
     else:
       return ais
-  logging.error('Connection error exiting')
+  logging.error("Connection error, exiting")
   sys.exit(os.EX_NOHOST)
 
 def main():
   config = Config()
   ais = ais_connect(config)
-
   send_header(ais, config)
   for sequence in Sequence():
     if sequence % 10 == 1:
@@ -277,12 +306,10 @@ def main():
     temp = get_temp()
     load = get_load()
     freemem = get_freemem()
-    data = "{}>APRS:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(
-        config.call, sequence, temp, load, freemem)
+    data = "{}>APP720:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)
     ais.sendall(data)
     logging.info(data)
     time.sleep(config.sleep)
-
 
 if __name__ == "__main__":
   try:
