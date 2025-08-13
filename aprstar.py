@@ -261,7 +261,7 @@ def get_mmdvminfo():
 def send_position(ais, config):
   packet = aprslib.packets.PositionReport()
   packet.fromcall = config.call
-  packet.tocall = "APRS"
+  packet.tocall = "APP720"
   packet.symbol = config.symbol
   packet.symbol_table = config.symbol_table
   packet.timestamp = time.time()
