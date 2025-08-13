@@ -21,7 +21,7 @@ CONFIG_DEFAULT = """
 call: N0CALL-1
 latitude: 0
 longitude: 0
-sleep: 600pip 
+sleep: 600
 symbol: n
 symbol_table: /
 """
