@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 Restart=on-failure
-ExecStart=/usr/local/bin/aprstar
+ExecStart=/usr/local/bin/rpiaprs
 
 [Install]
-Alias=aprstar.service
+Alias=rpiaprs.service
 WantedBy=multi-user.target
