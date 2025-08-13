@@ -261,7 +261,7 @@ def get_mmdvminfo():
 def send_position(ais, config):
   packet = aprslib.packets.PositionReport()
   packet.fromcall = config.call
-  packet.tocall = "APP720"
+  packet.tocall = "APP642"
   packet.symbol = config.symbol
   packet.symbol_table = config.symbol_table
   packet.timestamp = time.time()
@@ -277,9 +277,9 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP720::{0:9s}:PARM.Temp,Load,FreeMem".format(config.call))
-    ais.sendall("{0}>APP720::{0:9s}:UNIT.degC,Pcnt,MByte".format(config.call))
-    ais.sendall("{0}>APP720::{0:9s}:EQNS.0,0.001,0,0,0.1,0,0,1,0".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,Load,FreeMem".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,Pcnt,MByte".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.1,0,0,1,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
@@ -306,7 +306,7 @@ def main():
     temp = get_temp()
     load = get_load()
     freemem = get_freemem()
-    data = "{}>APP720:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)
+    data = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)
     ais.sendall(data)
     logging.info(data)
     time.sleep(config.sleep)
