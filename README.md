@@ -27,9 +27,7 @@ The following packages are the 3 dependencies used by `RPi-APRS`. They
 can be installed using the command pip.
 
 ```
-sudo pip install ConfigParser --break-system-packages
-sudo pip install aprslib --break-system-packages
-sudo pip install humanize --break-system-packages
+sudo pip install ConfigParser aprslib humanize --break-system-packages
 ```
 
 The module `ConfigParser` should be already installed but I have found
