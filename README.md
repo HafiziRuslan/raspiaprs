@@ -90,6 +90,6 @@ sudo systemctl status rpiaprs.service
 
 ## Example
 
-This is the screenshoot from aprs.fi, of the _temperature_ and _load average_ from an Pi-Star node.
+This is the screenshoot from aprs.fi, of _temperature_, _load average_ and _free memory_ from an Pi-Star node.
 
-![WSPR Picture](misc/Telemetry.png)
+![WSPR Picture](misc/metrics.png)
