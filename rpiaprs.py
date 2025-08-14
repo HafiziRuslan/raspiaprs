@@ -21,6 +21,7 @@ CONFIG_DEFAULT = """
 call: N0CALL-1
 latitude: 0
 longitude: 0
+altitude: 0
 sleep: 600
 symbol: n
 symbol_table: /
@@ -41,8 +42,9 @@ DEFAULT_PORT = 14580
 
 # Set up logging
 logging.basicConfig(
+  filename="/var/log/rpiaprs.log",
   format="%(asctime)s %(levelname)s: %(message)s",
-  datefmt="%H:%M:%S",
+  datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
 )
 
@@ -54,6 +56,7 @@ class Config(object):
     self._call = "NOCALL-1"
     self._longitude = 0.0
     self._latitude = 0.0
+    self._altitude = 0.0
     self._sleep = 600
     self._symbol = "n"
     self._symbol_table = "/"
@@ -71,6 +74,7 @@ class Config(object):
     self.sleep = parser.get("APRS", "sleep")
     self.symbol_table = parser.get("APRS", "symbol_table")
     self.symbol = parser.get("APRS", "symbol")
+    self.altitude = float(parser.get("APRS", "altitude"))
     lat, lon = [float(parser.get("APRS", c)) for c in ("latitude", "longitude")]
     if not lat or not lon:
       self.latitude, self.longitude = get_coordinates()
@@ -83,10 +87,7 @@ class Config(object):
       self.passcode = aprslib.passcode(self.call)
 
   def __repr__(self):
-    return (
-      "<Config> call: {0.call}, passcode: {0.passcode} - "
-      "{0.latitude}/{0.longitude}"
-    ).format(self)
+    return ("<Config> call: {0.call}, passcode: {0.passcode} - {0.latitude}/{0.longitude}/{0.altitude}").format(self)
 
   @property
   def call(self):
@@ -123,6 +124,14 @@ class Config(object):
   @longitude.setter
   def longitude(self, val):
     self._longitude = val
+
+  @property
+  def altitude(self):
+    return self._altitude
+
+  @altitude.setter
+  def altitude(self, val):
+    self._altitude = val
 
   @property
   def passcode(self):
@@ -197,10 +206,10 @@ def get_load():
   except IOError:
     return 0
   try:
-    load15 = float(loadstr.split()[1])
+    load5 = float(loadstr.split()[1])
   except ValueError:
     return 0
-  return int(load15 * 1000)
+  return int(load5 * 100)
 
 def get_freemem():
   try:
@@ -242,18 +251,18 @@ def get_uptime():
   with open("/proc/uptime") as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return "uptime: " + humanize.precisedelta(uptime, suppress=['seconds', 'milliseconds', 'microseconds'], format="%0.0f")
+  return "up " + humanize.precisedelta(uptime, suppress=['seconds', 'milliseconds', 'microseconds'], format="%0.0f")
 
 def get_mmdvminfo():
   parser = ConfigParser()
   with open(MMDVMHOST_FILE, "r") as mmh:
     parser.read_file(mmh)
-    rx = round(int(parser.get("Info", "RXFrequency")) / 1000000, 3)
-    tx = round(int(parser.get("Info", "TXFrequency")) / 1000000, 3)
+    rx = round(int(parser.get("Info", "RXFrequency")) / 1000000, 6)
+    tx = round(int(parser.get("Info", "TXFrequency")) / 1000000, 6)
     if tx > rx:
-      shift = str(round(rx - tx, 1))
+      shift = str(round(rx - tx, 6))
     else:
-      shift = "+" + str(round(rx - tx, 1))
+      shift = "+" + str(round(rx - tx, 6))
     cc = parser.get("DMR", "ColorCode")
   return (str(tx) + "MHz (" + shift + "MHz) DMRCC" + cc)
 
@@ -266,6 +275,7 @@ def send_position(ais, config):
   packet.timestamp = time.time()
   packet.latitude = config.latitude
   packet.longitude = config.longitude
+  packet.altitude = config.altitude
   packet.comment = get_osinfo() + "; " + get_uptime() + "; " + get_mmdvminfo() + "; github.com/HafiziRuslan/RPi-APRS"
   logging.info(str(packet))
   try:
@@ -278,7 +288,7 @@ def send_header(ais, config):
   try:
     ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,Load,FreeMem".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,Pcnt,MByte".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.1,0,0,1,0".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.01,0,0,1,0,0,1,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
@@ -300,7 +310,7 @@ def main():
   ais = ais_connect(config)
   send_header(ais, config)
   for sequence in Sequence():
-    if sequence % 10 == 1:
+    if sequence % 3 == 1:
       send_header(ais, config)
     temp = get_temp()
     load = get_load()
