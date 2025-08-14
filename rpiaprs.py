@@ -260,11 +260,14 @@ def get_mmdvminfo():
     rx = round(int(parser.get("Info", "RXFrequency")) / 1000000, 6)
     tx = round(int(parser.get("Info", "TXFrequency")) / 1000000, 6)
     if tx > rx:
-      shift = str(round(rx - tx, 6))
+      shift = " (" + str(round(rx - tx, 6)) + "MHz)"
+    elif tx < rx:
+      shift = " (+" + str(round(rx - tx, 6)) + "MHz)"
     else:
-      shift = "+" + str(round(rx - tx, 6))
-    cc = parser.get("DMR", "ColorCode")
-  return (str(tx) + "MHz (" + shift + "MHz) DMRCC" + cc)
+      shift = ""
+    if parser.getboolean("DMR", "Enable") == True:
+      cc = " DMRCC" + parser.get("DMR", "ColorCode")
+  return (str(tx) + "MHz" + shift + cc)
 
 def send_position(ais, config):
   packet = aprslib.packets.PositionReport()
