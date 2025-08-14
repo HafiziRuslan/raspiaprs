@@ -266,7 +266,7 @@ def send_position(ais, config):
   packet.timestamp = time.time()
   packet.latitude = config.latitude
   packet.longitude = config.longitude
-  packet.comment = get_osinfo() + "; " + get_uptime() + "; " + get_mmdvminfo()
+  packet.comment = get_osinfo() + "; " + get_uptime() + "; " + get_mmdvminfo() + "; github.com/HafiziRuslan/RPi-APRS"
   logging.info(str(packet))
   try:
     ais.sendall(packet)

@@ -1,10 +1,13 @@
 # RPi-APRS
 
 With this simple python program you can monitor your Allstar or
-pi-star health using APRS metrics.  You can see an example of the
-metrics logged by my allstar node. https://aprs.fi/telemetry/a/9W4GPA-4
+Pi-Star health using APRS metrics. You can see an example of the
+metrics logged by my Pi-Star node. [9W4GPA-4](https://aprs.fi/telemetry/a/9W4GPA-4?range=day)
 
-The metrics are temperature, CPU load average, and Available memory.
+The metrics are:-
+1. Temperature
+2. CPU load average
+3. Available memory
 
 ## Installation (Pi-Star)
 
