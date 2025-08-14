@@ -8,6 +8,7 @@ import time
 import aprslib
 import humanize
 import datetime as dt
+import subprocess
 
 from configparser import ConfigParser
 from io import StringIO
@@ -35,6 +36,8 @@ MEMINFO_FILE = "/proc/meminfo"
 OS_RELEASE_FILE = "/etc/os-release"
 PI_RELEASE_FILE = "/etc/pistar-release"
 MMDVMHOST_FILE = "/etc/mmdvmhost"
+MMDVMLOGPATH = "/var/log/pi-star"
+MMDVMLOGPREFIX = "MMDVM"
 
 # Default APRS server settings
 DEFAULT_HOST = "rotate.aprs2.net"
@@ -242,10 +245,57 @@ def get_osinfo():
         modelname = line.split(":", 1)[1].strip().strip('"')
   with open(PI_RELEASE_FILE, "r") as pir:
     parser.read_file(pir)
-    piversion = parser.get("Pi-Star", "Version")
+    piversion = "Pi-Star" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
     pikernel = parser.get("Pi-Star", "kernel")
-    pimmdvmhost = parser.get("Pi-Star", "MMDVMHost")
-  return (osname + " [" + pikernel + "]; " + modelname + "; Pi-Star " + piversion + " (" + pimmdvmhost + ")")
+  return osname + " [" + pikernel + "]; " + modelname + "; " + piversion
+
+def get_modem():
+  log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.utcnow().strftime('%Y-%m-%d')}.log")
+  log_mmdvm_previous = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{(dt.datetime.utcnow() - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
+  log_search_string = "MMDVM protocol version"
+  log_line = ''
+  modem_firmware = ''
+  try:
+    log_line = subprocess.check_output(f"grep \"{log_search_string}\" {log_mmdvm_now} | tail -1", shell=True, text=True).strip()
+  except subprocess.CalledProcessError:
+    try:
+      log_line = subprocess.check_output(f"grep \"{log_search_string}\" {log_mmdvm_previous} | tail -1", shell=True, text=True).strip()
+    except subprocess.CalledProcessError:
+      pass
+  if log_line:
+    if 'DVMEGA' in log_line:
+      modem_firmware = log_line[67:67+15]
+    # elif 'description: MMDVM_HS' in log_line:
+    #   modem_firmware = f"MMDVM_HS:{log_line[84:84+8].lstrip('v')}"
+    elif 'description: MMDVM ' in log_line:
+      modem_firmware = f"MMDVM:{log_line[73:73+8]}"
+    elif 'description: ZUMspot ' in log_line:
+      modem_firmware = f"ZUMspot:{log_line[83:83+12].split()[0]}"
+    elif 'description: MMDVM_MDO ' in log_line:
+      modem_firmware = f"MMDVM_MDO:{log_line[85:85+12].split()[0].lstrip('v')}"
+    elif 'description: ZUMspot-' in log_line:
+      modem_firmware = f"ZUMspot:{log_line[75:75+12].split()[0]}"
+    elif 'description: MMDVM_HS_Hat-' in log_line:
+      modem_firmware = f"MMDVM_HS_Hat:{log_line[80:80+12].split()[0]}"
+    elif 'description: MMDVM_HS_Dual_Hat-' in log_line:
+      modem_firmware = f"MMDVM_HS_Dual_Hat:{log_line[85:85+12].split()[0]}"
+    elif 'description: D2RG_MMDVM_HS-' in log_line:
+      modem_firmware = f"D2RG_MMDVM_HS:{log_line[81:81+12].split()[0]}"
+    elif 'description: MMDVM_HS-' in log_line:
+      modem_firmware = f"MMDVM_HS:{log_line[76:76+12].split()[0].lstrip('v')}"
+    elif 'description: Nano_hotSPOT-' in log_line:
+      modem_firmware = f"Nano_hotSPOT:{log_line[80:80+12].split()[0].lstrip('v')}"
+    elif 'description: Nano-Spot-' in log_line:
+      modem_firmware = f"NanoSpot:{log_line[77:77+12].split()[0]}"
+    elif 'description: Nano_DV-' in log_line:
+      modem_firmware = f"NanoDV:{log_line[75:75+12].split()[0]}"
+    elif 'description: OpenGD77 Hotspot' in log_line:
+      modem_firmware = f"OpenGD77:{log_line[83:83+12].split()[0]}"
+    elif 'description: OpenGD77_HS ' in log_line:
+      modem_firmware = f"OpenGD77_HS:{log_line[79:79+12].split()[0]}"
+    elif 'description: SkyBridge-' in log_line:
+      modem_firmware = f"SkyBridge:{log_line[77:77+12].split()[0]}"
+  return modem_firmware
 
 def get_uptime():
   with open("/proc/uptime") as upf:
@@ -279,7 +329,7 @@ def send_position(ais, config):
   packet.latitude = config.latitude
   packet.longitude = config.longitude
   packet.altitude = config.altitude
-  packet.comment = "https://github.com/HafiziRuslan/RPi-APRS; " + get_osinfo() + "; " + get_uptime() + "; " + get_mmdvminfo()
+  packet.comment = "https://github.com/HafiziRuslan/RPi-APRS; " + get_osinfo() + "; " + get_modem() + "; " + get_uptime() + "; " + get_mmdvminfo()
   logging.info(str(packet))
   try:
     ais.sendall(packet)
