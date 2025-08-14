@@ -288,7 +288,7 @@ def send_header(ais, config):
   try:
     ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,Load,FreeMem".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,Pcnt,MByte".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.01,0,0,1,0,0,1,0".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,1,0,0,1,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
