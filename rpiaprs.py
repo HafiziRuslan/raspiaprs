@@ -310,7 +310,7 @@ def main():
   ais = ais_connect(config)
   send_header(ais, config)
   for sequence in Sequence():
-    if sequence % 3 == 1:
+    if sequence % 10 == 1:
       send_header(ais, config)
     temp = get_temp()
     load = get_load()
