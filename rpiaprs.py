@@ -222,7 +222,7 @@ def get_freemem():
           freemem = int(line.split()[1])
   except (IOError, ValueError):
     return 0
-  return int(freemem / 1024)
+  return freemem
 
 def get_temp():
   try:
@@ -245,9 +245,9 @@ def get_osinfo():
         modelname = line.split(":", 1)[1].strip().strip('"')
   with open(PI_RELEASE_FILE, "r") as pir:
     parser.read_file(pir)
-    piversion = "Pi-Star" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
+    piversion = "PiStar" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
     pikernel = parser.get("Pi-Star", "kernel")
-  return osname + " [" + pikernel + "]; " + modelname + "; " + piversion
+  return osname + " [" + pikernel + "]; " + modelname + "; " + piversion + "; "
 
 def get_modem():
   log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.utcnow().strftime('%Y-%m-%d')}.log")
@@ -301,7 +301,7 @@ def get_uptime():
   with open("/proc/uptime") as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return "up " + humanize.precisedelta(uptime, suppress=['milliseconds', 'microseconds'], format="%0.0f").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr")
+  return "up " + humanize.precisedelta(uptime, suppress=['milliseconds', 'microseconds'], format="%0.0f").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + "; "
 
 def get_mmdvminfo():
   parser = ConfigParser()
@@ -317,31 +317,32 @@ def get_mmdvminfo():
       shift = ""
     if parser.getboolean("DMR", "Enable") == True:
       cc = " DMRCC" + parser.get("DMR", "ColorCode")
-  return (str(tx) + "MHz" + shift + cc)
+  return (str(tx) + "MHz" + shift + cc) + "; "
 
 def send_position(ais, config):
-  packet = aprslib.packets.PositionReport()
-  packet.fromcall = config.call
-  packet.tocall = "APP642"
-  packet.symbol = config.symbol
-  packet.symbol_table = config.symbol_table
-  packet.timestamp = time.time()
-  packet.latitude = config.latitude
-  packet.longitude = config.longitude
-  packet.altitude = config.altitude
-  packet.comment = "https://github.com/HafiziRuslan/RPi-APRS; " + get_osinfo() + "; " + get_modem() + "; " + get_uptime() + "; " + get_mmdvminfo()
-  logging.info(str(packet))
+  pos = aprslib.packets.PositionReport()
+  pos.fromcall = config.call
+  pos.tocall = "APP642"
+  pos.symbol = config.symbol
+  pos.symbol_table = config.symbol_table
+  pos.timestamp = time.time()
+  pos.latitude = config.latitude
+  pos.longitude = config.longitude
+  pos.altitude = config.altitude
+  pos.comment = get_mmdvminfo() + get_osinfo() + get_modem()
+  logging.info(str(pos))
   try:
-    ais.sendall(packet)
+    ais.sendall(pos)
   except ConnectionError as err:
     logging.warning(err)
 
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,Load,FreeMem".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,Pcnt,MByte".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,1,0,0,1,0".format(config.call))
+    ais.sendall("{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, get_uptime()))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,LoadAvg,FreeMem".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,%/5min,Mbytes".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,1,0,0,0.001,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
