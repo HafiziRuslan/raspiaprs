@@ -258,7 +258,7 @@ def get_osinfo():
   with open(VERSION_FILE) as ver:
     for line in ver:
       kernelver = " [" + line.split()[0] + line.split()[2] + "]"
-      osver = line.split()[5] + line.split()[6]
+      osver = " " + line.split()[5] + line.split()[6]
   try:
     with open(PISTAR_RELEASE_FILE, "r") as pir:
       parser.read_file(pir)
@@ -267,7 +267,7 @@ def get_osinfo():
     try:
       with open(WPSD_RELEASE_FILE, "r") as wps:
         parser.read_file(wps)
-        version = "WPSD" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost")
+        version = "WPSD" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost").split()[0]
     except (IOError, ValueError):
       version = "Unknown"
   return osname + osver + kernelver + "; " + modelname + "; " + version + "; "
