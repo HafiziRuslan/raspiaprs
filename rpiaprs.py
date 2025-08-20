@@ -36,6 +36,7 @@ THERMAL_FILE = "/sys/class/thermal/thermal_zone0/temp"
 LOADAVG_FILE = "/proc/loadavg"
 CPUINFO_FILE = "/proc/cpuinfo"
 MEMINFO_FILE = "/proc/meminfo"
+VERSION_FILE = "/proc/version"
 OS_RELEASE_FILE = "/etc/os-release"
 PISTAR_RELEASE_FILE = "/etc/pistar-release"
 WPSD_RELEASE_FILE = "/etc/WPSD-release"
@@ -254,17 +255,21 @@ def get_osinfo():
     for line in cpu:
       if "Model" in line:
         modelname = line.split(":", 1)[1].strip().strip('"')
-    with open("/proc/version") as ver:
-      kernel = ver.readline().split()[2]
+  with open(VERSION_FILE) as ver:
+    kernelver = " [" + ver.readline().split()[2] + "]"
+    osver = " (" + ver.readline().split()[5] + ver.readline().split()[6] + ")"
   try:
     with open(PISTAR_RELEASE_FILE, "r") as pir:
       parser.read_file(pir)
       version = "PiStar" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
   except (IOError, ValueError):
-    with open(WPSD_RELEASE_FILE, "r") as wps:
-      parser.read_file(wps)
-      version = "WPSD" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost")
-  return osname + " [" + kernel + "]; " + modelname + "; " + version + "; "
+    try:
+      with open(WPSD_RELEASE_FILE, "r") as wps:
+        parser.read_file(wps)
+        version = "WPSD" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost")
+    except (IOError, ValueError):
+      version = "Unknown"
+  return osname + osver + kernelver + "; " + modelname + "; " + version + "; "
 
 def get_modem():
   log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.utcnow().strftime('%Y-%m-%d')}.log")
