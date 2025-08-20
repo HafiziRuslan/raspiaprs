@@ -392,7 +392,7 @@ def main():
     load = get_load()
     freemem = get_freemem()
     uptime = get_uptime()
-    tel = {"{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)}
+    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)
     ais.sendall(tel)
     logging.info(tel)
     upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, uptime)
