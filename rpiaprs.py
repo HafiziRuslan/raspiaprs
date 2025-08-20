@@ -256,8 +256,9 @@ def get_osinfo():
       if "Model" in line:
         modelname = line.split(":", 1)[1].strip().strip('"')
   with open(VERSION_FILE) as ver:
-    kernelver = " [" + ver.readline().split()[0] + ver.readline().split()[2] + "]"
-    osver = ver.readline().split()[5] + ver.readline().split()[6]
+    for line in ver:
+      kernelver = " [" + line.split()[0] + line.split()[2] + "]"
+      osver = line.split()[5] + line.split()[6]
   try:
     with open(PISTAR_RELEASE_FILE, "r") as pir:
       parser.read_file(pir)
