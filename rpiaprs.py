@@ -254,16 +254,16 @@ def get_osinfo():
     for line in cpu:
       if "Model" in line:
         modelname = line.split(":", 1)[1].strip().strip('"')
-  if open(PISTAR_RELEASE_FILE).readable():
+    with open("/proc/version") as ver:
+      kernel = ver.readline().split()[2]
+  try:
     with open(PISTAR_RELEASE_FILE, "r") as pir:
       parser.read_file(pir)
       version = "PiStar" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
-      kernel = parser.get("Pi-Star", "kernel")
-  if open(WPSD_RELEASE_FILE).readable():
+  except (IOError, ValueError):
     with open(WPSD_RELEASE_FILE, "r") as wps:
       parser.read_file(wps)
       version = "WPSD" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost")
-      kernel = parser.get("WPSD", "kernel")
   return osname + " [" + kernel + "]; " + modelname + "; " + version + "; "
 
 def get_modem():
