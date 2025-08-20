@@ -26,6 +26,9 @@ altitude: 0
 sleep: 600
 symbol: n
 symbol_table: /
+[APRS-IS]
+host: rotate.aprs2.net
+port: 14580
 """
 
 # Default paths for system files
@@ -38,10 +41,6 @@ PI_RELEASE_FILE = "/etc/pistar-release"
 MMDVMHOST_FILE = "/etc/mmdvmhost"
 MMDVMLOGPATH = "/var/log/pi-star"
 MMDVMLOGPREFIX = "MMDVM"
-
-# Default APRS server settings
-DEFAULT_HOST = "rotate.aprs2.net"
-DEFAULT_PORT = 14580
 
 # Set up logging
 logging.basicConfig(
@@ -63,6 +62,8 @@ class Config(object):
     self._sleep = 600
     self._symbol = "n"
     self._symbol_table = "/"
+    self._server = "rotate.aprs2.net"
+    self._port = 14580
     if not os.path.exists(CONFIG_FILE):
       logging.info("Using default config")
     else:
@@ -83,6 +84,15 @@ class Config(object):
       self.latitude, self.longitude = get_coordinates()
     else:
       self.latitude, self.longitude = lat, lon
+    if parser.has_option("APRS-IS", "server"):
+      self._server = parser.get("APRS-IS", "server")
+    else:
+      logging.warning("Using default APRS-IS server: %s", self._server)
+      self.server = self._server
+    if parser.has_option("APRS-IS", "port"):
+      self._port = int(parser.get("APRS-IS", "port"))
+    else:
+      self.port = self._port
     if parser.has_option("APRS", "passcode"):
       self.passcode = parser.get("APRS", "passcode")
     else:
@@ -266,35 +276,35 @@ def get_modem():
     if 'DVMEGA' in log_line:
       modem_firmware = log_line[67:67+15]
     elif 'description: MMDVM ' in log_line:
-      modem_firmware = f"MMDVM:{log_line[73:73+8]}"
+      modem_firmware = f"MMDVM-{log_line[73:73+8]}"
     elif 'description: D2RG_MMDVM_HS-' in log_line:
-      modem_firmware = f"D2RG_MMDVM_HS:{log_line[81:81+12].split()[0]}"
+      modem_firmware = f"D2RG_MMDVM_HS-{log_line[81:81+12].split()[0]}"
     elif 'description: MMDVM_HS_Hat-' in log_line:
-      modem_firmware = f"MMDVM_HS_Hat:{log_line[80:80+12].split()[0]}"
+      modem_firmware = f"MMDVM_HS_Hat-{log_line[80:80+12].split()[0]}"
     elif 'description: MMDVM_HS_Dual_Hat-' in log_line:
-      modem_firmware = f"MMDVM_HS_Dual_Hat:{log_line[85:85+12].split()[0]}"
+      modem_firmware = f"MMDVM_HS_Dual_Hat-{log_line[85:85+12].split()[0]}"
     elif 'description: MMDVM_HS-' in log_line:
-      modem_firmware = f"MMDVM_HS:{log_line[76:76+12].split()[0].lstrip('v')}"
+      modem_firmware = f"MMDVM_HS-{log_line[76:76+12].split()[0].lstrip('v')}"
     elif 'description: MMDVM_MDO ' in log_line:
-      modem_firmware = f"MMDVM_MDO:{log_line[85:85+12].split()[0].lstrip('v')}"
+      modem_firmware = f"MMDVM_MDO-{log_line[85:85+12].split()[0].lstrip('v')}"
     elif 'description: MMDVM_HS' in log_line:
-      modem_firmware = f"MMDVM_HS:{log_line[84:84+8].lstrip('v')}"
+      modem_firmware = f"MMDVM_HS-{log_line[84:84+8].lstrip('v')}"
     elif 'description: Nano_DV-' in log_line:
-      modem_firmware = f"NanoDV:{log_line[75:75+12].split()[0]}"
+      modem_firmware = f"NanoDV-{log_line[75:75+12].split()[0]}"
     elif 'description: Nano_hotSPOT-' in log_line:
-      modem_firmware = f"Nano_hotSPOT:{log_line[80:80+12].split()[0].lstrip('v')}"
+      modem_firmware = f"Nano_hotSPOT-{log_line[80:80+12].split()[0].lstrip('v')}"
     elif 'description: Nano-Spot-' in log_line:
-      modem_firmware = f"NanoSpot:{log_line[77:77+12].split()[0]}"
+      modem_firmware = f"NanoSpot-{log_line[77:77+12].split()[0]}"
     elif 'description: OpenGD77 Hotspot' in log_line:
-      modem_firmware = f"OpenGD77:{log_line[83:83+12].split()[0]}"
+      modem_firmware = f"OpenGD77-{log_line[83:83+12].split()[0]}"
     elif 'description: OpenGD77_HS ' in log_line:
-      modem_firmware = f"OpenGD77_HS:{log_line[79:79+12].split()[0]}"
+      modem_firmware = f"OpenGD77_HS-{log_line[79:79+12].split()[0]}"
     elif 'description: SkyBridge-' in log_line:
-      modem_firmware = f"SkyBridge:{log_line[77:77+12].split()[0]}"
+      modem_firmware = f"SkyBridge-{log_line[77:77+12].split()[0]}"
     elif 'description: ZUMspot-' in log_line:
-      modem_firmware = f"ZUMspot:{log_line[75:75+12].split()[0]}"
+      modem_firmware = f"ZUMspot-{log_line[75:75+12].split()[0]}"
     elif 'description: ZUMspot ' in log_line:
-      modem_firmware = f"ZUMspot:{log_line[83:83+12].split()[0]}"
+      modem_firmware = f"ZUMspot-{log_line[83:83+12].split()[0]}"
   return modem_firmware
 
 def get_uptime():
@@ -339,7 +349,7 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, get_uptime()))
+    # ais.sendall("{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, get_uptime()))
     ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,LoadAvg,FreeMem".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,%/5min,Mbytes".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,1,0,0,0.001,0".format(config.call))
@@ -347,7 +357,7 @@ def send_header(ais, config):
     logging.warning(err)
 
 def ais_connect(config):
-  ais = aprslib.IS(config.call, passwd=config.passcode, host=DEFAULT_HOST, port=DEFAULT_PORT)
+  ais = aprslib.IS(config.call, passwd=config.passcode, host=config.server, port=config.port)
   for retry in range(5):
     try:
       ais.connect()
@@ -369,7 +379,11 @@ def main():
     temp = get_temp()
     load = get_load()
     freemem = get_freemem()
-    data = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)
+    uptime = get_uptime()
+    data = [
+      {"{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)},
+      {"{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, uptime)}
+    ]
     ais.sendall(data)
     logging.info(data)
     time.sleep(config.sleep)
