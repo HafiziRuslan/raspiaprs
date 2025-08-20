@@ -362,7 +362,6 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    # ais.sendall("{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, get_uptime()))
     ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,LoadAvg,FreeMem".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,%/5min,Mbytes".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,1,0,0,0.001,0".format(config.call))
@@ -393,15 +392,12 @@ def main():
     load = get_load()
     freemem = get_freemem()
     uptime = get_uptime()
-    data = {
-      {"{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)},
-      {"{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, uptime)}
-    }
-    ais.sendall(data)
-    logging.info("Sending data: %s", data)
-    # ais.sendall("{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem))
-    # ais.sendall("{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, uptime))
-    # logging.info(data)
+    tel = {"{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)}
+    ais.sendall(tel)
+    logging.info(tel)
+    upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, uptime)
+    ais.sendall(upt)
+    logging.info(upt)
     time.sleep(config.sleep)
 
 if __name__ == "__main__":
