@@ -49,8 +49,7 @@ sudo nano /etc/rpiaprs.conf
 sudo systemctl enable rpiaprs.service
 sudo systemctl start rpiaprs.service
 ```
-You can now run the status command to see if everything is running
-smoothly and you have no errors.
+You can now run the status command to see if everything is running smoothly and you have no errors.
 ```
 sudo systemctl status rpiaprs.service
 ```
