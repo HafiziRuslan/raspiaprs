@@ -27,7 +27,7 @@ sleep: 600
 symbol: n
 symbol_table: /
 [APRS-IS]
-host: rotate.aprs2.net
+server: rotate.aprs2.net
 port: 14580
 """
 
