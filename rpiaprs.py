@@ -37,7 +37,8 @@ LOADAVG_FILE = "/proc/loadavg"
 CPUINFO_FILE = "/proc/cpuinfo"
 MEMINFO_FILE = "/proc/meminfo"
 OS_RELEASE_FILE = "/etc/os-release"
-PI_RELEASE_FILE = "/etc/pistar-release"
+PISTAR_RELEASE_FILE = "/etc/pistar-release"
+WPSD_RELEASE_FILE = "/etc/WPSD-release"
 MMDVMHOST_FILE = "/etc/mmdvmhost"
 MMDVMLOGPATH = "/var/log/pi-star"
 MMDVMLOGPREFIX = "MMDVM"
@@ -253,11 +254,17 @@ def get_osinfo():
     for line in cpu:
       if "Model" in line:
         modelname = line.split(":", 1)[1].strip().strip('"')
-  with open(PI_RELEASE_FILE, "r") as pir:
-    parser.read_file(pir)
-    piversion = "PiStar" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
-    pikernel = parser.get("Pi-Star", "kernel")
-  return osname + " [" + pikernel + "]; " + modelname + "; " + piversion + "; "
+  if open(PISTAR_RELEASE_FILE).readable():
+    with open(PISTAR_RELEASE_FILE, "r") as pir:
+      parser.read_file(pir)
+      version = "PiStar" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
+      kernel = parser.get("Pi-Star", "kernel")
+  if open(WPSD_RELEASE_FILE).readable():
+    with open(WPSD_RELEASE_FILE, "r") as wps:
+      parser.read_file(wps)
+      version = "WPSD" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost")
+      kernel = parser.get("WPSD", "kernel")
+  return osname + " [" + kernel + "]; " + modelname + "; " + version + "; "
 
 def get_modem():
   log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.utcnow().strftime('%Y-%m-%d')}.log")
