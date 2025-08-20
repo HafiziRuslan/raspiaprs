@@ -85,12 +85,12 @@ class Config(object):
     else:
       self.latitude, self.longitude = lat, lon
     if parser.has_option("APRS-IS", "server"):
-      self._server = parser.get("APRS-IS", "server")
+      self.server = parser.get("APRS-IS", "server")
     else:
       logging.warning("Using default APRS-IS server: %s", self._server)
       self.server = self._server
     if parser.has_option("APRS-IS", "port"):
-      self._port = int(parser.get("APRS-IS", "port"))
+      self.port = int(parser.get("APRS-IS", "port"))
     else:
       self.port = self._port
     if parser.has_option("APRS", "passcode"):
