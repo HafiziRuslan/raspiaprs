@@ -58,6 +58,12 @@ If any error upon start, you may look into `journalctl` for more info.
 journalctl -u rpiaprs.service
 ```
 
+## Update RPi-APRS
+Use this command to update
+```bash
+sudo systemctl stop rpiaprs.service && git pull && sudo cp rpiaprs.py /usr/local/bin/rpiaprs && sudo chmod a+x /usr/local/bin/rpiaprs && sudo systemctl start rpiaprs.service
+```
+
 ## Example
 This is the screenshoot from aprs.fi, of _temperature_, _load average_ and _free memory_ from an Pi-Star node.
 ![WSPR Picture](misc/metrics.png)
