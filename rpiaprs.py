@@ -222,19 +222,26 @@ def get_load():
     return 0
   try:
     load5 = float(loadstr.split()[1])
+    corecount = subprocess.check_output(f"grep -c '^processor' {CPUINFO_FILE}", shell=True, text=True).strip()
   except ValueError:
     return 0
-  return int(load5 * 100)
+  return int((load5 / corecount) * 10000)
 
 def get_freemem():
   try:
     with open(MEMINFO_FILE) as pfd:
       for line in pfd:
+        if "MemTotal" in line:
+          totalmem = int(line.split()[1])
         if "MemFree" in line:
           freemem = int(line.split()[1])
+        if "Buffers" in line:
+          buffmem = int(line.split()[1])
+        if "Cached" in line:
+          cachemem = int(line.split()[1])
   except (IOError, ValueError):
     return 0
-  return freemem
+  return int(round(((totalmem - freemem - buffmem - cachemem / totalmem) * 100), 2))
 
 def get_temp():
   try:
@@ -362,9 +369,9 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,LoadAvg,FreeMem".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,%/5min,Mbytes".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,1,0,0,0.001,0".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,CPULoad,MemUsed".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
