@@ -222,7 +222,7 @@ def get_load():
     return 0
   try:
     load5 = float(loadstr.split()[1])
-    corecount = subprocess.check_output(f"grep -c '^processor' {CPUINFO_FILE}", shell=True, text=True).strip()
+    corecount = float(subprocess.check_output(f"grep -c '^processor' {CPUINFO_FILE}", shell=True, text=True).strip())
   except ValueError:
     return 0
   return int((load5 / corecount) * 10000)
