@@ -225,7 +225,7 @@ def get_load():
     corecount = float(subprocess.check_output(f"grep -c '^processor' {CPUINFO_FILE}", shell=True, text=True).strip())
   except ValueError:
     return 0
-  return (load5 / corecount) * 10000
+  return int((load5 / corecount) * 10000)
 
 def get_freemem():
   try:
