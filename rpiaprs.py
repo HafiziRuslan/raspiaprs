@@ -241,7 +241,7 @@ def get_freemem():
           cachemem = int(line.split()[1])
   except (IOError, ValueError):
     return 0
-  return int(round(((totalmem - freemem - buffmem - cachemem / totalmem) * 100), 2))
+  return int(round(((totalmem - freemem - buffmem - cachemem) / totalmem * 100), 2))
 
 def get_temp():
   try:
