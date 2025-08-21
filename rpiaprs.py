@@ -225,7 +225,7 @@ def get_load():
     corecount = float(subprocess.check_output(f"grep -c '^processor' {CPUINFO_FILE}", shell=True, text=True).strip())
   except ValueError:
     return 0
-  return int((load5 / corecount) * 10000)
+  return (load5 / corecount) * 10000
 
 def get_freemem():
   try:
@@ -239,9 +239,15 @@ def get_freemem():
           buffmem = int(line.split()[1])
         if "Cached" in line:
           cachemem = int(line.split()[1])
+        if "SwapTotal" in line:
+          swaptotalmem = int(line.split()[1])
+        if "SwapFree" in line:
+          swapfreemem = int(line.split()[1])
+    alltotalmem = totalmem + swaptotalmem
+    allfreemem = freemem + swapfreemem
   except (IOError, ValueError):
     return 0
-  return int((totalmem - freemem - buffmem - cachemem) / totalmem * 10000)
+  return ((alltotalmem - allfreemem - buffmem - cachemem) / alltotalmem) * 10000
 
 def get_temp():
   try:
@@ -369,7 +375,7 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,CPULoad,MemUsed".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,CPULoad,RAMUsed".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0".format(config.call))
   except ConnectionError as err:
