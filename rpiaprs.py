@@ -247,7 +247,7 @@ def get_freemem():
     allfreemem = freemem + swapfreemem
   except (IOError, ValueError):
     return 0
-  return ((alltotalmem - allfreemem - buffmem - cachemem) / alltotalmem) * 10000
+  return int(((alltotalmem - allfreemem - buffmem - cachemem) / alltotalmem) * 10000)
 
 def get_temp():
   try:
