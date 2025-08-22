@@ -16,7 +16,7 @@ from urllib.request import urlopen
 from aprslib.exceptions import ConnectionError
 
 # Default configuration file path
-CONFIG_FILE = "/etc/rpiaprs.conf"
+CONFIG_FILE = "/etc/raspiaprs.conf"
 CONFIG_DEFAULT = """
 [APRS]
 call: N0CALL-1
@@ -46,7 +46,7 @@ MMDVMLOGPREFIX = "MMDVM"
 
 # Set up logging
 logging.basicConfig(
-  filename="/var/log/rpiaprs.log",
+  filename="/var/log/raspiaprs.log",
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
@@ -175,7 +175,7 @@ class Config(object):
 class Sequence(object):
   """Generate an APRS sequence number."""
   def __init__(self):
-    self.sequence_file = "/tmp/rpiaprs.sequence"
+    self.sequence_file = "/tmp/raspiaprs.sequence"
     try:
       with open(self.sequence_file) as fds:
         self._count = int(fds.readline())
@@ -247,7 +247,7 @@ def get_freemem():
     allfreemem = freemem + swapfreemem
   except (IOError, ValueError):
     return 0
-  return int(((alltotalmem - allfreemem - buffmem - cachemem) / alltotalmem) * 10000)
+  return int(((alltotalmem - (allfreemem + buffmem + cachemem)) / alltotalmem) * 10000)
 
 def get_temp():
   try:
@@ -375,7 +375,7 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,CPULoad,RAMUsed".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,CPULoad,RAMFree".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0".format(config.call))
   except ConnectionError as err:
@@ -408,7 +408,7 @@ def main():
     tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)
     ais.sendall(tel)
     logging.info(tel)
-    upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/RPi-APRS".format(config.call, uptime)
+    upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)
     ais.sendall(upt)
     logging.info(upt)
     time.sleep(config.sleep)

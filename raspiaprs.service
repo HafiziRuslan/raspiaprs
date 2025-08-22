@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Restart=on-failure
 RestartSec=5
-ExecStart=/usr/local/bin/rpiaprs
+ExecStart=/usr/local/bin/raspiaprs
 
 [Install]
-Alias=rpiaprs.service
+Alias=raspiaprs.service
 WantedBy=multi-user.target
