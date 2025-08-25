@@ -20,7 +20,7 @@ CONFIG_FILE = "/etc/raspiaprs.conf"
 CONFIG_DEFAULT = """
 [APRS]
 call: N0CALL
-ssid: 1
+ssid: 0
 latitude: 0.0
 longitude: 0.0
 altitude: 0.0
@@ -58,7 +58,7 @@ class Config(object):
     parser = ConfigParser()
     parser.read_file(StringIO(CONFIG_DEFAULT))
     self._passcode = ""
-    self._call = "NOCALL-1"
+    self._call = "NOCALL"
     self._longitude = 0.0
     self._latitude = 0.0
     self._altitude = 0.0
