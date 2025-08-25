@@ -19,10 +19,11 @@ from aprslib.exceptions import ConnectionError
 CONFIG_FILE = "/etc/raspiaprs.conf"
 CONFIG_DEFAULT = """
 [APRS]
-call: N0CALL-1
-latitude: 0
-longitude: 0
-altitude: 0
+call: N0CALL
+ssid: 1
+latitude: 0.0
+longitude: 0.0
+altitude: 0.0
 sleep: 600
 symbol: n
 symbol_table: /
@@ -76,7 +77,7 @@ class Config(object):
         logging.info("Config file %s read", CONFIG_FILE)
       except (IOError, SystemError):
         raise SystemError("No [APRS] section configured")
-    self.call = parser.get("APRS", "call")
+    self.call = parser.get("APRS", "call") + "-" + parser.get("APRS", "ssid")
     self.sleep = parser.get("APRS", "sleep")
     self.symbol_table = parser.get("APRS", "symbol_table")
     self.symbol = parser.get("APRS", "symbol")

@@ -20,7 +20,8 @@ On the Pi-Star / WPSD / AllStarLink image, a very minimal version of python has 
 Make sure the main python libraries are installed by running the following commands:-
 ```bash
 rpi-rw
-sudo apt update && sudo apt install python3-pip -y
+sudo apt update
+sudo apt install python3-pip -y
 ```
 
 The following packages are the 3 dependencies used by `raspiaprs`.
@@ -81,7 +82,11 @@ journalctl -u raspiaprs.service
 
 Use this command to update:-
 ```bash
-sudo systemctl stop raspiaprs.service && git pull && sudo cp raspiaprs.py /usr/local/bin/raspiaprs && sudo chmod a+x /usr/local/bin/raspiaprs && sudo systemctl start raspiaprs.service
+sudo systemctl stop raspiaprs.service
+git pull
+sudo cp raspiaprs.py /usr/local/bin/raspiaprs
+sudo chmod a+x /usr/local/bin/raspiaprs
+sudo systemctl start raspiaprs.service
 ```
 
 ## Example
