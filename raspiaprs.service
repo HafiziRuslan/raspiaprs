@@ -4,7 +4,8 @@ After=network.target
 
 [Service]
 Restart=on-failure
-RestartSec=5
+RestartSec=15
+ExecStartPre=/bin/sleep 90
 ExecStart=/usr/local/bin/raspiaprs
 
 [Install]
