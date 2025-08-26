@@ -287,16 +287,16 @@ def get_osinfo():
   return osname + osver + kernelver + "; " + modelname + "; " + version + "; "
 
 def get_modem():
-  log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.utcnow().strftime('%Y-%m-%d')}.log")
-  log_mmdvm_previous = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{(dt.datetime.utcnow() - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
+  log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
+  log_mmdvm_previous = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
   log_search_string = "MMDVM protocol version"
   log_line = ''
   modem_firmware = ''
   try:
-    log_line = subprocess.check_output(f"grep \"{log_search_string}\" {log_mmdvm_now} | tail -1", shell=True, text=True).strip()
+    log_line = subprocess.run(f"grep \"{log_search_string}\" {log_mmdvm_now} | tail -1", shell=True, text=True).strip()
   except subprocess.CalledProcessError:
     try:
-      log_line = subprocess.check_output(f"grep \"{log_search_string}\" {log_mmdvm_previous} | tail -1", shell=True, text=True).strip()
+      log_line = subprocess.run(f"grep \"{log_search_string}\" {log_mmdvm_previous} | tail -1", shell=True, text=True).strip()
     except subprocess.CalledProcessError:
       pass
   if log_line:
