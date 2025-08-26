@@ -293,10 +293,10 @@ def get_modem():
   log_line = ''
   modem_firmware = ''
   try:
-    log_line = subprocess.run(f"grep \"{log_search_string}\" {log_mmdvm_now} | tail -1", shell=True, text=True).strip()
+    log_line = subprocess.run(f"grep \"{log_search_string}\" {log_mmdvm_now} | tail -1", shell=True, text=True).stdout.strip()
   except subprocess.CalledProcessError:
     try:
-      log_line = subprocess.run(f"grep \"{log_search_string}\" {log_mmdvm_previous} | tail -1", shell=True, text=True).strip()
+      log_line = subprocess.run(f"grep \"{log_search_string}\" {log_mmdvm_previous} | tail -1", shell=True, text=True).stdout.strip()
     except subprocess.CalledProcessError:
       pass
   if log_line:
