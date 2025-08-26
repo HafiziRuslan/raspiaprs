@@ -215,7 +215,7 @@ def get_coordinates():
     logging.warning("Position: %f, %f", data["lat"], data["lon"])
     return data["lat"], data["lon"]
 
-def get_load():
+def get_cpuload():
   try:
     with open(LOADAVG_FILE) as lfd:
       loadstr = lfd.readline()
@@ -228,7 +228,7 @@ def get_load():
     return 0
   return int((load5 / corecount) * 10000)
 
-def get_freemem():
+def get_memused():
   try:
     with open(MEMINFO_FILE) as pfd:
       for line in pfd:
@@ -248,7 +248,7 @@ def get_freemem():
     allfreemem = freemem + swapfreemem
   except (IOError, ValueError):
     return 0
-  return int(((alltotalmem - (allfreemem + buffmem + cachemem)) / alltotalmem) * 10000)
+  return int(((allfreemem + buffmem + cachemem) / alltotalmem) * 10000)
 
 def get_temp():
   try:
@@ -376,7 +376,7 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.Temp,CPULoad,RAMFree".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemperature,CPULoad,MemoryUsed".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0".format(config.call))
   except ConnectionError as err:
@@ -403,10 +403,10 @@ def main():
     if sequence % 10 == 1:
       send_header(ais, config)
     temp = get_temp()
-    load = get_load()
-    freemem = get_freemem()
+    cpuload = get_cpuload()
+    memused = get_memused()
     uptime = get_uptime()
-    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, load, freemem)
+    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, cpuload, memused)
     ais.sendall(tel)
     logging.info(tel)
     upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)

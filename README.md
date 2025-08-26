@@ -5,9 +5,9 @@ With this simple python program you can monitor your Pi-Star / WPSD / AllStarLin
 You can see an example of the metrics logged by my Pi-Star node [9W4GPA-4](https://aprs.fi/telemetry/a/9W4GPA-4?range=day).
 
 The metrics are:-
-1. Temperature
+1. CPU Temperature
 2. CPU load average
-3. Available memory
+3. Memory used
 
 ## Installation (Pi-Star / WPSD / AllStarLink)
 
@@ -91,5 +91,5 @@ sudo systemctl start raspiaprs.service
 
 ## Example
 
-This is the screenshoot from aprs.fi, of _temperature_, _load average_ and _free memory_ from an Pi-Star node.
+This is the screenshoot from aprs.fi, of _CPU temperature_, _CPU load average_ and _Memory free_ from an Pi-Star node.
 ![WSPR Picture](misc/metrics.png)
