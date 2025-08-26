@@ -93,3 +93,6 @@ sudo systemctl start raspiaprs.service
 
 This is the screenshoot from aprs.fi, of _CPU temperature_, _CPU load average_ and _Memory free_ from an Pi-Star node.
 ![WSPR Picture](misc/metrics.png)
+
+### Source
+[0x9900/aprstar](https://github.com/0x9900/aprstar)
