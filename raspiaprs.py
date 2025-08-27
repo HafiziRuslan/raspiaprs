@@ -408,7 +408,7 @@ def main():
     cpuload = get_cpuload()
     memused = get_memused()
     uptime = get_uptime()
-    tel = "{0}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, cpuload, memused)
+    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, cpuload, memused)
     ais.sendall(tel)
     logging.info(tel)
     upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)
