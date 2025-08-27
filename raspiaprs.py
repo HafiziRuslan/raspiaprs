@@ -251,6 +251,16 @@ def get_memused():
     return 0
   return int(((allfreemem + buffmem + cachemem) / alltotalmem) * 10000)
 
+def get_diskused():
+  try:
+    df = subprocess.check_output("df -k /", shell=True, text=True).strip().split("\n")
+    diskinfo = df[1].split()
+    diskused = int(diskinfo[2])
+    disktotal = int(diskinfo[1])
+  except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
+    return 0
+  return int((diskused / disktotal) * 10000)
+
 def get_temp():
   try:
     with open(THERMAL_FILE) as tfd:
@@ -378,9 +388,9 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt,pcnt".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0,0,0,0.01,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
@@ -407,8 +417,9 @@ def main():
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
+    diskused = get_diskused()
     uptime = get_uptime()
-    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, cpuload, memused)
+    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},0,00000000".format(config.call, sequence, temp, cpuload, memused, diskused)
     ais.sendall(tel)
     logging.info(tel)
     upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)
