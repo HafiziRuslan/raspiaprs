@@ -378,9 +378,9 @@ def send_position(ais, config):
 def send_header(ais, config):
   send_position(ais, config)
   try:
-    ais.sendall("{}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(config.call))
-    ais.sendall("{}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt".format(config.call))
-    ais.sendall("{}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
@@ -408,10 +408,10 @@ def main():
     cpuload = get_cpuload()
     memused = get_memused()
     uptime = get_uptime()
-    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, cpuload, memused)
+    tel = "{0}>APP642:T#{:03d},{:d},{:d},{:d},0,0,00000000".format(config.call, sequence, temp, cpuload, memused)
     ais.sendall(tel)
     logging.info(tel)
-    upt = "{}>APP642:>{}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)
+    upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)
     ais.sendall(upt)
     logging.info(upt)
     time.sleep(int(random.uniform(config.sleep - 15, config.sleep + 15)))
