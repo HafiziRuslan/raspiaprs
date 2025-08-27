@@ -9,6 +9,7 @@ import aprslib
 import humanize
 import datetime as dt
 import subprocess
+import random
 
 from configparser import ConfigParser
 from io import StringIO
@@ -339,7 +340,7 @@ def get_uptime():
   with open("/proc/uptime") as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return nowz + "; up " + humanize.precisedelta(uptime, suppress=['milliseconds', 'microseconds'], format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + "; "
+  return "up " + humanize.precisedelta(uptime, suppress=['milliseconds', 'microseconds'], format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + "; " + nowz + "; "
 
 def get_mmdvminfo():
   parser = ConfigParser()
@@ -413,7 +414,7 @@ def main():
     upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)
     ais.sendall(upt)
     logging.info(upt)
-    time.sleep(config.sleep)
+    time.sleep(int(random.uniform(config.sleep - 15, config.sleep + 15)))
 
 if __name__ == "__main__":
   try:
