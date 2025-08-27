@@ -293,12 +293,12 @@ def get_traffic():
         today = subprocess.check_output("vnstat -i wlan0 | grep today | sed 's/today//g'", shell=True, text=True).strip()
         # up = float(today.split()[0])
         # upunit = today.split()[1]
-        # down = float(today.split()[2])
-        # downunit = today.split()[3]
-        # total = float(today.split()[4])
-        # totalunit = today.split()[5]
-        avg = float(today.split()[6])
-        # avgunit = today.split()[7]
+        # down = float(today.split()[3])
+        # downunit = today.split()[4]
+        # total = float(today.split()[6])
+        # totalunit = today.split()[7]
+        avg = float(today.split()[9])
+        # avgunit = today.split()[10]
     except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
         return 0
     return avg * 100
