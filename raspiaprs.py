@@ -405,7 +405,7 @@ def send_position(ais, config):
     pos.latitude = config.latitude
     pos.longitude = config.longitude
     pos.altitude = config.altitude
-    pos.comment = get_mmdvminfo() + get_osinfo() + get_modem()
+    pos.comment = get_mmdvminfo() + get_osinfo() + get_modem() + "; https://github.com/HafiziRuslan/raspiaprs"
     logging.info(str(pos))
     try:
         ais.sendall(pos)
@@ -452,7 +452,7 @@ def main():
         tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},0,00000000".format(config.call, sequence, temp, cpuload, memused, diskused)
         ais.sendall(tel)
         logging.info(tel)
-        upt = "{0}>APP642:>{1}https://github.com/HafiziRuslan/raspiaprs".format(config.call, uptime)
+        upt = "{0}>APP642:>{1}".format(config.call, uptime)
         ais.sendall(upt)
         logging.info(upt)
         time.sleep(int(random.uniform(config.sleep - 15, config.sleep + 15)))
