@@ -291,13 +291,13 @@ def get_diskused():
 def get_traffic():
     try:
         today = subprocess.check_output("vnstat -i wlan0 | grep today | sed 's/today//g'", shell=True, text=True).strip()
-        # up = int(today.split()[0])
+        # up = float(today.split()[0])
         # upunit = today.split()[1]
-        # down = int(today.split()[2])
+        # down = float(today.split()[2])
         # downunit = today.split()[3]
-        # total = int(today.split()[4])
+        # total = float(today.split()[4])
         # totalunit = today.split()[5]
-        avg = int(today.split()[6])
+        avg = float(today.split()[6])
         # avgunit = today.split()[7]
     except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
         return 0
@@ -477,7 +477,9 @@ def main():
         upt = "{0}>APP642:>{1}".format(config.call, uptime)
         ais.sendall(upt)
         logging.info(upt)
-        time.sleep(int(random.uniform(config.sleep - 15, config.sleep + 15)))
+        randsleep = int(random.uniform(config.sleep - 15, config.sleep + 15))
+        logging.info("Sleeping for %d seconds", randsleep)
+        time.sleep(randsleep)
 
 
 if __name__ == "__main__":
