@@ -350,7 +350,7 @@ def get_uptime():
   with open("/proc/uptime") as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return "up " + humanize.precisedelta(uptime, suppress=['milliseconds', 'microseconds'], format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + "; " + nowz + "; "
+  return "up " + humanize.precisedelta(uptime, minimum_unit="seconds", format="%0.0f",).replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + " @ " + nowz + "; "
 
 def get_mmdvminfo():
   parser = ConfigParser()
