@@ -55,6 +55,7 @@ logging.basicConfig(
 )
 
 
+# Configuration class to handle settings
 class Config(object):
     def __init__(self):
         parser = ConfigParser()
@@ -152,14 +153,6 @@ class Config(object):
         self._altitude = val
 
     @property
-    def passcode(self):
-        return self._passcode
-
-    @passcode.setter
-    def passcode(self, val):
-        self._passcode = str(val)
-
-    @property
     def symbol(self):
         return self._symbol
 
@@ -175,10 +168,36 @@ class Config(object):
     def symbol_table(self, val):
         self._symbol_table = str(val)
 
+    @property
+    def server(self):
+        return self._server
+
+    @server.setter
+    def server(self, val):
+        self._server = str(val)
+
+    @property
+    def port(self):
+        return self._port
+
+    @port.setter
+    def port(self, val):
+        try:
+            self._port = int(val)
+        except ValueError:
+            logging.warning("Port value error, using 14580")
+            self._port = 14580
+
+    @property
+    def passcode(self):
+        return self._passcode
+
+    @passcode.setter
+    def passcode(self, val):
+        self._passcode = str(val)
+
 
 class Sequence(object):
-    """Generate an APRS sequence number."""
-
     def __init__(self):
         self.sequence_file = "/tmp/raspiaprs.sequence"
         try:
@@ -361,20 +380,7 @@ def get_uptime():
     with open("/proc/uptime") as upf:
         uptime_seconds = float(upf.readline().split()[0])
         uptime = dt.timedelta(seconds=uptime_seconds)
-    return (
-        "up "
-        + humanize.precisedelta(
-            uptime,
-            minimum_unit="seconds",
-            format="%0.0f",
-        )
-        .replace(" and", ",")
-        .replace("seconds", "sec")
-        .replace("minutes", "min")
-        .replace("hours", "hr")
-        + " @ "
-        + nowz
-    )
+    return "up " + humanize.precisedelta(uptime, minimum_unit="seconds", format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + " @ " + nowz
 
 
 def get_mmdvminfo():
