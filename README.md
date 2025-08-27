@@ -8,6 +8,7 @@ The metrics are:-
 1. CPU Temperature
 2. CPU load average
 3. Memory used
+4. Disk used
 
 ## Installation (Pi-Star / WPSD / AllStarLink)
 
