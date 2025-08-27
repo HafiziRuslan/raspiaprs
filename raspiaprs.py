@@ -301,7 +301,7 @@ def get_traffic():
         # avgunit = today.split()[10]
     except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
         return 0
-    return avg * 100
+    return int(avg * 100)
 
 
 def get_temp():
