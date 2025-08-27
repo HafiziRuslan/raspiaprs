@@ -374,7 +374,6 @@ def get_uptime():
         .replace("hours", "hr")
         + " @ "
         + nowz
-        + "; "
     )
 
 
