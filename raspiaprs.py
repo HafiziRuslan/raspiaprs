@@ -99,8 +99,8 @@ class Config(object):
             self.port = int(parser.get("APRS-IS", "port"))
         else:
             self.port = self._port
-        if parser.has_option("APRS-IS", "passcode"):
-            self.passcode = parser.get("APRS-IS", "passcode")
+        if parser.has_option("APRS", "passcode"):
+            self.passcode = parser.get("APRS", "passcode")
         else:
             logging.warning("Generating passcode")
             self.passcode = aprslib.passcode(self.call)
