@@ -323,7 +323,7 @@ def get_osinfo():
     with open(CPUINFO_FILE) as cpu:
         for line in cpu:
             if "Model" in line:
-                modelname = line.split(":", 1)[1].strip().strip('"')
+                modelname = " " + line.split(":", 1)[1].strip().strip('"')
     with open(VERSION_FILE) as ver:
         for line in ver:
             kernelver = " [" + line.split()[0] + line.split()[2] + "]"
@@ -331,12 +331,12 @@ def get_osinfo():
     try:
         with open(PISTAR_RELEASE_FILE, "r") as pir:
             parser.read_file(pir)
-            version = " PiStar" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
+            version = " #" + parser.get("Pi-Star", "Version") + "-" + parser.get("Pi-Star", "MMDVMHost")
     except (IOError, ValueError):
         try:
             with open(WPSD_RELEASE_FILE, "r") as wps:
                 parser.read_file(wps)
-                version = " WPSD" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost").split()[0]
+                version = " #" + parser.get("WPSD", "WPSD_Ver") + "-" + parser.get("WPSD", "MMDVMHost").split()[0]
         except (IOError, ValueError):
             version = " Unknown"
     return osname + osver + kernelver + modelname + version
@@ -388,7 +388,7 @@ def get_modem():
             modem_firmware = f"ZUMspot-{log_line[75 : 75 + 12].split()[0]}"
         elif "description: ZUMspot " in log_line:
             modem_firmware = f"ZUMspot-{log_line[83 : 83 + 12].split()[0]}"
-    return modem_firmware
+    return " " + modem_firmware
 
 
 def get_uptime():
