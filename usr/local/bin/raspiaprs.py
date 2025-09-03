@@ -393,19 +393,21 @@ def get_dmrmaster():
     log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
     log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
     log_search_string = "Logged into the master successfully"
-    log_line = str()
+    log_line = list()
     dmrmaster = list()
     dmrmasters = list()
     try:
-        log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_now}', shell=True, text=True)
+        log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
     except subprocess.CalledProcessError:
         try:
-            log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_previous}', shell=True, text=True)
+            log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
         except subprocess.CalledProcessError:
             pass
-    for master in log_line:
-        master = log_line.split()[3].split(",")[0]
+    log_line_count = len(log_line)
+    for count in range(log_line_count):
+        master = log_line[count].split()[3].split(",")[0]
         dmrmaster.append(master)
+        pass
     dmrmasters = list(dict.fromkeys(dmrmaster))
     return "connected to " + "".join(dmrmasters)
 
