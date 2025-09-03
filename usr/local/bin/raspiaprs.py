@@ -438,7 +438,11 @@ def get_dmrmaster():
         dmrmaster.insert(xlxid, ref)
         pass
     dmrmasters = list(dict.fromkeys(dmrmaster))
-    return "connected to " + ", ".join(dmrmasters)
+    if ConfigParser.getboolean("DMR", "Enable"):
+        dmr_master = "connected to " + ", ".join(dmrmasters.sort())
+    else:
+        dmr_master = ""
+    return dmr_master
 
 
 def get_uptime():
