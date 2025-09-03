@@ -94,10 +94,10 @@ Use this command to update:-
 ```bash
 sudo systemctl stop raspiaprs.service
 git pull
-sudo cp raspiaprs.py /usr/local/bin/raspiaprs
+sudo cp usr/local/bin/raspiaprs.py /usr/local/bin/raspiaprs
 sudo chmod a+x /usr/local/bin/raspiaprs
 sudo systemctl disable raspiaprs.service
-sudo cp raspiaprs.service /lib/systemd/system/raspiaprs.service
+sudo cp lib/systemd/system/raspiaprs.service /lib/systemd/system/raspiaprs.service
 sudo chmod 0644 /lib/systemd/system/raspiaprs.service
 sudo systemctl enable raspiaprs.service
 sudo systemctl start raspiaprs.service
