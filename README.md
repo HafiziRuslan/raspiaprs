@@ -48,14 +48,14 @@ cd raspiaprs
 ### Installing raspiaprs script
 
 ```bash
-sudo cp raspiaprs.py /usr/local/bin/raspiaprs
+sudo cp usr/local/bin/raspiaprs.py /usr/local/bin/raspiaprs
 sudo chmod a+x /usr/local/bin/raspiaprs
 ```
 
 ### Installing the raspiaprs service
 
 ```bash
-sudo cp raspiaprs.service /lib/systemd/system/raspiaprs.service
+sudo cp lib/systemd/system/raspiaprs.service /lib/systemd/system/raspiaprs.service
 sudo chmod 0644 /lib/systemd/system/raspiaprs.service
 ```
 
@@ -64,7 +64,7 @@ sudo chmod 0644 /lib/systemd/system/raspiaprs.service
 Copy the file `raspiaprs.conf` into `/etc`, and edit the informations using your favorite editor.
 
 ```bash
-sudo cp raspiaprs.conf /etc/raspiaprs.conf
+sudo cp etc/raspiaprs.conf /etc/raspiaprs.conf
 sudo nano /etc/raspiaprs.conf
 ```
 
