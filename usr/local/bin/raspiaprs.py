@@ -431,14 +431,14 @@ def get_dmrmaster():
                 dmrmaster.append(master)
                 for refcount in range(ref_line_count):
                     ref = ref_line[refcount].split()[7] + ref_line[refcount].split()[8]
-                    xlxid = dmrmaster.index(re.search("^XLX", dmrmaster[refcount]))
+                    xlxid = dmrmaster.index(re.search(r"^XLX", dmrmaster[refcount])[0])
                     dmrmaster.pop(xlxid)
                     dmrmaster.insert(xlxid, ref)
                     pass
                 # for dccount in range(master_dc_line_count):
                 #     master_dc = master_dc_line[dccount].split()[3].split(",")[0]
                 #     if master_dc == "XLX":
-                #         xlxdcid = dmrmaster.index(re.search("^XLX", dmrmaster[dccount]))
+                #         xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
                 #         dmrmaster.pop(xlxdcid)
                 #     dmrmaster.remove(master_dc)
                 #     pass
