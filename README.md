@@ -78,7 +78,7 @@ sudo systemctl start raspiaprs.service
 You can now run the status command to see if everything is running smoothly and you have no errors.
 
 ```bash
-sudo systemctl status raspiaprs.service
+systemctl status raspiaprs.service
 ```
 
 If any error upon start, you may look into `journalctl` for more info.
