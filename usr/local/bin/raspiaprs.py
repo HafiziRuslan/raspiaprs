@@ -426,6 +426,14 @@ def get_dmrmaster():
             master_dc_line_count = len(master_dc_line)
             ref_line_count = len(ref_line)
             for count in range(master_line_count):
+                master = master_line[count].split()[3].split(",")[0]
+                dmrmaster.append(master)
+                for count in range(ref_line_count):
+                    ref = ref_line[count].split()[7] + ref_line[count].split()[8]
+                    xlxid = dmrmaster.index("XLX")
+                    dmrmaster.pop(xlxid)
+                    dmrmaster.insert(xlxid, ref)
+                    pass
                 for dccount in range(master_dc_line_count):
                     master_dc = master_dc_line[dccount].split()[3].split(",")[0]
                     if master_dc == "XLX":
@@ -433,14 +441,6 @@ def get_dmrmaster():
                         dmrmaster.pop(xlxdcid)
                     dmrmaster.remove(master_dc)
                     pass
-                master = master_line[count].split()[3].split(",")[0]
-                dmrmaster.append(master)
-                pass
-            for count in range(ref_line_count):
-                ref = ref_line[count].split()[7] + ref_line[count].split()[8]
-                xlxid = dmrmaster.index("XLX")
-                dmrmaster.pop(xlxid)
-                dmrmaster.insert(xlxid, ref)
                 pass
             dmrmasters = list(dict.fromkeys(dmrmaster))
             dmr_master = " connected to " + ", ".join(dmrmasters.sort())
