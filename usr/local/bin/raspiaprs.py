@@ -451,7 +451,7 @@ def get_dmrmaster():
 
 def get_uptime():
     nowz = dt.datetime.now(dt.UTC).strftime("%H%M%Sz")
-    now = dt.datetime.now().strftime("%H%M%S%Z")
+    now = dt.datetime.now().strftime("%H%M%S")
     with open("/proc/uptime") as upf:
         uptime_seconds = float(upf.readline().split()[0])
         uptime = dt.timedelta(seconds=uptime_seconds)
