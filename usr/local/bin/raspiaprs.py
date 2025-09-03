@@ -397,7 +397,8 @@ def get_modem():
 
 
 def get_dmrmaster():
-    if ConfigParser.getboolean("DMR", "Enable"):
+    parser = ConfigParser()
+    if parser.getboolean("DMR", "Enable"):
         log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
         log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
         log_master_string = "Logged into the master successfully"
