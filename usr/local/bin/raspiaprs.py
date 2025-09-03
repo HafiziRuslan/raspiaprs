@@ -442,7 +442,7 @@ def get_dmrmaster():
                 dmrmaster.insert(xlxid, ref)
                 pass
             dmrmasters = list(dict.fromkeys(dmrmaster))
-            dmr_master = "connected to " + ", ".join(dmrmasters.sort())
+            dmr_master = " connected to " + ", ".join(dmrmasters.sort())
         else:
             dmr_master = ""
     return dmr_master
@@ -472,7 +472,7 @@ def get_mmdvminfo():
             cc = " DMRCC" + parser.get("DMR", "ColorCode")
         else:
             cc = ""
-    return (str(tx) + "MHz" + shift + cc) + ", "
+    return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
 def send_position(ais, config):
@@ -485,7 +485,7 @@ def send_position(ais, config):
     pos.latitude = config.latitude
     pos.longitude = config.longitude
     pos.altitude = config.altitude
-    pos.comment = get_mmdvminfo() + get_dmrmaster() + get_osinfo() + get_modem() + " https://github.com/HafiziRuslan/raspiaprs"
+    pos.comment = get_mmdvminfo() + get_osinfo() + get_modem() + " https://github.com/HafiziRuslan/raspiaprs"
     logging.info(str(pos))
     try:
         ais.sendall(pos)
