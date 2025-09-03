@@ -463,6 +463,8 @@ def get_mmdvminfo():
             shift = ""
         if parser.getboolean("DMR", "Enable"):
             cc = " DMRCC" + parser.get("DMR", "ColorCode")
+        else:
+            cc = ""
     return (str(tx) + "MHz" + shift + cc) + ", "
 
 
