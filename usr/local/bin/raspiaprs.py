@@ -451,10 +451,11 @@ def get_dmrmaster():
 
 def get_uptime():
     nowz = dt.datetime.now(dt.UTC).strftime("%H%M%Sz")
+    now = dt.datetime.now().strftime("%H%M%S%Z")
     with open("/proc/uptime") as upf:
         uptime_seconds = float(upf.readline().split()[0])
         uptime = dt.timedelta(seconds=uptime_seconds)
-    return "up " + humanize.precisedelta(uptime, minimum_unit="seconds", format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + " @ " + nowz
+    return "up " + humanize.precisedelta(uptime, minimum_unit="seconds", format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + " @ " + nowz + "/" + now
 
 
 def get_mmdvminfo():
