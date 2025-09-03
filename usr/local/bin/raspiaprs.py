@@ -398,51 +398,53 @@ def get_modem():
 
 def get_dmrmaster():
     parser = ConfigParser()
-    if parser.getboolean("DMR", "Enable"):
-        log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
-        log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
-        log_master_string = "Logged into the master successfully"
-        log_ref_string = "Linking to reflector"
-        log_master_dc_string = "Closing DMR Network"
-        master_line = list()
-        ref_line = list()
-        dmrmaster = list()
-        dmrmasters = list()
-        try:
-            master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-            master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-            ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-        except subprocess.CalledProcessError:
+    with open(MMDVMHOST_FILE, "r") as mmh:
+        parser.read_file(mmh)
+        if parser.getboolean("DMR", "Enable"):
+            log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
+            log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
+            log_master_string = "Logged into the master successfully"
+            log_ref_string = "Linking to reflector"
+            log_master_dc_string = "Closing DMR Network"
+            master_line = list()
+            ref_line = list()
+            dmrmaster = list()
+            dmrmasters = list()
             try:
-                master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
-                master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
-                ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
+                master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
+                master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
+                ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
             except subprocess.CalledProcessError:
+                try:
+                    master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
+                    master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
+                    ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
+                except subprocess.CalledProcessError:
+                    pass
+            master_line_count = len(master_line)
+            master_dc_line_count = len(master_dc_line)
+            ref_line_count = len(ref_line)
+            for count in range(master_line_count):
+                for dccount in range(master_dc_line_count):
+                    master_dc = master_dc_line[dccount].split()[3].split(",")[0]
+                    if master_dc == "XLX":
+                        xlxdcid = dmrmaster.index(re.search("^XLX", dmrmaster[dccount]))
+                        dmrmaster.pop(xlxdcid)
+                    dmrmaster.remove(master_dc)
+                    pass
+                master = master_line[count].split()[3].split(",")[0]
+                dmrmaster.append(master)
                 pass
-        master_line_count = len(master_line)
-        master_dc_line_count = len(master_dc_line)
-        ref_line_count = len(ref_line)
-        for count in range(master_line_count):
-            for dccount in range(master_dc_line_count):
-                master_dc = master_dc_line[dccount].split()[3].split(",")[0]
-                if master_dc == "XLX":
-                    xlxdcid = dmrmaster.index(re.search("^XLX", dmrmaster[dccount]))
-                    dmrmaster.pop(xlxdcid)
-                dmrmaster.remove(master_dc)
+            for count in range(ref_line_count):
+                ref = ref_line[count].split()[7] + ref_line[count].split()[8]
+                xlxid = dmrmaster.index("XLX")
+                dmrmaster.pop(xlxid)
+                dmrmaster.insert(xlxid, ref)
                 pass
-            master = master_line[count].split()[3].split(",")[0]
-            dmrmaster.append(master)
-            pass
-        for count in range(ref_line_count):
-            ref = ref_line[count].split()[7] + ref_line[count].split()[8]
-            xlxid = dmrmaster.index("XLX")
-            dmrmaster.pop(xlxid)
-            dmrmaster.insert(xlxid, ref)
-            pass
-        dmrmasters = list(dict.fromkeys(dmrmaster))
-        dmr_master = "connected to " + ", ".join(dmrmasters.sort())
-    else:
-        dmr_master = ""
+            dmrmasters = list(dict.fromkeys(dmrmaster))
+            dmr_master = "connected to " + ", ".join(dmrmasters.sort())
+        else:
+            dmr_master = ""
     return dmr_master
 
 
