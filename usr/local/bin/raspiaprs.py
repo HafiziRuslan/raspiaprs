@@ -425,12 +425,12 @@ def get_dmrmaster():
             master_line_count = len(master_line)
             master_dc_line_count = len(master_dc_line)
             ref_line_count = len(ref_line)
-            for count in range(master_line_count):
-                master = master_line[count].split()[3].split(",")[0]
+            for mascount in range(master_line_count):
+                master = master_line[mascount].split()[3].split(",")[0]
                 dmrmaster.append(master)
-                for count in range(ref_line_count):
-                    ref = ref_line[count].split()[7] + ref_line[count].split()[8]
-                    xlxid = dmrmaster.index("XLX")
+                for refcount in range(ref_line_count):
+                    ref = ref_line[refcount].split()[7] + ref_line[refcount].split()[8]
+                    xlxid = dmrmaster.index(re.search("^XLX", dmrmaster[refcount]))
                     dmrmaster.pop(xlxid)
                     dmrmaster.insert(xlxid, ref)
                     pass
