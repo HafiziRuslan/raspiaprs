@@ -290,8 +290,10 @@ def get_diskused():
 
 
 def get_traffic():
+    timenow = dt.datetime.now()
+    roundedtime = timenow - dt.timedelta(minutes=timenow.minute % 5 + 5)
     try:
-        today = subprocess.check_output("vnstat -i wlan0 | grep today | sed 's/today//g'", shell=True, text=True).strip()
+        today = subprocess.check_output(f"vnstat -i wlan0 -5 1 | grep {dt.datetime.strftime(roundedtime, '%H:%M')}", shell=True, text=True).strip()
         # up = float(today.split()[0])
         # upunit = today.split()[1]
         # down = float(today.split()[3])
@@ -299,9 +301,13 @@ def get_traffic():
         # total = float(today.split()[6])
         # totalunit = today.split()[7]
         avg = float(today.split()[9])
-        # avgunit = today.split()[10]
+        avgunit = today.split()[10]
     except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
         return 0
+    if avgunit == "Mbit/s":
+        avg = avg * 1000
+    elif avgunit == "Gbit/s":
+        avg = avg * 1000000
     return int(avg * 100)
 
 
@@ -459,7 +465,7 @@ def send_header(ais, config):
     send_position(ais, config)
     try:
         ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt,pcnt,kbps".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt,pcnt,kbit/s".format(config.call))
         ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0,0,0.01,0,0,0.01,0".format(config.call))
     except ConnectionError as err:
         logging.warning(err)
