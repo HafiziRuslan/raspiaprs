@@ -408,8 +408,8 @@ def get_dmrmaster():
         master = log_line[count].split()[3].split(",")[0]
         dmrmaster.append(master)
         pass
-    dmrmasters = list(dict.fromkeys(dmrmaster))
-    return "connected to " + "".join(dmrmasters)
+    dmrmasters = list(dict.fromkeys(dmrmaster)).sort()
+    return "connected to " + ", ".join(dmrmasters)
 
 
 def get_uptime():
