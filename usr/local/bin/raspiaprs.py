@@ -444,7 +444,7 @@ def get_dmrmaster():
                 #     pass
                 pass
             dmrmasters = list(dict.fromkeys(dmrmaster))
-            dmr_master = " connected to " + ", ".join(dmrmasters.sort())
+            dmr_master = " connected to " + ", ".join(dmrmasters)
         else:
             dmr_master = ""
     return dmr_master
