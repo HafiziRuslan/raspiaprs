@@ -405,43 +405,43 @@ def get_dmrmaster():
             log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
             log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
             log_master_string = "Logged into the master successfully"
-            log_ref_string = "Linking to reflector"
-            log_master_dc_string = "Closing DMR Network"
+            # log_ref_string = "Linking to reflector"
+            # log_master_dc_string = "Closing DMR Network"
             master_line = list()
-            master_dc_line = list()
-            ref_line = list()
+            # master_dc_line = list()
+            # ref_line = list()
             dmrmaster = list()
             dmrmasters = list()
             try:
                 master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-                master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-                ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
+                # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
+                # ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
             except subprocess.CalledProcessError:
                 try:
                     master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
-                    master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
-                    ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
+                    # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
+                    # ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
                 except subprocess.CalledProcessError:
                     pass
             master_line_count = len(master_line)
-            master_dc_line_count = len(master_dc_line)
-            ref_line_count = len(ref_line)
+            # master_dc_line_count = len(master_dc_line)
+            # ref_line_count = len(ref_line)
             for mascount in range(master_line_count):
                 master = master_line[mascount].split()[3].split(",")[0]
                 dmrmaster.append(master)
-                for refcount in range(ref_line_count):
-                    ref = ref_line[refcount].split()[7] + ref_line[refcount].split()[8]
-                    xlxid = dmrmaster.index(re.search(r"^XLX", dmrmaster[refcount])[0])
-                    dmrmaster.pop(xlxid)
-                    dmrmaster.insert(xlxid, ref)
-                    pass
-                for dccount in range(master_dc_line_count):
-                    master_dc = master_dc_line[dccount].split()[3].split(",")[0]
-                    if master_dc == "XLX":
-                        xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
-                        dmrmaster.pop(xlxdcid)
-                    dmrmaster.remove(master_dc)
-                    pass
+                # for refcount in range(ref_line_count):
+                #     ref = ref_line[refcount].split()[7] + ref_line[refcount].split()[8]
+                #     xlxid = dmrmaster.index(re.search(r"^XLX", dmrmaster[refcount])[0])
+                #     dmrmaster.pop(xlxid)
+                #     dmrmaster.insert(xlxid, ref)
+                #     pass
+                # for dccount in range(master_dc_line_count):
+                #     master_dc = master_dc_line[dccount].split()[3].split(",")[0]
+                #     if master_dc == "XLX":
+                #         xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
+                #         dmrmaster.pop(xlxdcid)
+                #     dmrmaster.remove(master_dc)
+                #     pass
                 pass
             dmrmasters = list(dict.fromkeys(dmrmaster))
             dmr_master = " connected to " + ", ".join(dmrmasters.sort())
