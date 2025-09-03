@@ -404,8 +404,7 @@ def get_dmrmaster():
     if log_line:
         masters = log_line.split()[3]
         dmrmaster = list()
-        for master in masters:
-            dmrmaster.append(master)
+        dmrmaster.append(masters)
         dmrmasters = list(dict.fromkeys(dmrmaster))
     return "connected to " + "".join(dmrmasters)
 
