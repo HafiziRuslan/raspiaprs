@@ -424,7 +424,7 @@ def get_dmrmaster():
         for dccount in range(master_dc_line_count):
             master_dc = master_dc_line[dccount].split()[3].split(",")[0]
             if master_dc == "XLX":
-                xlxdcid = dmrmaster.index(re.search("^XLX", dmrmaster[count]))
+                xlxdcid = dmrmaster.index(re.search("^XLX", dmrmaster[dccount]))
                 dmrmaster.pop(xlxdcid)
             dmrmaster.remove(master_dc)
             pass
