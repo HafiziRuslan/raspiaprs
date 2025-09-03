@@ -401,7 +401,7 @@ def get_dmrmaster():
             log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_previous}', shell=True, text=True).strip()
         except subprocess.CalledProcessError:
             pass
-    if log_line:
+    for masters in log_line:
         masters = log_line.split()[3]
         dmrmaster = list()
         dmrmaster.append(masters)
