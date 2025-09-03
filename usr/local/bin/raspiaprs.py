@@ -325,6 +325,7 @@ def get_osinfo():
         for line in ver:
             kernelver = " [" + line.split()[0] + line.split()[2] + "]"
             osver = " " + line.split()[5] + line.split()[6]
+    softver = " Unknown"
     try:
         with open(PISTAR_RELEASE_FILE, "r") as pir:
             parser.read_file(pir)
@@ -335,7 +336,7 @@ def get_osinfo():
                 parser.read_file(wps)
                 softver = " " + parser.get("WPSD", "MMDVMHost").split()[0] + "#" + parser.get("WPSD", "WPSD_Ver")
         except (IOError, ValueError):
-            softver = " Unknown"
+            pass
     return " " + osname + osver + kernelver + softver
 
 
