@@ -393,7 +393,7 @@ def get_dmrmaster():
     log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
     log_search_string = "Logged into the master successfully"
     log_line = str()
-    dmrmaster = list()
+    # dmrmaster = list()
     dmrmasters = list()
     try:
         log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_now}', shell=True, text=True).strip()
@@ -404,8 +404,8 @@ def get_dmrmaster():
             pass
     for master in log_line:
         master = log_line.split()[3]
-        dmrmaster.append(master)
-    dmrmasters = list(dict.fromkeys(dmrmaster))
+        dmrmasters.append(master)
+    # dmrmasters = list(dict.fromkeys(dmrmaster))
     return "connected to " + "".join(dmrmasters)
 
 
