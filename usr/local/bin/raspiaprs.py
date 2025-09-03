@@ -5,7 +5,7 @@ import json
 import logging
 import os
 import random
-import re
+# import re
 import subprocess
 import sys
 import time
