@@ -407,7 +407,7 @@ def get_dmrmaster():
         for master in masters:
             dmrmaster.append(master)
         dmrmasters = list(dict.fromkeys(dmrmaster))
-    return "connected to ".join(dmrmasters)
+    return "connected to " + "".join(dmrmasters)
 
 
 def get_uptime():
