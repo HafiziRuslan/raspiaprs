@@ -45,6 +45,7 @@ WPSD_RELEASE_FILE = "/etc/WPSD-release"
 MMDVMHOST_FILE = "/etc/mmdvmhost"
 MMDVMLOGPATH = "/var/log/pi-star"
 MMDVMLOGPREFIX = "MMDVM"
+DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
@@ -320,10 +321,6 @@ def get_osinfo():
         for line in osr:
             if "PRETTY_NAME" in line:
                 osname = line.split("=", 1)[1].strip().strip('"')
-    with open(CPUINFO_FILE) as cpu:
-        for line in cpu:
-            if "Model" in line:
-                modelname = " " + line.split(":", 1)[1].strip().strip('"')
     with open(VERSION_FILE) as ver:
         for line in ver:
             kernelver = " [" + line.split()[0] + line.split()[2] + "]"
@@ -331,23 +328,23 @@ def get_osinfo():
     try:
         with open(PISTAR_RELEASE_FILE, "r") as pir:
             parser.read_file(pir)
-            version = " " + parser.get("Pi-Star", "MMDVMHost") + "#" + parser.get("Pi-Star", "Version")
+            softver = " " + parser.get("Pi-Star", "MMDVMHost") + "#" + parser.get("Pi-Star", "Version")
     except (IOError, ValueError):
         try:
             with open(WPSD_RELEASE_FILE, "r") as wps:
                 parser.read_file(wps)
-                version = " " + parser.get("WPSD", "MMDVMHost").split()[0] + "#" + parser.get("WPSD", "WPSD_Ver")
+                softver = " " + parser.get("WPSD", "MMDVMHost").split()[0] + "#" + parser.get("WPSD", "WPSD_Ver")
         except (IOError, ValueError):
-            version = " Unknown"
-    return osname + osver + kernelver + modelname + version
+            softver = " Unknown"
+    return " " + osname + osver + kernelver + softver
 
 
 def get_modem():
     log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
     log_mmdvm_previous = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
     log_search_string = "MMDVM protocol version"
-    log_line = ""
-    modem_firmware = ""
+    log_line = str()
+    modem_firmware = str()
     try:
         log_line = subprocess.check_output(f'grep "{log_search_string}" {log_mmdvm_now} | tail -1', shell=True, text=True).strip()
     except subprocess.CalledProcessError:
@@ -391,6 +388,28 @@ def get_modem():
     return " " + modem_firmware
 
 
+def get_dmrmaster():
+    log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
+    log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
+    log_search_string = "Logged into the master successfully"
+    log_line = str()
+    dmrmasters = list()
+    try:
+        log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_now}', shell=True, text=True).strip()
+    except subprocess.CalledProcessError:
+        try:
+            log_line = subprocess.check_output(f'grep "{log_search_string}" {log_dmrgw_previous}', shell=True, text=True).strip()
+        except subprocess.CalledProcessError:
+            pass
+    if log_line:
+        masters = log_line.split()[3]
+        dmrmaster = list()
+        for master in masters:
+            dmrmaster.append(master)
+        dmrmasters = list(dict.fromkeys(dmrmaster))
+    return "connected to ".join(dmrmasters)
+
+
 def get_uptime():
     nowz = dt.datetime.now(dt.UTC).strftime("%H%M%Sz")
     with open("/proc/uptime") as upf:
@@ -413,7 +432,7 @@ def get_mmdvminfo():
             shift = ""
         if parser.getboolean("DMR", "Enable"):
             cc = " DMRCC" + parser.get("DMR", "ColorCode")
-    return (str(tx) + "MHz" + shift + cc) + " "
+    return (str(tx) + "MHz" + shift + cc) + ", "
 
 
 def send_position(ais, config):
@@ -426,7 +445,7 @@ def send_position(ais, config):
     pos.latitude = config.latitude
     pos.longitude = config.longitude
     pos.altitude = config.altitude
-    pos.comment = get_mmdvminfo() + get_osinfo() + get_modem() + " https://github.com/HafiziRuslan/raspiaprs"
+    pos.comment = get_mmdvminfo() + get_dmrmaster() + get_osinfo() + get_modem() + " https://github.com/HafiziRuslan/raspiaprs"
     logging.info(str(pos))
     try:
         ais.sendall(pos)
