@@ -295,14 +295,15 @@ def get_traffic():
     roundedtime = timenow - dt.timedelta(minutes=timenow.minute % 5 + 5)
     try:
         today = subprocess.check_output(f"vnstat -i wlan0 -5 1 | grep {dt.datetime.strftime(roundedtime, '%H:%M')}", shell=True, text=True).strip()
-        # up = float(today.split()[0])
-        # upunit = today.split()[1]
-        # down = float(today.split()[3])
-        # downunit = today.split()[4]
-        # total = float(today.split()[6])
-        # totalunit = today.split()[7]
-        avg = float(today.split()[9])
-        avgunit = today.split()[10]
+        # time = today.split()[0]
+        # up = float(today.split()[1])
+        # upunit = today.split()[2]
+        # down = float(today.split()[4])
+        # downunit = today.split()[5]
+        # total = float(today.split()[7])
+        # totalunit = today.split()[8]
+        avg = float(today.split()[10])
+        avgunit = today.split()[11]
     except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
         return 0
     if avgunit == "Mbit/s":
