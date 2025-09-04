@@ -405,7 +405,7 @@ def get_dmrmaster():
             log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
             log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
             log_master_string = "Logged into the master successfully"
-            log_ref_string = "Linking to reflector"
+            log_ref_string = "XLX, Linking"
             # log_master_dc_string = "Closing DMR Network"
             master_line = list()
             # master_dc_line = list()
@@ -415,12 +415,12 @@ def get_dmrmaster():
             try:
                 master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
                 # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-                ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
+                ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now} | tail -1', shell=True, text=True).splitlines()
             except subprocess.CalledProcessError:
                 try:
                     master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
                     # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
-                    ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
+                    ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous} | tail -1', shell=True, text=True).splitlines()
                 except subprocess.CalledProcessError:
                     pass
             master_line_count = len(master_line)
