@@ -1,10 +1,17 @@
 [Unit]
 Description=APRS Metrics
 After=network.target
+StartLimitIntervalSec=90
+StartLimitBurst=5
 
 [Service]
 Restart=on-failure
 RestartSec=15
+LimitCPU=50%
+LimitMEMORY=100M
+ProtectSystem=true
+ProtectHome=true
+PermissionsStartOnly=true
 ExecStart=/usr/local/bin/raspiaprs
 
 [Install]
