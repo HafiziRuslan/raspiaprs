@@ -48,8 +48,8 @@ cd raspiaprs
 ### Installing raspiaprs script
 
 ```bash
-sudo cp usr/local/bin/raspiaprs.py /usr/local/bin/raspiaprs
-sudo chmod a+x /usr/local/bin/raspiaprs
+sudo cp usr/bin/raspiaprs.py /usr/bin/raspiaprs
+sudo chmod a+x /usr/bin/raspiaprs
 ```
 
 ### Installing the raspiaprs service
@@ -95,8 +95,8 @@ Use this command to update:-
 sudo systemctl stop raspiaprs.service
 sudo systemctl disable raspiaprs.service
 git pull
-sudo cp usr/local/bin/raspiaprs.py /usr/local/bin/raspiaprs
-sudo chmod a+x /usr/local/bin/raspiaprs
+sudo cp usr/bin/raspiaprs.py /usr/bin/raspiaprs
+sudo chmod a+x /usr/bin/raspiaprs
 sudo cp lib/systemd/system/raspiaprs.service /lib/systemd/system/raspiaprs.service
 sudo chmod 0644 /lib/systemd/system/raspiaprs.service
 sudo systemctl enable raspiaprs.service

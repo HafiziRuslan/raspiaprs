@@ -10,7 +10,7 @@ RestartSec=45
 ProtectSystem=true
 ProtectHome=true
 PermissionsStartOnly=true
-ExecStart=/usr/local/bin/raspiaprs
+ExecStart=/usr/bin/raspiaprs
 
 [Install]
 Alias=raspiaprs.service
