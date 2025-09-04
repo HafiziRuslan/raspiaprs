@@ -1,14 +1,12 @@
 [Unit]
 Description=APRS Metrics
 After=network.target
-StartLimitIntervalSec=90
+StartLimitIntervalSec=300
 StartLimitBurst=5
 
 [Service]
 Restart=on-failure
-RestartSec=15
-LimitCPU=50%
-LimitMEMORY=100M
+RestartSec=45
 ProtectSystem=true
 ProtectHome=true
 PermissionsStartOnly=true
