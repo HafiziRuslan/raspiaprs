@@ -71,20 +71,20 @@ sudo nano /etc/raspiaprs.conf
 ## Starting the service
 
 ```bash
-sudo systemctl enable raspiaprs.service
-sudo systemctl start raspiaprs.service
+sudo systemctl enable raspiaprs
+sudo systemctl start raspiaprs
 ```
 
 You can now run the status command to see if everything is running smoothly and you have no errors.
 
 ```bash
-systemctl status raspiaprs.service
+systemctl status raspiaprs
 ```
 
 If any error upon start, you may look into `journalctl` for more info.
 
 ```bash
-journalctl -u raspiaprs.service
+journalctl -u raspiaprs
 ```
 
 ## Update raspiaprs
@@ -92,15 +92,15 @@ journalctl -u raspiaprs.service
 Use this command to update:-
 
 ```bash
-sudo systemctl stop raspiaprs.service
-sudo systemctl disable raspiaprs.service
+sudo systemctl stop raspiaprs
+sudo systemctl disable raspiaprs
 git pull
 sudo cp usr/bin/raspiaprs.py /usr/bin/raspiaprs
 sudo chmod a+x /usr/bin/raspiaprs
 sudo cp lib/systemd/system/raspiaprs.service /lib/systemd/system/raspiaprs.service
 sudo chmod 0644 /lib/systemd/system/raspiaprs.service
-sudo systemctl enable raspiaprs.service
-sudo systemctl start raspiaprs.service
+sudo systemctl enable raspiaprs
+sudo systemctl start raspiaprs
 ```
 
 ## Example
