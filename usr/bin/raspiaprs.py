@@ -260,23 +260,18 @@ def get_memused():
     try:
         with open(MEMINFO_FILE) as pfd:
             for line in pfd:
-                if "MemTotal" in line:
-                    totalmem = int(line.split()[1])
                 if "MemFree" in line:
                     freemem = int(line.split()[1])
                 if "Buffers" in line:
                     buffmem = int(line.split()[1])
                 if "Cached" in line:
                     cachemem = int(line.split()[1])
-                if "SwapTotal" in line:
-                    swaptotalmem = int(line.split()[1])
                 if "SwapFree" in line:
                     swapfreemem = int(line.split()[1])
-        alltotalmem = totalmem + swaptotalmem
         allfreemem = freemem + swapfreemem
     except (IOError, ValueError):
         return 0
-    return int(((allfreemem + buffmem + cachemem) / alltotalmem) * 10000)
+    return int(allfreemem + buffmem + cachemem)
 
 
 def get_diskused():
@@ -284,10 +279,9 @@ def get_diskused():
         df = subprocess.check_output("df -k /", shell=True, text=True).strip().split("\n")
         diskinfo = df[1].split()
         diskused = int(diskinfo[2])
-        disktotal = int(diskinfo[1])
     except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
         return 0
-    return int((diskused / disktotal) * 10000)
+    return int(diskused / 1000)
 
 
 def get_traffic():
@@ -498,8 +492,8 @@ def send_header(ais, config):
     send_position(ais, config)
     try:
         ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,pcnt,pcnt,kbit/s".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.01,0,0,0.01,0,0,0.01,0".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0".format(config.call))
     except ConnectionError as err:
         logging.warning(err)
 
