@@ -506,7 +506,7 @@ def send_position(ais, config):
 def send_header(ais, config):
     send_position(ais, config)
     try:
-        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,D-Star,YSF,P25,NXDN,FM,POCSAG".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,D*,YSF,P25,NXDN,FM,Pager".format(config.call))
         ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s,on,on,on,on,on,on,on".format(config.call))
         ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0,0000000".format(config.call))
     except ConnectionError as err:
