@@ -476,38 +476,20 @@ def get_mmdvmmode():
     with open(MMDVMHOST_FILE, "r") as mdh:
         parser.read_file(mdh)
         if parser.getboolean("DMR", "Enable"):
-            dmr = 1
-        else:
-            dmr = 0
+            dmr = parser.get("DMR", "Enable")
         if parser.getboolean("D-Star", "Enable"):
-            dstar = 1
-        else:
-            dstar = 0
+            dstar = parser.get("D-Star", "Enable")
         if parser.getboolean("System Fusion", "Enable"):
-            ysf = 1
-        else:
-            ysf = 0
+            ysf = parser.get("System Fusion", "Enable")
         if parser.getboolean("P25", "Enable"):
-            p25 = 1
-        else:
-            p25 = 0
+            p25 = parser.get("P25", "Enable")
         if parser.getboolean("NXDN", "Enable"):
-            nxdn = 1
-        else:
-            nxdn = 0
+            nxdn = parser.get("NXDN", "Enable")
         if parser.getboolean("FM", "Enable"):
-            fm = 1
-        else:
-            fm = 0
+            fm = parser.get("FM", "Enable")
         if parser.getboolean("POCSAG", "Enable"):
-            pager = 1
-        else:
-            pager = 0
-        if parser.getboolean("AX.25", "Enable"):
-            ax25 = 1
-        else:
-            ax25 = 0
-    return dmr + dstar + ysf + p25 + nxdn + fm + pager + ax25
+            pager = parser.get("POCSAG", "Enable")
+    return dmr + dstar + ysf + p25 + nxdn + fm + pager
 
 
 def send_position(ais, config):
@@ -531,9 +513,9 @@ def send_position(ais, config):
 def send_header(ais, config):
     send_position(ais, config)
     try:
-        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,D-Star,YSF,P25,NXDN,FM,POCSAG,AX.25".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s,on,on,on,on,on,on,on,on".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0,000000000".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,D-Star,YSF,P25,NXDN,FM,POCSAG".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s,on,on,on,on,on,on,on".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0,0000000".format(config.call))
     except ConnectionError as err:
         logging.warning(err)
 
@@ -566,7 +548,7 @@ def main():
         netavg = get_traffic()
         modes = get_mmdvmmode()
         uptime = get_uptime()
-        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{:d}".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
+        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{:d}0".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
         ais.sendall(tel)
         logging.info(tel)
         upt = "{0}>APP642:>{1}".format(config.call, uptime)
