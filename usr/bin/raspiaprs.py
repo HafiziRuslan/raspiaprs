@@ -477,12 +477,11 @@ def get_mmdvmmode():
         parser.read_file(mdh)
         dmr = parser.get("DMR", "Enable", fallback=0)
         dstar = parser.get("D-Star", "Enable", fallback=0)
-        ysf = parser.get("System Fusion", "Enable", fallback=0)
+        c4fm = parser.get("System Fusion", "Enable", fallback=0)
         p25 = parser.get("P25", "Enable", fallback=0)
         nxdn = parser.get("NXDN", "Enable", fallback=0)
-        fm = parser.get("FM", "Enable", fallback=0)
-        pager = parser.get("POCSAG", "Enable", fallback=0)
-    return dmr + dstar + ysf + p25 + nxdn + fm + pager
+        pocsag = parser.get("POCSAG", "Enable", fallback=0)
+    return dmr + dstar + c4fm + p25 + nxdn + pocsag
 
 
 def send_position(ais, config):
@@ -506,9 +505,9 @@ def send_position(ais, config):
 def send_header(ais, config):
     send_position(ais, config)
     try:
-        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,D*,YSF,P25,NXDN,FM,Pager".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s,on,on,on,on,on,on,on".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0,0000000".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,DSTAR,C4FM,P25,NXDN,POCSAG".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s,on,on,on,on,on,on".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0,000000".format(config.call))
     except ConnectionError as err:
         logging.warning(err)
 
@@ -541,7 +540,7 @@ def main():
         netavg = get_traffic()
         modes = get_mmdvmmode()
         uptime = get_uptime()
-        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}0".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
+        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
         ais.sendall(tel)
         logging.info(tel)
         upt = "{0}>APP642:>{1}".format(config.call, uptime)
