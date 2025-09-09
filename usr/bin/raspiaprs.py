@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import random
+
 # import re
 import subprocess
 import sys
@@ -470,6 +471,41 @@ def get_mmdvminfo():
     return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
+def get_mmdvmmode():
+    parser = ConfigParser()
+    with open(MMDVMHOST_FILE, "r") as mdh:
+        parser.read_file(mdh)
+        if parser.getboolean("DMR", "Enable"):
+            dmr = 1
+        else:
+            dmr = 0
+        if parser.getboolean("D-Star", "Enable"):
+            dstar = 1
+        else:
+            dstar = 0
+        if parser.getboolean("System Fusion", "Enable"):
+            ysf = 1
+        else:
+            ysf = 0
+        if parser.getboolean("System Fusion", "Enable"):
+            ysf = 1
+        else:
+            ysf = 0
+        if parser.getboolean("P25", "Enable"):
+            p25 = 1
+        else:
+            p25 = 0
+        if parser.getboolean("NXDN", "Enable"):
+            nxdn = 1
+        else:
+            nxdn = 0
+        if parser.getboolean("FM", "Enable"):
+            fm = 1
+        else:
+            fm = 0
+    return dmr + dstar + ysf + p25 + nxdn + fm
+
+
 def send_position(ais, config):
     pos = aprslib.packets.PositionReport()
     pos.fromcall = config.call
@@ -524,8 +560,9 @@ def main():
         memused = get_memused()
         diskused = get_diskused()
         netavg = get_traffic()
+        modes = get_mmdvmmode()
         uptime = get_uptime()
-        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},00000000".format(config.call, sequence, temp, cpuload, memused, diskused, netavg)
+        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{:d}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
         ais.sendall(tel)
         logging.info(tel)
         upt = "{0}>APP642:>{1}".format(config.call, uptime)
