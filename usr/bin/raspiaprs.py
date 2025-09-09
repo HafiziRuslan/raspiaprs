@@ -546,7 +546,7 @@ def main():
         upt = "{0}>APP642:>{1}".format(config.call, uptime)
         ais.sendall(upt)
         logging.info(upt)
-        randsleep = int(random.uniform(config.sleep - 15, config.sleep + 15))
+        randsleep = int(random.uniform(config.sleep, config.sleep + 30))
         logging.info("Sleeping for %d seconds", randsleep)
         time.sleep(randsleep)
 
