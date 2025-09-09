@@ -475,20 +475,13 @@ def get_mmdvmmode():
     parser = ConfigParser()
     with open(MMDVMHOST_FILE, "r") as mdh:
         parser.read_file(mdh)
-        if parser.getboolean("DMR", "Enable"):
-            dmr = parser.get("DMR", "Enable")
-        if parser.getboolean("D-Star", "Enable"):
-            dstar = parser.get("D-Star", "Enable")
-        if parser.getboolean("System Fusion", "Enable"):
-            ysf = parser.get("System Fusion", "Enable")
-        if parser.getboolean("P25", "Enable"):
-            p25 = parser.get("P25", "Enable")
-        if parser.getboolean("NXDN", "Enable"):
-            nxdn = parser.get("NXDN", "Enable")
-        if parser.getboolean("FM", "Enable"):
-            fm = parser.get("FM", "Enable")
-        if parser.getboolean("POCSAG", "Enable"):
-            pager = parser.get("POCSAG", "Enable")
+        dmr = parser.get("DMR", "Enable", 0)
+        dstar = parser.get("D-Star", "Enable", 0)
+        ysf = parser.get("System Fusion", "Enable", 0)
+        p25 = parser.get("P25", "Enable", 0)
+        nxdn = parser.get("NXDN", "Enable", 0)
+        fm = parser.get("FM", "Enable", 0)
+        pager = parser.get("POCSAG", "Enable", 0)
     return dmr + dstar + ysf + p25 + nxdn + fm + pager
 
 
