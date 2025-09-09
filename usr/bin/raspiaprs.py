@@ -487,10 +487,6 @@ def get_mmdvmmode():
             ysf = 1
         else:
             ysf = 0
-        if parser.getboolean("System Fusion", "Enable"):
-            ysf = 1
-        else:
-            ysf = 0
         if parser.getboolean("P25", "Enable"):
             p25 = 1
         else:
@@ -503,7 +499,11 @@ def get_mmdvmmode():
             fm = 1
         else:
             fm = 0
-    return dmr + dstar + ysf + p25 + nxdn + fm
+        if parser.getboolean("POCSAG", "Enable"):
+            pager = 1
+        else:
+            pager = 0
+    return dmr + dstar + ysf + p25 + nxdn + fm + pager
 
 
 def send_position(ais, config):
@@ -527,9 +527,9 @@ def send_position(ais, config):
 def send_header(ais, config):
     send_position(ais, config)
     try:
-        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s".format(config.call))
-        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,D-Star,YSF,P25,NXDN,FM,POCSAG".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s,on,on,on,on,on,on,on".format(config.call))
+        ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0,00000000".format(config.call))
     except ConnectionError as err:
         logging.warning(err)
 
@@ -562,7 +562,7 @@ def main():
         netavg = get_traffic()
         modes = get_mmdvmmode()
         uptime = get_uptime()
-        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{:d}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
+        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{:d}0".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
         ais.sendall(tel)
         logging.info(tel)
         upt = "{0}>APP642:>{1}".format(config.call, uptime)
