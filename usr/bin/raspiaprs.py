@@ -541,7 +541,7 @@ def main():
         netavg = get_traffic()
         modes = get_mmdvmmode()
         uptime = get_uptime()
-        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{:d}0".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
+        tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}0".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
         ais.sendall(tel)
         logging.info(tel)
         upt = "{0}>APP642:>{1}".format(config.call, uptime)
