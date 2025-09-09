@@ -1,6 +1,6 @@
 [Unit]
 Description=APRS Metrics
-After=network.target
+Require=network.target
 StartLimitIntervalSec=300
 StartLimitBurst=5
 
