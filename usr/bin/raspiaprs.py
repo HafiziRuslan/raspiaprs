@@ -35,11 +35,12 @@ port: 14580
 """
 
 # Default paths for system files
-THERMAL_FILE = "/sys/class/thermal/thermal_zone0/temp"
-LOADAVG_FILE = "/proc/loadavg"
 CPUINFO_FILE = "/proc/cpuinfo"
+LOADAVG_FILE = "/proc/loadavg"
 MEMINFO_FILE = "/proc/meminfo"
+UPTIME_FILE = "/proc/uptime"
 VERSION_FILE = "/proc/version"
+THERMAL_FILE = "/sys/class/thermal/thermal_zone0/temp"
 OS_RELEASE_FILE = "/etc/os-release"
 PISTAR_RELEASE_FILE = "/etc/pistar-release"
 WPSD_RELEASE_FILE = "/etc/WPSD-release"
@@ -402,30 +403,25 @@ def get_dmrmaster():
             log_master_string = "Logged into the master successfully"
             log_ref_string = "XLX, Linking"
             # log_master_dc_string = "Closing DMR Network"
-            # log_ref_dc_string = "XLX, Unlinking"
             master_line = list()
             # master_dc_line = list()
             ref_line = list()
-            # ref_dc_line = list()
             dmrmaster = list()
             dmrmasters = list()
             try:
                 master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
                 # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
                 ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now} | tail -1', shell=True, text=True).splitlines()
-                # ref_dc_line = subprocess.check_output(f'grep "{log_ref_dc_string}" {log_dmrgw_now} | tail -1', shell=True, text=True).splitlines()
             except subprocess.CalledProcessError:
                 try:
                     master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
                     # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
                     ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous} | tail -1', shell=True, text=True).splitlines()
-                    # ref_dc_line = subprocess.check_output(f'grep "{log_ref_dc_string}" {log_dmrgw_previous} | tail -1', shell=True, text=True).splitlines()
                 except subprocess.CalledProcessError:
                     pass
             master_line_count = len(master_line)
             # master_dc_line_count = len(master_dc_line)
             ref_line_count = len(ref_line)
-            # ref_dc_line_count = len(ref_dc_line)
             for mascount in range(master_line_count):
                 master = master_line[mascount].split()[3].split(",")[0]
                 if master == "XLX":
@@ -450,7 +446,7 @@ def get_dmrmaster():
 def get_uptime():
     nowz = dt.datetime.now(dt.UTC).strftime("%H%M%Sz")
     now = dt.datetime.now().strftime("%H%M%S")
-    with open("/proc/uptime") as upf:
+    with open(UPTIME_FILE) as upf:
         uptime_seconds = float(upf.readline().split()[0])
         uptime = dt.timedelta(seconds=uptime_seconds)
     return "up " + humanize.precisedelta(uptime, minimum_unit="seconds", format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + " @ " + nowz + "/" + now
