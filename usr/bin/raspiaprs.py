@@ -202,7 +202,7 @@ class Config(object):
 
 class Sequence(object):
     def __init__(self):
-        self.sequence_file = "/tmp/raspiaprs.sequence"
+        self.sequence_file = "/tmp/raspiaprs.seq"
         try:
             with open(self.sequence_file) as fds:
                 self._count = int(fds.readline())
