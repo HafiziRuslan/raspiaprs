@@ -443,7 +443,7 @@ def get_dmrmaster():
                 #     pass
                 pass
             dmrmasters = list(dict.fromkeys(dmrmaster))
-            if dmrmasters.count() > 0:
+            if len(dmrmasters) > 0:
                 dmr_master = " connected via [" + ", ".join(dmrmasters) + "]"
     return dmr_master
 
