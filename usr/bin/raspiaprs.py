@@ -5,7 +5,6 @@ import json
 import logging
 import os
 import random
-
 # import re
 import subprocess
 import sys
@@ -434,6 +433,7 @@ def get_dmrmaster():
                         master = ref_line[refcount].split()[7] + ref_line[refcount].split()[8]
                         pass
                 dmrmaster.append(master)
+                pass
                 # for dccount in range(master_dc_line_count):
                 #     master_dc = master_dc_line[dccount].split()[3].split(",")[0]
                 #     if master_dc == "XLX":
@@ -441,7 +441,6 @@ def get_dmrmaster():
                 #         dmrmaster.pop(xlxdcid)
                 #     dmrmaster.remove(master_dc)
                 #     pass
-                pass
             dmrmasters = list(dict.fromkeys(dmrmaster))
             if len(dmrmasters) > 0:
                 dmr_master = " connected via [" + ", ".join(dmrmasters) + "]"
