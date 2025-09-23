@@ -427,16 +427,13 @@ def get_dmrmaster():
                 if master == "XLX":
                     for refcount in range(ref_line_count):
                         master = ref_line[refcount].split()[7] + ref_line[refcount].split()[8]
-                        pass
                 dmrmaster.append(master)
-                pass
                 # for dccount in range(master_dc_line_count):
                 #     master_dc = master_dc_line[dccount].split()[3].split(",")[0]
                 #     if master_dc == "XLX":
                 #         xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
                 #         dmrmaster.pop(xlxdcid)
                 #     dmrmaster.remove(master_dc)
-                #     pass
             dmrmasters = list(dict.fromkeys(dmrmaster))
             if len(dmrmasters) > 0:
                 dmr_master = " connected via [" + ", ".join(dmrmasters) + "]"
