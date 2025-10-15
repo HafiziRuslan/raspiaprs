@@ -415,7 +415,7 @@ def get_modem():
       modem_firmware = f"ZUMspot-{log_line[75 : 75 + 12].split()[0]}"
     elif "description: ZUMspot " in log_line:
       modem_firmware = f"ZUMspot-{log_line[83 : 83 + 12].split()[0]}"
-  return " " + modem_firmware
+  return f" {modem_firmware}"
 
 
 def get_dmrmaster():
@@ -462,7 +462,7 @@ def get_dmrmaster():
         #   dmrmaster.remove(master_dc)
       dmrmasters = list(dict.fromkeys(dmrmaster))
       if len(dmrmasters) > 0:
-        dmr_master = " connected via [" + ", ".join(dmrmasters) + "]"
+        dmr_master = f" connected via [{', '.join(dmrmasters)}]"
   return dmr_master
 
 
@@ -472,7 +472,7 @@ def get_uptime():
   with open(UPTIME_FILE) as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return "up " + humanize.precisedelta(uptime, minimum_unit="seconds", format="%0.0f").replace(" and", ",").replace("seconds", "sec").replace("minutes", "min").replace("hours", "hr") + " @ " + nowz + "/" + now
+  return f"up {humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' and', ',').replace('seconds', 'sec').replace('minutes', 'min').replace('hours', 'hr')} @ {nowz}/{now}"
 
 
 def get_mmdvminfo():
