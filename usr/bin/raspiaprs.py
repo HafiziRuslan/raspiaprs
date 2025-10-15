@@ -60,6 +60,7 @@ logging.basicConfig(
 
 # Configuration class to handle settings
 class Config(object):
+  """Class to handle configuration settings."""
   def __init__(self):
     parser = ConfigParser()
     parser.read_file(StringIO(CONFIG_DEFAULT))
@@ -201,6 +202,8 @@ class Config(object):
 
 
 class Sequence(object):
+  """Class to manage APRS sequence numbers."""
+  _count = 0
   def __init__(self):
     self.sequence_file = "/tmp/raspiaprs.seq"
     try:
@@ -229,6 +232,7 @@ class Sequence(object):
 
 
 def get_coordinates():
+  """Get approximate latitude and longitude using IP address lookup."""
   logging.warning("Trying to figure out the coordinate using your IP address")
   url = "http://ip-api.com/json/"
   try:
@@ -244,6 +248,7 @@ def get_coordinates():
 
 
 def get_cpuload():
+  """Get CPU load as a percentage of total capacity scaled by 10000."""
   try:
     with open(LOADAVG_FILE) as lfd:
       loadstr = lfd.readline()
@@ -258,11 +263,12 @@ def get_cpuload():
 
 
 def get_memused():
+  """Get used memory in MB."""
+  freemem = 0
+  buffmem = 0
+  cachemem = 0
+  swapfreemem = 0
   try:
-    freemem = 0
-    buffmem = 0
-    cachemem = 0
-    swapfreemem = 0
     with open(MEMINFO_FILE) as pfd:
       for line in pfd:
         if line.startswith("MemFree"):
@@ -288,6 +294,7 @@ def get_memused():
 
 
 def get_diskused():
+  """Get used disk space in GB."""
   try:
     df = subprocess.check_output("df -k /", shell=True, text=True).strip().split("\n")
     diskinfo = df[1].split()
@@ -298,6 +305,7 @@ def get_diskused():
 
 
 def get_traffic():
+  """Get average network traffic in kbit/s over the last 5 minutes scaled by 100."""
   timenow = dt.datetime.now()
   roundedtime = timenow - dt.timedelta(minutes=timenow.minute % 5 + 5)
   try:
@@ -321,6 +329,7 @@ def get_traffic():
 
 
 def get_temp():
+  """Get CPU temperature in degC scaled by 100."""
   try:
     with open(THERMAL_FILE) as tfd:
       _tmp = tfd.readline()
@@ -331,6 +340,7 @@ def get_temp():
 
 
 def get_osinfo():
+  """Get operating system information."""
   parser = ConfigParser()
   osname = ""
   osver = ""
@@ -370,6 +380,7 @@ def get_osinfo():
 
 
 def get_modem():
+  """Get modem firmware information from MMDVM log files."""
   log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
   log_mmdvm_previous = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
   log_search_string = "MMDVM protocol version"
@@ -419,6 +430,7 @@ def get_modem():
 
 
 def get_dmrmaster():
+  """Get connected DMR master from DMRGateway log files."""
   parser = ConfigParser()
   dmr_master = ""
   with open(MMDVMHOST_FILE, "r") as mmh:
@@ -467,6 +479,7 @@ def get_dmrmaster():
 
 
 def get_uptime():
+  """Get system uptime in a human-readable format."""
   nowz = dt.datetime.now(dt.UTC).strftime("%H%M%Sz")
   now = dt.datetime.now().strftime("%H%M%S")
   with open(UPTIME_FILE) as upf:
@@ -476,6 +489,7 @@ def get_uptime():
 
 
 def get_mmdvminfo():
+  """Get MMDVM configured frequency and color code."""
   parser = ConfigParser()
   with open(MMDVMHOST_FILE, "r") as mmh:
     parser.read_file(mmh)
@@ -495,6 +509,7 @@ def get_mmdvminfo():
 
 
 def get_mmdvmmode():
+  """Get enabled modes from MMDVMHost configuration."""
   parser = ConfigParser()
   with open(MMDVMHOST_FILE, "r") as mdh:
     parser.read_file(mdh)
@@ -508,6 +523,7 @@ def get_mmdvmmode():
 
 
 def send_position(ais, config):
+  """Send APRS position packet to APRS-IS."""
   # Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
   def _lat_to_aprs(lat):
     ns = "N" if lat >= 0 else "S"
@@ -540,6 +556,7 @@ def send_position(ais, config):
 
 
 def send_header(ais, config):
+  """Send APRS header information to APRS-IS."""
   send_position(ais, config)
   try:
     ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,DSTAR,C4FM,P25,NXDN,POCSAG".format(config.call))
@@ -550,6 +567,8 @@ def send_header(ais, config):
 
 
 def ais_connect(config):
+  """Establish connection to APRS-IS with retries."""
+  logging.info("Connecting to APRS-IS server %s:%d as %s", config.server, config.port, config.call)
   ais = aprslib.IS(config.call, passwd=config.passcode, host=config.server, port=config.port)
   for retry in range(5):
     try:
@@ -564,6 +583,7 @@ def ais_connect(config):
 
 
 def main():
+  """Main function to run the APRS reporting loop."""
   config = Config()
   ais = ais_connect(config)
   send_header(ais, config)
