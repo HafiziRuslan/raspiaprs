@@ -543,10 +543,11 @@ def send_position(ais, config):
   osinfo = get_osinfo()
   modem = get_modem()
   comment = f"{mmdvminfo}{osinfo}{modem} https://github.com/HafiziRuslan/raspiaprs"
+  timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
   latstr = _lat_to_aprs(config.latitude)
   lonstr = _lon_to_aprs(config.longitude)
   # Use uncompressed APRS position format: !DDMM.mmN/SymbolTableDDDMM.mmWSymbol comment
-  payload = f"!{latstr}{config.symbol_table}{lonstr}{config.symbol} {comment}"
+  payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{config.altitude:04.0f}{comment}"
   packet = f"{config.call}>APP642::{config.call:9s}:{payload}"
   logging.info(packet)
   try:
