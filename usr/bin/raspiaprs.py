@@ -547,8 +547,8 @@ def send_position(ais, config):
   latstr = _lat_to_aprs(config.latitude)
   lonstr = _lon_to_aprs(config.longitude)
   # Use uncompressed APRS position format: !DDMM.mmN/SymbolTableDDDMM.mmWSymbol comment
-  payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{config.altitude}{comment}"
-  packet = f"{config.call}>APP642::{payload}"
+  payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{config.altitude:04.0f}{comment}"
+  packet = f"{config.call}>APP642:{payload}"
   # def send_position(ais, config):
   #   pos = aprslib.packets.PositionReport()
   #   pos.timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
