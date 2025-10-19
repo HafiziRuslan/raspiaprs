@@ -549,23 +549,6 @@ def send_position(ais, config):
   # Use uncompressed APRS position format: !DDMM.mmN/SymbolTableDDDMM.mmWSymbol comment
   payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{config.altitude:04.0f}{comment}"
   packet = f"{config.call}>APP642:{payload}"
-  # def send_position(ais, config):
-  #   pos = aprslib.packets.PositionReport()
-  #   pos.timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
-  #   pos.fromcall = config.call
-  #   pos.tocall = "APP642"
-  #   pos.symbol = config.symbol
-  #   pos.symbol_table = config.symbol_table
-  #   pos.timestamp = time.time()
-  #   pos.latitude = config.latitude
-  #   pos.longitude = config.longitude
-  #   pos.altitude = config.altitude
-  #   pos.comment = get_mmdvminfo() + get_osinfo() + get_modem() + " https://github.com/HafiziRuslan/raspiaprs"
-  #   logging.info(str(pos))
-  #   try:
-  #     ais.sendall(pos)
-  #   except ConnectionError as err:
-  #     logging.warning(err)
   logging.info(packet)
   try:
     ais.sendall(packet)
