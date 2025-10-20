@@ -539,6 +539,12 @@ def send_position(ais, config):
     minutes = (lon - deg) * 60
     return f"{deg:03d}{minutes:05.2f}{ew}"
 
+  def _alt_to_aprs(alt):
+    alt /= 0.3048  # to feet
+    alt = min(999999, alt)
+    alt = max(-99999, alt)
+    return "/A={0:06.0f}".format(alt)
+
   mmdvminfo = get_mmdvminfo()
   osinfo = get_osinfo()
   modem = get_modem()
@@ -546,8 +552,9 @@ def send_position(ais, config):
   timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
   latstr = _lat_to_aprs(config.latitude)
   lonstr = _lon_to_aprs(config.longitude)
+  altstr = _alt_to_aprs(config.altitude)
   # Use uncompressed APRS position format: !DDMM.mmN/SymbolTableDDDMM.mmWSymbol comment
-  payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{config.altitude:04.0f}{comment}"
+  payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{altstr}{comment}"
   packet = f"{config.call}>APP642:{payload}"
   logging.info(packet)
   try:
