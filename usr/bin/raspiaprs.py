@@ -480,12 +480,20 @@ def get_dmrmaster():
 
 def get_uptime():
   """Get system uptime in a human-readable format."""
-  nowz = dt.datetime.now(dt.UTC).strftime("%H%M%Sz")
-  now = dt.datetime.now().strftime("%H%M%S")
   with open(UPTIME_FILE) as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return f"up {humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' and', ',').replace('seconds', 'sec').replace('minutes', 'min').replace('hours', 'hr')} @ {nowz}/{now}"
+  return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' and', ',').replace('seconds', 'sec').replace('minutes', 'min').replace('hours', 'hr')}"
+
+
+def get_current_volt():
+  """Get current voltage"""
+  try:
+    mvolts = subprocess.check_output("vcgencmd measure_volts", shell=True, text=True).strip()
+    voltinfo = mvolts
+  except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
+    return 0
+  return voltinfo
 
 
 def get_mmdvminfo():
@@ -605,12 +613,14 @@ def main():
     netavg = get_traffic()
     modes = get_mmdvmmode()
     uptime = get_uptime()
-    tel = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
-    ais.sendall(tel)
-    logging.info(tel)
-    upt = "{0}>APP642:>{1}".format(config.call, uptime)
-    ais.sendall(upt)
-    logging.info(upt)
+    voltage = get_current_volt()
+    nowz = dt.datetime.now(dt.UTC).strftime("%d%H%Mz")
+    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
+    ais.sendall(telemetry)
+    logging.info(telemetry)
+    status = f"{0}>APP642:>/{nowz}, {1}, {2}".format(config.call, voltage, uptime)
+    ais.sendall(status)
+    logging.info(status)
     randsleep = int(random.uniform(config.sleep, config.sleep + 30))
     logging.info("Sleeping for %d seconds", randsleep)
     time.sleep(randsleep)
