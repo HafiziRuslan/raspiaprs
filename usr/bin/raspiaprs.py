@@ -483,7 +483,7 @@ def get_uptime():
   with open(UPTIME_FILE) as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' and', ',').replace('seconds', 'sec').replace('minutes', 'min').replace('hours', 'hr')}"
+  return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' seconds', 's').replace(' and', ',').replace(' minutes', 'm').replace(' hours', 'h').replace(' days', 'd').replace(' weeks', 'w').replace(' months', 'mo').replace(' years', 'y')}"
 
 
 def get_current_volt():
@@ -591,7 +591,7 @@ def ais_connect(config):
       ais.connect()
     except ConnectionError as err:
       logging.warning(err)
-      time.sleep(10)
+      time.sleep(15)
     else:
       return ais
   logging.error("Connection error, exiting")
@@ -618,10 +618,10 @@ def main():
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
     ais.sendall(telemetry)
     logging.info(telemetry)
-    status = "{0}>APP642:>/{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
+    status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
     ais.sendall(status)
     logging.info(status)
-    randsleep = int(random.uniform(config.sleep, config.sleep + 30))
+    randsleep = int(random.uniform(config.sleep - 15, config.sleep + 15))
     logging.info("Sleeping for %d seconds", randsleep)
     time.sleep(randsleep)
 
