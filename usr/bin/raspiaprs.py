@@ -483,7 +483,7 @@ def get_uptime():
   with open(UPTIME_FILE) as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' seconds', 's').replace(' and', ',').replace(' minutes', 'm').replace(' hours', 'h').replace(' days', 'd').replace(' weeks', 'w').replace(' months', 'mo').replace(' years', 'y')}"
+  return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' seconds', 's').replace(' and', ',').replace(' minutes', 'mi').replace(' hours', 'h').replace(' days', 'd').replace(' weeks', 'w').replace(' months', 'mo').replace(' years', 'y').replace(', ', ',')}"
 
 
 def get_current_volt():
