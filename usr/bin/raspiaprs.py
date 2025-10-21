@@ -614,7 +614,7 @@ def main():
     modes = get_mmdvmmode()
     uptime = get_uptime()
     voltage = get_current_volt()
-    nowz = dt.datetime.now(dt.UTC).strftime("%d%H%Mz")
+    nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
     ais.sendall(telemetry)
     logging.info(telemetry)
