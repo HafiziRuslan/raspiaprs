@@ -618,7 +618,7 @@ def main():
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
     ais.sendall(telemetry)
     logging.info(telemetry)
-    status = f"{0}>APP642:>/{nowz}, {1}, {2}".format(config.call, voltage, uptime)
+    status = "{0}>APP642:>/{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
     ais.sendall(status)
     logging.info(status)
     randsleep = int(random.uniform(config.sleep, config.sleep + 30))
