@@ -1,0 +1,23 @@
+name: Sync Repository to GitLab
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 */4 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Sync to GitLab
+      uses: keninkujovic/gitlab-sync@latest
+      with:
+        # The URL of the GitLab repository (e.g., https://gitlab.com/user/repo.git)
+        gitlab_url: ${{ secrets.GITLAB_URL }}
+        # Your GitLab username
+        username: ${{ secrets.USERNAME }}
+        # Your GitLab Personal Access Token with required permissions
+        gitlab_pat: ${{ secrets.GITLAB_PAT }}
+        # Whether to force push to GitLab. Defaults to false.
+        force_push: true
