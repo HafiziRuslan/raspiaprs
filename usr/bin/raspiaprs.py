@@ -91,7 +91,6 @@ class Config(object):
     self.symbol = parser.get("APRS", "symbol")
     lat, lon, alt = [float(parser.get("APRS", l)) for l in ("latitude", "longitude", "altitude")]
     if parser.has_option("GPSD", "device"):
-      self.device = parser.get("GPSD", "device")
       self.latitude, self.longitude, self.altitude = get_gpsdata() # type: ignore
     elif not lat and not lon:
       self.latitude, self.longitude = get_coordinates()
@@ -238,8 +237,6 @@ def get_gpsdata():
   """Get latitude and longitude from GPSD."""
   parser = ConfigParser()
   parser.read(CONFIG_FILE)
-  if not parser.has_option("GPSD", "device"):
-    return 0, 0, 0
   gpsd_device = parser.get("GPSD", "device")
   session = gps.gps(device=gpsd_device, mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
   try:
