@@ -491,12 +491,12 @@ def main():
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
-    uptime = get_uptime()
-    voltage = get_current_volt()
-    nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(config.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
     logging.info(telemetry)
+    uptime = get_uptime()
+    voltage = get_current_volt()
+    nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
     status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
     ais.sendall(status)
     logging.info(status)
