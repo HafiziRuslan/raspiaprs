@@ -9,8 +9,6 @@ The metrics are:-
 1. CPU Temperature
 2. CPU load average per 5 min
 3. Memory used
-4. Disk used
-5. Traffic average per 5 min
 
 ## Installation (Pi-Star / WPSD / AllStarLink)
 

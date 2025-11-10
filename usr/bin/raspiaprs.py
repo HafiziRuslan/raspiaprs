@@ -293,41 +293,6 @@ def get_memused():
   return int(allfreemem + buffmem + cachemem)
 
 
-def get_diskused():
-  """Get used disk space in GB."""
-  try:
-    df = subprocess.check_output("df -k /", shell=True, text=True).strip().split("\n")
-    diskinfo = df[1].split()
-    diskused = int(diskinfo[2])
-  except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
-    return 0
-  return int(diskused / 1000)
-
-
-def get_traffic():
-  """Get average network traffic in kbit/s over the last 5 minutes scaled by 100."""
-  timenow = dt.datetime.now()
-  roundedtime = timenow - dt.timedelta(minutes=timenow.minute % 5 + 5)
-  try:
-    today = subprocess.check_output(f"vnstat -i wlan0 -5 1 | grep {dt.datetime.strftime(roundedtime, '%H:%M')}", shell=True, text=True).strip()
-    # time = today.split()[0]
-    # up = float(today.split()[1])
-    # upunit = today.split()[2]
-    # down = float(today.split()[4])
-    # downunit = today.split()[5]
-    # total = float(today.split()[7])
-    # totalunit = today.split()[8]
-    avg = float(today.split()[10])
-    avgunit = today.split()[11]
-  except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
-    return 0
-  if avgunit == "Mbit/s":
-    avg = avg * 1000
-  elif avgunit == "Gbit/s":
-    avg = avg * 1000000
-  return int(avg * 100)
-
-
 def get_temp():
   """Get CPU temperature in degC scaled by 100."""
   try:
@@ -575,9 +540,9 @@ def send_header(ais, config):
   """Send APRS header information to APRS-IS."""
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DiskUsed,NetAvg,DMR,DSTAR,C4FM,P25,NXDN,POCSAG".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,Gbytes,kbit/s,on,on,on,on,on,on".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,0.001,0,0,0.01,0,000000".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DMR,DSTAR,C4FM,P25,NXDN,POCSAG".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,on,on,on,on,on,on".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,000000".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
@@ -609,13 +574,11 @@ def main():
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
-    diskused = get_diskused()
-    netavg = get_traffic()
     modes = get_mmdvmmode()
     uptime = get_uptime()
     voltage = get_current_volt()
     nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
-    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d},{}00".format(config.call, sequence, temp, cpuload, memused, diskused, netavg, modes)
+    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,{}00".format(config.call, sequence, temp, cpuload, memused, modes)
     ais.sendall(telemetry)
     logging.info(telemetry)
     status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
