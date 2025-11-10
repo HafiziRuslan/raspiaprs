@@ -473,7 +473,7 @@ def send_header(ais, config):
   try:
     ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DMR,DSTAR,C4FM,P25,NXDN,POCSAG".format(config.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,on,on,on,on,on,on".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,000000".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,000000".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
@@ -509,7 +509,7 @@ def main():
     uptime = get_uptime()
     voltage = get_current_volt()
     nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
-    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,{}00".format(config.call, sequence, temp, cpuload, memused, modes)
+    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,{}".format(config.call, sequence, temp, cpuload, memused, modes)
     ais.sendall(telemetry)
     logging.info(telemetry)
     status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
