@@ -248,6 +248,14 @@ def get_gpsdata():
         logging.info("GPSD: Time: n/a")
       if ((gps.isfinite(session.fix.latitude) and gps.isfinite(session.fix.longitude))):
         logging.info("GPSD: Lat %.6f Lon %.6f Alt %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
+        with open(CONFIG_FILE, "r") as fdc:
+          parser = ConfigParser()
+          parser.read_file(fdc)
+          parser.set("APRS", "latitude", session.fix.latitude.__str__())
+          parser.set("APRS", "longitude", session.fix.longitude.__str__())
+          parser.set("APRS", "altitude", session.fix.altitude.__str__())
+          with open(CONFIG_FILE, "w") as fdcw:
+            parser.write(fdcw)
         return session.fix.latitude, session.fix.longitude, session.fix.altitude
       else:
         logging.info("GPSD: Lat n/a Lon n/a Alt n/a")
@@ -440,7 +448,7 @@ def get_mmdvminfo():
   return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-def send_position(ais, self):
+def send_position(ais, config):
   """Send APRS position packet to APRS-IS."""
   # Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
   def _lat_to_aprs(lat):
@@ -467,12 +475,12 @@ def send_position(ais, self):
   osinfo = get_osinfo()
   comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/raspiaprs"
   timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
-  latstr = _lat_to_aprs(self.latitude)
-  lonstr = _lon_to_aprs(self.longitude)
-  altstr = _alt_to_aprs(self.altitude)
+  latstr = _lat_to_aprs(config.latitude)
+  lonstr = _lon_to_aprs(config.longitude)
+  altstr = _alt_to_aprs(config.altitude)
   # Use uncompressed APRS position format: !DDMM.mmN/SymbolTableDDDMM.mmWSymbol comment
-  payload = f"/{timestamp}{latstr}{self.symbol_table}{lonstr}{self.symbol}{altstr}{comment}"
-  packet = f"{self.call}>APP642:{payload}"
+  payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{altstr}{comment}"
+  packet = f"{config.call}>APP642:{payload}"
   logging.info(packet)
   try:
     ais.sendall(packet)
@@ -491,10 +499,10 @@ def send_header(ais, config):
     logging.warning(err)
 
 
-def ais_connect(self):
+def ais_connect(config):
   """Establish connection to APRS-IS with retries."""
-  logging.info("Connecting to APRS-IS server %s:%d as %s", self.server, self.port, self.call)
-  ais = aprslib.IS(self.call, passwd=self.passcode, host=self.server, port=self.port)
+  logging.info("Connecting to APRS-IS server %s:%d as %s", config.server, config.port, config.call)
+  ais = aprslib.IS(config.call, passwd=config.passcode, host=config.server, port=config.port)
   for retry in range(5):
     try:
       ais.connect()
@@ -509,25 +517,25 @@ def ais_connect(self):
 
 def main():
   """Main function to run the APRS reporting loop."""
-  self = Config()
-  ais = ais_connect(self)
-  send_header(ais, self)
+  config = Config()
+  ais = ais_connect(config)
+  send_header(ais, config)
   for sequence in Sequence():
     if sequence % 10 == 1:
-      send_header(ais, self)
+      send_header(ais, config)
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
-    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(self.call, sequence, temp, cpuload, memused)
+    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(config.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
     logging.info(telemetry)
     uptime = get_uptime()
     voltage = get_current_volt()
     nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
-    status = "{0}>APP642:>{1}, {2}, {3}".format(self.call, nowz, voltage, uptime)
+    status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
     ais.sendall(status)
     logging.info(status)
-    randsleep = int(random.uniform(self.sleep - 15, self.sleep + 15))
+    randsleep = int(random.uniform(config.sleep - 15, config.sleep + 15))
     logging.info("Sleeping for %d seconds", randsleep)
     time.sleep(randsleep)
 
