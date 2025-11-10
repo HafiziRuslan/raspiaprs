@@ -306,10 +306,7 @@ def get_temp():
 
 def get_osinfo():
   """Get operating system information."""
-  parser = ConfigParser()
   osname = ""
-  osver = ""
-  kernelver = ""
   try:
     with open(OS_RELEASE_FILE) as osr:
       for line in osr:
@@ -317,81 +314,16 @@ def get_osinfo():
           osname = line.split("=", 1)[1].strip().strip('"')
   except (IOError, OSError):
     logging.warning("OS release file not found: %s", OS_RELEASE_FILE)
+  kernelver = ""
   try:
     with open(VERSION_FILE) as ver:
       for line in ver:
         parts = line.split()
-        # Ensure expected indexes exist before accessing
-        if len(parts) >= 7:
-          kernelver = parts[0] + parts[2]
-          osver = parts[5] + " " + parts[6]
-        elif len(parts) >= 3:
+        if len(parts) >= 3:
           kernelver = parts[0] + parts[2]
   except (IOError, IndexError):
     logging.warning("Version file not found or unexpected format: %s", VERSION_FILE)
-  softver = " Unknown"
-  try:
-    with open(PISTAR_RELEASE_FILE, "r") as pir:
-      parser.read_file(pir)
-      softver = " " + parser.get("Pi-Star", "MMDVMHost") + "#" + parser.get("Pi-Star", "Version")
-  except (IOError, ValueError):
-    try:
-      with open(WPSD_RELEASE_FILE, "r") as wps:
-        parser.read_file(wps)
-        softver = " " + parser.get("WPSD", "MMDVMHost").split()[0] + "#" + parser.get("WPSD", "WPSD_Ver")
-    except (IOError, ValueError):
-      pass
-  return f" {osname} {osver} [{kernelver}] {softver}"
-
-
-def get_modem():
-  """Get modem firmware information from MMDVM log files."""
-  log_mmdvm_now = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
-  log_mmdvm_previous = os.path.join(MMDVMLOGPATH, f"{MMDVMLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
-  log_search_string = "MMDVM protocol version"
-  log_line = str()
-  modem_firmware = str()
-  try:
-    log_line = subprocess.check_output(f'grep "{log_search_string}" {log_mmdvm_now} | tail -1', shell=True, text=True).strip()
-  except subprocess.CalledProcessError:
-    try:
-      log_line = subprocess.check_output(f'grep "{log_search_string}" {log_mmdvm_previous} | tail -1', shell=True, text=True).strip()
-    except subprocess.CalledProcessError:
-      pass
-  if log_line:
-    if "DVMEGA" in log_line:
-      modem_firmware = log_line[67 : 67 + 15]
-    elif "description: MMDVM " in log_line:
-      modem_firmware = f"MMDVM-{log_line[73 : 73 + 8]}"
-    elif "description: D2RG_MMDVM_HS-" in log_line:
-      modem_firmware = f"D2RG_MMDVM_HS-{log_line[81 : 81 + 12].split()[0]}"
-    elif "description: MMDVM_HS_Hat-" in log_line:
-      modem_firmware = f"MMDVM_HS_Hat-{log_line[80 : 80 + 12].split()[0]}"
-    elif "description: MMDVM_HS_Dual_Hat-" in log_line:
-      modem_firmware = f"MMDVM_HS_Dual_Hat-{log_line[85 : 85 + 12].split()[0]}"
-    elif "description: MMDVM_HS-" in log_line:
-      modem_firmware = f"MMDVM_HS-{log_line[76 : 76 + 12].split()[0].lstrip('v')}"
-    elif "description: MMDVM_MDO " in log_line:
-      modem_firmware = f"MMDVM_MDO-{log_line[85 : 85 + 12].split()[0].lstrip('v')}"
-    elif "description: MMDVM_HS" in log_line:
-      modem_firmware = f"MMDVM_HS-{log_line[84 : 84 + 8].lstrip('v')}"
-    elif "description: Nano_DV-" in log_line:
-      modem_firmware = f"NanoDV-{log_line[75 : 75 + 12].split()[0]}"
-    elif "description: Nano_hotSPOT-" in log_line:
-      modem_firmware = f"Nano_hotSPOT-{log_line[80 : 80 + 12].split()[0].lstrip('v')}"
-    elif "description: Nano-Spot-" in log_line:
-      modem_firmware = f"NanoSpot-{log_line[77 : 77 + 12].split()[0]}"
-    elif "description: OpenGD77 Hotspot" in log_line:
-      modem_firmware = f"OpenGD77-{log_line[83 : 83 + 12].split()[0]}"
-    elif "description: OpenGD77_HS " in log_line:
-      modem_firmware = f"OpenGD77_HS-{log_line[79 : 79 + 12].split()[0]}"
-    elif "description: SkyBridge-" in log_line:
-      modem_firmware = f"SkyBridge-{log_line[77 : 77 + 12].split()[0]}"
-    elif "description: ZUMspot-" in log_line:
-      modem_firmware = f"ZUMspot-{log_line[75 : 75 + 12].split()[0]}"
-    elif "description: ZUMspot " in log_line:
-      modem_firmware = f"ZUMspot-{log_line[83 : 83 + 12].split()[0]}"
-  return f" {modem_firmware}"
+  return f" {osname} [{kernelver}]"
 
 
 def get_dmrmaster():
@@ -520,8 +452,7 @@ def send_position(ais, config):
 
   mmdvminfo = get_mmdvminfo()
   osinfo = get_osinfo()
-  modem = get_modem()
-  comment = f"{mmdvminfo}{osinfo}{modem} https://github.com/HafiziRuslan/raspiaprs"
+  comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/raspiaprs"
   timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
   latstr = _lat_to_aprs(config.latitude)
   lonstr = _lon_to_aprs(config.longitude)
