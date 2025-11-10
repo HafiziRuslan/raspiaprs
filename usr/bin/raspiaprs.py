@@ -413,20 +413,6 @@ def get_mmdvminfo():
   return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-def get_mmdvmmode():
-  """Get enabled modes from MMDVMHost configuration."""
-  parser = ConfigParser()
-  with open(MMDVMHOST_FILE, "r") as mdh:
-    parser.read_file(mdh)
-    dmr = parser.get("DMR", "Enable", fallback=0)
-    dstar = parser.get("D-Star", "Enable", fallback=0)
-    c4fm = parser.get("System Fusion", "Enable", fallback=0)
-    p25 = parser.get("P25", "Enable", fallback=0)
-    nxdn = parser.get("NXDN", "Enable", fallback=0)
-    pocsag = parser.get("POCSAG", "Enable", fallback=0)
-  return f"{dmr}{dstar}{c4fm}{p25}{nxdn}{pocsag}"
-
-
 def send_position(ais, config):
   """Send APRS position packet to APRS-IS."""
   # Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
@@ -471,9 +457,9 @@ def send_header(ais, config):
   """Send APRS header information to APRS-IS."""
   send_position(ais, config)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,DMR,DSTAR,C4FM,P25,NXDN,POCSAG".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,on,on,on,on,on,on".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,000000".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes".format(config.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0".format(config.call))
   except ConnectionError as err:
     logging.warning(err)
 
@@ -505,11 +491,10 @@ def main():
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
-    modes = get_mmdvmmode()
     uptime = get_uptime()
     voltage = get_current_volt()
     nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
-    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},0,0,{}".format(config.call, sequence, temp, cpuload, memused, modes)
+    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(config.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
     logging.info(telemetry)
     status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
