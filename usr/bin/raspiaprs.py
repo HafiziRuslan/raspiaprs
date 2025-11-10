@@ -9,6 +9,7 @@ import random
 import subprocess
 import sys
 import time
+import gps
 from configparser import ConfigParser
 from io import StringIO
 from urllib.request import urlopen
@@ -88,12 +89,14 @@ class Config(object):
     self.sleep = parser.get("APRS", "sleep")
     self.symbol_table = parser.get("APRS", "symbol_table")
     self.symbol = parser.get("APRS", "symbol")
-    self.altitude = float(parser.get("APRS", "altitude"))
-    lat, lon = [float(parser.get("APRS", c)) for c in ("latitude", "longitude")]
-    if not lat or not lon:
+    lat, lon, alt = [float(parser.get("APRS", l)) for l in ("latitude", "longitude", "altitude")]
+    if parser.has_option("GPSD", "device"):
+      self.device = parser.get("GPSD", "device")
+      self.latitude, self.longitude, self.altitude = get_gpsdata() # type: ignore
+    elif not lat and not lon:
       self.latitude, self.longitude = get_coordinates()
     else:
-      self.latitude, self.longitude = lat, lon
+      self.latitude, self.longitude, self.altitude = lat, lon, alt
     if parser.has_option("APRS-IS", "server"):
       self.server = parser.get("APRS-IS", "server")
     else:
@@ -231,6 +234,37 @@ class Sequence(object):
     return self._count
 
 
+def get_gpsdata():
+  """Get latitude and longitude from GPSD."""
+  parser = ConfigParser()
+  parser.read(CONFIG_FILE)
+  if not parser.has_option("GPSD", "device"):
+    return 0, 0, 0
+  gpsd_device = parser.get("GPSD", "device")
+  session = gps.gps(device=gpsd_device, mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+  try:
+    while 0 == session.read():
+      if not (gps.MODE_SET & session.valid):
+        # not useful, probably not a TPV message
+        continue
+      logging.info('GPSD: Mode: %s(%d) Time: ' %(("Invalid", "NO_FIX", "2D", "3D")[session.fix.mode], session.fix.mode))
+      # print time, if we have it
+      if gps.TIME_SET & session.valid:
+        logging.info("GPSD: Time: %s", session.fix.time)
+      else:
+        logging.info("GPSD: Time: n/a")
+      if ((gps.isfinite(session.fix.latitude) and gps.isfinite(session.fix.longitude))):
+        logging.info("GPSD: Lat %.6f Lon %.6f Alt %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
+        return session.fix.latitude, session.fix.longitude, session.fix.altitude
+      else:
+        logging.info("GPSD: Lat n/a Lon n/a Alt n/a")
+        return 0, 0, 0
+    gps.gps.close(session)
+  except Exception as e:
+    logging.error("Error getting gps data: %s", e)
+    return 0, 0, 0
+
+
 def get_coordinates():
   """Get approximate latitude and longitude using IP address lookup."""
   logging.warning("Trying to figure out the coordinate using your IP address")
@@ -243,7 +277,7 @@ def get_coordinates():
     logging.error(err)
     return (0, 0)
   else:
-    logging.warning("Position: %f, %f", data["lat"], data["lon"])
+    logging.warning("IP-Position: %f, %f", data["lat"], data["lon"])
     return data["lat"], data["lon"]
 
 
