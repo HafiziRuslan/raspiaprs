@@ -89,7 +89,7 @@ class Config(object):
     self.symbol_table = parser.get("APRS", "symbol_table")
     self.symbol = parser.get("APRS", "symbol")
     lat, lon, alt = [float(parser.get("APRS", l)) for l in ("latitude", "longitude", "altitude")]
-    if parser.has_option("GPSD", "device"):
+    if parser.has_option("GPSD", "enable") and parser.getboolean("GPSD", "enable"):
       self.latitude, self.longitude, self.altitude = get_gpsdata() # type: ignore
     elif not lat and not lon:
       self.latitude, self.longitude = get_coordinates()
@@ -234,10 +234,7 @@ class Sequence(object):
 
 def get_gpsdata():
   """Get latitude and longitude from GPSD."""
-  parser = ConfigParser()
-  parser.read(CONFIG_FILE)
-  gpsd_device = parser.get("GPSD", "device")
-  session = gps.gps(device=gpsd_device, mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+  session = gps.gps(mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
   try:
     while 0 == session.read():
       if not (gps.MODE_SET & session.valid):
