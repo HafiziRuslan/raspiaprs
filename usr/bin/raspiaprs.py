@@ -89,9 +89,9 @@ class Config(object):
     self.symbol_table = parser.get("APRS", "symbol_table")
     self.symbol = parser.get("APRS", "symbol")
     lat, lon, alt = [float(parser.get("APRS", l)) for l in ("latitude", "longitude", "altitude")]
-    if parser.has_option("GPSD", "enable") and parser.getboolean("GPSD", "enable"):
+    if parser.getboolean("GPSD", "enable"):
       self.latitude, self.longitude, self.altitude = get_gpsdata() # type: ignore
-    elif not lat and not lon:
+    if not lat and not lon:
       self.latitude, self.longitude = get_coordinates()
     else:
       self.latitude, self.longitude, self.altitude = lat, lon, alt
