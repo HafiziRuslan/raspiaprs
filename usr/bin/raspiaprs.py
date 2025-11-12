@@ -478,7 +478,6 @@ def send_position(ais, config):
   latstr = _lat_to_aprs(config.latitude)
   lonstr = _lon_to_aprs(config.longitude)
   altstr = _alt_to_aprs(config.altitude)
-  # Use uncompressed APRS position format: !DDMM.mmN/SymbolTableDDDMM.mmWSymbol comment
   payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{altstr}{comment}"
   packet = f"{config.call}>APP642:{payload}"
   logging.info(packet)
@@ -521,7 +520,7 @@ def main():
   ais = ais_connect(config)
   send_header(ais, config)
   for sequence in Sequence():
-    if sequence % 10 == 1:
+    if sequence % 6 == 1:
       send_header(ais, config)
     temp = get_temp()
     cpuload = get_cpuload()
@@ -535,7 +534,7 @@ def main():
     status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
     ais.sendall(status)
     logging.info(status)
-    randsleep = int(random.uniform(config.sleep - 15, config.sleep + 15))
+    randsleep = int(random.uniform(config.sleep - 30, config.sleep + 30))
     logging.info("Sleeping for %d seconds", randsleep)
     time.sleep(randsleep)
 
