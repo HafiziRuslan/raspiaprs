@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
+import aprslib
 import datetime as dt
+import gps
+import humanize
 import json
 import logging
 import os
@@ -8,17 +11,15 @@ import random
 import subprocess
 import sys
 import time
-import gps
+
+from aprslib.exceptions import ConnectionError
 from configparser import ConfigParser
 from io import StringIO
+from logging.handlers import TimedRotatingFileHandler
 from urllib.request import urlopen
 
-import aprslib
-import humanize
-from aprslib.exceptions import ConnectionError
-
 # Default configuration file path
-CONFIG_FILE = "/etc/raspiaprs.conf"
+CONFIG_FILE = "raspiaprs.conf"
 CONFIG_DEFAULT = """
 [APRS]
 call: N0CALL
@@ -51,10 +52,11 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
-  filename="/var/log/raspiaprs.log",
+  filename="log/raspiaprs.log",
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
+  handlers=[TimedRotatingFileHandler("log/raspiaprs.log", when="midnight", backupCount=3)]
 )
 
 
@@ -254,8 +256,8 @@ def get_gpsdata():
           parser.set("APRS", "latitude", session.fix.latitude.__str__())
           parser.set("APRS", "longitude", session.fix.longitude.__str__())
           parser.set("APRS", "altitude", session.fix.altitude.__str__())
-          with open(CONFIG_FILE, "w") as fdcw:
-            parser.write(fdcw)
+          # with open(CONFIG_FILE, "w") as fdcw:
+          #   parser.write(fdcw)
         return session.fix.latitude, session.fix.longitude, session.fix.altitude
       else:
         logging.info("GPSD: Lat n/a Lon n/a Alt n/a")
