@@ -235,9 +235,9 @@ class Sequence(object):
 def get_gpsdata():
   """Get latitude and longitude from ModemManager."""
   logging.warning("Trying to figure out the coordinate using ModemManager")
-  lat = 0.0
-  lon = 0.0
-  alt = 0.0
+  lat: float = 0.0
+  lon: float = 0.0
+  alt: float = 0.0
   try:
     mm_output = subprocess.getoutput("sudo /bin/bash -c /home/pi-star/raspiaprs/mmcli_loc_get.sh").splitlines()
     for line in mm_output:
@@ -247,8 +247,8 @@ def get_gpsdata():
         lon = float(line.split(":")[1].strip())
       if line.startswith("Altitude:"):
         alt = float(line.split(":")[1].strip())
+      return lat, lon, alt
     logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
-    return lat, lon, alt
   except Exception as e:
     logging.error("Error getting modem manager data: %s", e)
     return lat, lon, alt
