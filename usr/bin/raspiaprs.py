@@ -239,7 +239,7 @@ def get_gpsdata():
   lon = 0.0
   alt = 0.0
   try:
-    mm_output = subprocess.getoutput("sudo /bin/bash -c 'cd /home/pi-star/raspiaprs && ./mmcli_loc_get.sh'").splitlines()
+    mm_output = subprocess.getoutput("sudo /bin/bash -c /home/pi-star/raspiaprs/mmcli_loc_get.sh").splitlines()
     for line in mm_output:
       if line.startswith("Latitude:"):
         lat = float(line.split(":")[1].strip())
