@@ -8,8 +8,8 @@ import random
 import subprocess
 import sys
 import time
-import gps
 from configparser import ConfigParser
+from gpsdclient import GPSDClient
 from io import StringIO
 from urllib.request import urlopen
 
@@ -234,32 +234,17 @@ class Sequence(object):
 
 def get_gpsd_coordinate():
   """Get latitude and longitude from GPSD."""
-  session = gps.gps(mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
   try:
-    while 0 == session.read():
-      if not (gps.MODE_SET & session.valid):
-        # not useful, probably not a TPV message
-        continue
-      logging.info('GPSD: Mode: %s(%d) Time: ' %(("Invalid", "NO_FIX", "2D", "3D")[session.fix.mode], session.fix.mode))
-      # print time, if we have it
-      if gps.TIME_SET & session.valid:
-        logging.info("GPSD: Time: %s", session.fix.time)
-      if ((gps.isfinite(session.fix.latitude) and gps.isfinite(session.fix.longitude))):
-        logging.info("GPSD: Lat: %.6f; Lon: %.6f; Alt: %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
-        with open(CONFIG_FILE, "r") as fdc:
-          parser = ConfigParser()
-          parser.read_file(fdc)
-          parser.set("APRS", "latitude", session.fix.latitude.__str__())
-          parser.set("APRS", "longitude", session.fix.longitude.__str__())
-          parser.set("APRS", "altitude", session.fix.altitude.__str__())
-          with open(CONFIG_FILE, "w") as fdcw:
-            parser.write(fdcw)
-        return session.fix.latitude, session.fix.longitude, session.fix.altitude
-      else:
-        return 0, 0, 0
-    gps.gps.close(session)
+    with GPSDClient() as client:
+      for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
+        lat = result.get("lat", "n/a")
+        lon =result.get("lon", "n/a")
+        alt = result.get("alt", "n/a")
+        if lat != "n/a" and lon != "n/a" and alt != "n/a":
+          logging.info("GPSD Position: %f, %f, %f", lat, lon, alt)
+        return lat, lon, alt
   except Exception as e:
-    logging.error("Error getting gps data: %s", e)
+    logging.error("Error getting GPSD data: %s", e)
     return 0, 0, 0
 
 
