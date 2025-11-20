@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 
-import aprslib
 import datetime as dt
-import gps
-import humanize
 import json
 import logging
 import os
@@ -11,15 +8,17 @@ import random
 import subprocess
 import sys
 import time
-
-from aprslib.exceptions import ConnectionError
+import gps
 from configparser import ConfigParser
 from io import StringIO
-from logging.handlers import TimedRotatingFileHandler
 from urllib.request import urlopen
 
+import aprslib
+import humanize
+from aprslib.exceptions import ConnectionError
+
 # Default configuration file path
-CONFIG_FILE = "raspiaprs.conf"
+CONFIG_FILE = "/etc/raspiaprs.conf"
 CONFIG_DEFAULT = """
 [APRS]
 call: N0CALL
@@ -52,11 +51,10 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
-  # filename="log/raspiaprs.log",
+  filename="/var/log/raspiaprs.log",
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
-  handlers=[TimedRotatingFileHandler("log/raspiaprs.log", when="midnight", backupCount=3)]
 )
 
 
@@ -249,18 +247,18 @@ def get_gpsdata():
       else:
         logging.info("GPSD: Time: n/a")
       if ((gps.isfinite(session.fix.latitude) and gps.isfinite(session.fix.longitude))):
-        logging.info("GPSD: Lat: %.6f; Lon: %.6f ;Alt: %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
+        logging.info("GPSD: Lat %.6f Lon %.6f Alt %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
         with open(CONFIG_FILE, "r") as fdc:
           parser = ConfigParser()
           parser.read_file(fdc)
           parser.set("APRS", "latitude", session.fix.latitude.__str__())
           parser.set("APRS", "longitude", session.fix.longitude.__str__())
           parser.set("APRS", "altitude", session.fix.altitude.__str__())
-          # with open(CONFIG_FILE, "w") as fdcw:
-          #   parser.write(fdcw)
+          with open(CONFIG_FILE, "w") as fdcw:
+            parser.write(fdcw)
         return session.fix.latitude, session.fix.longitude, session.fix.altitude
       else:
-        logging.info("GPSD: Lat: n/a; Lon: n/a; Alt: n/a")
+        logging.info("GPSD: Lat n/a Lon n/a Alt n/a")
         return 0, 0, 0
     gps.gps.close(session)
   except Exception as e:

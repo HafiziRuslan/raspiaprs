@@ -26,15 +26,15 @@ sudo apt update
 sudo apt install python3-pip -y
 ```
 
-<!-- The following packages are the 3 dependencies used by `raspiaprs`. -->
+The following packages are the 3 dependencies used by `raspiaprs`.
 
-<!-- They can be installed using the command pip:- -->
+They can be installed using the command pip:-
 
-<!-- ```bash
+```bash
 sudo pip install ConfigParser aprslib humanize --break-system-packages
-``` -->
+```
 
-<!-- The module `ConfigParser` should be already installed but I have found some instances where it is not. -->
+The module `ConfigParser` should be already installed but I have found some instances where it is not.
 
 Clone this repo and move into directory:-
 
@@ -45,30 +45,30 @@ cd raspiaprs
 
 ### Installing raspiaprs script
 
-<!-- ```bash
+```bash
 sudo cp usr/bin/raspiaprs.py /usr/bin/raspiaprs
 sudo chmod a+x /usr/bin/raspiaprs
-``` -->
+```
 
 ### Installing the raspiaprs service
 
-<!-- ```bash
+```bash
 sudo cp lib/systemd/system/raspiaprs.service /lib/systemd/system/raspiaprs.service
 sudo chmod 0644 /lib/systemd/system/raspiaprs.service
-``` -->
+```
 
 ## Configurations
 
-<!-- Copy the file `raspiaprs.conf` into `/etc`, and edit the informations using your favorite editor.
+Copy the file `raspiaprs.conf` into `/etc`, and edit the informations using your favorite editor.
 
 ```bash
 sudo cp etc/raspiaprs.conf /etc/raspiaprs.conf
 sudo nano /etc/raspiaprs.conf
-``` -->
+```
 
 ## Starting the service
 
-<!-- ```bash
+```bash
 sudo systemctl enable raspiaprs
 sudo systemctl start raspiaprs
 ```
@@ -83,11 +83,11 @@ If any error upon start, you may look into `journalctl` for more info.
 
 ```bash
 journalctl -u raspiaprs
-``` -->
+```
 
 ## Update raspiaprs
 
-<!-- Use this command to update:-
+Use this command to update:-
 
 ```bash
 sudo systemctl stop raspiaprs
@@ -99,7 +99,7 @@ sudo cp lib/systemd/system/raspiaprs.service /lib/systemd/system/raspiaprs.servi
 sudo chmod 0644 /lib/systemd/system/raspiaprs.service
 sudo systemctl enable raspiaprs
 sudo systemctl start raspiaprs
-``` -->
+```
 
 ## Example
 
