@@ -90,7 +90,7 @@ class Config(object):
     self.symbol = parser.get("APRS", "symbol")
     lat, lon, alt = [float(parser.get("APRS", l)) for l in ("latitude", "longitude", "altitude")]
     if parser.getboolean("GPSD", "enable"):
-      self.latitude, self.longitude, self.altitude = get_gpsdata() # type: ignore
+      self.latitude, self.longitude, self.altitude = get_gpsd_coordinate() # type: ignore
     if not lat and not lon:
       self.latitude, self.longitude = get_coordinates()
     else:
@@ -232,21 +232,51 @@ class Sequence(object):
     return self._count
 
 
-def get_gpsdata():
-  """Get latitude and longitude from ModemManager."""
-  logging.warning("Trying to figure out the coordinate using ModemManager")
-  lat: float = 0.0
-  lon: float = 0.0
-  alt: float = 0.0
+def get_gpsd_coordinate():
+  """Get latitude and longitude from GPSD."""
+  session = gps.gps(mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+  try:
+    while 0 == session.read():
+      if not (gps.MODE_SET & session.valid):
+        # not useful, probably not a TPV message
+        continue
+      logging.info('GPSD: Mode: %s(%d) Time: ' %(("Invalid", "NO_FIX", "2D", "3D")[session.fix.mode], session.fix.mode))
+      # print time, if we have it
+      if gps.TIME_SET & session.valid:
+        logging.info("GPSD: Time: %s", session.fix.time)
+      if ((gps.isfinite(session.fix.latitude) and gps.isfinite(session.fix.longitude))):
+        logging.info("GPSD: Lat: %.6f; Lon: %.6f; Alt: %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
+        with open(CONFIG_FILE, "r") as fdc:
+          parser = ConfigParser()
+          parser.read_file(fdc)
+          parser.set("APRS", "latitude", session.fix.latitude.__str__())
+          parser.set("APRS", "longitude", session.fix.longitude.__str__())
+          parser.set("APRS", "altitude", session.fix.altitude.__str__())
+          with open(CONFIG_FILE, "w") as fdcw:
+            parser.write(fdcw)
+        return session.fix.latitude, session.fix.longitude, session.fix.altitude
+      else:
+        return 0, 0, 0
+    gps.gps.close(session)
+  except Exception as e:
+    logging.error("Error getting gps data: %s", e)
+    return 0, 0, 0
+
+
+def get_modemmanager_coordinates():
+  logging.info("Trying to figure out the coordinate using ModemManager")
+  lat: str = "0.0"
+  lon: str = "0.0"
+  alt: str = "0.0"
   try:
     mm_output = subprocess.run(args=["sudo", "/home/pi-star/raspiaprs/mmcli_loc_get.sh"], capture_output=True, text=True).stdout.splitlines()
     for line in mm_output:
       if line.startswith("Latitude:"):
-        lat = float(line.split(":")[1].strip())
+        lat = str(line.split(":")[1].strip())
       if line.startswith("Longitude:"):
-        lon = float(line.split(":")[1].strip())
+        lon = str(line.split(":")[1].strip())
       if line.startswith("Altitude:"):
-        alt = float(line.split(":")[1].strip())
+        alt = str(line.split(":")[1].strip())
     logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
     return lat, lon, alt
   except Exception as e:
@@ -256,7 +286,7 @@ def get_gpsdata():
 
 def get_coordinates():
   """Get approximate latitude and longitude using IP address lookup."""
-  logging.warning("Trying to figure out the coordinate using your IP address")
+  logging.info("Trying to figure out the coordinate using your IP address")
   url = "http://ip-api.com/json/"
   try:
     response = urlopen(url)
@@ -266,7 +296,7 @@ def get_coordinates():
     logging.error(err)
     return (0, 0)
   else:
-    logging.warning("IP-Position: %f, %f", data["lat"], data["lon"])
+    logging.info("IP-Position: %f, %f", data["lat"], data["lon"])
     return data["lat"], data["lon"]
 
 
