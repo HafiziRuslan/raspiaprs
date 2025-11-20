@@ -239,7 +239,7 @@ def get_gpsdata():
   lon: float = 0.0
   alt: float = 0.0
   try:
-    mm_output = subprocess.getoutput("sudo /bin/bash -c /home/pi-star/raspiaprs/mmcli_loc_get.sh").splitlines()
+    mm_output = subprocess.run(args=["sudo", "/home/pi-star/raspiaprs/mmcli_loc_get.sh"], capture_output=True, text=True).stdout.splitlines()
     for line in mm_output:
       if line.startswith("Latitude:"):
         lat = float(line.split(":")[1].strip())
@@ -247,8 +247,8 @@ def get_gpsdata():
         lon = float(line.split(":")[1].strip())
       if line.startswith("Altitude:"):
         alt = float(line.split(":")[1].strip())
-      return lat, lon, alt
     logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
+    return lat, lon, alt
   except Exception as e:
     logging.error("Error getting modem manager data: %s", e)
     return lat, lon, alt
