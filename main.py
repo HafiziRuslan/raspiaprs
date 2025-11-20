@@ -52,11 +52,11 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
-  filename="log/raspiaprs.log",
+  # filename="log/raspiaprs.log",
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
-  # handlers=[TimedRotatingFileHandler("log/raspiaprs.log", when="midnight", backupCount=3)]
+  handlers=[TimedRotatingFileHandler("log/raspiaprs.log", when="midnight", backupCount=3)]
 )
 
 
