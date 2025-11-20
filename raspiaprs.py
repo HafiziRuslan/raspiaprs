@@ -249,7 +249,7 @@ def get_gpsdata():
       else:
         logging.info("GPSD: Time: n/a")
       if ((gps.isfinite(session.fix.latitude) and gps.isfinite(session.fix.longitude))):
-        logging.info("GPSD: Lat %.6f Lon %.6f Alt %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
+        logging.info("GPSD: Lat: %.6f; Lon: %.6f ;Alt: %.6f" %(session.fix.latitude, session.fix.longitude, session.fix.altitude))
         with open(CONFIG_FILE, "r") as fdc:
           parser = ConfigParser()
           parser.read_file(fdc)
@@ -260,7 +260,7 @@ def get_gpsdata():
           #   parser.write(fdcw)
         return session.fix.latitude, session.fix.longitude, session.fix.altitude
       else:
-        logging.info("GPSD: Lat n/a Lon n/a Alt n/a")
+        logging.info("GPSD: Lat: n/a; Lon: n/a; Alt: n/a")
         return 0, 0, 0
     gps.gps.close(session)
   except Exception as e:
