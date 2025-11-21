@@ -8,8 +8,9 @@ import random
 import subprocess
 import sys
 import time
+import telegram
 from configparser import ConfigParser
-from gpsdclient import GPSDClient
+from gpsdclient.client import GPSDClient
 from io import StringIO
 from urllib.request import urlopen
 
@@ -479,6 +480,26 @@ def get_mmdvminfo():
   return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
+def logs_to_telegram(tg_message: str):
+  """Send log message to Telegram channel."""
+  parser = ConfigParser()
+  parser.read(CONFIG_FILE)
+  if parser.getboolean("TELEGRAM", "enable"):
+    tgbot = telegram.Bot(token=parser.get("TELEGRAM", "token"))
+    try:
+      botcall = tgbot.send_message(
+        chat_id=parser.get("TELEGRAM", "chat_id"),
+        message_thread_id=parser.getint("TELEGRAM", "topic_id"),
+        text=tg_message,
+        parse_mode="HTML",
+        # link_preview_options={"is_disabled": True},
+        disable_web_page_preview=True
+      )
+      logging.info("Sent message to Telegram: %s", botcall)
+    except Exception as e:
+      logging.error("Failed to send message to Telegram: %s", e)
+
+
 def send_position(ais, config):
   """Send APRS position packet to APRS-IS."""
   # Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
@@ -516,6 +537,7 @@ def send_position(ais, config):
   altstr = _alt_to_aprs(cur_alt)
   payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{altstr}{comment}"
   packet = f"{config.call}>APP642:{payload}"
+  logs_to_telegram(packet)
   logging.info(packet)
   try:
     ais.sendall(packet)
@@ -563,12 +585,14 @@ def main():
     memused = get_memused()
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(config.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
+    logs_to_telegram(telemetry)
     logging.info(telemetry)
     uptime = get_uptime()
     voltage = get_current_volt()
     nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
     status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
     ais.sendall(status)
+    logs_to_telegram(status)
     logging.info(status)
     randsleep = int(random.uniform(config.sleep - 30, config.sleep + 30))
     logging.info("Sleeping for %d seconds", randsleep)
