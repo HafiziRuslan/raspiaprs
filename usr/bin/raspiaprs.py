@@ -447,17 +447,7 @@ def get_uptime():
   with open(UPTIME_FILE) as upf:
     uptime_seconds = float(upf.readline().split()[0])
     uptime = dt.timedelta(seconds=uptime_seconds)
-  return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f').replace(' seconds', 's').replace(' and', ',').replace(' minutes', 'mi').replace(' hours', 'h').replace(' days', 'd').replace(' weeks', 'w').replace(' months', 'mo').replace(' years', 'y').replace(', ', ',')}"
-
-
-def get_current_volt():
-  """Get current voltage"""
-  try:
-    mvolts = subprocess.check_output("vcgencmd measure_volts", shell=True, text=True).strip()
-    voltinfo = mvolts
-  except (IOError, ValueError, IndexError, subprocess.CalledProcessError):
-    return 0
-  return voltinfo
+  return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f')}"
 
 
 def get_mmdvminfo():
@@ -590,9 +580,8 @@ def main():
     logs_to_telegram(telemetry)
     logging.info(telemetry)
     uptime = get_uptime()
-    voltage = get_current_volt()
     nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
-    status = "{0}>APP642:>{1}, {2}, {3}".format(config.call, nowz, voltage, uptime)
+    status = "{0}>APP642:>{1}, {2}".format(config.call, nowz, uptime)
     ais.sendall(status)
     logs_to_telegram(status)
     logging.info(status)
