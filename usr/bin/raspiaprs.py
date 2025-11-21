@@ -578,8 +578,10 @@ def main():
   ais = ais_connect(config)
   send_header(ais, config)
   for sequence in Sequence():
-    if sequence % 6 == 1:
+    if sequence % 12 == 1:
       send_header(ais, config)
+    if sequence % 2 == 1:
+      send_position(ais, config)
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
