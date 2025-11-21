@@ -246,7 +246,6 @@ def get_gpsd_coordinate():
         alt = result.get("alt", "0.0")
         if lat != "0.0" and lon != "0.0" and alt != "0.0":
           logging.info("GPSD Position: %f, %f, %f", lat, lon, alt)
-        else:
           parser = ConfigParser()
           with open(CONFIG_FILE, "r") as fdc:
             parser.read_file(fdc)
@@ -258,7 +257,7 @@ def get_gpsd_coordinate():
           Config.latitude = lat
           Config.longitude = lon
           Config.altitude = alt
-          return lat, lon, alt
+        return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
     return 0, 0, 0
