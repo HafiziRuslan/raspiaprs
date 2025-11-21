@@ -234,13 +234,17 @@ class Sequence(object):
 
 def get_gpsd_coordinate():
   """Get latitude and longitude from GPSD."""
+  logging.info("Trying to figure out the coordinate using GPSD")
+  lat: str = "0.0"
+  lon: str = "0.0"
+  alt: str = "0.0"
   try:
     with GPSDClient() as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
-        lat = result.get("lat", "n/a")
-        lon = result.get("lon", "n/a")
-        alt = result.get("alt", "n/a")
-        if lat != "n/a" and lon != "n/a" and alt != "n/a":
+        lat = result.get("lat", "0.0")
+        lon = result.get("lon", "0.0")
+        alt = result.get("alt", "0.0")
+        if lat != "0.0" and lon != "0.0" and alt != "0.0":
           logging.info("GPSD Position: %f, %f, %f", lat, lon, alt)
         else:
           parser = ConfigParser()
@@ -261,6 +265,7 @@ def get_gpsd_coordinate():
 
 
 def get_modemmanager_coordinates():
+  """Get latitude and longitude from ModemManager."""
   logging.info("Trying to figure out the coordinate using ModemManager")
   lat: str = "0.0"
   lon: str = "0.0"
