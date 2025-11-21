@@ -278,8 +278,20 @@ def get_modemmanager_coordinates():
         lon = str(line.split(":")[1].strip())
       if line.startswith("Altitude:"):
         alt = str(line.split(":")[1].strip())
-    logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
-    return lat, lon, alt
+      if lat != "0.0" and lon != "0.0" and alt != "0.0":
+        logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
+        parser = ConfigParser()
+        with open(CONFIG_FILE, "r") as fdc:
+          parser.read_file(fdc)
+          parser.set("APRS", "latitude", str(lat))
+          parser.set("APRS", "longitude", str(lon))
+          parser.set("APRS", "altitude", str(alt))
+        with open(CONFIG_FILE, "w") as fdc:
+          parser.write(fdc)
+        Config.latitude = lat
+        Config.longitude = lon
+        Config.altitude = alt
+      return lat, lon, alt
   except Exception as e:
     logging.error("Error getting modem manager data: %s", e)
     return lat, lon, alt
@@ -490,13 +502,18 @@ def send_position(ais, config):
     alt = max(-99999, alt)
     return "/A={0:06.0f}".format(alt)
 
+  parser = ConfigParser()
+  parser.read(CONFIG_FILE)
+  cur_lat = get_gpsd_coordinate()[0] if parser.getboolean("GPSD", "enable") else parser.get("APRS", "latitude") # type: ignore
+  cur_lon = get_gpsd_coordinate()[1] if parser.getboolean("GPSD", "enable") else parser.get("APRS", "longitude") # type: ignore
+  cur_alt = get_gpsd_coordinate()[2] if parser.getboolean("GPSD", "enable") else parser.get("APRS", "altitude") # type: ignore
   mmdvminfo = get_mmdvminfo()
   osinfo = get_osinfo()
   comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/raspiaprs"
   timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
-  latstr = _lat_to_aprs(config.latitude)
-  lonstr = _lon_to_aprs(config.longitude)
-  altstr = _alt_to_aprs(config.altitude)
+  latstr = _lat_to_aprs(cur_lat)
+  lonstr = _lon_to_aprs(cur_lon)
+  altstr = _alt_to_aprs(cur_alt)
   payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{altstr}{comment}"
   packet = f"{config.call}>APP642:{payload}"
   logging.info(packet)
