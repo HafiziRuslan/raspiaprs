@@ -238,7 +238,7 @@ def get_gpsd_coordinate():
     with GPSDClient() as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
         lat = result.get("lat", "n/a")
-        lon =result.get("lon", "n/a")
+        lon = result.get("lon", "n/a")
         alt = result.get("alt", "n/a")
         if lat != "n/a" and lon != "n/a" and alt != "n/a":
           logging.info("GPSD Position: %f, %f, %f", lat, lon, alt)
