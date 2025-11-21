@@ -257,7 +257,7 @@ def get_gpsd_coordinate():
           Config.latitude = lat
           Config.longitude = lon
           Config.altitude = alt
-      return lat, lon, alt
+        return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
     return 0, 0, 0
