@@ -242,17 +242,18 @@ def get_gpsd_coordinate():
         alt = result.get("alt", "n/a")
         if lat != "n/a" and lon != "n/a" and alt != "n/a":
           logging.info("GPSD Position: %f, %f, %f", lat, lon, alt)
-        parser = ConfigParser()
-        with open(CONFIG_FILE, "r") as fdc:
-          parser.read_file(fdc)
-          parser.set("APRS", "latitude", str(lat))
-          parser.set("APRS", "longitude", str(lon))
-          parser.set("APRS", "altitude", str(alt))
-        with open(CONFIG_FILE, "w") as fdc:
-          parser.write(fdc)
-        Config.latitude = lat
-        Config.longitude = lon
-        Config.altitude = alt
+        else:
+          parser = ConfigParser()
+          with open(CONFIG_FILE, "r") as fdc:
+            parser.read_file(fdc)
+            parser.set("APRS", "latitude", str(lat))
+            parser.set("APRS", "longitude", str(lon))
+            parser.set("APRS", "altitude", str(alt))
+          with open(CONFIG_FILE, "w") as fdc:
+            parser.write(fdc)
+          Config.latitude = lat
+          Config.longitude = lon
+          Config.altitude = alt
         return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
