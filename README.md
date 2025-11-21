@@ -26,12 +26,12 @@ sudo apt update
 sudo apt install python3-pip -y
 ```
 
-The following packages are the 4 dependencies used by `raspiaprs`.
+The following packages are the 5 dependencies used by `raspiaprs`.
 
 They can be installed using the command pip:-
 
 ```bash
-sudo pip install ConfigParser aprslib humanize gpsdclient --break-system-packages
+sudo pip install ConfigParser aprslib humanize gpsdclient python-telegram-bot --break-system-packages
 ```
 
 The module `ConfigParser` should be already installed but I have found some instances where it is not.
