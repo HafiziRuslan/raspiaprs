@@ -1,11 +1,11 @@
 [Unit]
 Description=APRS Metrics
 After=network-online.target
-StartLimitIntervalSec=300
-StartLimitBurst=5
 
 [Service]
 Restart=on-failure
+StartLimitIntervalSec=300
+StartLimitBurst=5
 RestartSec=45
 ProtectSystem=true
 ProtectHome=true
