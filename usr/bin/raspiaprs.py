@@ -289,9 +289,9 @@ def get_modemmanager_coordinates():
           parser.set("APRS", "altitude", str(alt))
         with open(CONFIG_FILE, "w") as fdc:
           parser.write(fdc)
-        Config.latitude = lat
-        Config.longitude = lon
-        Config.altitude = alt
+      Config.latitude = lat
+      Config.longitude = lon
+      Config.altitude = alt
       return lat, lon, alt
   except Exception as e:
     logging.error("Error getting modem manager data: %s", e)
