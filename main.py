@@ -39,7 +39,7 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
-  filename=os.path.join(".", "logs", "raspiaprs.log"),
+  filename=os.path.join("var", "log", "raspiaprs.log"),
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
@@ -184,7 +184,7 @@ class Sequence(object):
   """Class to manage APRS sequence numbers."""
   _count = 0
   def __init__(self):
-    self.sequence_file = os.path.join(tempfile.gettempdir(), "raspiaprs.seq")
+    self.sequence_file = os.path.join("tmp", "raspiaprs.seq")
     try:
       with open(self.sequence_file) as fds:
         self._count = int(fds.readline())
@@ -213,21 +213,21 @@ class Sequence(object):
 def get_gpsd_coordinate():
   """Get latitude and longitude from GPSD."""
   logging.info("Trying to figure out the coordinate using GPSD")
-  lat: str = "0.0"
-  lon: str = "0.0"
-  alt: str = "0.0"
+  lat: float = 0.0
+  lon: float = 0.0
+  alt: float = 0.0
   try:
     with GPSDClient() as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
-        lat = result.get("lat", "0.0")
-        lon = result.get("lon", "0.0")
-        alt = result.get("alt", "0.0")
+        lat = float(result.get("lat", 0.0))
+        lon = float(result.get("lon", 0.0))
+        alt = float(result.get("alt", 0.0))
         utc = result.get("utc", dt.datetime.now(dt.timezone.utc))
-      if lat != "0.0" and lon != "0.0" and alt != "0.0":
+      if lat != 0.0 and lon != 0.0 and alt != 0.0:
         logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
-        set_key(".env", "APRS_LATITUDE", str(lat))
-        set_key(".env", "APRS_LONGITUDE", str(lon))
-        set_key(".env", "APRS_ALTITUDE", str(alt))
+        set_key(".env", "APRS_LATITUDE", float(lat))
+        set_key(".env", "APRS_LONGITUDE", float(lon))
+        set_key(".env", "APRS_ALTITUDE", float(alt))
       return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
