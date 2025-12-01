@@ -64,7 +64,11 @@ class Config(object):
     alt = float(os.getenv("APRS_ALTITUDE", 0.0))
 
     if os.getenv("GPSD_ENABLE") == "true":
-      self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
+      if get_gpsd_coordinate() != (0, 0, 0):
+        self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
+      else:
+        logging.warning("GPSD is enabled but no fix available, using previous coordinates")
+        self.latitude, self.longitude, self.altitude = lat, lon, alt
     else:
       if not lat and not lon:
         self.latitude, self.longitude = get_coordinates()
@@ -219,14 +223,11 @@ def get_gpsd_coordinate():
         lon = result.get("lon", "0.0")
         alt = result.get("alt", "0.0")
         utc = result.get("utc", dt.datetime.now(dt.timezone.utc))
-      if lat != "0.0" and lon != "0.0" and alt != "0.0":
+      if lat is not "0.0" and lon is not "0.0" and alt is not "0.0":
         logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
         set_key(".env", "APRS_LATITUDE", str(lat))
         set_key(".env", "APRS_LONGITUDE", str(lon))
         set_key(".env", "APRS_ALTITUDE", str(alt))
-      Config.latitude = lat
-      Config.longitude = lon
-      Config.altitude = alt
       return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
