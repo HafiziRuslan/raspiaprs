@@ -215,7 +215,7 @@ def get_gpsd_coordinate():
   lon: float = 0.0
   alt: float = 0.0
   try:
-    with GPSDClient() as client:
+    with GPSDClient(timeout=10) as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
         lat = float(result.get("lat", 0.0))
         lon = float(result.get("lon", 0.0))
