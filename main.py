@@ -1,39 +1,25 @@
 #!/usr/bin/python3
 
+"""RaspiAPRS: Send APRS position and telemetry from Raspberry Pi to APRS-IS."""
+
+import aprslib
 import datetime as dt
+import dotenv
+import humanize
 import json
 import logging
 import os
 import random
 import subprocess
 import sys
+import tempfile
 import time
 # import telegram
-from configparser import ConfigParser
+
+from aprslib.exceptions import ConnectionError as APRSConnectionError
+from dotenv import set_key
 from gpsdclient.client import GPSDClient
-from io import StringIO
 from urllib.request import urlopen
-
-import aprslib
-import humanize
-from aprslib.exceptions import ConnectionError
-
-# Default configuration file path
-CONFIG_FILE = "/etc/raspiaprs.conf"
-CONFIG_DEFAULT = """
-[APRS]
-call: N0CALL
-ssid: 0
-latitude: 0.0
-longitude: 0.0
-altitude: 0.0
-sleep: 600
-symbol: n
-symbol_table: /
-[APRS-IS]
-server: rotate.aprs2.net
-port: 14580
-"""
 
 # Default paths for system files
 CPUINFO_FILE = "/proc/cpuinfo"
@@ -63,53 +49,37 @@ logging.basicConfig(
 class Config(object):
   """Class to handle configuration settings."""
   def __init__(self):
-    parser = ConfigParser()
-    parser.read_file(StringIO(CONFIG_DEFAULT))
-    self._passcode = ""
-    self._call = "NOCALL"
-    self._longitude = 0.0
-    self._latitude = 0.0
-    self._altitude = 0.0
-    self._sleep = 600
-    self._symbol = "n"
-    self._symbol_table = "/"
-    self._server = "rotate.aprs2.net"
-    self._port = 14580
-    if not os.path.exists(CONFIG_FILE):
-      logging.info("Using default config")
+    dotenv.load_dotenv(".env")
+
+    call = os.getenv("APRS_CALL", "N0CALL")
+    ssid = os.getenv("APRS_SSID", "0")
+    self.call = f"{call}-{ssid}"
+    self.sleep = int(os.getenv("APRS_SLEEP", 600))
+    self.symbol_table = os.getenv("APRS_SYMBOL_TABLE", "/")
+    self.symbol = os.getenv("APRS_SYMBOL", "n")
+
+    lat = float(os.getenv("APRS_LATITUDE", 0.0))
+    lon = float(os.getenv("APRS_LONGITUDE", 0.0))
+    alt = float(os.getenv("APRS_ALTITUDE", 0.0))
+
+    if os.getenv("GPSD_ENABLE") == "true":
+      self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
     else:
-      try:
-        logging.info("Reading config file")
-        with open(CONFIG_FILE, "r") as fdc:
-          parser.read_file(fdc)
-        logging.info("Config file %s read", CONFIG_FILE)
-      except (IOError, SystemError):
-        raise SystemError("No [APRS] section configured")
-    self.call = parser.get("APRS", "call") + "-" + parser.get("APRS", "ssid")
-    self.sleep = parser.get("APRS", "sleep")
-    self.symbol_table = parser.get("APRS", "symbol_table")
-    self.symbol = parser.get("APRS", "symbol")
-    lat, lon, alt = [float(parser.get("APRS", l)) for l in ("latitude", "longitude", "altitude")]
-    if parser.getboolean("GPSD", "enable"):
-      self.latitude, self.longitude, self.altitude = get_gpsd_coordinate() # type: ignore
-    if not lat and not lon:
-      self.latitude, self.longitude = get_coordinates()
-    else:
-      self.latitude, self.longitude, self.altitude = lat, lon, alt
-    if parser.has_option("APRS-IS", "server"):
-      self.server = parser.get("APRS-IS", "server")
-    else:
-      logging.warning("Using default APRS-IS server: %s", self._server)
-      self.server = self._server
-    if parser.has_option("APRS-IS", "port"):
-      self.port = int(parser.get("APRS-IS", "port"))
-    else:
-      self.port = self._port
-    if parser.has_option("APRS", "passcode"):
-      self.passcode = parser.get("APRS", "passcode")
+      if not lat and not lon:
+        self.latitude, self.longitude = get_coordinates()
+        self.altitude = alt
+      else:
+        self.latitude, self.longitude, self.altitude = lat, lon, alt
+
+    self.server = os.getenv("APRSIS_SERVER", "rotate.aprs2.net")
+    self.port = int(os.getenv("APRSIS_PORT", 14580))
+
+    passcode = os.getenv("APRS_PASSCODE")
+    if passcode:
+      self.passcode = passcode
     else:
       logging.warning("Generating passcode")
-      self.passcode = aprslib.passcode(self.call)
+      self.passcode = aprslib.passcode(call)
 
   def __repr__(self):
     return ("<Config> call: {0.call}, passcode: {0.passcode} - {0.latitude}/{0.longitude}/{0.altitude}").format(self)
@@ -207,7 +177,7 @@ class Sequence(object):
   """Class to manage APRS sequence numbers."""
   _count = 0
   def __init__(self):
-    self.sequence_file = "/tmp/raspiaprs.seq"
+    self.sequence_file = os.path.join(tempfile.gettempdir(), "raspiaprs.seq")
     try:
       with open(self.sequence_file) as fds:
         self._count = int(fds.readline())
@@ -245,57 +215,53 @@ def get_gpsd_coordinate():
         lat = result.get("lat", "0.0")
         lon = result.get("lon", "0.0")
         alt = result.get("alt", "0.0")
+        utc = result.get("utc", dt.datetime.now(dt.timezone.utc))
       if lat != "0.0" and lon != "0.0" and alt != "0.0":
-        logging.info("GPSD Position: %f, %f, %f", lat, lon, alt)
-        parser = ConfigParser()
-        with open(CONFIG_FILE, "r") as fdc:
-          parser.read_file(fdc)
-          parser.set("APRS", "latitude", str(lat))
-          parser.set("APRS", "longitude", str(lon))
-          parser.set("APRS", "altitude", str(alt))
-        with open(CONFIG_FILE, "w") as fdc:
-          parser.write(fdc)
+        logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
+        set_key(".env", "APRS_LATITUDE", str(lat))
+        set_key(".env", "APRS_LONGITUDE", str(lon))
+        set_key(".env", "APRS_ALTITUDE", str(alt))
       Config.latitude = lat
       Config.longitude = lon
       Config.altitude = alt
       return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
-    return 0, 0, 0
+    return (0, 0, 0)
 
 
-def get_modemmanager_coordinates():
-  """Get latitude and longitude from ModemManager."""
-  logging.info("Trying to figure out the coordinate using ModemManager")
-  lat: str = "0.0"
-  lon: str = "0.0"
-  alt: str = "0.0"
-  try:
-    mm_output = subprocess.run(args=["sudo", "/home/pi-star/raspiaprs/mmcli_loc_get.sh"], capture_output=True, text=True).stdout.splitlines()
-    for line in mm_output:
-      if line.startswith("Latitude:"):
-        lat = str(line.split(":")[1].strip())
-      if line.startswith("Longitude:"):
-        lon = str(line.split(":")[1].strip())
-      if line.startswith("Altitude:"):
-        alt = str(line.split(":")[1].strip())
-      if lat != "0.0" and lon != "0.0" and alt != "0.0":
-        logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
-        parser = ConfigParser()
-        with open(CONFIG_FILE, "r") as fdc:
-          parser.read_file(fdc)
-          parser.set("APRS", "latitude", str(lat))
-          parser.set("APRS", "longitude", str(lon))
-          parser.set("APRS", "altitude", str(alt))
-        with open(CONFIG_FILE, "w") as fdc:
-          parser.write(fdc)
-      Config.latitude = lat
-      Config.longitude = lon
-      Config.altitude = alt
-      return lat, lon, alt
-  except Exception as e:
-    logging.error("Error getting modem manager data: %s", e)
-    return lat, lon, alt
+# def get_modemmanager_coordinates():
+#   """Get latitude and longitude from ModemManager."""
+#   logging.info("Trying to figure out the coordinate using ModemManager")
+#   lat: str = "0.0"
+#   lon: str = "0.0"
+#   alt: str = "0.0"
+#   try:
+#     mm_output = subprocess.run(args=["sudo", "/home/pi-star/raspiaprs/mmcli_loc_get.sh"], capture_output=True, text=True).stdout.splitlines()
+#     for line in mm_output:
+#       if line.startswith("Latitude:"):
+#         lat = str(line.split(":")[1].strip())
+#       if line.startswith("Longitude:"):
+#         lon = str(line.split(":")[1].strip())
+#       if line.startswith("Altitude:"):
+#         alt = str(line.split(":")[1].strip())
+#       if lat != "0.0" and lon != "0.0" and alt != "0.0":
+#         logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
+#         parser = ConfigParser()
+#         with open(".env", "r") as fdc:
+#           parser.read_file(fdc)
+#           parser.set("APRS", "latitude", str(lat))
+#           parser.set("APRS", "longitude", str(lon))
+#           parser.set("APRS", "altitude", str(alt))
+#         with open(".env", "w") as fdc:
+#           parser.write(fdc)
+#       Config.latitude = lat
+#       Config.longitude = lon
+#       Config.altitude = alt
+#       return lat, lon, alt
+#   except Exception as e:
+#     logging.error("Error getting modem manager data: %s", e)
+#     return lat, lon, alt
 
 
 def get_coordinates():
@@ -303,15 +269,19 @@ def get_coordinates():
   logging.info("Trying to figure out the coordinate using your IP address")
   url = "http://ip-api.com/json/"
   try:
-    response = urlopen(url)
-    _data = response.read()
-    data = json.loads(_data.decode())
-  except IOError as err:
-    logging.error(err)
+    with urlopen(url) as response:
+      _data = response.read()
+      data = json.loads(_data.decode())
+  except Exception as err:
+    logging.error("Failed to fetch coordinates from %s: %s", url, err)
     return (0, 0)
   else:
-    logging.info("IP-Position: %f, %f", data["lat"], data["lon"])
-    return data["lat"], data["lon"]
+    try:
+      logging.info("IP-Position: %f, %f", data["lat"], data["lon"])
+      return data["lat"], data["lon"]
+    except (KeyError, TypeError) as err:
+      logging.error("Unexpected response format: %s", err)
+      return (0, 0)
 
 
 def get_cpuload():
@@ -323,7 +293,7 @@ def get_cpuload():
     return 0
   try:
     load5 = float(loadstr.split()[1])
-    corecount = float(subprocess.check_output(f"grep -c '^processor' {CPUINFO_FILE}", shell=True, text=True).strip())
+    corecount = float(subprocess.check_output(["grep", "-c", "^processor", CPUINFO_FILE], text=True).strip())
   except ValueError:
     return 0
   return int((load5 / corecount) * 10000)
@@ -395,13 +365,13 @@ def get_osinfo():
 
 def get_dmrmaster():
   """Get connected DMR master from DMRGateway log files."""
-  parser = ConfigParser()
   dmr_master = ""
+  # We need to parse MMDVMHost to see if DMR is enabled.
+  # A simple string search is easier than using a full ini parser.
   with open(MMDVMHOST_FILE, "r") as mmh:
-    parser.read_file(mmh)
-    if parser.getboolean("DMR", "Enable"):
-      log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
+    if "Enable=1" in mmh.read():
       log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
+      log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
       log_master_string = "Logged into the master successfully"
       log_ref_string = "XLX, Linking"
       # log_master_dc_string = "Closing DMR Network"
@@ -411,14 +381,16 @@ def get_dmrmaster():
       dmrmaster = list()
       dmrmasters = list()
       try:
-        master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-        # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_now}', shell=True, text=True).splitlines()
-        ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_now} | tail -1', shell=True, text=True).splitlines()
+        master_line = subprocess.check_output(["grep", log_master_string, log_dmrgw_now], text=True).splitlines()
+        # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
+        ref_line = subprocess.check_output(["grep", log_ref_string, log_dmrgw_now], text=True).splitlines()
+        ref_line = ref_line[-1:] if ref_line else []
       except subprocess.CalledProcessError:
         try:
-          master_line = subprocess.check_output(f'grep "{log_master_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
-          # master_dc_line = subprocess.check_output(f'grep "{log_master_dc_string}" {log_dmrgw_previous}', shell=True, text=True).splitlines()
-          ref_line = subprocess.check_output(f'grep "{log_ref_string}" {log_dmrgw_previous} | tail -1', shell=True, text=True).splitlines()
+          master_line = subprocess.check_output(["grep", log_master_string, log_dmrgw_previous], text=True).splitlines()
+          # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_previous], text=True).splitlines()
+          ref_line = subprocess.check_output(["grep", log_ref_string, log_dmrgw_previous], text=True).splitlines()
+          ref_line = ref_line[-1:] if ref_line else []
         except subprocess.CalledProcessError:
           pass
       master_line_count = len(master_line)
@@ -452,21 +424,27 @@ def get_uptime():
 
 def get_mmdvminfo():
   """Get MMDVM configured frequency and color code."""
-  parser = ConfigParser()
+  # Using string parsing to avoid a full dependency for a few values.
+  rx_freq, tx_freq, color_code, dmr_enabled = 0, 0, "1", False
   with open(MMDVMHOST_FILE, "r") as mmh:
-    parser.read_file(mmh)
-    rx = round(int(parser.get("Info", "RXFrequency")) / 1000000, 6)
-    tx = round(int(parser.get("Info", "TXFrequency")) / 1000000, 6)
-    if tx > rx:
-      shift = " (" + str(round(rx - tx, 6)) + "MHz)"
-    elif tx < rx:
-      shift = " (+" + str(round(rx - tx, 6)) + "MHz)"
-    else:
-      shift = ""
-    if parser.getboolean("DMR", "Enable"):
-      cc = " DMRCC" + parser.get("DMR", "ColorCode")
-    else:
-      cc = ""
+    for line in mmh:
+      if line.startswith("RXFrequency="):
+        rx_freq = int(line.strip().split("=")[1])
+      elif line.startswith("TXFrequency="):
+        tx_freq = int(line.strip().split("=")[1])
+      elif line.startswith("ColorCode="):
+        color_code = line.strip().split("=")[1]
+      elif "[DMR]" in line:
+        dmr_enabled = "Enable=1" in next(mmh, "")
+
+  rx = round(rx_freq / 1000000, 6)
+  tx = round(tx_freq / 1000000, 6)
+  shift = ""
+  if tx > rx:
+    shift = f" ({round(rx - tx, 6)}MHz)"
+  elif tx < rx:
+    shift = f" (+{round(rx - tx, 6)}MHz)"
+  cc = f" DMRCC{color_code}" if dmr_enabled else ""
   return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
@@ -490,7 +468,7 @@ def get_mmdvminfo():
 #       logging.error("Failed to send message to Telegram: %s", e)
 
 
-def send_position(ais, config):
+def send_position(ais, cfg):
   """Send APRS position packet to APRS-IS."""
   # Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
   def _lat_to_aprs(lat):
@@ -513,11 +491,12 @@ def send_position(ais, config):
     alt = max(-99999, alt)
     return "/A={0:06.0f}".format(alt)
 
-  parser = ConfigParser()
-  parser.read(CONFIG_FILE)
-  cur_lat = get_gpsd_coordinate()[0] if parser.getboolean("GPSD", "enable") else parser.get("APRS", "latitude") # type: ignore
-  cur_lon = get_gpsd_coordinate()[1] if parser.getboolean("GPSD", "enable") else parser.get("APRS", "longitude") # type: ignore
-  cur_alt = get_gpsd_coordinate()[2] if parser.getboolean("GPSD", "enable") else parser.get("APRS", "altitude") # type: ignore
+  if os.getenv("GPSD_ENABLE"):
+    cur_lat, cur_lon, cur_alt = get_gpsd_coordinate()
+  else:
+    cur_lat = float(os.getenv("APRS_LATITUDE", cfg.latitude))
+    cur_lon = float(os.getenv("APRS_LONGITUDE", cfg.longitude))
+    cur_alt = float(os.getenv("APRS_ALTITUDE", cfg.altitude))
   mmdvminfo = get_mmdvminfo()
   osinfo = get_osinfo()
   comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/raspiaprs"
@@ -525,35 +504,35 @@ def send_position(ais, config):
   latstr = _lat_to_aprs(cur_lat)
   lonstr = _lon_to_aprs(cur_lon)
   altstr = _alt_to_aprs(cur_alt)
-  payload = f"/{timestamp}{latstr}{config.symbol_table}{lonstr}{config.symbol}{altstr}{comment}"
-  packet = f"{config.call}>APP642:{payload}"
+  payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
+  packet = f"{cfg.call}>APP642:{payload}"
   # logs_to_telegram(packet)
   logging.info(packet)
   try:
     ais.sendall(packet)
-  except ConnectionError as err:
+  except APRSConnectionError as err:
     logging.warning(err)
 
 
-def send_header(ais, config):
+def send_header(ais, cfg):
   """Send APRS header information to APRS-IS."""
-  send_position(ais, config)
+  send_position(ais, cfg)
   try:
-    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes".format(config.call))
-    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0".format(config.call))
-  except ConnectionError as err:
+    ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(cfg.call))
+    ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes".format(cfg.call))
+    ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0".format(cfg.call))
+  except APRSConnectionError as err:
     logging.warning(err)
 
 
-def ais_connect(config):
+def ais_connect(cfg):
   """Establish connection to APRS-IS with retries."""
-  logging.info("Connecting to APRS-IS server %s:%d as %s", config.server, config.port, config.call)
-  ais = aprslib.IS(config.call, passwd=config.passcode, host=config.server, port=config.port)
-  for retry in range(5):
+  logging.info("Connecting to APRS-IS server %s:%d as %s", cfg.server, cfg.port, cfg.call)
+  ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port)
+  for _ in range(5):
     try:
       ais.connect()
-    except ConnectionError as err:
+    except APRSConnectionError as err:
       logging.warning(err)
       time.sleep(15)
     else:
@@ -564,28 +543,28 @@ def ais_connect(config):
 
 def main():
   """Main function to run the APRS reporting loop."""
-  config = Config()
-  ais = ais_connect(config)
-  send_header(ais, config)
+  cfg = Config()
+  ais = ais_connect(cfg)
+  send_header(ais, cfg)
   for sequence in Sequence():
     if sequence % 12 == 1:
-      send_header(ais, config)
+      send_header(ais, cfg)
     if sequence % 2 == 1:
-      send_position(ais, config)
+      send_position(ais, cfg)
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
-    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(config.call, sequence, temp, cpuload, memused)
+    telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
     # logs_to_telegram(telemetry)
     logging.info(telemetry)
     uptime = get_uptime()
-    nowz = f"time={dt.datetime.now(dt.UTC).strftime('%d%H%Mz')}"
-    status = "{0}>APP642:>{1}, {2}".format(config.call, nowz, uptime)
+    nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
+    status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
     ais.sendall(status)
     # logs_to_telegram(status)
     logging.info(status)
-    randsleep = int(random.uniform(config.sleep - 30, config.sleep + 30))
+    randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
     logging.info("Sleeping for %d seconds", randsleep)
     time.sleep(randsleep)
 
