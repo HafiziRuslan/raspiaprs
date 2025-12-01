@@ -39,7 +39,7 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
-  filename=os.path.join("var", "log", "raspiaprs.log"),
+  filename=os.path.join("tmp", "raspiaprs.log"),
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
