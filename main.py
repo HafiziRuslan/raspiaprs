@@ -37,7 +37,7 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
-  filename=os.path.join("tmp", "raspiaprs.log"),
+  filename=os.path.join("/tmp", "raspiaprs.log"),
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
@@ -182,7 +182,7 @@ class Sequence(object):
   """Class to manage APRS sequence numbers."""
   _count = 0
   def __init__(self):
-    self.sequence_file = os.path.join("tmp", "raspiaprs.seq")
+    self.sequence_file = os.path.join("/tmp", "raspiaprs.seq")
     try:
       with open(self.sequence_file) as fds:
         self._count = int(fds.readline())
