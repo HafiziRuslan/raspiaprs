@@ -12,15 +12,13 @@ import os
 import random
 import subprocess
 import sys
-import tempfile
-import time
 # import telegram
+import time
 
 from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
 from gpsdclient.client import GPSDClient
 from urllib.request import urlopen
-from venv import logger
 
 # Default paths for system files
 CPUINFO_FILE = "/proc/cpuinfo"
@@ -177,7 +175,7 @@ class Config(object):
   def passcode(self, val):
     self._passcode = str(val)
 
-  logger.info("Configuration: %s", dotenv.dotenv_values(".env"))
+  logging.info("Configuration: %s", dotenv.dotenv_values(".env"))
 
 
 class Sequence(object):
