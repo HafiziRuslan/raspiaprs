@@ -223,7 +223,7 @@ def get_gpsd_coordinate():
         lon = result.get("lon", "0.0")
         alt = result.get("alt", "0.0")
         utc = result.get("utc", dt.datetime.now(dt.timezone.utc))
-      if lat is not "0.0" and lon is not "0.0" and alt is not "0.0":
+      if lat != "0.0" and lon != "0.0" and alt != "0.0":
         logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
         set_key(".env", "APRS_LATITUDE", str(lat))
         set_key(".env", "APRS_LONGITUDE", str(lon))
