@@ -20,6 +20,7 @@ from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
 from gpsdclient.client import GPSDClient
 from urllib.request import urlopen
+from venv import logger
 
 # Default paths for system files
 CPUINFO_FILE = "/proc/cpuinfo"
@@ -38,7 +39,7 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
 logging.basicConfig(
-  filename="/var/log/raspiaprs.log",
+  filename=os.path.join(".", "logs", "raspiaprs.log"),
   format="%(asctime)s %(levelname)s: %(message)s",
   datefmt="%Y-%m-%dT%H:%M:%S",
   level=logging.INFO,
@@ -83,6 +84,8 @@ class Config(object):
 
   def __repr__(self):
     return ("<Config> call: {0.call}, passcode: {0.passcode} - {0.latitude}/{0.longitude}/{0.altitude}").format(self)
+
+  logger.info("Configuration: %s", repr(__repr__))
 
   @property
   def call(self):
