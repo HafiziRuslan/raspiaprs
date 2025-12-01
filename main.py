@@ -85,8 +85,6 @@ class Config(object):
   def __repr__(self):
     return ("<Config> call: {0.call}, passcode: {0.passcode} - {0.latitude}/{0.longitude}/{0.altitude}").format(self)
 
-  logger.info("Configuration: %s", repr(__repr__))
-
   @property
   def call(self):
     return self._call
@@ -174,6 +172,8 @@ class Config(object):
   @passcode.setter
   def passcode(self, val):
     self._passcode = str(val)
+
+  logger.info("Configuration: %s", dotenv.dotenv_values(".env"))
 
 
 class Sequence(object):
