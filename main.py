@@ -217,15 +217,15 @@ def get_gpsd_coordinate():
   try:
     with GPSDClient(timeout=10) as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
-        lat = float(result.get("lat", 0.0))
-        lon = float(result.get("lon", 0.0))
-        alt = float(result.get("alt", 0.0))
-        utc = result.get("utc", dt.datetime.now(dt.timezone.utc))
+        lat = result.get("lat", 0.0)
+        lon = result.get("lon", 0.0)
+        alt = result.get("alt", 0.0)
+        utc = result.get("time", dt.datetime.now(dt.timezone.utc))
       if lat != 0.0 and lon != 0.0 and alt != 0.0:
         logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
-        set_key(".env", "APRS_LATITUDE", float(lat))
-        set_key(".env", "APRS_LONGITUDE", float(lon))
-        set_key(".env", "APRS_ALTITUDE", float(alt))
+        set_key(".env", "APRS_LATITUDE", lat)
+        set_key(".env", "APRS_LONGITUDE", lon)
+        set_key(".env", "APRS_ALTITUDE", alt)
       return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
