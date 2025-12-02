@@ -17,7 +17,7 @@ import time
 
 from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
-from gpsdclient.client import GPSDClient
+from gpsdclient import GPSDClient
 from urllib.request import urlopen
 
 # Default paths for system files
