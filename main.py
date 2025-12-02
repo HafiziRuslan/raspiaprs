@@ -61,7 +61,7 @@ class Config(object):
     lon = float(os.getenv("APRS_LONGITUDE", 0.0))
     alt = float(os.getenv("APRS_ALTITUDE", 0.0))
 
-    if os.getenv("GPSD_ENABLE") == "true":
+    if os.getenv("GPSD_ENABLE"):
       self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
     else:
       if not lat and not lon:
@@ -207,26 +207,19 @@ class Sequence(object):
 def get_gpsd_coordinate():
   """Get latitude and longitude from GPSD."""
   logging.info("Trying to figure out the coordinate using GPSD")
-  lat: float = 0.0
-  lon: float = 0.0
-  alt: float = 0.0
+  lat: str = "0.0"
+  lon: str = "0.0"
+  alt: str = "0.0"
   try:
     with GPSDClient() as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
-        if not result or "class" not in result or result["class"] != "TPV":
-          continue
-        if "lat" not in result or "lon" not in result or "alt" not in result:
-          logging.warning("GPSD position data is incomplete")
-          continue
-        if result["mode"] == 2:
-          logging.info("GPSD 2D fix acquired")
-        elif result["mode"] == 3:
+        if result["mode"] == 3:
           logging.info("GPSD 3D fix acquired")
           utc = result.get("time", dt.datetime.now(dt.timezone.utc))
-          lat = result.get("lat", 0.0)
-          lon = result.get("lon", 0.0)
-          alt = result.get("alt", 0.0)
-        if lat != 0.0 and lon != 0.0 and alt != 0.0:
+          lat = result.get("lat", "n/a")
+          lon = result.get("lon", "n/a")
+          alt = result.get("alt", "n/a")
+        if lat != "n/a" and lon != "n/a" and alt != "n/a":
           logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
           set_key(".env", "APRS_LATITUDE", lat)
           set_key(".env", "APRS_LONGITUDE", lon)
@@ -234,7 +227,7 @@ def get_gpsd_coordinate():
         return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
-    return (0, 0, 0)
+    return ("0.0", "0.0", "0.0")
 
 
 # def get_modemmanager_coordinates():
@@ -501,9 +494,9 @@ def send_position(ais, cfg):
   if os.getenv("GPSD_ENABLE"):
     cur_lat, cur_lon, cur_alt = get_gpsd_coordinate()
   else:
-    cur_lat = float(os.getenv("APRS_LATITUDE", cfg.latitude))
-    cur_lon = float(os.getenv("APRS_LONGITUDE", cfg.longitude))
-    cur_alt = float(os.getenv("APRS_ALTITUDE", cfg.altitude))
+    cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
+    cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
+    cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
   mmdvminfo = get_mmdvminfo()
   osinfo = get_osinfo()
   comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/raspiaprs"
