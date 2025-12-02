@@ -207,9 +207,6 @@ class Sequence(object):
 def get_gpsd_coordinate():
   """Get latitude and longitude from GPSD."""
   logging.info("Trying to figure out the coordinate using GPSD")
-  lat: str = "0.0"
-  lon: str = "0.0"
-  alt: str = "0.0"
   try:
     with GPSDClient() as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
@@ -230,15 +227,12 @@ def get_gpsd_coordinate():
         return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
-    return ("0.0", "0.0", "0.0")
+    return (0,0,0)
 
 
 # def get_modemmanager_coordinates():
 #   """Get latitude and longitude from ModemManager."""
 #   logging.info("Trying to figure out the coordinate using ModemManager")
-#   lat: str = "0.0"
-#   lon: str = "0.0"
-#   alt: str = "0.0"
 #   try:
 #     mm_output = subprocess.run(args=["sudo", "/home/pi-star/raspiaprs/mmcli_loc_get.sh"], capture_output=True, text=True).stdout.splitlines()
 #     for line in mm_output:
