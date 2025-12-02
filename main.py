@@ -547,7 +547,7 @@ async def main():
     if sequence % 12 == 1:
       send_header(ais, cfg)
     if sequence % 2 == 1:
-      await send_position(ais, cfg)
+      send_position(ais, cfg)
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
