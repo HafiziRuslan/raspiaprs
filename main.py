@@ -62,11 +62,7 @@ class Config(object):
     alt = float(os.getenv("APRS_ALTITUDE", 0.0))
 
     if os.getenv("GPSD_ENABLE") == "true":
-      if get_gpsd_coordinate() != (0, 0, 0):
-        self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
-      else:
-        logging.warning("GPSD is enabled but no fix available, using previous coordinates")
-        self.latitude, self.longitude, self.altitude = lat, lon, alt
+      self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
     else:
       if not lat and not lon:
         self.latitude, self.longitude = get_coordinates()
@@ -215,7 +211,7 @@ def get_gpsd_coordinate():
   lon: float = 0.0
   alt: float = 0.0
   try:
-    with GPSDClient(timeout=10) as client:
+    with GPSDClient() as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
         lat = result.get("lat", 0.0)
         lon = result.get("lon", 0.0)
