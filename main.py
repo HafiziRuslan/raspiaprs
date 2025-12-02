@@ -568,6 +568,12 @@ async def main():
 
 if __name__ == "__main__":
   try:
+    logging.info("Starting the application...")
     asyncio.run(main())
   except KeyboardInterrupt:
+    logging.info("Stopping application...")
+  except Exception as e:
+    logging.error("An error occurred: %s", e)
+  finally:
+    logging.info("Exiting script...")
     sys.exit(0)

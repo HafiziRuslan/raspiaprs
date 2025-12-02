@@ -15,4 +15,6 @@ fi
 echo "Running main.py"
 while true; do
   python3 ./main.py
+  echo "Script exited. Waiting for 10 seconds before the next run."
+  sleep 10
 done
