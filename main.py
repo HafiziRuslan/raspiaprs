@@ -2,6 +2,7 @@
 
 """RaspiAPRS: Send APRS position and telemetry from Raspberry Pi to APRS-IS."""
 
+import asyncio
 import aprslib
 import datetime as dt
 import dotenv
@@ -12,7 +13,7 @@ import os
 import random
 import subprocess
 import sys
-# import telegram
+import telegram
 import time
 
 from aprslib.exceptions import ConnectionError as APRSConnectionError
@@ -445,27 +446,26 @@ def get_mmdvminfo():
   return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-# def logs_to_telegram(tg_message: str):
-#   """Send log message to Telegram channel."""
-#   parser = ConfigParser()
-#   parser.read(CONFIG_FILE)
-#   if parser.getboolean("TELEGRAM", "enable"):
-#     tgbot = telegram.Bot(token=parser.get("TELEGRAM", "token"))
-#     try:
-#       botcall = tgbot.send_message(
-#         chat_id=parser.get("TELEGRAM", "chat_id"),
-#         message_thread_id=parser.getint("TELEGRAM", "topic_id"),
-#         text=tg_message,
-#         parse_mode="HTML",
-#         # link_preview_options={"is_disabled": True},
-#         disable_web_page_preview=True
-#       )
-#       logging.info("Sent message to Telegram: %s", botcall)
-#     except Exception as e:
-#       logging.error("Failed to send message to Telegram: %s", e)
+async def logs_to_telegram(tg_message: str):
+  """Send log message to Telegram channel."""
+  if os.getenv("TELEGRAM_ENABLE"):
+    tgbot = telegram.Bot(os.getenv("TELEGRAM_BOT_TOKEN"))
+    async with tgbot:
+      try:
+        botcall = await tgbot.send_message(
+          chat_id=os.getenv("TELEGRAM_CHAT_ID"),
+          message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
+          text=tg_message,
+          parse_mode="HTML",
+          # link_preview_options={"is_disabled": True},
+          disable_web_page_preview=True
+        )
+        logging.info("Sent message to Telegram: %s", botcall)
+      except Exception as e:
+        logging.error("Failed to send message to Telegram: %s", e)
 
 
-def send_position(ais, cfg):
+async def send_position(ais, cfg):
   """Send APRS position packet to APRS-IS."""
   # Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
   def _lat_to_aprs(lat):
@@ -503,7 +503,7 @@ def send_position(ais, cfg):
   altstr = _alt_to_aprs(cur_alt)
   payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
   packet = f"{cfg.call}>APP642:{payload}"
-  # logs_to_telegram(packet)
+  await logs_to_telegram(packet)
   logging.info(packet)
   try:
     ais.sendall(packet)
@@ -538,7 +538,7 @@ def ais_connect(cfg):
   sys.exit(getattr(os, "EX_NOHOST", 1))
 
 
-def main():
+async def main():
   """Main function to run the APRS reporting loop."""
   cfg = Config()
   ais = ais_connect(cfg)
@@ -547,19 +547,19 @@ def main():
     if sequence % 12 == 1:
       send_header(ais, cfg)
     if sequence % 2 == 1:
-      send_position(ais, cfg)
+      await send_position(ais, cfg)
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
-    # logs_to_telegram(telemetry)
+    await logs_to_telegram(telemetry)
     logging.info(telemetry)
     uptime = get_uptime()
     nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
     status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
     ais.sendall(status)
-    # logs_to_telegram(status)
+    await logs_to_telegram(status)
     logging.info(status)
     randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
     logging.info("Sleeping for %d seconds", randsleep)
@@ -568,6 +568,6 @@ def main():
 
 if __name__ == "__main__":
   try:
-    main()
+    asyncio.run(main())
   except KeyboardInterrupt:
     sys.exit(0)
