@@ -503,7 +503,7 @@ async def send_position(ais, cfg):
   altstr = _alt_to_aprs(cur_alt)
   payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
   packet = f"{cfg.call}>APP642:{payload}"
-  await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nLat: {cur_lat}\nLon: {cur_lon}\nAlt: {cur_alt}m\n{comment}")
+  await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos: {cur_lat}, {cur_lon}, {cur_alt}m\n{comment}")
   logging.info(packet)
   try:
     ais.sendall(packet)
@@ -553,7 +553,7 @@ async def main():
     memused = get_memused()
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
-    await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {sequence}\nCPU Temp: {temp / 100:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nMemory Used: {memused / 1000:.2f} MBytes")
+    await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {sequence}\nCPU Temp: {temp / 1000:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nMemory Used: {memused / 1000:.2f} MBytes")
     logging.info(telemetry)
     uptime = get_uptime()
     nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
