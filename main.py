@@ -57,9 +57,9 @@ class Config(object):
     self.symbol_table = os.getenv("APRS_SYMBOL_TABLE", "/")
     self.symbol = os.getenv("APRS_SYMBOL", "n")
 
-    lat = float(os.getenv("APRS_LATITUDE", 0.0))
-    lon = float(os.getenv("APRS_LONGITUDE", 0.0))
-    alt = float(os.getenv("APRS_ALTITUDE", 0.0))
+    lat = os.getenv("APRS_LATITUDE", "0.0")
+    lon = os.getenv("APRS_LONGITUDE", "0.0")
+    alt = os.getenv("APRS_ALTITUDE", "0.0")
 
     if os.getenv("GPSD_ENABLE"):
       self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
@@ -221,9 +221,12 @@ def get_gpsd_coordinate():
           alt = result.get("alt", "n/a")
         if lat != "n/a" and lon != "n/a" and alt != "n/a":
           logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
-          set_key(".env", "APRS_LATITUDE", lat)
-          set_key(".env", "APRS_LONGITUDE", lon)
-          set_key(".env", "APRS_ALTITUDE", alt)
+          set_key(".env", "APRS_LATITUDE", lat, quote_mode="none")
+          set_key(".env", "APRS_LONGITUDE", lon, quote_mode="none")
+          set_key(".env", "APRS_ALTITUDE", alt, quote_mode="none")
+          Config.latitude = lat
+          Config.longitude = lon
+          Config.altitude = alt
         return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
