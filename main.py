@@ -218,9 +218,9 @@ def get_gpsd_coordinate():
           alt = result.get("alt", "n/a")
         if lat != "n/a" and lon != "n/a" and alt != "n/a":
           logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
-          set_key(".env", "APRS_LATITUDE", lat, quote_mode="none")
-          set_key(".env", "APRS_LONGITUDE", lon, quote_mode="none")
-          set_key(".env", "APRS_ALTITUDE", alt, quote_mode="none")
+          set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
+          set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
+          set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
           Config.latitude = lat
           Config.longitude = lon
           Config.altitude = alt
