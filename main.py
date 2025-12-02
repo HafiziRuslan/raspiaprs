@@ -449,7 +449,7 @@ def get_mmdvminfo():
 async def logs_to_telegram(tg_message: str):
   """Send log message to Telegram channel."""
   if os.getenv("TELEGRAM_ENABLE"):
-    tgbot = telegram.Bot(os.getenv("TELEGRAM_BOT_TOKEN"))
+    tgbot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
     async with tgbot:
       try:
         botcall = await tgbot.send_message(
