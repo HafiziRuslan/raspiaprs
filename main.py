@@ -511,9 +511,9 @@ async def send_position(ais, cfg):
     logging.warning(err)
 
 
-def send_header(ais, cfg):
+async def send_header(ais, cfg):
   """Send APRS header information to APRS-IS."""
-  send_position(ais, cfg)
+  await send_position(ais, cfg)
   try:
     ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(cfg.call))
     ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes".format(cfg.call))
@@ -542,23 +542,23 @@ async def main():
   """Main function to run the APRS reporting loop."""
   cfg = Config()
   ais = ais_connect(cfg)
-  send_header(ais, cfg)
+  await send_header(ais, cfg)
   for sequence in Sequence():
     if sequence % 12 == 1:
-      send_header(ais, cfg)
+      await send_header(ais, cfg)
     if sequence % 2 == 1:
-      send_position(ais, cfg)
+      await send_position(ais, cfg)
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, sequence, temp, cpuload, memused)
-    ais.sendall(telemetry)
+    await ais.sendall(telemetry)
     await logs_to_telegram(telemetry)
     logging.info(telemetry)
     uptime = get_uptime()
     nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
     status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
-    ais.sendall(status)
+    await ais.sendall(status)
     await logs_to_telegram(status)
     logging.info(status)
     randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
