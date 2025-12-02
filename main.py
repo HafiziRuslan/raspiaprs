@@ -503,7 +503,7 @@ async def send_position(ais, cfg):
   altstr = _alt_to_aprs(cur_alt)
   payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
   packet = f"{cfg.call}>APP642:{payload}"
-  await logs_to_telegram(packet)
+  await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nLat: {cur_lat}\nLon: {cur_lon}\nAlt: {cur_alt}m\n{comment}")
   logging.info(packet)
   try:
     ais.sendall(packet)
@@ -553,13 +553,13 @@ async def main():
     memused = get_memused()
     telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, sequence, temp, cpuload, memused)
     ais.sendall(telemetry)
-    await logs_to_telegram(telemetry)
+    await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {sequence}\nCPU Temp: {temp / 100:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nMemory Used: {memused / 1000:.2f} MBytes")
     logging.info(telemetry)
     uptime = get_uptime()
     nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
     status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
     ais.sendall(status)
-    await logs_to_telegram(status)
+    await logs_to_telegram(f"{cfg.call} Status:-\n\n{nowz}, {uptime}")
     logging.info(status)
     randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
     logging.info("Sleeping for %d seconds", randsleep)
