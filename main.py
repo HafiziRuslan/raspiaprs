@@ -346,14 +346,13 @@ def get_osinfo():
   try:
     with open(OS_RELEASE_FILE) as osr:
       for line in osr:
-        name = line[1].split("=", 1)[1].strip().strip('"')
+        if "ID_LIKE" in line:
+          id_like = line.split("=", 1)[1].strip().title()
         if "DEBIAN_VERSION_FULL" in line:
           debian_version_full = line.split("=", 1)[1].strip()
-        if "ID_LIKE" in line:
-          id_like = line.split("=", 1)[1].strip()
         if "VERSION_CODENAME" in line:
           version_codename = line.split("=", 1)[1].strip()
-      osname = f"{name} {debian_version_full} ({id_like}-{version_codename})"
+      osname = f"{id_like} {debian_version_full} ({version_codename})"
   except (IOError, OSError):
     logging.warning("OS release file not found: %s", OS_RELEASE_FILE)
   kernelver = ""
