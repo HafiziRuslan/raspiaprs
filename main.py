@@ -346,13 +346,12 @@ def get_osinfo():
   try:
     with open(OS_RELEASE_FILE) as osr:
       for line in osr:
-        if "NAME=" in line:
-          name = line.split("=", 1)[1].strip().strip('"')
-        if "DEBIAN_VERSION_FULL=" in line:
+        name = line[1].split("=", 1)[1].strip().strip('"')
+        if "DEBIAN_VERSION_FULL" in line:
           debian_version_full = line.split("=", 1)[1].strip()
-        if "ID_LIKE=" in line:
+        if "ID_LIKE" in line:
           id_like = line.split("=", 1)[1].strip()
-        if "VERSION_CODENAME=" in line:
+        if "VERSION_CODENAME" in line:
           version_codename = line.split("=", 1)[1].strip()
       osname = f"{name} {debian_version_full} ({id_like}-{version_codename})"
   except (IOError, OSError):
@@ -363,10 +362,10 @@ def get_osinfo():
       for line in ver:
         parts = line.split()
         if len(parts) >= 3:
-          kernelver = f"{parts[0]} {parts[2]} ({parts[4].removeprefix('(').split('-')[0]})"
+          kernelver = f"[{parts[0]} {parts[2]} ({parts[4].removeprefix('(').split('-')[0]})]"
   except (IOError, IndexError):
     logging.warning("Version file not found or unexpected format: %s", VERSION_FILE)
-  return f" {osname} [{kernelver}]"
+  return f" {osname} {kernelver}"
 
 
 def get_dmrmaster():
