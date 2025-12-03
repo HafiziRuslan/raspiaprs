@@ -29,6 +29,7 @@ nano .env
 ## Starting RasPiAPRS
 
 ```bash
+chmod a+x *.sh
 ./main.sh
 ```
 
@@ -47,7 +48,7 @@ edit the `pi-star` username into your username
 Use this command to update:-
 
 ```bash
-git pull
+git pull --autostash
 ```
 
 ## Example
