@@ -12,6 +12,7 @@ import subprocess
 import sys
 import time
 
+from urllib.request import urlopen
 import aprslib
 import dotenv
 import humanize
@@ -19,7 +20,6 @@ import telegram
 from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
 from gpsdclient import GPSDClient
-from urllib.request import urlopen
 
 # Default paths for system files
 CPUINFO_FILE = "/proc/cpuinfo"
