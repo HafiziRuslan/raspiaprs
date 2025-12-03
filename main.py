@@ -544,10 +544,10 @@ async def main():
   ais = ais_connect(cfg)
   await send_header(ais, cfg)
   for sequence in Sequence():
-    if sequence % 12 == 1:
-      await send_header(ais, cfg)
     if sequence % 2 == 1:
       await send_position(ais, cfg)
+    if sequence % 6 == 1:
+      await send_header(ais, cfg)
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
