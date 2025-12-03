@@ -233,36 +233,6 @@ def get_gpsd_coordinate():
 		logging.error("Error getting GPSD data: %s", e)
 		return "n/a", "n/a", "n/a"
 
-# def get_modemmanager_coordinates():
-# 	 """Get latitude and longitude from ModemManager."""
-# 	 logging.info("Trying to figure out the coordinate using ModemManager")
-# 	 try:
-# 		 mm_output = subprocess.run(args=["sudo", "/home/pi-star/raspiaprs/mmcli_loc_get.sh"], capture_output=True, text=True).stdout.splitlines()
-# 		 for line in mm_output:
-# 			 if line.startswith("Latitude:"):
-# 				 lat = str(line.split(":")[1].strip())
-# 			 if line.startswith("Longitude:"):
-# 				 lon = str(line.split(":")[1].strip())
-# 			 if line.startswith("Altitude:"):
-# 				 alt = str(line.split(":")[1].strip())
-# 			 if lat != "0.0" and lon != "0.0" and alt != "0.0":
-# 				 logging.info("ModemManager Position: %f, %f, %f", lat, lon, alt)
-# 				 parser = ConfigParser()
-# 				 with open(".env", "r") as fdc:
-# 					 parser.read_file(fdc)
-# 					 parser.set("APRS", "latitude", str(lat))
-# 					 parser.set("APRS", "longitude", str(lon))
-# 					 parser.set("APRS", "altitude", str(alt))
-# 				 with open(".env", "w") as fdc:
-# 					 parser.write(fdc)
-# 			 Config.latitude = lat
-# 			 Config.longitude = lon
-# 			 Config.altitude = alt
-# 			 return lat, lon, alt
-# 	 except Exception as e:
-# 		 logging.error("Error getting modem manager data: %s", e)
-# 		 return lat, lon, alt
-
 
 def get_coordinates():
 	"""Get approximate latitude and longitude using IP address lookup."""
