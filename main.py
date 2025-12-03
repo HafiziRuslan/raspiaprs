@@ -461,7 +461,7 @@ async def logs_to_telegram(tg_message: str):
           # link_preview_options={"is_disabled": True},
           disable_web_page_preview=True
         )
-        logging.info("Sent message to Telegram: %s", botcall)
+        logging.info("Sent message to Telegram: %s/%s/%s", botcall.chat_id, botcall.message_thread_id, botcall.message_id)
       except Exception as e:
         logging.error("Failed to send message to Telegram: %s", e)
 
