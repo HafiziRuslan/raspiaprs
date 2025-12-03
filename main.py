@@ -465,8 +465,11 @@ async def logs_to_telegram(tg_message: str, lat: float, lon: float):
           message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
           text=tg_message,
           parse_mode="HTML",
-          link_preview_options=[{"is_disabled": True}],
-          # disable_web_page_preview=True,
+          link_preview_options=[{
+            "is_disabled": True,
+            "prefer_small_media": True,
+            "show_above_text": True,
+            }],
         )
         logging.info("Sent message to Telegram: %s/%s/%s", botcall.chat_id, botcall.message_thread_id, botcall.message_id)
         if lat and lon:
