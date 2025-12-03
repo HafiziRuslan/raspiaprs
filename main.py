@@ -3,19 +3,19 @@
 """RaspiAPRS: Send APRS position and telemetry from Raspberry Pi to APRS-IS."""
 
 import asyncio
-import aprslib
 import datetime as dt
-import dotenv
-import humanize
 import json
 import logging
 import os
 import random
 import subprocess
 import sys
-import telegram
 import time
 
+import aprslib
+import dotenv
+import humanize
+import telegram
 from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
 from gpsdclient import GPSDClient
