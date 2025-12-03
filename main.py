@@ -172,8 +172,6 @@ class Config(object):
   def passcode(self, val):
     self._passcode = str(val)
 
-  logging.info("Configuration: %s", dotenv.dotenv_values(".env"))
-
 
 class Sequence(object):
   """Class to manage APRS sequence numbers."""
