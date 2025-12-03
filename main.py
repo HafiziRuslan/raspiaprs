@@ -403,10 +403,10 @@ def get_dmrmaster():
       # master_dc_line_count = len(master_dc_line)
       ref_line_count = len(ref_line)
       for mascount in range(master_line_count):
-        master = master_line[mascount].split()[3].split(",")[0]
+        master = master_line[mascount].split()[3].split(",")[0].replace("_", " ")
         if master == "XLX":
           for refcount in range(ref_line_count):
-            master = ref_line[refcount].split()[7] + ref_line[refcount].split()[8]
+            master = f"{ref_line[refcount].split()[7]} {ref_line[refcount].split()[8]}"
         dmrmaster.append(master)
         # for dccount in range(master_dc_line_count):
         #   master_dc = master_dc_line[dccount].split()[3].split(",")[0]
