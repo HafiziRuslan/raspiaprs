@@ -1,20 +1,21 @@
 #!/bin/bash
 set -e
+date=$(date +'%FT%T')
 if [ ! -d "venv" ]; then
-  echo "Virtual environment not found. Creating one."
+  echo $date "Virtual environment not found. Creating one."
   python3 -m venv venv
-  echo "Activating virtual environment"
+  echo $date  "Activating virtual environment"
   source venv/bin/activate
-  echo "Installing dependencies"
+  echo $date  "Installing dependencies"
   pip install -r requirements.txt
 else
-  echo "Virtual environment already exists."
-  echo "Activating virtual environment"
+  echo $date "Virtual environment already exists."
+  echo $date "Activating virtual environment"
   source venv/bin/activate
 fi
-echo "Running main.py"
+echo $date "Running main.py"
 while true; do
   python3 ./main.py
-  echo "Script exited. Waiting for 10 seconds before the next run."
-  sleep 10
+  echo $date "Script exited. Waiting for 15 seconds before the next run."
+  sleep 15
 done
