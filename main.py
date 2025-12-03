@@ -503,9 +503,9 @@ async def send_position(ais, cfg):
   osinfo = get_osinfo()
   comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/raspiaprs"
   timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
-  latstr = _lat_to_aprs(int(cur_lat))
-  lonstr = _lon_to_aprs(int(cur_lon))
-  altstr = _alt_to_aprs(int(cur_alt))
+  latstr = _lat_to_aprs(float(cur_lat))
+  lonstr = _lon_to_aprs(float(cur_lon))
+  altstr = _alt_to_aprs(float(cur_alt))
   payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
   packet = f"{cfg.call}>APP642:{payload}"
   await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos: {cur_lat}, {cur_lon}, {cur_alt}m\nComment: {comment}")
