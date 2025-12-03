@@ -222,9 +222,12 @@ def get_gpsd_coordinate():
           set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
           set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
           set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
-          Config.latitude = lat
-          Config.longitude = lon
-          Config.altitude = alt
+        else:
+          logging.info("GPSD Position not available yet")
+          continue
+        Config.latitude = lat
+        Config.longitude = lon
+        Config.altitude = alt
         return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
@@ -503,7 +506,7 @@ async def send_position(ais, cfg):
   altstr = _alt_to_aprs(cur_alt)
   payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
   packet = f"{cfg.call}>APP642:{payload}"
-  await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos: {cur_lat}, {cur_lon}, {cur_alt}m\n{comment}")
+  await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos: {cur_lat}, {cur_lon}, {cur_alt}m\nComment: {comment}")
   logging.info(packet)
   try:
     ais.sendall(packet)
