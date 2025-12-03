@@ -346,8 +346,15 @@ def get_osinfo():
   try:
     with open(OS_RELEASE_FILE) as osr:
       for line in osr:
-        if "PRETTY_NAME" in line:
-          osname = line.split("=", 1)[1].strip().strip('"')
+        if "NAME" in line:
+          name = line.split("=", 1)[1].strip().strip('"')
+        if "DEBIAN_VERSION_FULL" in line:
+          debian_version_full = line.split("=", 1)[1].strip()
+        if "ID_LIKE" in line:
+          id_like = line.split("=", 1)[1].strip()
+        if "VERSION_CODENAME" in line:
+          version_codename = line.split("=", 1)[1].strip()
+      osname = f"{name} {debian_version_full} ({id_like}, {version_codename})"
   except (IOError, OSError):
     logging.warning("OS release file not found: %s", OS_RELEASE_FILE)
   kernelver = ""
@@ -356,7 +363,7 @@ def get_osinfo():
       for line in ver:
         parts = line.split()
         if len(parts) >= 3:
-          kernelver = parts[0] + parts[2]
+          kernelver = f"{parts[0]} {parts[2]} ({parts[4].removeprefix('(').split('-')[0]})"
   except (IOError, IndexError):
     logging.warning("Version file not found or unexpected format: %s", VERSION_FILE)
   return f" {osname} [{kernelver}]"
@@ -443,11 +450,11 @@ def get_mmdvminfo():
     shift = f" ({round(rx - tx, 6)}MHz)"
   elif tx < rx:
     shift = f" (+{round(rx - tx, 6)}MHz)"
-  cc = f" DMRCC{color_code}" if dmr_enabled else ""
+  cc = f" CC{color_code}" if dmr_enabled else ""
   return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-async def logs_to_telegram(tg_message: str):
+async def logs_to_telegram(tg_message: str, lat: float, lon: float):
   """Send log message to Telegram channel."""
   if os.getenv("TELEGRAM_ENABLE"):
     tgbot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
@@ -458,10 +465,18 @@ async def logs_to_telegram(tg_message: str):
           message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
           text=tg_message,
           parse_mode="HTML",
-          # link_preview_options={"is_disabled": True},
-          disable_web_page_preview=True
+          link_preview_options=[{"is_disabled": True}],
+          # disable_web_page_preview=True,
         )
         logging.info("Sent message to Telegram: %s/%s/%s", botcall.chat_id, botcall.message_thread_id, botcall.message_id)
+        if lat and lon:
+          await tgbot.send_location(
+            chat_id=os.getenv("TELEGRAM_CHAT_ID"),
+            message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
+            latitude=lat,
+            longitude=lon,
+          )
+          logging.info("Sent location to Telegram: %s/%s/%s", botcall.chat_id, botcall.message_thread_id, botcall.message_id)
       except Exception as e:
         logging.error("Failed to send message to Telegram: %s", e)
 
@@ -508,7 +523,7 @@ async def send_position(ais, cfg):
   altstr = _alt_to_aprs(float(cur_alt))
   payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
   packet = f"{cfg.call}>APP642:{payload}"
-  await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos: {cur_lat}, {cur_lon}, {cur_alt}m\nComment: {comment}")
+  await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos: {cur_lat}, {cur_lon}, {cur_alt}m\nComment: {comment}", cur_lat, cur_lon)
   logging.info(packet)
   try:
     ais.sendall(packet)
@@ -564,7 +579,7 @@ async def main():
     nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
     status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
     ais.sendall(status)
-    await logs_to_telegram(f"{cfg.call} Status:-\n\n{nowz}, {uptime}")
+    await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}")
     logging.info(status)
     randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
     logging.info("Sleeping for %d seconds", randsleep)
