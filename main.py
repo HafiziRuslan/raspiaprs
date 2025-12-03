@@ -209,7 +209,7 @@ def get_gpsd_coordinate():
   """Get latitude and longitude from GPSD."""
   logging.info("Trying to figure out the coordinate using GPSD")
   try:
-    with GPSDClient() as client:
+    with GPSDClient(timeout=15) as client:
       for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
         if result["mode"] == 3:
           logging.info("GPSD 3D fix acquired")
