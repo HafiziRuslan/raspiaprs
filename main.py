@@ -220,13 +220,13 @@ def get_gpsd_coordinate():
           set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
           set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
           set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
+          Config.latitude = lat
+          Config.longitude = lon
+          Config.altitude = alt
+          return lat, lon, alt
         else:
           logging.info("GPSD Position not available yet")
           continue
-        Config.latitude = lat
-        Config.longitude = lon
-        Config.altitude = alt
-        return lat, lon, alt
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
     return (0,0,0)
