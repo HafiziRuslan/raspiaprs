@@ -454,7 +454,7 @@ def get_mmdvminfo():
   return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-async def logs_to_telegram(tg_message: str, lat: float, lon: float):
+async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
   """Send log message to Telegram channel."""
   if os.getenv("TELEGRAM_ENABLE"):
     tgbot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
@@ -472,7 +472,7 @@ async def logs_to_telegram(tg_message: str, lat: float, lon: float):
             }],
         )
         logging.info("Sent message to Telegram: %s/%s/%s", botcall.chat_id, botcall.message_thread_id, botcall.message_id)
-        if lat and lon:
+        if lat != 0 and lon != 0:
           await tgbot.send_location(
             chat_id=os.getenv("TELEGRAM_CHAT_ID"),
             message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
