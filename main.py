@@ -229,7 +229,7 @@ def get_gpsd_coordinate():
           continue
   except Exception as e:
     logging.error("Error getting GPSD data: %s", e)
-    return (0,0,0)
+    return "n/a", "n/a", "n/a"
 
 
 # def get_modemmanager_coordinates():
@@ -491,6 +491,10 @@ async def send_position(ais, cfg):
 
   if os.getenv("GPSD_ENABLE"):
     cur_lat, cur_lon, cur_alt = get_gpsd_coordinate()
+    if cur_lat == "n/a" or cur_lon == "n/a" or cur_alt == "n/a":
+      cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
+      cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
+      cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
   else:
     cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
     cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
