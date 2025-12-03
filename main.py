@@ -460,7 +460,7 @@ async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
     tgbot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
     async with tgbot:
       try:
-        botcall = await tgbot.send_message(
+        botmsg = await tgbot.send_message(
           chat_id=os.getenv("TELEGRAM_CHAT_ID"),
           message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
           text=tg_message,
@@ -471,15 +471,15 @@ async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
             "show_above_text": True,
             },
         )
-        logging.info("Sent message to Telegram: %s/%s/%s", botcall.chat_id, botcall.message_thread_id, botcall.message_id)
+        logging.info("Sent message to Telegram: %s/%s/%s", botmsg.chat_id, botmsg.message_thread_id, botmsg.message_id)
         if lat != 0 and lon != 0:
-          await tgbot.send_location(
+          botloc = await tgbot.send_location(
             chat_id=os.getenv("TELEGRAM_CHAT_ID"),
             message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
             latitude=lat,
             longitude=lon,
           )
-          logging.info("Sent location to Telegram: %s/%s/%s", botcall.chat_id, botcall.message_thread_id, botcall.message_id)
+          logging.info("Sent location to Telegram: %s/%s/%s", botloc.chat_id, botloc.message_thread_id, botloc.message_id)
       except Exception as e:
         logging.error("Failed to send message to Telegram: %s", e)
 
