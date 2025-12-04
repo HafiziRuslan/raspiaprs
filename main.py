@@ -553,7 +553,7 @@ async def main():
 		if seq % 6 == 1:
 			send_header(ais, cfg)
 		if seq % 2 == 1:
-			send_position(ais, cfg)
+			await send_position(ais, cfg)
 	temp = get_temp()
 	cpuload = get_cpuload()
 	memused = get_memused()
