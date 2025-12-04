@@ -549,10 +549,10 @@ async def main():
 	"""Main function to run the APRS reporting loop."""
 	cfg = Config()
 	ais = ais_connect(cfg)
-	await send_header(ais, cfg)
+	# await send_header(ais, cfg)
 	for sequence in Sequence():
-		if sequence % 2 == 1:
-			await send_position(ais, cfg)
+		# if sequence % 2 == 1:
+		# 	await send_position(ais, cfg)
 		if sequence % 6 == 1:
 			await send_header(ais, cfg)
 		temp = get_temp()
