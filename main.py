@@ -214,24 +214,24 @@ def get_gpsd_position():
 				if result["mode"] == 3:
 					logging.info("GPSD 3D fix acquired")
 					utc = result.get("time", dt.datetime.now(dt.timezone.utc))
-					lat = result.get("lat", "n/a")
-					lon = result.get("lon", "n/a")
-					alt = result.get("alt", "n/a")
-				if lat != "n/a" and lon != "n/a" and alt != "n/a":
-					logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
-					set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
-					set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
-					set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
-					Config.latitude = lat
-					Config.longitude = lon
-					Config.altitude = alt
-					return lat, lon, alt
+					lat = result.get("lat", 0)
+					lon = result.get("lon", 0)
+					alt = result.get("alt", 0)
+					if lat != 0 and lon != 0 and alt != 0:
+						logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
+						set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
+						set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
+						set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
+						Config.latitude = lat
+						Config.longitude = lon
+						Config.altitude = alt
+						return lat, lon, alt
 				else:
 					logging.info("GPSD Position not available yet")
-					continue
+					return (0, 0, 0)
 	except Exception as e:
 		logging.error("Error getting GPSD data: %s", e)
-		return "n/a", "n/a", "n/a"
+		return (0, 0, 0)
 
 
 def get_gpsd_sat():
@@ -494,7 +494,7 @@ async def send_position(ais, cfg):
 
 	if os.getenv("GPSD_ENABLE"):
 		cur_lat, cur_lon, cur_alt = get_gpsd_position()
-		if cur_lat == "n/a" or cur_lon == "n/a" or cur_alt == "n/a":
+		if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
 			cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
 			cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
 			cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
