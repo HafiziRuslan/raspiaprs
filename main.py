@@ -64,7 +64,7 @@ class Config(object):
 		alt = os.getenv("APRS_ALTITUDE", "0.0")
 
 		if os.getenv("GPSD_ENABLE"):
-			self.latitude, self.longitude, self.altitude = get_gpsd_coordinate()
+			self.latitude, self.longitude, self.altitude = get_gpsd_position()
 		else:
 			if not lat and not lon:
 				self.latitude, self.longitude = get_coordinates()
@@ -205,9 +205,9 @@ class Sequence(object):
 		return self._count
 
 
-def get_gpsd_coordinate():
+def get_gpsd_position():
 	"""Get latitude and longitude from GPSD."""
-	logging.info("Trying to figure out the coordinate using GPSD")
+	logging.info("Trying to figure out position using GPSD")
 	try:
 		with GPSDClient(timeout=15) as client:
 			for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
@@ -232,6 +232,20 @@ def get_gpsd_coordinate():
 	except Exception as e:
 		logging.error("Error getting GPSD data: %s", e)
 		return "n/a", "n/a", "n/a"
+
+
+def get_gpsd_sat():
+	"""Get satellite used from GPSD."""
+	logging.info("Trying to figure out satellite used using GPSD")
+	try:
+		with GPSDClient(timeout=15) as client:
+			for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
+				logging.info("GPSD satellite acquired")
+				sat = result.get("uSat", 0)
+				return sat
+	except Exception as e:
+		logging.error("Error getting GPSD data: %s", e)
+		return 0
 
 
 def get_coordinates():
@@ -263,7 +277,7 @@ def get_cpuload():
 		return 0
 	try:
 		load5 = float(loadstr.split()[1])
-		corecount = float(subprocess.check_output(["grep", "-c", "^processor", CPUINFO_FILE], text=True).strip())
+		corecount = os.cpu_count()
 	except ValueError:
 		return 0
 	return int((load5 / corecount) * 10000)
@@ -478,7 +492,7 @@ async def send_position(ais, cfg):
 		return "/A={0:06.0f}".format(alt)
 
 	if os.getenv("GPSD_ENABLE"):
-		cur_lat, cur_lon, cur_alt = get_gpsd_coordinate()
+		cur_lat, cur_lon, cur_alt = get_gpsd_position()
 		if cur_lat == "n/a" or cur_lon == "n/a" or cur_alt == "n/a":
 			cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
 			cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
@@ -508,9 +522,9 @@ async def send_header(ais, cfg):
 	"""Send APRS header information to APRS-IS."""
 	await send_position(ais, cfg)
 	try:
-		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed".format(cfg.call))
-		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes".format(cfg.call))
-		ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0".format(cfg.call))
+		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,GPSSat".format(cfg.call))
+		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mbytes,sats".format(cfg.call))
+		ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,1,0".format(cfg.call))
 	except APRSConnectionError as err:
 		logging.warning(err)
 
@@ -544,9 +558,10 @@ async def main():
 		temp = get_temp()
 		cpuload = get_cpuload()
 		memused = get_memused()
-		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, sequence, temp, cpuload, memused)
+		satlock = get_gpsd_sat()
+		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, sequence, temp, cpuload, memused, satlock)
 		ais.sendall(telemetry)
-		await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {sequence}\nCPU Temp: {temp / 1000:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nMemory Used: {memused / 1000:.2f} MBytes")
+		await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {sequence}\nCPU Temp: {temp / 1000:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nMemory Used: {memused / 1000:.2f} MBytes\nGPS Satellite: {satlock}")
 		logging.info(telemetry)
 		uptime = get_uptime()
 		nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
