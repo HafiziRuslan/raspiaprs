@@ -355,20 +355,20 @@ def get_osinfo():
 def get_dmrmaster():
 	"""Get connected DMR master from DMRGateway log files."""
 	dmr_master = ""
-	# We need to parse MMDVMHost to see if DMR is enabled.
-	# A simple string search is easier than using a full ini parser.
+	log_master_string = "Logged into the master successfully"
+	log_ref_string = "XLX, Linking"
+	# log_master_dc_string = "Closing DMR Network"
+	master_line = []
+	# master_dc_line = []
+	ref_line = []
+	dmrmaster = []
+	dmrmasters = []
+
 	with open(MMDVMHOST_FILE, "r") as mmh:
 		if "Enable=1" in mmh.read():
 			log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
 			log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
-			log_master_string = "Logged into the master successfully"
-			log_ref_string = "XLX, Linking"
-			# log_master_dc_string = "Closing DMR Network"
-			master_line = list()
-			# master_dc_line = list()
-			ref_line = list()
-			dmrmaster = list()
-			dmrmasters = list()
+
 			try:
 				master_line = subprocess.check_output(["grep", log_master_string, log_dmrgw_now], text=True).splitlines()
 				# master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
@@ -382,6 +382,7 @@ def get_dmrmaster():
 					ref_line = ref_line[-1:] if ref_line else []
 				except subprocess.CalledProcessError:
 					pass
+
 			master_line_count = len(master_line)
 			# master_dc_line_count = len(master_dc_line)
 			ref_line_count = len(ref_line)
@@ -397,7 +398,7 @@ def get_dmrmaster():
 				# 		 xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
 				# 		 dmrmaster.pop(xlxdcid)
 				# 	 dmrmaster.remove(master_dc)
-			dmrmasters = list(dict.fromkeys(dmrmaster))
+			dmrmasters = [dict.fromkeys(dmrmaster)]
 			if len(dmrmasters) > 0:
 				dmr_master = f" connected via [{', '.join(dmrmasters)}]"
 	return dmr_master
