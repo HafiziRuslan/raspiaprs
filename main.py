@@ -354,21 +354,21 @@ def get_osinfo():
 
 def get_dmrmaster():
 	"""Get connected DMR master from DMRGateway log files."""
-	dmr_master = ""
-	log_master_string = "Logged into the master successfully"
-	log_ref_string = "XLX, Linking"
-	# log_master_dc_string = "Closing DMR Network"
-	master_line = []
-	# master_dc_line = []
-	ref_line = []
-	dmrmaster = []
-	dmrmasters = []
 
 	with open(MMDVMHOST_FILE, "r") as mmh:
 		if "Enable=1" in mmh.read():
 			log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
 			log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
 
+			dmr_master: str = ""
+			log_master_string = "Logged into the master successfully"
+			log_ref_string = "XLX, Linking"
+			# log_master_dc_string = "Closing DMR Network"
+			master_line: list[str] = []
+			# master_dc_line: list[str] = []
+			ref_line: list[str] = []
+			dmrmaster: list[str] = []
+			dmrmasters: list[str] = []
 			try:
 				master_line = subprocess.check_output(["grep", log_master_string, log_dmrgw_now], text=True).splitlines()
 				# master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
