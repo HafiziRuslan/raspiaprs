@@ -519,9 +519,8 @@ async def send_position(ais, cfg):
 		logging.warning(err)
 
 
-async def send_header(ais, cfg):
+def send_header(ais, cfg):
 	"""Send APRS header information to APRS-IS."""
-	await send_position(ais, cfg)
 	try:
 		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,GPSSat".format(cfg.call))
 		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mb,sats".format(cfg.call))
@@ -550,10 +549,9 @@ async def main():
 	"""Main function to run the APRS reporting loop."""
 	cfg = Config()
 	ais = ais_connect(cfg)
-	await send_header(ais, cfg)
 	for seq in Sequence():
 		if seq % 6 == 1:
-			await send_header(ais, cfg)
+			send_header(ais, cfg)
 		if seq % 2 == 1:
 			await send_position(ais, cfg)
 	temp = get_temp()
