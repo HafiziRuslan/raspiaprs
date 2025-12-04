@@ -398,7 +398,7 @@ def get_dmrmaster():
 				# 		 xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
 				# 		 dmrmaster.pop(xlxdcid)
 				# 	 dmrmaster.remove(master_dc)
-			dmrmasters = [dict.fromkeys(dmrmaster)]
+			dmrmasters = list(dict.fromkeys(dmrmaster))
 			if len(dmrmasters) > 0:
 				dmr_master = f" connected via [{', '.join(dmrmasters)}]"
 	return dmr_master
