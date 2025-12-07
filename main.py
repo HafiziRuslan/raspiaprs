@@ -55,7 +55,7 @@ class Config(object):
 		call = os.getenv("APRS_CALL", "N0CALL")
 		ssid = os.getenv("APRS_SSID", "0")
 		self.call = f"{call}-{ssid}"
-		self.sleep = int(os.getenv("APRS_SLEEP", 600))
+		self.sleep = int(os.getenv("SLEEP", 600))
 		self.symbol_table = os.getenv("APRS_SYMBOL_TABLE", "/")
 		self.symbol = os.getenv("APRS_SYMBOL", "n")
 
@@ -66,7 +66,7 @@ class Config(object):
 		if os.getenv("GPSD_ENABLE"):
 			self.latitude, self.longitude, self.altitude = get_gpsd_position()
 		else:
-			if not lat and not lon:
+			if lat == "0.0" and lon == "0.0":
 				self.latitude, self.longitude = get_coordinates()
 				self.altitude = alt
 			else:
@@ -74,6 +74,7 @@ class Config(object):
 
 		self.server = os.getenv("APRSIS_SERVER", "rotate.aprs2.net")
 		self.port = int(os.getenv("APRSIS_PORT", 14580))
+		self.filter = os.getenv("APRSIS_FILTER", "m/50")
 
 		passcode = os.getenv("APRS_PASSCODE")
 		if passcode:
@@ -207,18 +208,18 @@ class Sequence(object):
 
 def get_gpsd_position():
 	"""Get latitude and longitude from GPSD."""
-	logging.info("Trying to figure out position using GPSD")
+	logging.info("Trying to figure out position using GPS")
 	try:
-		with GPSDClient(timeout=15) as client:
+		with GPSDClient(host=os.getenv("GPSD_HOST", "localhost"), port=int(os.getenv("GPSD_PORT", 2947)), timeout=15) as client:
 			for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
-				if result["mode"] == 3:
-					logging.info("GPSD 3D fix acquired")
+				if result["class"] == "TPV":
+					logging.info("GPS 3D fix acquired")
 					utc = result.get("time", dt.datetime.now(dt.timezone.utc))
 					lat = result.get("lat", 0)
 					lon = result.get("lon", 0)
 					alt = result.get("alt", 0)
 					if lat != 0 and lon != 0 and alt != 0:
-						logging.info("%s | GPSD Position: %s, %s, %s", utc, lat, lon, alt)
+						logging.info("%s | GPS Position: %s, %s, %s", utc, lat, lon, alt)
 						set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
 						set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
 						set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
@@ -227,24 +228,24 @@ def get_gpsd_position():
 						Config.altitude = alt
 						return lat, lon, alt
 				else:
-					logging.info("GPSD Position not available yet")
+					logging.info("GPS Position not available yet")
 					return (0, 0, 0)
 	except Exception as e:
-		logging.error("Error getting GPSD data: %s", e)
+		logging.error("Error getting GPS data: %s", e)
 		return (0, 0, 0)
 
 
 def get_gpsd_sat():
 	"""Get satellite used from GPSD."""
-	logging.info("Trying to figure out satellite used using GPSD")
+	logging.info("Trying to figure out satellite used using GPS")
 	try:
-		with GPSDClient(timeout=15) as client:
+		with GPSDClient(host=os.getenv("GPSD_HOST", "localhost"), port=int(os.getenv("GPSD_PORT", 2947)), timeout=15) as client:
 			for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
-				logging.info("GPSD satellite acquired")
+				logging.info("GPS satellite acquired")
 				sat = result.get("uSat", 0)
 				return sat
 	except Exception as e:
-		logging.error("Error getting GPSD data: %s", e)
+		logging.error("Error getting GPS data: %s", e)
 		return 0
 
 
@@ -532,7 +533,7 @@ def send_header(ais, cfg):
 def ais_connect(cfg):
 	"""Establish connection to APRS-IS with retries."""
 	logging.info("Connecting to APRS-IS server %s:%d as %s", cfg.server, cfg.port, cfg.call)
-	ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port)
+	ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port).set_filter(cfg.filter)
 	for _ in range(5):
 		try:
 			ais.connect()
