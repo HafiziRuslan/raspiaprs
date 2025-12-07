@@ -533,9 +533,10 @@ def send_header(ais, cfg):
 def ais_connect(cfg):
 	"""Establish connection to APRS-IS with retries."""
 	logging.info("Connecting to APRS-IS server %s:%d as %s", cfg.server, cfg.port, cfg.call)
-	ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port).set_filter(cfg.filter)
+	ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port)
 	for _ in range(5):
 		try:
+			ais.set_filter(cfg.filter)
 			ais.connect()
 		except APRSConnectionError as err:
 			logging.warning(err)
