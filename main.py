@@ -536,12 +536,12 @@ def ais_connect(cfg):
 	ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port)
 	for _ in range(5):
 		try:
-			ais.set_filter(cfg.filter)
 			ais.connect()
 		except APRSConnectionError as err:
 			logging.warning(err)
 			time.sleep(15)
 		else:
+			ais.set_filter(cfg.filter)
 			return ais
 	logging.error("Connection error, exiting")
 	sys.exit(getattr(os, "EX_NOHOST", 1))
