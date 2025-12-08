@@ -5,6 +5,7 @@ on:
     types:
       - created
       - edited
+      - published
 
 jobs:
   generate-changelog:
