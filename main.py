@@ -565,7 +565,7 @@ def send_header(ais, cfg):
         )
         ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
         ais.sendall(
-            "{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,1,0".format(cfg.call)
+            "{0}>APP642::{0:9s}:EQNS.0,0.01,0,0,0.01,0,0,0.01,0,0,1,0".format(cfg.call)
         )
     except APRSConnectionError as err:
         logging.warning(err)
