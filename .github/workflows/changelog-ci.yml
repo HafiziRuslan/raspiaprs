@@ -11,7 +11,7 @@ on:
         required: true
 
 jobs:
-  build:
+  build-changelog:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,4 +22,4 @@ jobs:
           changelog_filename: CHANGELOG.md
           config_file: .github/changelog-ci-config.json
           release_version: ${{ github.event.inputs.release_version || github.event.head_commit.id }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
