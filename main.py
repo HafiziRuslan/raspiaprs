@@ -565,7 +565,7 @@ def send_header(ais, cfg):
         )
         ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
         ais.sendall(
-            "{0}>APP642::{0:9s}:EQNS.0,0.01,0,0,0.01,0,0,0.01,0,0,1,0".format(cfg.call)
+            "{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call)
         )
     except APRSConnectionError as err:
         logging.warning(err)
@@ -608,7 +608,7 @@ async def main():
         )
         ais.sendall(telemetry)
         await logs_to_telegram(
-            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 100:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {satlock}"
+            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 1000:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {satlock}"
         )
         logging.info(telemetry)
         uptime = get_uptime()
