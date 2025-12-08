@@ -20,3 +20,8 @@ jobs:
           automatic_release_tag: 'beta'
           prerelease: true
           title: 'v0.1-beta-1'
+          files: |
+            main.sh
+            .env.SAMPLE
+            requirements.txt
+            main.py
