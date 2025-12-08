@@ -2,7 +2,8 @@ name: Changelog CI
 
 on:
   pull_request:
-    types: [opened]
+    types:
+      - opened
   push:
   workflow_dispatch:
     inputs:
@@ -22,4 +23,3 @@ jobs:
           changelog_filename: CHANGELOG.md
           config_file: .github/changelog-ci-config.json
           release_version: ${{ github.event.inputs.release_version || github.event.head_commit.id }}
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
