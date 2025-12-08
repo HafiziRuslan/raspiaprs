@@ -608,7 +608,7 @@ async def main():
         )
         ais.sendall(telemetry)
         await logs_to_telegram(
-            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 1000:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nRAM Used: {memused / 1000:.2f}MB\nGPS Satellite: {satlock}"
+            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 100:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {satlock}"
         )
         logging.info(telemetry)
         uptime = get_uptime()
