@@ -5,10 +5,10 @@ on:
     types: [opened]
   push:
   workflow_dispatch:
-    inputs:
-      release_version:
-        description: 'Set Release Version'
-        required: true
+    # inputs:
+    #   release_version:
+    #     description: 'Set Release Version'
+    #     required: true
 
 jobs:
   build:
@@ -21,4 +21,4 @@ jobs:
         with:
           changelog_filename: CHANGELOG.md
           config_file: .github/changelog-ci-config.json
-          release_version: ${{ github.event.inputs.release_version }}
+          # release_version: ${{ github.event.inputs.release_version }}
