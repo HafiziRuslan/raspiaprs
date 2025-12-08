@@ -325,7 +325,7 @@ def get_memused():
         allfreemem = freemem + swapfreemem
     except (IOError, ValueError):
         return 0
-    return int(allfreemem + buffmem + cachemem).__round__(4)
+    return int(allfreemem + buffmem + cachemem)
 
 
 def get_temp():
@@ -336,7 +336,7 @@ def get_temp():
             temperature = int(_tmp.strip())
     except (IOError, ValueError):
         temperature = 20000
-    return temperature.__round__(4)
+    return temperature
 
 
 def get_osinfo():
@@ -468,7 +468,7 @@ def get_mmdvminfo():
     return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
+async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0):
     """Send log message to Telegram channel."""
     if os.getenv("TELEGRAM_ENABLE"):
         tgbot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
@@ -573,7 +573,7 @@ def send_header(ais, cfg):
         )
         ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
         ais.sendall(
-            "{0}>APP642::{0:9s}:EQNS.0,0.01,0,0,0.01,0,0,0.01,0,0,1,0".format(cfg.call)
+            "{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,1,0".format(cfg.call)
         )
     except APRSConnectionError as err:
         logging.warning(err)
