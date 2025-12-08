@@ -284,59 +284,58 @@ def get_coordinates():
 
 def get_cpuload():
     """Get CPU load as a percentage of total capacity."""
+    load5: float = 0.0
+    corecount: int = 0
     try:
         with open(LOADAVG_FILE) as lfd:
             loadstr = lfd.readline()
-    except IOError:
-        return 0
-    try:
-        load5 = float(loadstr.split()[1])
+        load5 = loadstr.split()[1]
         corecount = os.cpu_count()
-    except ValueError:
+    except (IOError, ValueError):
         return 0
-    return int((load5 / corecount) * 10000)
+    return (load5 / corecount) * 10000
 
 
 def get_memused():
     """Get used memory in MB."""
-    freemem = 0
-    buffmem = 0
-    cachemem = 0
-    swapfreemem = 0
+    freemem: int = 0
+    buffmem: int = 0
+    cachemem: int = 0
+    swapfreemem: int = 0
     try:
         with open(MEMINFO_FILE) as pfd:
             for line in pfd:
                 if line.startswith("MemFree"):
                     parts = line.split()
                     if len(parts) > 1:
-                        freemem = int(parts[1])
+                        freemem = parts[1]
                 if line.startswith("Buffers"):
                     parts = line.split()
                     if len(parts) > 1:
-                        buffmem = int(parts[1])
+                        buffmem = parts[1]
                 if line.startswith("Cached"):
                     parts = line.split()
                     if len(parts) > 1:
-                        cachemem = int(parts[1])
+                        cachemem = parts[1]
                 if line.startswith("SwapFree"):
                     parts = line.split()
                     if len(parts) > 1:
-                        swapfreemem = int(parts[1])
+                        swapfreemem = parts[1]
         allfreemem = freemem + swapfreemem
     except (IOError, ValueError):
         return 0
-    return int(allfreemem + buffmem + cachemem)
+    return (allfreemem + buffmem + cachemem) / 100
 
 
 def get_temp():
     """Get CPU temperature in degC."""
+    temperature: int = 0
     try:
         with open(THERMAL_FILE) as tfd:
-            _tmp = tfd.readline()
-            temperature = int(_tmp.strip())
+            temperature = tfd.readline().strip()
     except (IOError, ValueError):
-        temperature = 20000
-    return temperature
+        return 0
+    return temperature / 100
 
 
 def get_osinfo():
@@ -573,7 +572,7 @@ def send_header(ais, cfg):
         )
         ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
         ais.sendall(
-            "{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,1,0".format(cfg.call)
+            "{0}>APP642::{0:9s}:EQNS.0,0.01,0,0,0.01,0,0,0.01,0,0,1,0".format(cfg.call)
         )
     except APRSConnectionError as err:
         logging.warning(err)
