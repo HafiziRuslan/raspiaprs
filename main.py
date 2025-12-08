@@ -523,8 +523,8 @@ async def send_position(ais, cfg):
 def send_header(ais, cfg):
 	"""Send APRS header information to APRS-IS."""
 	try:
-		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,MemUsed,GPSSat".format(cfg.call))
-		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,Mb,sats".format(cfg.call))
+		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSSat".format(cfg.call))
+		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
 		ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.01,0,0,0.001,0,0,1,0".format(cfg.call))
 	except APRSConnectionError as err:
 		logging.warning(err)
@@ -562,7 +562,7 @@ async def main():
 		satlock = get_gpsd_sat()
 		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, satlock)
 		ais.sendall(telemetry)
-		await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 1000:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nMemory Used: {memused / 1000:.2f} Mb\nGPS Satellite: {satlock}")
+		await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 1000:.2f}°C\nCPU Load: {cpuload / 100:.2f}%\nRAM Used: {memused / 1000:.2f}MB\nGPS Satellite: {satlock}")
 		logging.info(telemetry)
 		uptime = get_uptime()
 		nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
