@@ -1,4 +1,4 @@
-name: Merge Schedule
+name: 'Auto-Merge'
 
 on:
   pull_request:
