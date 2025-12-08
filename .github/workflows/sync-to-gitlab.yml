@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync to GitLab
-        uses: keninkujovic/gitlab-sync@2.1.0
+        uses: keninkujovic/gitlab-sync@main
         with:
           # The URL of the GitLab repository (e.g., https://gitlab.com/user/repo.git)
           gitlab_url: ${{ secrets.GITLAB_URL }}
