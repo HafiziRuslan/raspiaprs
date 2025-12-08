@@ -606,10 +606,10 @@ async def main():
             await send_position(ais, cfg)
         if seq % 6 == 1:
             send_header(ais, cfg)
-        temp = get_temp()
-        cpuload = get_cpuload()
-        memused = get_memused()
-        satlock = get_gpsd_sat()
+        temp = int(get_temp())
+        cpuload = int(get_cpuload())
+        memused = int(get_memused())
+        satlock = int(get_gpsd_sat())
         telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
             cfg.call, seq, temp, cpuload, memused, satlock
         )
