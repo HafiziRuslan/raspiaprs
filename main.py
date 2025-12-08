@@ -284,58 +284,51 @@ def get_coordinates():
 
 def get_cpuload():
     """Get CPU load as a percentage of total capacity."""
-    load5: float = 0.0
-    corecount: int = 0
     try:
         with open(LOADAVG_FILE) as lfd:
             loadstr = lfd.readline()
-        load5 = loadstr.split()[1]
+        load5 = float(loadstr.split()[1])
         corecount = os.cpu_count()
     except (IOError, ValueError):
         return 0
-    return (load5 / corecount) * 10000
+    return int((load5 / corecount) * 10000)
 
 
 def get_memused():
     """Get used memory in MB."""
-    freemem: int = 0
-    buffmem: int = 0
-    cachemem: int = 0
-    swapfreemem: int = 0
     try:
         with open(MEMINFO_FILE) as pfd:
             for line in pfd:
                 if line.startswith("MemFree"):
                     parts = line.split()
                     if len(parts) > 1:
-                        freemem = parts[1]
+                        freemem = int(parts[1])
                 if line.startswith("Buffers"):
                     parts = line.split()
                     if len(parts) > 1:
-                        buffmem = parts[1]
+                        buffmem = int(parts[1])
                 if line.startswith("Cached"):
                     parts = line.split()
                     if len(parts) > 1:
-                        cachemem = parts[1]
+                        cachemem = int(parts[1])
                 if line.startswith("SwapFree"):
                     parts = line.split()
                     if len(parts) > 1:
-                        swapfreemem = parts[1]
+                        swapfreemem = int(parts[1])
         allfreemem = freemem + swapfreemem
     except (IOError, ValueError):
         return 0
-    return (allfreemem + buffmem + cachemem) / 100
+    return int((allfreemem + buffmem + cachemem) / 100)
 
 
 def get_temp():
     """Get CPU temperature in degC."""
-    temperature: int = 0
     try:
         with open(THERMAL_FILE) as tfd:
-            temperature = tfd.readline().strip()
+            temperature = int(tfd.readline().strip())
     except (IOError, ValueError):
         return 0
-    return temperature / 100
+    return int(temperature / 100)
 
 
 def get_osinfo():
@@ -606,10 +599,10 @@ async def main():
             await send_position(ais, cfg)
         if seq % 6 == 1:
             send_header(ais, cfg)
-        temp = int(get_temp())
-        cpuload = int(get_cpuload())
-        memused = int(get_memused())
-        satlock = int(get_gpsd_sat())
+        temp = get_temp()
+        cpuload = get_cpuload()
+        memused = get_memused()
+        satlock = get_gpsd_sat()
         telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
             cfg.call, seq, temp, cpuload, memused, satlock
         )
