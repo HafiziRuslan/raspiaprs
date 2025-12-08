@@ -291,7 +291,7 @@ def get_cpuload():
         corecount = os.cpu_count()
     except (IOError, ValueError):
         return 0
-    return int((load5 / corecount) * 10000)
+    return int((load5 / corecount) * 1000)
 
 
 def get_memused():
@@ -608,7 +608,7 @@ async def main():
         )
         ais.sendall(telemetry)
         await logs_to_telegram(
-            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 1000:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {satlock}"
+            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 100:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {satlock}"
         )
         logging.info(telemetry)
         uptime = get_uptime()
