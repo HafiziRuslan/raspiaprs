@@ -12,12 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Generate Changelog
-        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
+        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.md
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
-          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          body_path: ${{ github.workspace }}-CHANGELOG.md
           append_body: true
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
