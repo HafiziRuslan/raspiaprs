@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/HafiziRuslan/raspiaprs/tree/HEAD)
+## [beta](https://github.com/HafiziRuslan/raspiaprs/tree/beta) (2025-12-09)
 
-[Full Changelog](https://github.com/HafiziRuslan/raspiaprs/compare/4de42c9871d686e6e5c3a936b1c1acc2b81bfbaf...HEAD)
+[Full Changelog](https://github.com/HafiziRuslan/raspiaprs/compare/4de42c9871d686e6e5c3a936b1c1acc2b81bfbaf...beta)
 
 **Merged pull requests:**
 
