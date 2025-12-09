@@ -30,7 +30,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body_path: ${{ github.workspace }}/CHANGELOG.md
-          append_body: true
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
           name: v0.1-beta.1
