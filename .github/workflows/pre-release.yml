@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "✏️ Generate release changelog"
+      - name: Generate CHANGELOG.md
         uses: janheinrichmerker/action-github-changelog-generator@v2.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
