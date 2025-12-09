@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   pre-release:
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -19,8 +19,7 @@ jobs:
         uses: requarks/changelog-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fromTag: master
-          toTag: master
+          tag: beta
 
       - name: Commit CHANGELOG.md
         uses: stefanzweifel/git-auto-commit-action@v7
@@ -36,8 +35,8 @@ jobs:
           append_body: true
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: 'v0.1-beta.1'
-          tag_name: 'beta'
+          name: v0.1-beta.1
+          tag_name: beta
           prerelease: true
           preserve_order: true
           files: |
