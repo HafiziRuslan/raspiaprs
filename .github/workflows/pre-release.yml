@@ -15,7 +15,6 @@ jobs:
         run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.md
       - name: Release
         uses: softprops/action-gh-release@v2
-        if: github.ref_type == 'tag'
         with:
           body_path: ${{ github.workspace }}-CHANGELOG.md
           append_body: true
