@@ -22,7 +22,7 @@ cd raspiaprs
 Copy the file `.env.SAMPLE` into `.env`, and edit the informations using your favorite editor.
 
 ```bash
-cp .env.SAMPLE .env
+cp default.env .env
 nano .env
 ```
 

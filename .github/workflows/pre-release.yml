@@ -1,21 +1,31 @@
 name: 'Release'
 
-on:
-  push:
-    branches:
-      - 'master'
+on: push
+
+permissions:
+  contents: write
 
 jobs:
   pre-release:
     runs-on: 'ubuntu-latest'
     steps:
-      - name: 'Build & test'
-        run: |
-          echo "done!"
-
-      - uses: marvinpinto/action-automatic-releases@latest
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Generate Changelog
+        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: 'beta'
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          append_body: true
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: 'v0.1-beta.1'
+          tag_name: 'beta'
           prerelease: true
-          title: '0.1-beta-1'
+          preserve_order: true
+          files: |
+            main.py
+            requirements.txt
+            default.env
