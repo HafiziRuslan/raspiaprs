@@ -11,12 +11,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Generate Changelog
-        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.md
+        with:
+          fetch-depth: 0
+
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }}
+
+      - name: Commit CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          branch: master
+          commit_message: 'docs: update CHANGELOG.md'
+          file_pattern: CHANGELOG.md
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          body_path: ${{ github.workspace }}-CHANGELOG.md
+          body_path: ${{ github.workspace }}/CHANGELOG.md
           append_body: true
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
