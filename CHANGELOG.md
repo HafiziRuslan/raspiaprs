@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T00:23:12.554166192+08:00)
+## [unreleased] - (2025-12-11T02:15:29.511365314+08:00)
 
 ### 🚀 Features
 
@@ -29,6 +29,7 @@ All notable changes to this project will be documented in this file.
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
+- 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -39,6 +40,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 🔧 chore(scripts): update uv install message
 - 🔧 chore(ci): remove changelog-ci-config.yaml
 - 📦 build(release): add main.sh to release artifacts
 - 🔧 chore(ci): update cliff.toml path in release workflow
@@ -484,4 +486,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T00:23:12.570013317+08:00)
+generated using git-cliff - (2025-12-11T02:15:29.527482904+08:00)
