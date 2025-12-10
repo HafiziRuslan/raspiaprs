@@ -3,22 +3,13 @@ name: 'Release'
 on: push
 
 jobs:
-  changelog:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@main
-
-      - name: Generate CHANGELOG
-        uses: orhun/git-cliff-action@main
-        id: git-cliff
-        with:
-          config: .github/cliff.toml
-        env:
-          OUTPUT: CHANGELOG.md
-          GITHUB_REPO: ${{ github.repository }}
 
       - name: Upload default.env
         uses: svenstaro/upload-release-action@master
@@ -52,7 +43,24 @@ jobs:
           overwrite: true
           prerelease: true
           make_latest: false
-          body: ${{ steps.git-cliff.outputs.content }}
+          body: ${{ github.event.head_commit.message }}
+
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Generate CHANGELOG
+        uses: orhun/git-cliff-action@main
+        id: git-cliff
+        with:
+          config: .github/cliff.toml
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
 
       - name: Commit CHANGELOG
         run: |
