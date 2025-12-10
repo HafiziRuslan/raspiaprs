@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-10T23:28:54.714590495+08:00)
+## [unreleased] - (2025-12-10T23:41:20.946086446+08:00)
 
 ### 🐛 Bug Fixes
 
+- ✨ refactor(main): sort import & fix identation
 - 🐛 fix(main): reduce tab spacing
 - 🐛 fix(scripts): correct virtual environment activation path
 
@@ -19,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
 - 📝 docs(changelog): update release note
@@ -475,4 +477,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-10T23:28:54.730165885+08:00)
+generated using git-cliff - (2025-12-10T23:41:20.964537568+08:00)
