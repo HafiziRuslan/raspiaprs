@@ -33,6 +33,17 @@ jobs:
           prerelease: true
           make_latest: false
 
+      - name: Upload main.sh
+        uses: svenstaro/upload-release-action@master
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: main.sh
+          release_name: v0.1-beta.2
+          tag: beta
+          overwrite: true
+          prerelease: true
+          make_latest: false
+
       - name: Upload main.py
         uses: svenstaro/upload-release-action@master
         with:
@@ -52,6 +63,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        with:
+          fetch-depth: 0
 
       - name: Generate CHANGELOG
         uses: orhun/git-cliff-action@main
