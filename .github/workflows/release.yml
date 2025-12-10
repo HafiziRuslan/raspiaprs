@@ -1,0 +1,53 @@
+name: 'Release'
+
+on: push
+
+# permissions:
+#   contents: write
+
+jobs:
+  changelog:
+    name: Generate changelog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Generate changelog
+        uses: orhun/git-cliff-action@v4
+        id: git-cliff
+        with:
+          config: .github/cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Commit
+        run: |
+          git checkout <branch>
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          set +e
+          git add CHANGELOG.md
+          git commit -m "Update changelog"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git <branch>
+
+      - name: Upload the binary releases
+        uses: svenstaro/upload-release-action@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: beta
+          overwrite: true
+          prerelease: true
+          make_latest: false
+          release_name: v0.1-beta.1
+          body: ${{ steps.git-cliff.outputs.content }}
+          file:  |
+            main.py
+            requirements.txt
+            default.env

@@ -1,3 +1,5 @@
 .env
 .vscode
 /sample
+.python-version
+*.lock
