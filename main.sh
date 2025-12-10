@@ -7,7 +7,7 @@ command_exists() {
 }
 
 if command_exists uv; then
-  echo $date "✅ uv is installed."
+  echo -n $date "✅ uv is installed."
   echo " -> Checking uv update"
   uv self update
 else
