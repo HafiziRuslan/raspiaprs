@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T02:48:09.185163988+08:00)
+## [unreleased] - (2025-12-11T02:54:16.155073487+08:00)
 
 ### 🚀 Features
 
@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(gpsd): use 'is not' for float comparison
 - 🐛 fix(repo): correct repository URL in cliff config and main script
 - ✨ refactor(main): sort import & fix identation
 - 🐛 fix(main): reduce tab spacing
@@ -25,6 +26,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -488,4 +490,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T02:48:09.202041553+08:00)
+generated using git-cliff - (2025-12-11T02:54:16.171168108+08:00)
