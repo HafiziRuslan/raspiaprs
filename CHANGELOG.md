@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-10T22:12:42.774737450+08:00)
+## [unreleased] - (2025-12-10T23:22:48.284749285+08:00)
+
+### 🐛 Bug Fixes
+
+- 🐛 fix(scripts): correct virtual environment activation path
 
 ### 💼 Other
 
@@ -14,6 +18,8 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(pyproject): update readme filename
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -22,6 +28,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 🔧 chore(ci): remove changelog-ci-config.yaml
 - 📦 build(release): add main.sh to release artifacts
 - 🔧 chore(ci): update cliff.toml path in release workflow
 - 🔧 chore(ci): update git-cliff configuration path
@@ -466,4 +473,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-10T22:12:42.792232306+08:00)
+generated using git-cliff - (2025-12-10T23:22:48.300445675+08:00)
