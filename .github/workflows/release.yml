@@ -57,7 +57,7 @@ jobs:
         uses: orhun/git-cliff-action@main
         id: git-cliff
         with:
-          config: cliff.toml
+          config: .github/cliff.toml
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
