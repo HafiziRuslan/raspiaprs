@@ -13,7 +13,7 @@ The metrics are:-
 ## Installation (Pi-Star / WPSD / AllStarLink)
 
 ```bash
-git clone https://github.com/HafiziRuslan/raspiaprs.git
+git clone https://github.com/HafiziRuslan/RasPiAPRS.git ./raspiaprs
 cd raspiaprs
 ```
 
