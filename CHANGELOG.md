@@ -1,9 +1,11 @@
 # CHANGELOG
+
 ## [unreleased]
 
 ### 📚 Documentation
 
 - Update CHANGELOG.md
+
 ## [beta] - 2025-12-09
 
 ### 🐛 Bug Fixes
