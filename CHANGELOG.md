@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T00:18:18.445609447+08:00)
+## [unreleased] - (2025-12-11T00:23:12.554166192+08:00)
+
+### 🚀 Features
+
+- ✨ feat(readme): update installation instructions
 
 ### 🐛 Bug Fixes
 
@@ -21,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -479,4 +484,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T00:18:18.461278625+08:00)
+generated using git-cliff - (2025-12-11T00:23:12.570013317+08:00)
