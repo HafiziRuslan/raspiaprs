@@ -4,12 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
-### 📚 Documentation
+### 🚀 Features
 
-- 📝 docs(ci): standardize changelog file reference
+- ✨ feat(deps): update project dependencies and tooling
 
-- change 'changelog' references to 'CHANGELOG' in release workflow
-- ensures consistency with generated file name CHANGELOG.md
+- [build] update release workflow to target v0.1-beta.2 for all assets
+- [build] update project version in pyproject.toml to v0.1-beta.2
+- [build] regenerate requirements.txt using uv, locking dependencies
+- [chore] update main.sh to use uv for environment management and dependency sync
+- [chore] replace venv with .venv directory for uv managed environment
+- [chore] install uv if not present in main.sh initialization script
 
 ---
 
