@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 
-      - name: Generate changelog
+      - name: Generate CHANGELOG
         uses: orhun/git-cliff-action@main
         id: git-cliff
         with:
@@ -54,11 +54,11 @@ jobs:
           make_latest: false
           body: ${{ steps.git-cliff.outputs.content }}
 
-      - name: Commit changelog
+      - name: Commit CHANGELOG
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           set +e
           git add CHANGELOG.md
-          git commit -m "Update changelog"
+          git commit -m "Update CHANGELOG"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
