@@ -14,10 +14,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Generate CHANGELOG.md
-        uses: janheinrichmerker/action-github-changelog-generator@v2.4
+      - name: changelog-ci
+        id: changelog-ci
+        uses: saadmk11/changelog-ci@v1.2.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          config_file: .github/changelog-ci-config.yaml
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Changelog Output
+        run: |
+          echo "${{ steps.changelog-ci.outputs.changelog }}"
+          echo "${{ steps.changelog-ci.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY
+
+      # - name: Generate CHANGELOG.md
+      #   uses: janheinrichmerker/action-github-changelog-generator@v2.4
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit CHANGELOG.md
         uses: stefanzweifel/git-auto-commit-action@v7
