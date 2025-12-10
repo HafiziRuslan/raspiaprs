@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-10T23:41:20.946086446+08:00)
+## [unreleased] - (2025-12-11T00:18:18.445609447+08:00)
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(repo): correct repository URL in cliff config and main script
 - ✨ refactor(main): sort import & fix identation
 - 🐛 fix(main): reduce tab spacing
 - 🐛 fix(scripts): correct virtual environment activation path
@@ -20,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
@@ -271,14 +273,14 @@ All notable changes to this project will be documented in this file.
 - Update CHANGELOG
 - Update changelog
 - Update changelog
-- Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/raspiaprs)
-- Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/raspiaprs)
+- Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
+- Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
 - run changelog on push
 - [Changelog CI] Add Changelog for Version ae1c38ed31d5d068814908845ff28e5e766d8146
 - Update Python versions in pylint workflow
 - Set package-ecosystem to 'pip' in dependabot config
 - Delete .github/workflows/pylint.yml
-- Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/raspiaprs)
+- Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
 - Add Pylint workflow for Python code analysis
 - Merge pull request #2 from HafiziRuslan/virtual-env
 - Add GitHub Actions workflow to sync with GitLab
@@ -477,4 +479,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-10T23:41:20.964537568+08:00)
+generated using git-cliff - (2025-12-11T00:18:18.461278625+08:00)
