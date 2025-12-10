@@ -27,10 +27,7 @@ jobs:
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: |
-            main.py
-            requirements.txt
-            default.env
+          file: main.py
           release_name: v0.1-beta.1
           tag: beta
           overwrite: true
