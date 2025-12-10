@@ -38,7 +38,7 @@ render_always = true
 # An array of regex based postprocessors to modify the changelog.
 postprocessors = [
     # Replace the placeholder <REPO> with a URL.
-    { pattern = 'https://github.com/HafiziRuslan/RPi-APRS', replace = "[RasPiAPRS](https://github.com/HafiziRuslan/raspiaprs)" },
+    { pattern = 'https://github.com/HafiziRuslan/RPi-APRS', replace = "[RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)" },
 ]
 
 [git]

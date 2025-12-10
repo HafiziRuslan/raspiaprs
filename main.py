@@ -545,7 +545,7 @@ async def send_position(ais, cfg):
         cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
     mmdvminfo = get_mmdvminfo()
     osinfo = get_osinfo()
-    comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/raspiaprs"
+    comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/RasPiAPRS"
     timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
     latstr = _lat_to_aprs(float(cur_lat))
     lonstr = _lon_to_aprs(float(cur_lon))
