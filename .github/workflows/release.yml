@@ -57,7 +57,7 @@ jobs:
         uses: orhun/git-cliff-action@main
         id: git-cliff
         with:
-          config: .github/cliff.toml
+          config: ./.github/cliff.toml
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
@@ -68,5 +68,5 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           set +e
           git add CHANGELOG.md
-          git commit -m "Update CHANGELOG"
+          git commit -m "📝 docs(changelog): update release note"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
