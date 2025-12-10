@@ -7,18 +7,17 @@ on: push
 
 jobs:
   changelog:
-    name: Generate changelog
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
       - name: Generate changelog
-        uses: orhun/git-cliff-action@v4
+        uses: orhun/git-cliff-action@main
         id: git-cliff
         with:
           config: .github/cliff.toml
@@ -27,9 +26,8 @@ jobs:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
-      - name: Commit
+      - name: Commit changelog
         run: |
-          git checkout <branch>
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           set +e
@@ -37,8 +35,8 @@ jobs:
           git commit -m "Update changelog"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git <branch>
 
-      - name: Upload the binary releases
-        uses: svenstaro/upload-release-action@latest
+      - name: Upload releases
+        uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: beta
