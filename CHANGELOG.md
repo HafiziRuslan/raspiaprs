@@ -4,16 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
-### 🚀 Features
+### ⚙️ Miscellaneous Tasks
 
-- ✨ feat(deps): update project dependencies and tooling
+- 👷 ci(release): restructure workflow jobs
 
-- [build] update release workflow to target v0.1-beta.2 for all assets
-- [build] update project version in pyproject.toml to v0.1-beta.2
-- [build] regenerate requirements.txt using uv, locking dependencies
-- [chore] update main.sh to use uv for environment management and dependency sync
-- [chore] replace venv with .venv directory for uv managed environment
-- [chore] install uv if not present in main.sh initialization script
+- rename 'changelog' job to 'release' in the main workflow file
+- move changelog generation to a separate 'changelog' job
+- update 'release' job to use the last commit message as the release body
+- ensure changelog generation runs independently after release steps
 
 ---
 
