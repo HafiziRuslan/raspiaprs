@@ -37,9 +37,9 @@ jobs:
           release_name: v0.1-beta.1
           body: ${{ steps.git-cliff.outputs.content }}
           file:  |
-            ./main.py
-            ./requirements.txt
-            ./default.env
+            ${{ github.workspace }}/main.py
+            ${{ github.workspace }}/requirements.txt
+            ${{ github.workspace }}/default.env
 
       - name: Commit changelog
         run: |
