@@ -30,16 +30,16 @@ jobs:
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: |
+            ./main.py
+            ./requirements.txt
+            ./default.env
+          release_name: v0.1-beta.1
           tag: beta
           overwrite: true
           prerelease: true
           make_latest: false
-          release_name: v0.1-beta.1
           body: ${{ steps.git-cliff.outputs.content }}
-          file:  |
-            ${{ github.workspace }}/main.py
-            ${{ github.workspace }}/requirements.txt
-            ${{ github.workspace }}/default.env
 
       - name: Commit changelog
         run: |
