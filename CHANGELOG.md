@@ -4,19 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
-### 🐛 Bug Fixes
+### 📚 Documentation
 
-- ♻️ refactor(ci): streamline release asset upload process
+- 📝 docs(ci): standardize changelog file reference
 
-- 📦 build(ci): split large upload step into multiple, focused actions for clarity
-  - Upload default.env separately
-  - Upload requirements.txt separately
-  - Upload main.py separately
-- 🔧 chore(ci): remove explicit file list from the main upload step in release workflow
-- 🔧 chore(ci): update release workflow to use explicit file uploads for assets
-- 🔧 chore(ci): correct file paths in release workflow to use correct context prefix
-- 🔧 chore(cliff): update changelog header to uppercase "CHANGELOG"
-- 🔧 chore(cliff): update changelog footer template for consistency
+- change 'changelog' references to 'CHANGELOG' in release workflow
+- ensures consistency with generated file name CHANGELOG.md
 
 ---
 
