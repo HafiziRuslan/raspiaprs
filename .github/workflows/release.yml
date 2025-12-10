@@ -25,7 +25,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: default.env
-          release_name: v0.1-beta.1
+          release_name: v0.1-beta.2
           tag: beta
           overwrite: true
           prerelease: true
@@ -36,7 +36,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: requirements.txt
-          release_name: v0.1-beta.1
+          release_name: v0.1-beta.2
           tag: beta
           overwrite: true
           prerelease: true
@@ -47,7 +47,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: main.py
-          release_name: v0.1-beta.1
+          release_name: v0.1-beta.2
           tag: beta
           overwrite: true
           prerelease: true
