@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T02:58:11.812520002+08:00)
+## [unreleased] - (2025-12-11T04:07:42.676719649+08:00)
 
 ### 🚀 Features
 
@@ -35,6 +35,7 @@ All notable changes to this project will be documented in this file.
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
+- 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -45,6 +46,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 🔧 chore(install): remove uv shell completion setup
 - 🔧 chore(scripts): improve shell script output and activation
 - 🔧 chore(scripts): update uv install message
 - 🔧 chore(ci): remove changelog-ci-config.yaml
@@ -492,4 +494,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T02:58:11.830711444+08:00)
+generated using git-cliff - (2025-12-11T04:07:42.693905415+08:00)
