@@ -229,7 +229,7 @@ def get_gpsd_position():
                     lat = result.get("lat", 0)
                     lon = result.get("lon", 0)
                     alt = result.get("alt", 0)
-                    if lat != 0 and lon != 0 and alt != 0:
+                    if lat is not 0 and lon is not 0 and alt is not 0:
                         logging.info(
                             "%s | GPS Position: %s, %s, %s", utc, lat, lon, alt
                         )
@@ -491,7 +491,7 @@ async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
                     botmsg.message_thread_id,
                     botmsg.message_id,
                 )
-                if lat != 0 and lon != 0:
+                if lat is not 0 and lon is not 0:
                     botloc = await tgbot.send_location(
                         chat_id=os.getenv("TELEGRAM_CHAT_ID"),
                         message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
