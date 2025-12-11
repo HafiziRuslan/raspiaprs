@@ -25,10 +25,10 @@ def get_gpsd_position():
 				if result["class"] == "TPV":
 					logging.info("GPS fix acquired")
 					utc = result.get("time", dt.datetime.now(dt.timezone.utc))
-					lat = result.get("lat", 0)
-					lon = result.get("lon", 0)
-					alt = result.get("alt", 0)
-					if lat != 0 and lon != 0 and alt != 0:
+					lat = result.get("lat", "0")
+					lon = result.get("lon", "0")
+					alt = result.get("alt", "0")
+					if lat != "0" and lon != "0" and alt != "0":
 						logging.info(
 							"%s | GPS Position: %s, %s, %s", utc, lat, lon, alt
 						)
@@ -51,8 +51,8 @@ def get_gpsd_sat():
 			for result in client.json_stream(filter=["SKY"]):
 				if result["class"] == "SKY":
 					logging.info("GPS Satellite acquired")
-					uSat = result.get("uSat", 0)
-					nSat = result.get("nSat", 0)
+					uSat = result.get("uSat", "0")
+					nSat = result.get("nSat", "0")
 					print(uSat, nSat)
 				else:
 					logging.info("GPS Satellite unavailable")
