@@ -22,7 +22,6 @@ from dotenv import set_key
 from gpsdclient import GPSDClient
 
 # Default paths for system files
-
 CPUINFO_FILE = "/proc/cpuinfo"
 LOADAVG_FILE = "/proc/loadavg"
 MEMINFO_FILE = "/proc/meminfo"
@@ -38,7 +37,6 @@ MMDVMLOGPREFIX = "MMDVM"
 DMRGATEWAYLOGPREFIX = "DMRGateway"
 
 # Set up logging
-
 logging.basicConfig(
 	filename=os.path.join("/tmp", "raspiaprs.log"),
 	format="%(asctime)s %(levelname)s: %(message)s",
@@ -46,9 +44,8 @@ logging.basicConfig(
 	level=logging.INFO,
 )
 
+
 # Configuration class to handle settings
-
-
 class Config(object):
 	"""Class to handle configuration settings."""
 
@@ -181,7 +178,6 @@ class Config(object):
 
 class Sequence(object):
 	"""Class to manage APRS sequence numbers."""
-
 	_count = 0
 
 	def __init__(self):
@@ -212,7 +208,7 @@ class Sequence(object):
 
 
 def get_gpsd_position():
-	"""Get latitude and longitude from GPSD."""
+	"""Get position from GPSD."""
 	logging.info("Trying to figure out position using GPS")
 	try:
 		with GPSDClient(
@@ -227,6 +223,7 @@ def get_gpsd_position():
 					lat = result.get("lat", 0)
 					lon = result.get("lon", 0)
 					alt = result.get("alt", 0)
+					# acc = result.get("sep", 0)
 					if lat != 0 and lon != 0 and alt != 0:
 						logging.info(
 							"%s | GPS Position: %s, %s, %s", utc, lat, lon, alt
@@ -247,8 +244,8 @@ def get_gpsd_position():
 
 
 def get_gpsd_sat():
-	"""Get satellite used from GPSD."""
-	logging.info("Trying to figure out satellite used using GPS")
+	"""Get satellite from GPSD."""
+	logging.info("Trying to figure out satellite using GPS")
 	try:
 		with GPSDClient(
 			host=os.getenv("GPSD_HOST", "localhost"),
@@ -259,8 +256,8 @@ def get_gpsd_sat():
 				if result["class"] == "SKY":
 					logging.info("GPS Satellite acquired")
 					uSat = result.get("uSat", 0)
-					# nSat = result.get("nSat", 0)
-					return uSat
+					nSat = result.get("nSat", 0)
+					return uSat, nSat
 				else:
 					logging.info("GPS Satellite unavailable")
 					return 0
@@ -367,7 +364,6 @@ def get_osinfo():
 
 def get_dmrmaster():
 	"""Get connected DMR master from DMRGateway log files."""
-
 	with open(MMDVMHOST_FILE, "r") as mmh:
 		if "Enable=1" in mmh.read():
 			log_dmrgw_previous = os.path.join(
@@ -383,10 +379,8 @@ def get_dmrmaster():
 			log_master_string = "Logged into the master successfully"
 			log_ref_string = "XLX, Linking"
 			# log_master_dc_string = "Closing DMR Network"
-
 			master_line: list[str] = []
 			# master_dc_line: list[str] = []
-
 			ref_line: list[str] = []
 			dmrmaster: list[str] = []
 			dmrmasters: list[str] = []
@@ -395,7 +389,6 @@ def get_dmrmaster():
 					["grep", log_master_string, log_dmrgw_now], text=True
 				).splitlines()
 				# master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
-
 				ref_line = subprocess.check_output(
 					["grep", log_ref_string, log_dmrgw_now], text=True
 				).splitlines()
@@ -406,7 +399,6 @@ def get_dmrmaster():
 						["grep", log_master_string, log_dmrgw_previous], text=True
 					).splitlines()
 					# master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_previous], text=True).splitlines()
-
 					ref_line = subprocess.check_output(
 						["grep", log_ref_string, log_dmrgw_previous], text=True
 					).splitlines()
@@ -415,7 +407,6 @@ def get_dmrmaster():
 					pass
 			master_line_count = len(master_line)
 			# master_dc_line_count = len(master_dc_line)
-
 			ref_line_count = len(ref_line)
 			for mascount in range(master_line_count):
 				master = (
@@ -447,8 +438,6 @@ def get_uptime():
 
 def get_mmdvminfo():
 	"""Get MMDVM configured frequency and color code."""
-	# Using string parsing to avoid a full dependency for a few values.
-
 	rx_freq, tx_freq, color_code, dmr_enabled = 0, 0, 0, False
 	with open(MMDVMHOST_FILE, "r") as mmh:
 		for line in mmh:
@@ -515,7 +504,6 @@ async def send_position(ais, cfg):
 	"""Send APRS position packet to APRS-IS."""
 
 	# Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
-
 	def _lat_to_aprs(lat):
 		ns = "N" if lat >= 0 else "S"
 		lat = abs(lat)
@@ -614,20 +602,21 @@ async def main():
 		temp = get_temp()
 		cpuload = get_cpuload()
 		memused = get_memused()
-		uSat = get_gpsd_sat()
+		uSat, nSat = get_gpsd_sat()
 		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
 			cfg.call, seq, temp, cpuload, memused, uSat
 		)
 		ais.sendall(telemetry)
 		await logs_to_telegram(
-			f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 10:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {uSat}"
+			f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 10:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {uSat}/{nSat}"
 		)
 		logging.info(telemetry)
 		uptime = get_uptime()
+		sats = f"sats={uSat}/{nSat}"
 		nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
-		status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
+		status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
 		ais.sendall(status)
-		await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}")
+		await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}, {sats}")
 		logging.info(status)
 		randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
 		logging.info("Sleeping for %d seconds", randsleep)
