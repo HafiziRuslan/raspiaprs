@@ -13,7 +13,7 @@ logging.basicConfig(
 
 
 def get_gpsd_position():
-	"""Get latitude and longitude from GPSD."""
+	"""Get position from GPSD."""
 	logging.info("Trying to figure out position using GPS")
 	try:
 		with GPSDClient(
@@ -21,41 +21,36 @@ def get_gpsd_position():
 			port=2947,
 			timeout=15,
 		) as client:
-			for result in client.json_stream(filter=["TPV"]):
+			for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
 				if result["class"] == "TPV":
-					logging.info("GPS fix acquired")
 					utc = result.get("time", dt.datetime.now(dt.timezone.utc))
 					lat = result.get("lat", 0)
 					lon = result.get("lon", 0)
 					alt = result.get("alt", 0)
-					print(utc, lat, lon, alt)
-				else:
-					logging.info("GPS Position unavailable")
+					acc = result.get("sep", 0)
+					return utc, lat, lon, alt, acc
 	except Exception as e:
 		logging.error("Error getting GPS data: %s", e)
 
 
 def get_gpsd_sat():
-	"""Get satellite used from GPSD."""
-	logging.info("Trying to figure out satellite used using GPS")
+	"""Get satellite from GPSD."""
+	logging.info("Trying to figure out satellite using GPS")
 	try:
 		with GPSDClient(
 			host='localhost',
 			port=2947,
 			timeout=15,
 		) as client:
-			for result in client.json_stream(filter=["SKY"]):
+			for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
 				if result["class"] == "SKY":
-					logging.info("GPS Satellite acquired")
 					uSat = result.get("uSat", 0)
 					nSat = result.get("nSat", 0)
-					print(uSat, nSat)
-				else:
-					logging.info("GPS Satellite unavailable")
+					return uSat, nSat
 	except Exception as e:
 		logging.error("Error getting GPS data: %s", e)
 
 
 if __name__ == "__main__":
-	get_gpsd_position()
-	get_gpsd_sat()
+	print(get_gpsd_position())
+	print(get_gpsd_sat())
