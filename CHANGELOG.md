@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T08:50:22.104789206+08:00)
+## [unreleased] - (2025-12-11T09:07:26.995483182+08:00)
 
 ### 🚀 Features
 
@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(gps): remove accuracy from position report
 - 🐛 fix(gps): remove unused nSat variable
 - 🐛 fix(gpsd): correct gps position check
 - 🐛 fix(gpsd): use 'is not' for float comparison
@@ -42,6 +43,7 @@ All notable changes to this project will be documented in this file.
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
+- 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -52,6 +54,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 🔧 chore(main.sh): clear extra spacing in log
 - 🔧 chore(main.sh): improve uv installation message
 - 🔧 chore(uv): remove uv self update
 - 🔧 chore(install): remove uv shell completion setup
@@ -502,4 +505,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T08:50:22.122385110+08:00)
+generated using git-cliff - (2025-12-11T09:07:27.013186614+08:00)
