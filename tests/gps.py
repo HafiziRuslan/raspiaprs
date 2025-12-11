@@ -5,6 +5,12 @@ import logging
 
 from gpsdclient import GPSDClient
 
+logging.basicConfig(
+	format="%(asctime)s %(levelname)s: %(message)s",
+	datefmt="%Y-%m-%dT%H:%M:%S",
+	level=logging.INFO,
+)
+
 
 def get_gpsd_position():
 	"""Get latitude and longitude from GPSD."""
@@ -17,7 +23,7 @@ def get_gpsd_position():
 		) as client:
 			for result in client.json_stream(filter=["TPV"]):
 				if result["class"] == "TPV":
-					logging.info("GPS 3D fix acquired")
+					logging.info("GPS fix acquired")
 					utc = result.get("time", dt.datetime.now(dt.timezone.utc))
 					lat = result.get("lat", 0)
 					lon = result.get("lon", 0)
@@ -28,7 +34,7 @@ def get_gpsd_position():
 						)
 					print(utc, lat, lon, alt)
 				else:
-					logging.info("GPS Position not available yet")
+					logging.info("GPS Position unavailable")
 	except Exception as e:
 		logging.error("Error getting GPS data: %s", e)
 
@@ -44,12 +50,12 @@ def get_gpsd_sat():
 		) as client:
 			for result in client.json_stream(filter=["SKY"]):
 				if result["class"] == "SKY":
-					logging.info("GPS satellite acquired")
+					logging.info("GPS Satellite acquired")
 					uSat = result.get("uSat", 0)
 					nSat = result.get("nSat", 0)
 					print(uSat, nSat)
 				else:
-					logging.info("GPS satellite not available yet")
+					logging.info("GPS Satellite unavailable")
 	except Exception as e:
 		logging.error("Error getting GPS data: %s", e)
 
