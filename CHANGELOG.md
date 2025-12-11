@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T18:39:19.465108333+08:00)
+## [unreleased] - (2025-12-11T18:43:19.622351192+08:00)
 
 ### 🚀 Features
 
@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- ✅ test(gps): improve logging messages and fix satellite return value
 - fix: ident to tab 4
 - 🐛 fix(gps): remove accuracy from position report
 - 🐛 fix(gps): remove unused nSat variable
@@ -32,6 +33,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -508,4 +510,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T18:39:19.482674522+08:00)
+generated using git-cliff - (2025-12-11T18:43:19.639144610+08:00)
