@@ -2,16 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T18:54:17.879278631+08:00)
+## [unreleased] - (2025-12-12T00:28:20.516622269+08:00)
 
 ### 🚀 Features
 
+- ✨ feat(gpsd): return both used and total satellites
 - ✨ feat(gps): add gpsd client for position and satellite data
 - ✨ feat(gpsd): enhance GPS data reporting
 - ✨ feat(readme): update installation instructions
 
 ### 🐛 Bug Fixes
 
+- ✅ test(gps): improve gpsd client usage and data retrieval
 - 🐛 fix(gps): ensure correct type for gps data retrieval
 - ✅ test(gps): improve logging messages and fix satellite return value
 - fix: ident to tab 4
@@ -34,6 +36,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -519,4 +522,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T18:54:17.898286019+08:00)
+generated using git-cliff - (2025-12-12T00:28:20.535729888+08:00)
