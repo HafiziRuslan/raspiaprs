@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T18:43:19.622351192+08:00)
+## [unreleased] - (2025-12-11T18:47:06.490947075+08:00)
 
 ### 🚀 Features
 
@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(gps): ensure correct type for gps data retrieval
 - ✅ test(gps): improve logging messages and fix satellite return value
 - fix: ident to tab 4
 - 🐛 fix(gps): remove accuracy from position report
@@ -33,6 +34,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -510,4 +512,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T18:43:19.639144610+08:00)
+generated using git-cliff - (2025-12-11T18:47:06.509195996+08:00)
