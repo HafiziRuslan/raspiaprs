@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T08:23:21.464272675+08:00)
+## [unreleased] - (2025-12-11T08:47:51.622199820+08:00)
 
 ### 🚀 Features
 
@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(gps): remove unused nSat variable
 - 🐛 fix(gpsd): correct gps position check
 - 🐛 fix(gpsd): use 'is not' for float comparison
 - 🐛 fix(repo): correct repository URL in cliff config and main script
@@ -28,6 +29,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -498,4 +500,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T08:23:21.481381450+08:00)
+generated using git-cliff - (2025-12-11T08:47:51.639229060+08:00)
