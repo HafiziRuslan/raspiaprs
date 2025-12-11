@@ -227,7 +227,6 @@ def get_gpsd_position():
                     lat = result.get("lat", 0)
                     lon = result.get("lon", 0)
                     alt = result.get("alt", 0)
-                    acc = result.get("sep", 0)
                     if lat != 0 and lon != 0 and alt != 0:
                         logging.info(
                             "%s | GPS Position: %s, %s, %s", utc, lat, lon, alt
@@ -238,7 +237,7 @@ def get_gpsd_position():
                         Config.latitude = lat
                         Config.longitude = lon
                         Config.altitude = alt
-                        return lat, lon, alt, acc
+                        return lat, lon, alt
                 else:
                     logging.info("GPS Position not available yet")
                     return (0, 0, 0)
@@ -446,7 +445,7 @@ def get_mmdvminfo():
     """Get MMDVM configured frequency and color code."""
     # Using string parsing to avoid a full dependency for a few values.
 
-    rx_freq, tx_freq, color_code, dmr_enabled = 0, 0, "1", False
+    rx_freq, tx_freq, color_code, dmr_enabled = 0, 0, 0, False
     with open(MMDVMHOST_FILE, "r") as mmh:
         for line in mmh:
             if line.startswith("RXFrequency="):
@@ -454,7 +453,7 @@ def get_mmdvminfo():
             elif line.startswith("TXFrequency="):
                 tx_freq = int(line.strip().split("=")[1])
             elif line.startswith("ColorCode="):
-                color_code = line.strip().split("=")[1]
+                color_code = int(line.strip().split("=")[1])
             elif "[DMR]" in line:
                 dmr_enabled = "Enable=1" in next(mmh, "")
     rx = round(rx_freq / 1000000, 6)
@@ -468,7 +467,7 @@ def get_mmdvminfo():
     return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0, acc: float=0):
+async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0):
     """Send log message to Telegram channel."""
     if os.getenv("TELEGRAM_ENABLE"):
         tgbot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
@@ -497,7 +496,6 @@ async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0, acc: flo
                         message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
                         latitude=lat,
                         longitude=lon,
-                        horizontal_accuracy=acc
                     )
                     logging.info(
                         "Sent location to Telegram: %s/%s/%s",
@@ -535,7 +533,7 @@ async def send_position(ais, cfg):
         return "/A={0:06.0f}".format(alt)
 
     if os.getenv("GPSD_ENABLE"):
-        cur_lat, cur_lon, cur_alt, cur_acc = get_gpsd_position()
+        cur_lat, cur_lon, cur_alt = get_gpsd_position()
         if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
             cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
             cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
@@ -556,10 +554,9 @@ async def send_position(ais, cfg):
     )
     packet = f"{cfg.call}>APP642:{payload}"
     await logs_to_telegram(
-        f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos:\n\tLatitude: {cur_lat}\n\tLongitude: {cur_lon}\n\tAltitude: {cur_alt}m\n\tAccuracy: ±{cur_acc}m\nComment: {comment}",
+        f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos:\n\tLatitude: {cur_lat}\n\tLongitude: {cur_lon}\n\tAltitude: {cur_alt}m\nComment: {comment}",
         cur_lat,
-        cur_lon,
-        cur_acc
+        cur_lon
     )
     logging.info(packet)
     try:
