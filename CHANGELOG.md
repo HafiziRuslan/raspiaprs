@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-11T18:47:06.490947075+08:00)
+## [unreleased] - (2025-12-11T18:51:58.838773127+08:00)
 
 ### 🚀 Features
 
@@ -51,6 +51,7 @@ All notable changes to this project will be documented in this file.
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
+- 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -58,6 +59,10 @@ All notable changes to this project will be documented in this file.
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
+
+### 🧪 Testing
+
+- ✅ test(gps): improve gpsd data handling
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -512,4 +517,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-11T18:47:06.509195996+08:00)
+generated using git-cliff - (2025-12-11T18:51:58.857386563+08:00)
