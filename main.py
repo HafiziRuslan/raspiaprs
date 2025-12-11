@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-
 """RasPiAPRS: Send APRS position and telemetry from Raspberry Pi to APRS-IS."""
 
 import asyncio
@@ -46,7 +45,6 @@ logging.basicConfig(
     datefmt="%Y-%m-%dT%H:%M:%S",
     level=logging.INFO,
 )
-
 
 # Configuration class to handle settings
 
@@ -229,6 +227,7 @@ def get_gpsd_position():
                     lat = result.get("lat", 0)
                     lon = result.get("lon", 0)
                     alt = result.get("alt", 0)
+                    acc = result.get("sep", 0)
                     if lat != 0 and lon != 0 and alt != 0:
                         logging.info(
                             "%s | GPS Position: %s, %s, %s", utc, lat, lon, alt
@@ -239,7 +238,7 @@ def get_gpsd_position():
                         Config.latitude = lat
                         Config.longitude = lon
                         Config.altitude = alt
-                        return lat, lon, alt
+                        return lat, lon, alt, acc
                 else:
                     logging.info("GPS Position not available yet")
                     return (0, 0, 0)
@@ -259,11 +258,12 @@ def get_gpsd_sat():
         ) as client:
             for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
                 logging.info("GPS satellite acquired")
-                sat = result.get("uSat", 0)
-                return sat
+                uSat = result.get("uSat", 0)
+                nSat = result.get("nSat", 0)
+                return uSat, nSat
     except Exception as e:
         logging.error("Error getting GPS data: %s", e)
-        return 0
+        return 0, 0
 
 
 def get_coordinates():
@@ -468,7 +468,7 @@ def get_mmdvminfo():
     return (str(tx) + "MHz" + shift + cc) + get_dmrmaster() + ","
 
 
-async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
+async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0, acc: float=0):
     """Send log message to Telegram channel."""
     if os.getenv("TELEGRAM_ENABLE"):
         tgbot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
@@ -497,6 +497,7 @@ async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
                         message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
                         latitude=lat,
                         longitude=lon,
+                        horizontal_accuracy=acc
                     )
                     logging.info(
                         "Sent location to Telegram: %s/%s/%s",
@@ -534,7 +535,7 @@ async def send_position(ais, cfg):
         return "/A={0:06.0f}".format(alt)
 
     if os.getenv("GPSD_ENABLE"):
-        cur_lat, cur_lon, cur_alt = get_gpsd_position()
+        cur_lat, cur_lon, cur_alt, cur_acc = get_gpsd_position()
         if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
             cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
             cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
@@ -555,9 +556,10 @@ async def send_position(ais, cfg):
     )
     packet = f"{cfg.call}>APP642:{payload}"
     await logs_to_telegram(
-        f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos: {cur_lat}, {cur_lon}, {cur_alt}m\nComment: {comment}",
+        f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos:\n\tLatitude: {cur_lat}\n\tLongitude: {cur_lon}\n\tAltitude: {cur_alt}m\n\tAccuracy: ±{cur_acc}m\nComment: {comment}",
         cur_lat,
         cur_lon,
+        cur_acc
     )
     logging.info(packet)
     try:
@@ -611,20 +613,21 @@ async def main():
         temp = get_temp()
         cpuload = get_cpuload()
         memused = get_memused()
-        satlock = get_gpsd_sat()
+        uSat, nSat = get_gpsd_sat()
         telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
-            cfg.call, seq, temp, cpuload, memused, satlock
+            cfg.call, seq, temp, cpuload, memused, uSat
         )
         ais.sendall(telemetry)
         await logs_to_telegram(
-            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 10:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {satlock}"
+            f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 10:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {uSat}"
         )
         logging.info(telemetry)
         uptime = get_uptime()
+        sats = f"Sats: {uSat}/{nSat}"
         nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
-        status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
+        status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
         ais.sendall(status)
-        await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}")
+        await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}, {sats}")
         logging.info(status)
         randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
         logging.info("Sleeping for %d seconds", randsleep)
