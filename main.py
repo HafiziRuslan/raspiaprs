@@ -259,8 +259,8 @@ def get_gpsd_sat():
             for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
                 logging.info("GPS satellite acquired")
                 uSat = result.get("uSat", 0)
-                nSat = result.get("nSat", 0)
-                return uSat, nSat
+                # nSat = result.get("nSat", 0)
+                return uSat
     except Exception as e:
         logging.error("Error getting GPS data: %s", e)
         return 0, 0
@@ -613,7 +613,7 @@ async def main():
         temp = get_temp()
         cpuload = get_cpuload()
         memused = get_memused()
-        uSat, nSat = get_gpsd_sat()
+        uSat = get_gpsd_sat()
         telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
             cfg.call, seq, temp, cpuload, memused, uSat
         )
@@ -623,11 +623,10 @@ async def main():
         )
         logging.info(telemetry)
         uptime = get_uptime()
-        sats = f"Sats: {uSat}/{nSat}"
         nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
-        status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
+        status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
         ais.sendall(status)
-        await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}, {sats}")
+        await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}")
         logging.info(status)
         randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
         logging.info("Sleeping for %d seconds", randsleep)
