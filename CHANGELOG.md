@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-12T00:28:20.516622269+08:00)
+## [unreleased] - (2025-12-15T23:49:32.400858452+08:00)
 
 ### 🚀 Features
 
@@ -32,10 +32,12 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(main): simplify and improve code readability
 - 📝 docs(cliff config): update changelog template and commit parsers
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -522,4 +524,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-12T00:28:20.535729888+08:00)
+generated using git-cliff - (2025-12-15T23:49:32.417760684+08:00)
