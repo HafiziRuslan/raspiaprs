@@ -83,9 +83,7 @@ class Config(object):
 			self.passcode = aprslib.passcode(call)
 
 	def __repr__(self):
-		return (
-			"<Config> call: {0.call}, passcode: {0.passcode} - {0.latitude}/{0.longitude}/{0.altitude}"
-		).format(self)
+		return ("<Config> call: {0.call}, passcode: {0.passcode} - {0.latitude}/{0.longitude}/{0.altitude}").format(self)
 
 	@property
 	def call(self):
@@ -211,11 +209,7 @@ def get_gpsd_position():
 	"""Get position from GPSD."""
 	logging.info("Trying to figure out position using GPS")
 	try:
-		with GPSDClient(
-			host=os.getenv("GPSD_HOST", "localhost"),
-			port=int(os.getenv("GPSD_PORT", 2947)),
-			timeout=15,
-		) as client:
+		with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
 			for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
 				if result["class"] == "TPV":
 					logging.info("GPS fix acquired")
@@ -225,9 +219,7 @@ def get_gpsd_position():
 					alt = result.get("alt", 0)
 					# acc = result.get("sep", 0)
 					if lat != 0 and lon != 0 and alt != 0:
-						logging.info(
-							"%s | GPS Position: %s, %s, %s", utc, lat, lon, alt
-						)
+						logging.info("%s | GPS Position: %s, %s, %s", utc, lat, lon, alt)
 						set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
 						set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
 						set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
@@ -247,11 +239,7 @@ def get_gpsd_sat():
 	"""Get satellite from GPSD."""
 	logging.info("Trying to figure out satellite using GPS")
 	try:
-		with GPSDClient(
-			host=os.getenv("GPSD_HOST", "localhost"),
-			port=int(os.getenv("GPSD_PORT", 2947)),
-			timeout=15,
-		) as client:
+		with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
 			for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
 				if result["class"] == "SKY":
 					logging.info("GPS Satellite acquired")
@@ -366,14 +354,8 @@ def get_dmrmaster():
 	"""Get connected DMR master from DMRGateway log files."""
 	with open(MMDVMHOST_FILE, "r") as mmh:
 		if "Enable=1" in mmh.read():
-			log_dmrgw_previous = os.path.join(
-				MMDVMLOGPATH,
-				f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log",
-			)
-			log_dmrgw_now = os.path.join(
-				MMDVMLOGPATH,
-				f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log",
-			)
+			log_dmrgw_previous = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log")
+			log_dmrgw_now = os.path.join(MMDVMLOGPATH, f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log")
 
 			dmr_master: str = ""
 			log_master_string = "Logged into the master successfully"
@@ -385,23 +367,15 @@ def get_dmrmaster():
 			dmrmaster: list[str] = []
 			dmrmasters: list[str] = []
 			try:
-				master_line = subprocess.check_output(
-					["grep", log_master_string, log_dmrgw_now], text=True
-				).splitlines()
+				master_line = subprocess.check_output(["grep", log_master_string, log_dmrgw_now], text=True).splitlines()
 				# master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
-				ref_line = subprocess.check_output(
-					["grep", log_ref_string, log_dmrgw_now], text=True
-				).splitlines()
+				ref_line = subprocess.check_output(["grep", log_ref_string, log_dmrgw_now], text=True).splitlines()
 				ref_line = ref_line[-1:] if ref_line else []
 			except subprocess.CalledProcessError:
 				try:
-					master_line = subprocess.check_output(
-						["grep", log_master_string, log_dmrgw_previous], text=True
-					).splitlines()
+					master_line = subprocess.check_output(["grep", log_master_string, log_dmrgw_previous], text=True).splitlines()
 					# master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_previous], text=True).splitlines()
-					ref_line = subprocess.check_output(
-						["grep", log_ref_string, log_dmrgw_previous], text=True
-					).splitlines()
+					ref_line = subprocess.check_output(["grep", log_ref_string, log_dmrgw_previous], text=True).splitlines()
 					ref_line = ref_line[-1:] if ref_line else []
 				except subprocess.CalledProcessError:
 					pass
@@ -409,9 +383,7 @@ def get_dmrmaster():
 			# master_dc_line_count = len(master_dc_line)
 			ref_line_count = len(ref_line)
 			for mascount in range(master_line_count):
-				master = (
-					master_line[mascount].split()[3].split(",")[0].replace("_", " ")
-				)
+				master = master_line[mascount].split()[3].split(",")[0].replace("_", " ")
 				if master == "XLX":
 					for refcount in range(ref_line_count):
 						master = f"{ref_line[refcount].split()[7]} {ref_line[refcount].split()[8]}"
@@ -477,12 +449,7 @@ async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0):
 						"show_above_text": True,
 					},
 				)
-				logging.info(
-					"Sent message to Telegram: %s/%s/%s",
-					botmsg.chat_id,
-					botmsg.message_thread_id,
-					botmsg.message_id,
-				)
+				logging.info("Sent message to Telegram: %s/%s/%s", botmsg.chat_id, botmsg.message_thread_id, botmsg.message_id)
 				if lat != 0 and lon != 0:
 					botloc = await tgbot.send_location(
 						chat_id=os.getenv("TELEGRAM_CHAT_ID"),
@@ -490,12 +457,7 @@ async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0):
 						latitude=lat,
 						longitude=lon,
 					)
-					logging.info(
-						"Sent location to Telegram: %s/%s/%s",
-						botloc.chat_id,
-						botloc.message_thread_id,
-						botloc.message_id,
-					)
+					logging.info("Sent location to Telegram: %s/%s/%s", botloc.chat_id, botloc.message_thread_id, botloc.message_id)
 			except Exception as e:
 				logging.error("Failed to send message to Telegram: %s", e)
 
@@ -541,15 +503,9 @@ async def send_position(ais, cfg):
 	latstr = _lat_to_aprs(float(cur_lat))
 	lonstr = _lon_to_aprs(float(cur_lon))
 	altstr = _alt_to_aprs(float(cur_alt))
-	payload = (
-		f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
-	)
+	payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
 	packet = f"{cfg.call}>APP642:{payload}"
-	await logs_to_telegram(
-		f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos:\n\tLatitude: {cur_lat}\n\tLongitude: {cur_lon}\n\tAltitude: {cur_alt}m\nComment: {comment}",
-		cur_lat,
-		cur_lon
-	)
+	await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos:\n\tLatitude: {cur_lat}\n\tLongitude: {cur_lon}\n\tAltitude: {cur_alt}m\nComment: {comment}", cur_lat, cur_lon)
 	logging.info(packet)
 	try:
 		ais.sendall(packet)
@@ -560,22 +516,16 @@ async def send_position(ais, cfg):
 def send_header(ais, cfg):
 	"""Send APRS header information to APRS-IS."""
 	try:
-		ais.sendall(
-			"{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSSat".format(cfg.call)
-		)
+		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSSat".format(cfg.call))
 		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
-		ais.sendall(
-			"{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call)
-		)
+		ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call))
 	except APRSConnectionError as err:
 		logging.warning(err)
 
 
 def ais_connect(cfg):
 	"""Establish connection to APRS-IS with retries."""
-	logging.info(
-		"Connecting to APRS-IS server %s:%d as %s", cfg.server, cfg.port, cfg.call
-	)
+	logging.info("Connecting to APRS-IS server %s:%d as %s", cfg.server, cfg.port, cfg.call)
 	ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port)
 	for _ in range(5):
 		try:
@@ -603,13 +553,9 @@ async def main():
 		cpuload = get_cpuload()
 		memused = get_memused()
 		uSat, nSat = get_gpsd_sat()
-		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
-			cfg.call, seq, temp, cpuload, memused, uSat
-		)
+		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, uSat)
 		ais.sendall(telemetry)
-		await logs_to_telegram(
-			f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 10:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {uSat}/{nSat}"
-		)
+		await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 10:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {uSat}/{nSat}")
 		logging.info(telemetry)
 		uptime = get_uptime()
 		sats = f"sats={uSat}/{nSat}"
