@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-15T23:49:32.400858452+08:00)
+## [unreleased] - (2025-12-17T04:49:00.769788945+08:00)
 
 ### 🚀 Features
 
+- ✨ feat(gpsd): enable gpsd functionality with environment variable
 - ✨ feat(gpsd): return both used and total satellites
 - ✨ feat(gps): add gpsd client for position and satellite data
 - ✨ feat(gpsd): enhance GPS data reporting
@@ -37,6 +38,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -524,4 +526,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-15T23:49:32.417760684+08:00)
+generated using git-cliff - (2025-12-17T04:49:00.788014580+08:00)
