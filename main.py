@@ -207,51 +207,53 @@ class Sequence(object):
 
 def get_gpsd_position():
 	"""Get position from GPSD."""
-	logging.info("Trying to figure out position using GPS")
-	try:
-		with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
-			for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
-				if result["class"] == "TPV":
-					logging.info("GPS fix acquired")
-					utc = result.get("time", dt.datetime.now(dt.timezone.utc))
-					lat = result.get("lat", 0)
-					lon = result.get("lon", 0)
-					alt = result.get("alt", 0)
-					# acc = result.get("sep", 0)
-					if lat != 0 and lon != 0 and alt != 0:
-						logging.info("%s | GPS Position: %s, %s, %s", utc, lat, lon, alt)
-						set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
-						set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
-						set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
-						Config.latitude = lat
-						Config.longitude = lon
-						Config.altitude = alt
-						return lat, lon, alt
-				else:
-					logging.info("GPS Position unavailable")
-					return (0, 0, 0)
-	except Exception as e:
-		logging.error("Error getting GPS data: %s", e)
-		return (0, 0, 0)
+	if os.getenv("GPSD_ENABLE"):
+		logging.info("Trying to figure out position using GPS")
+		try:
+			with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
+				for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
+					if result["class"] == "TPV":
+						logging.info("GPS fix acquired")
+						utc = result.get("time", dt.datetime.now(dt.timezone.utc))
+						lat = result.get("lat", 0)
+						lon = result.get("lon", 0)
+						alt = result.get("alt", 0)
+						# acc = result.get("sep", 0)
+						if lat != 0 and lon != 0 and alt != 0:
+							logging.info("%s | GPS Position: %s, %s, %s", utc, lat, lon, alt)
+							set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
+							set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
+							set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
+							Config.latitude = lat
+							Config.longitude = lon
+							Config.altitude = alt
+							return lat, lon, alt
+					else:
+						logging.info("GPS Position unavailable")
+						return (0, 0, 0)
+		except Exception as e:
+			logging.error("Error getting GPS data: %s", e)
+			return (0, 0, 0)
 
 
 def get_gpsd_sat():
 	"""Get satellite from GPSD."""
-	logging.info("Trying to figure out satellite using GPS")
-	try:
-		with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
-			for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
-				if result["class"] == "SKY":
-					logging.info("GPS Satellite acquired")
-					uSat = result.get("uSat", 0)
-					nSat = result.get("nSat", 0)
-					return uSat, nSat
-				else:
-					logging.info("GPS Satellite unavailable")
-					return 0
-	except Exception as e:
-		logging.error("Error getting GPS data: %s", e)
-		return 0
+	if os.getenv("GPSD_ENABLE"):
+		logging.info("Trying to figure out satellite using GPS")
+		try:
+			with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
+				for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
+					if result["class"] == "SKY":
+						logging.info("GPS Satellite acquired")
+						uSat = result.get("uSat", 0)
+						nSat = result.get("nSat", 0)
+						return uSat, nSat
+					else:
+						logging.info("GPS Satellite unavailable")
+						return 0
+		except Exception as e:
+			logging.error("Error getting GPS data: %s", e)
+			return 0
 
 
 def get_coordinates():
@@ -505,7 +507,7 @@ async def send_position(ais, cfg):
 	altstr = _alt_to_aprs(float(cur_alt))
 	payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
 	packet = f"{cfg.call}>APP642:{payload}"
-	await logs_to_telegram(f"{cfg.call} Position:-\n\nTime: {timestamp}\nPos:\n\tLatitude: {cur_lat}\n\tLongitude: {cur_lon}\n\tAltitude: {cur_alt}m\nComment: {comment}", cur_lat, cur_lon)
+	await logs_to_telegram(f"{cfg.call} <u>Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
 	logging.info(packet)
 	try:
 		ais.sendall(packet)
@@ -516,7 +518,7 @@ async def send_position(ais, cfg):
 def send_header(ais, cfg):
 	"""Send APRS header information to APRS-IS."""
 	try:
-		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSSat".format(cfg.call))
+		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSUsed".format(cfg.call))
 		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
 		ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call))
 	except APRSConnectionError as err:
@@ -532,7 +534,7 @@ def ais_connect(cfg):
 			ais.connect()
 		except APRSConnectionError as err:
 			logging.warning(err)
-			time.sleep(15)
+			time.sleep(20)
 		else:
 			ais.set_filter(cfg.filter)
 			return ais
@@ -552,17 +554,21 @@ async def main():
 		temp = get_temp()
 		cpuload = get_cpuload()
 		memused = get_memused()
-		uSat, nSat = get_gpsd_sat()
+		if os.getenv("GPSD_ENABLE"):
+			uSat, nSat = get_gpsd_sat()
+		else:
+			uSat = 0
+			nSat = 0
 		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, uSat)
 		ais.sendall(telemetry)
-		await logs_to_telegram(f"{cfg.call} Telemetry:-\n\nSequence: {seq}\nCPU Temp: {temp / 10:.1f}°C\nCPU Load: {cpuload / 10:.1f}%\nRAM Used: {memused / 10:.1f}MB\nGPS Satellite: {uSat}/{nSat}")
+		await logs_to_telegram(f"{cfg.call} <u>Telemetry</u>\n\n<b>Sequence</b>: {seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>GPS Used</b>: {uSat}/{nSat}")
 		logging.info(telemetry)
 		uptime = get_uptime()
 		sats = f"sats={uSat}/{nSat}"
 		nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
 		status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
 		ais.sendall(status)
-		await logs_to_telegram(f"{cfg.call} Status: {nowz}, {uptime}, {sats}")
+		await logs_to_telegram(f"{cfg.call} <u>Status</u>\n\n{nowz}, {uptime}, {sats}")
 		logging.info(status)
 		randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
 		logging.info("Sleeping for %d seconds", randsleep)
