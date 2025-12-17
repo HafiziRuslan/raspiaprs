@@ -458,13 +458,17 @@ async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0):
 						message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
 						latitude=lat,
 						longitude=lon,
+						reply_parameters={
+							"reply_to_message_id": botmsg.message_id,
+							"allow_sending_without_reply": False
+						},
 					)
 					logging.info("Sent location to Telegram: %s/%s/%s", botloc.chat_id, botloc.message_thread_id, botloc.message_id)
 			except Exception as e:
 				logging.error("Failed to send message to Telegram: %s", e)
 
 
-async def send_position(ais, cfg):
+async def send_position(ais, cfg, seq):
 	"""Send APRS position packet to APRS-IS."""
 
 	# Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
@@ -507,7 +511,7 @@ async def send_position(ais, cfg):
 	altstr = _alt_to_aprs(float(cur_alt))
 	payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
 	packet = f"{cfg.call}>APP642:{payload}"
-	await logs_to_telegram(f"{cfg.call} <u>Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
+	await logs_to_telegram(f"{cfg.call} <u>Position-{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
 	logging.info(packet)
 	try:
 		ais.sendall(packet)
@@ -553,7 +557,7 @@ async def main():
 	ais = ais_connect(cfg)
 	for seq in Sequence():
 		if seq % 2 == 1:
-			await send_position(ais, cfg)
+			await send_position(ais, cfg, seq)
 		if seq % 6 == 1:
 			send_header(ais, cfg)
 		temp = get_temp()
@@ -563,7 +567,7 @@ async def main():
 			uSat, nSat = get_gpsd_sat()
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, uSat)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"{cfg.call} <u>Telemetry</u>\n\n<b>Sequence</b>: {seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>GPS Used</b>: {uSat}/{nSat}")
+			await logs_to_telegram(f"{cfg.call} <u>Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>GPS Used</b>: {uSat}/{nSat}")
 			logging.info(telemetry)
 			uptime = get_uptime()
 			sats = f"sats={uSat}/{nSat}"
@@ -575,13 +579,13 @@ async def main():
 		else:
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"{cfg.call} <u>Telemetry</u>\n\n<b>Sequence</b>: {seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB")
+			await logs_to_telegram(f"{cfg.call} <u>Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB")
 			logging.info(telemetry)
 			uptime = get_uptime()
 			nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
 			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime)
 			ais.sendall(status)
-			await logs_to_telegram(f"{cfg.call} <u>Status</u>\n\n{nowz}, {uptime}")
+			await logs_to_telegram(f"{cfg.call} <u>Status-{seq}</u>\n\n{nowz}, {uptime}")
 			logging.info(status)
 		randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
 		logging.info("Sleeping for %d seconds", randsleep)
