@@ -32,6 +32,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(system_info): simplify memory usage calculation
 - ♻️ refactor(main): simplify and improve code readability
 - 📝 docs(cliff config): update changelog template and commit parsers
 
@@ -498,4 +499,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 21:38:04.823, +08
+generated using git-cliff at Wed, 17-Dec-2025, 22:54:01.927, +08
