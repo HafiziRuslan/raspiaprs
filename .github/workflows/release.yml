@@ -61,3 +61,13 @@ jobs:
           prerelease: true
           make_latest: false
           body: "${{ github.event.head_commit.message }}\n\nby: ${{ github.event.head_commit.author.username }} on ${{ github.event.head_commit.timestamp }}"
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Tag
+        uses: richardsimko/update-tag@main
+        with:
+          tag_name: beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
