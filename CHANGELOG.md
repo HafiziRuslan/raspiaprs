@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(gpsd): handle GPSD_ENABLE environment variable
 - ✅ test(gps): improve gpsd client usage and data retrieval
 - 🐛 fix(gps): ensure correct type for gps data retrieval
 - ✅ test(gps): improve logging messages and fix satellite return value
@@ -495,4 +496,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 20:51:06.172, +08
+generated using git-cliff at Wed, 17-Dec-2025, 21:03:57.793, +08
