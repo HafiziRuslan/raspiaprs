@@ -6,7 +6,6 @@ on:
       - Release
     types:
       - completed
-  push:
 
 jobs:
   changelog:
