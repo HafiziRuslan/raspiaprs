@@ -51,6 +51,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 🔧 chore(logging): improve logging configuration
 - chore(ci): remove unnecessary push trigger for changelog workflow
 - 👷 ci(workflows): update CI workflows for repository synchronization
 - 🔧 chore(main.sh): clear extra spacing in log
@@ -500,4 +501,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 22:56:15.893, +08
+generated using git-cliff at Wed, 17-Dec-2025, 23:43:06.658, +08
