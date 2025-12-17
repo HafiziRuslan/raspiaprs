@@ -70,6 +70,7 @@ commit_parsers = [
     { message = "feat", group = "<!-- 0 -->🚀 Features" },
     { message = "fix|Fix", group = "<!-- 1 -->🐛 Bug Fixes" },
     { message = "refactor|Enhance", group = "<!-- 2 -->🚜 Refactor" },
+    { field = "author.name", pattern = "^github", skip = true },
     { message = "doc", group = "<!-- 3 -->📚 Documentation" },
     { message = "perf", group = "<!-- 4 -->⚡ Performance" },
     { message = "style", group = "<!-- 5 -->🎨 Styling" },
