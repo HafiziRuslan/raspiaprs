@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update changes
 - 📝 docs(changelog): update changelog generation workflow
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -532,4 +533,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 20:24:18.733, +08
+generated using git-cliff at Wed, 17-Dec-2025, 20:24:29.108, +08
