@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features
 
+- ✨ feat(telegram): enhance logging with sequence numbers and reply parameters
 - ✨ feat(gpsd): enable gpsd functionality with environment variable
 - ✨ feat(gpsd): return both used and total satellites
 - ✨ feat(gps): add gpsd client for position and satellite data
@@ -496,4 +497,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 21:03:57.793, +08
+generated using git-cliff at Wed, 17-Dec-2025, 21:29:29.242, +08
