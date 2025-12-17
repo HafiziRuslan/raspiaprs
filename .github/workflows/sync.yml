@@ -1,0 +1,41 @@
+name: 'Sync Repo'
+
+on:
+  workflow_run:
+    workflows:
+      - Release
+    types:
+      - completed
+
+jobs:
+  codeberg:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: 'push to Codeberg'
+        uses: cssnr/mirror-repository-action@latest
+        with:
+          host: https://codeberg.org
+          owner: hafiziruslan
+          repo: RasPiAPRS
+          create: false
+          username: hafiziruslan
+          password: ${{ secrets.CODEBERG_TOKEN }}
+          summary: false
+          private: false
+
+  gitlab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'push to GitLab'
+        uses: keninkujovic/gitlab-sync@main
+        with:
+          gitlab_url: 'https://gitlab.com/hafiziruslan/RasPiAPRS.git'
+          username: hafiziruslan
+          gitlab_pat: ${{ secrets.GITLAB_TOKEN }}
+          force_push: true

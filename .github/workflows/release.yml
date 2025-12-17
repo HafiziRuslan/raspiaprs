@@ -1,6 +1,12 @@
 name: 'Release'
 
-on: push
+on:
+  workflow_run:
+    workflows:
+      - Auto-Merge
+    types:
+      - completed
+  push:
 
 jobs:
   release:
