@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-17T16:37:28.407181174+08:00)
+## [unreleased]
 
 ### 🚀 Features
 
@@ -38,6 +38,8 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(changelog): update changelog generation workflow
+- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -88,7 +90,9 @@ All notable changes to this project will be documented in this file.
 - 🔧 chore(ci): update cliff.toml path in release workflow
 - 🔧 chore(ci): update git-cliff configuration path
 
-## [beta] - (2025-12-10T20:39:10+08:00)
+---
+
+## [beta] - (Wed, 10-Dec-2025, 20:39:10.000, +08)
 
 ### 🚀 Features
 
@@ -528,4 +532,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-17T16:37:28.424765482+08:00)
+generated using git-cliff at Wed, 17-Dec-2025, 20:24:18.733, +08
