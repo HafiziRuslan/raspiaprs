@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [beta] - (Thu, 18-Dec-2025, 00:12:25.000, +08)
 
 ### 🚀 Features
 
@@ -12,66 +12,6 @@ All notable changes to this project will be documented in this file.
 - ✨ feat(gps): add gpsd client for position and satellite data
 - ✨ feat(gpsd): enhance GPS data reporting
 - ✨ feat(readme): update installation instructions
-
-### 🐛 Bug Fixes
-
-- 🐛 fix(telegram): prepend callsign to telegram log messages
-- 🐛 fix(telegram): remove unnecessary reply parameters from logs_to_telegram
-- 🐛 fix(gpsd): handle GPSD_ENABLE environment variable
-- ✅ test(gps): improve gpsd client usage and data retrieval
-- 🐛 fix(gps): ensure correct type for gps data retrieval
-- ✅ test(gps): improve logging messages and fix satellite return value
-- fix: ident to tab 4
-- 🐛 fix(gps): remove accuracy from position report
-- 🐛 fix(gps): remove unused nSat variable
-- 🐛 fix(gpsd): correct gps position check
-- 🐛 fix(gpsd): use 'is not' for float comparison
-- 🐛 fix(repo): correct repository URL in cliff config and main script
-- ✨ refactor(main): sort import & fix identation
-- 🐛 fix(main): reduce tab spacing
-- 🐛 fix(scripts): correct virtual environment activation path
-
-### 🚜 Refactor
-
-- ♻️ refactor(system_info): simplify memory usage calculation
-- ♻️ refactor(main): simplify and improve code readability
-- 📝 docs(cliff config): update changelog template and commit parsers
-
-### 📚 Documentation
-
-- 📝 docs(cliff.toml): skip commits from github actions
-- 📝 docs(changelog): update changelog generation workflow
-- 📝 docs(pyproject): update readme filename
-- 📝 docs(changelog): update release note
-
-### 🧪 Testing
-
-- 👷 ci(release): add deploy job for beta tag
-- ✅ test(gps): simplify gps data retrieval
-- ✅ test(gps): improve gpsd data handling
-
-### ⚙️ Miscellaneous Tasks
-
-- 🔧 chore(logging): improve logging configuration
-- chore(ci): remove unnecessary push trigger for changelog workflow
-- 👷 ci(workflows): update CI workflows for repository synchronization
-- 🔧 chore(main.sh): clear extra spacing in log
-- 🔧 chore(main.sh): improve uv installation message
-- 🔧 chore(uv): remove uv self update
-- 🔧 chore(install): remove uv shell completion setup
-- 🔧 chore(scripts): improve shell script output and activation
-- 🔧 chore(scripts): update uv install message
-- 🔧 chore(ci): remove changelog-ci-config.yaml
-- 📦 build(release): add main.sh to release artifacts
-- 🔧 chore(ci): update cliff.toml path in release workflow
-- 🔧 chore(ci): update git-cliff configuration path
-
----
-
-## [beta] - (Wed, 10-Dec-2025, 20:39:10.000, +08)
-
-### 🚀 Features
-
 - ✨ feat(deps): update project dependencies and tooling
 - ✨ feat(ci): change changelog file extension to md
 - ✨ feat(ci): add merge schedule workflow
@@ -109,6 +49,21 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(telegram): prepend callsign to telegram log messages
+- 🐛 fix(telegram): remove unnecessary reply parameters from logs_to_telegram
+- 🐛 fix(gpsd): handle GPSD_ENABLE environment variable
+- ✅ test(gps): improve gpsd client usage and data retrieval
+- 🐛 fix(gps): ensure correct type for gps data retrieval
+- ✅ test(gps): improve logging messages and fix satellite return value
+- fix: ident to tab 4
+- 🐛 fix(gps): remove accuracy from position report
+- 🐛 fix(gps): remove unused nSat variable
+- 🐛 fix(gpsd): correct gps position check
+- 🐛 fix(gpsd): use 'is not' for float comparison
+- 🐛 fix(repo): correct repository URL in cliff config and main script
+- ✨ refactor(main): sort import & fix identation
+- 🐛 fix(main): reduce tab spacing
+- 🐛 fix(scripts): correct virtual environment activation path
 - ♻️ refactor(ci): streamline release asset upload process
 - 🔧 chore(config): update cliff configuration and release workflow
 - 🐛 fix(ci): adjust git-cliff checkout depth and file paths
@@ -368,6 +323,9 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(system_info): simplify memory usage calculation
+- ♻️ refactor(main): simplify and improve code readability
+- 📝 docs(cliff config): update changelog template and commit parsers
 - ♻️ refactor(system): clean up type conversions in system metric functions
 - ♻️ refactor(config): improve readability and adhere to Python conventions
 - ♻️ refactor(main): simplify header sending logic
@@ -397,6 +355,10 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+- 📝 docs(cliff.toml): skip commits from github actions
+- 📝 docs(changelog): update changelog generation workflow
+- 📝 docs(pyproject): update readme filename
+- 📝 docs(changelog): update release note
 - 📝 docs(ci): standardize changelog file reference
 - 📝 docs(changelog): adjust cliff configuration and release workflow
 - docs: update CHANGELOG.md
@@ -433,10 +395,27 @@ All notable changes to this project will be documented in this file.
 
 ### 🧪 Testing
 
+- 👷 ci(release): use latest version tag of deploy
+- 👷 ci(release): add deploy job for beta tag
+- ✅ test(gps): simplify gps data retrieval
+- ✅ test(gps): improve gpsd data handling
 - 👷 ci(release): update GitHub Actions versions
 
 ### ⚙️ Miscellaneous Tasks
 
+- 🔧 chore(logging): improve logging configuration
+- chore(ci): remove unnecessary push trigger for changelog workflow
+- 👷 ci(workflows): update CI workflows for repository synchronization
+- 🔧 chore(main.sh): clear extra spacing in log
+- 🔧 chore(main.sh): improve uv installation message
+- 🔧 chore(uv): remove uv self update
+- 🔧 chore(install): remove uv shell completion setup
+- 🔧 chore(scripts): improve shell script output and activation
+- 🔧 chore(scripts): update uv install message
+- 🔧 chore(ci): remove changelog-ci-config.yaml
+- 📦 build(release): add main.sh to release artifacts
+- 🔧 chore(ci): update cliff.toml path in release workflow
+- 🔧 chore(ci): update git-cliff configuration path
 - 👷 ci(release): restructure workflow jobs
 - 📦 build(ci): include requirements and environment file in release
 - 📦 build(ci): simplify release asset upload
@@ -502,4 +481,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 00:10:43.528, +08
+generated using git-cliff at Thu, 18-Dec-2025, 00:13:41.101, +08
