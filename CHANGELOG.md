@@ -46,6 +46,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🧪 Testing
 
+- 👷 ci(release): add deploy job for beta tag
 - ✅ test(gps): simplify gps data retrieval
 - ✅ test(gps): improve gpsd data handling
 
@@ -501,4 +502,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 23:43:06.658, +08
+generated using git-cliff at Thu, 18-Dec-2025, 00:10:43.528, +08
