@@ -27,10 +27,6 @@ All notable changes to this project will be documented in this file.
 - 🐛 fix(main): reduce tab spacing
 - 🐛 fix(scripts): correct virtual environment activation path
 
-### 💼 Other
-
-- Update CHANGELOG
-
 ### 🚜 Refactor
 
 - ♻️ refactor(main): simplify and improve code readability
@@ -38,39 +34,9 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
-- 📝 docs(changelog): update changes
-- 📝 docs(changelog): update changes
+- 📝 docs(cliff.toml): skip commits from github actions
 - 📝 docs(changelog): update changelog generation workflow
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
-- 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 
 ### 🧪 Testing
@@ -325,14 +291,9 @@ All notable changes to this project will be documented in this file.
 
 ### 💼 Other
 
-- Update CHANGELOG
-- Update CHANGELOG
-- Update changelog
-- Update changelog
 - Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
 - Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
 - run changelog on push
-- [Changelog CI] Add Changelog for Version ae1c38ed31d5d068814908845ff28e5e766d8146
 - Update Python versions in pylint workflow
 - Set package-ecosystem to 'pip' in dependabot config
 - Delete .github/workflows/pylint.yml
@@ -433,7 +394,6 @@ All notable changes to this project will be documented in this file.
 - 📝 docs(changelog): adjust cliff configuration and release workflow
 - docs: update CHANGELOG.md
 - docs: update CHANGELOG.md
-- docs(CHANGELOG): update release notes
 - 👷 ci(workflows): streamline release and changelog generation
 - 📝 docs(readme): rename README to README.md
 - 📝 docs(readme): update license file reference
@@ -535,4 +495,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 20:32:23.694, +08
+generated using git-cliff at Wed, 17-Dec-2025, 20:51:06.172, +08
