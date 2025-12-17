@@ -457,11 +457,7 @@ async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0):
 						chat_id=os.getenv("TELEGRAM_CHAT_ID"),
 						message_thread_id=int(os.getenv("TELEGRAM_TOPIC_ID")),
 						latitude=lat,
-						longitude=lon,
-						reply_parameters={
-							"reply_to_message_id": botmsg.message_id,
-							"allow_sending_without_reply": False
-						},
+						longitude=lon
 					)
 					logging.info("Sent location to Telegram: %s/%s/%s", botloc.chat_id, botloc.message_thread_id, botloc.message_id)
 			except Exception as e:
@@ -574,7 +570,7 @@ async def main():
 			nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
 			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
 			ais.sendall(status)
-			await logs_to_telegram(f"{cfg.call} <u>Status</u>\n\n{nowz}, {uptime}, {sats}")
+			await logs_to_telegram(f"{cfg.call} <u>Status-{seq}</u>\n\n{nowz}, {uptime}, {sats}")
 			logging.info(status)
 		else:
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused)
