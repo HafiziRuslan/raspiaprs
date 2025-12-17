@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased] - (2025-12-17T04:49:00.769788945+08:00)
+## [unreleased] - (2025-12-17T16:37:28.407181174+08:00)
 
 ### 🚀 Features
 
@@ -60,6 +60,7 @@ All notable changes to this project will be documented in this file.
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
+- 📝 docs(changelog): update release note
 - 📝 docs(pyproject): update readme filename
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -75,6 +76,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 👷 ci(workflows): update CI workflows for repository synchronization
 - 🔧 chore(main.sh): clear extra spacing in log
 - 🔧 chore(main.sh): improve uv installation message
 - 🔧 chore(uv): remove uv self update
@@ -526,4 +528,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff - (2025-12-17T04:49:00.788014580+08:00)
+generated using git-cliff - (2025-12-17T16:37:28.424765482+08:00)
