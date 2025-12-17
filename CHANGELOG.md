@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(telegram): prepend callsign to telegram log messages
 - 🐛 fix(telegram): remove unnecessary reply parameters from logs_to_telegram
 - 🐛 fix(gpsd): handle GPSD_ENABLE environment variable
 - ✅ test(gps): improve gpsd client usage and data retrieval
@@ -499,4 +500,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 22:54:01.927, +08
+generated using git-cliff at Wed, 17-Dec-2025, 22:56:15.893, +08
