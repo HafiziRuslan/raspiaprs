@@ -39,6 +39,7 @@ All notable changes to this project will be documented in this file.
 ### 📚 Documentation
 
 - 📝 docs(changelog): update changes
+- 📝 docs(changelog): update changes
 - 📝 docs(changelog): update changelog generation workflow
 - 📝 docs(changelog): update release note
 - 📝 docs(changelog): update release note
@@ -79,6 +80,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- chore(ci): remove unnecessary push trigger for changelog workflow
 - 👷 ci(workflows): update CI workflows for repository synchronization
 - 🔧 chore(main.sh): clear extra spacing in log
 - 🔧 chore(main.sh): improve uv installation message
@@ -533,4 +535,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 17-Dec-2025, 20:24:29.108, +08
+generated using git-cliff at Wed, 17-Dec-2025, 20:32:23.694, +08
