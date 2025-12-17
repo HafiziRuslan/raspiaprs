@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update Tag
-        uses: richardsimko/update-tag@main
+        uses: richardsimko/update-tag@latest
         with:
           tag_name: beta
         env:
