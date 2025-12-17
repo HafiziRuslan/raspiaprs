@@ -305,14 +305,9 @@ def get_memused():
 					parts = line.split()
 					if len(parts) > 1:
 						cachemem = int(parts[1])
-				if line.startswith("SwapFree"):
-					parts = line.split()
-					if len(parts) > 1:
-						swapfreemem = int(parts[1])
-		allfreemem = freemem + swapfreemem
 	except (IOError, ValueError):
 		return 0
-	return int((allfreemem + buffmem + cachemem) / 100)
+	return int((freemem + buffmem + cachemem) / 100)
 
 
 def get_temp():
