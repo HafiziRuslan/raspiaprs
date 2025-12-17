@@ -250,10 +250,10 @@ def get_gpsd_sat():
 						return uSat, nSat
 					else:
 						logging.info("GPS Satellite unavailable")
-						return 0
+						return (0, 0)
 		except Exception as e:
 			logging.error("Error getting GPS data: %s", e)
-			return 0
+			return (0, 0)
 
 
 def get_coordinates():
@@ -518,9 +518,14 @@ async def send_position(ais, cfg):
 def send_header(ais, cfg):
 	"""Send APRS header information to APRS-IS."""
 	try:
-		ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSUsed".format(cfg.call))
-		ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
-		ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call))
+		if os.getenv("GPSD_ENABLE"):
+			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSUsed".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call))
+		else:
+			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0".format(cfg.call))
 	except APRSConnectionError as err:
 		logging.warning(err)
 
@@ -556,20 +561,28 @@ async def main():
 		memused = get_memused()
 		if os.getenv("GPSD_ENABLE"):
 			uSat, nSat = get_gpsd_sat()
+			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, uSat)
+			ais.sendall(telemetry)
+			await logs_to_telegram(f"{cfg.call} <u>Telemetry</u>\n\n<b>Sequence</b>: {seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>GPS Used</b>: {uSat}/{nSat}")
+			logging.info(telemetry)
+			uptime = get_uptime()
+			sats = f"sats={uSat}/{nSat}"
+			nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
+			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
+			ais.sendall(status)
+			await logs_to_telegram(f"{cfg.call} <u>Status</u>\n\n{nowz}, {uptime}, {sats}")
+			logging.info(status)
 		else:
-			uSat = 0
-			nSat = 0
-		telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, uSat)
-		ais.sendall(telemetry)
-		await logs_to_telegram(f"{cfg.call} <u>Telemetry</u>\n\n<b>Sequence</b>: {seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>GPS Used</b>: {uSat}/{nSat}")
-		logging.info(telemetry)
-		uptime = get_uptime()
-		sats = f"sats={uSat}/{nSat}"
-		nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
-		status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
-		ais.sendall(status)
-		await logs_to_telegram(f"{cfg.call} <u>Status</u>\n\n{nowz}, {uptime}, {sats}")
-		logging.info(status)
+			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused)
+			ais.sendall(telemetry)
+			await logs_to_telegram(f"{cfg.call} <u>Telemetry</u>\n\n<b>Sequence</b>: {seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB")
+			logging.info(telemetry)
+			uptime = get_uptime()
+			nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
+			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime)
+			ais.sendall(status)
+			await logs_to_telegram(f"{cfg.call} <u>Status</u>\n\n{nowz}, {uptime}")
+			logging.info(status)
 		randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
 		logging.info("Sleeping for %d seconds", randsleep)
 		time.sleep(randsleep)
