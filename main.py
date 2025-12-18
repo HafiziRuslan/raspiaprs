@@ -300,7 +300,7 @@ def get_diskused():
 	"""Get used disk space in GB."""
 	try:
 		diskused = psutil.disk_usage("/").used
-		return (diskused / 1024 / 1024 / 1024) * 10
+		return int((diskused / 1024 / 1024 / 1024) * 10)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
