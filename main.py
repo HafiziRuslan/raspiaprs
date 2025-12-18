@@ -36,6 +36,7 @@ MMDVMLOGPATH = "/var/log/pi-star"
 MMDVMLOGPREFIX = "MMDVM"
 DMRGATEWAYLOGPREFIX = "DMRGateway"
 
+
 # Set up logging
 def configure_logging():
 	logging.basicConfig(
@@ -315,10 +316,11 @@ def get_memused():
 		logging.error("Unexpected error: %s", e)
 		return 0
 
+
 def get_diskused():
 	"""Get used disk space in GB."""
 	try:
-		diskused = subprocess.check_output("df --block-size=1 / | tail -1 | awk {'print $3'}", shell=True, text=True)
+		diskused = subprocess.check_output("df --block-size=1 \/ | tail -1 | awk {'print $3'}", text=True)
 		return int(diskused / 1024 / 1024 / 1024) * 10
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
