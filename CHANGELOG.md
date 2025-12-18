@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 20:13:53.000, +08)
+## [beta] - (Thu, 18-Dec-2025, 20:55:20.000, +08)
 
 ### 🚀 Features
 
@@ -332,6 +332,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(metrics): migrate system status checks to psutil
 - ♻️ refactor(metrics): restructure disk usage command
 - ♻️ refactor(system): improve disk usage metric retrieval
 - ♻️ refactor(system_info): simplify memory usage calculation
@@ -492,4 +493,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 20:14:36.737, +08
+generated using git-cliff at Thu, 18-Dec-2025, 20:55:50.363, +08
