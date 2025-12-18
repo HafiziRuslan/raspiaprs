@@ -283,9 +283,9 @@ def get_cpuload():
 			loadstr = lfd.readline()
 		load5 = float(loadstr.split()[1])
 		corecount = os.cpu_count()
-	except (IOError, ValueError):
+		return int((load5 / corecount) * 1000)
+	except Exception:
 		return 0
-	return int((load5 / corecount) * 1000)
 
 
 def get_memused():
@@ -309,9 +309,17 @@ def get_memused():
 					parts = line.split()
 					if len(parts) > 1:
 						cachemem = int(parts[1])
-	except (IOError, ValueError):
+		return int((totalmem - freemem - buffmem - cachemem) / 100)
+	except Exception:
 		return 0
-	return int((totalmem - freemem - buffmem - cachemem) / 100)
+
+def get_diskused():
+	"""Get used disk space in GB."""
+	try:
+		diskused = os.system("df --block-size=1 / | tail -1 | awk {'print $3'}")
+		return int(diskused / 1024 / 1024 / 1024) * 100
+	except Exception:
+		return 0
 
 
 def get_temp():
@@ -319,9 +327,9 @@ def get_temp():
 	try:
 		with open(THERMAL_FILE) as tfd:
 			temperature = int(tfd.readline().strip())
-	except (IOError, ValueError):
+		return int(temperature / 100)
+	except Exception:
 		return 0
-	return int(temperature / 100)
 
 
 def get_osinfo():
@@ -518,13 +526,13 @@ def send_header(ais, cfg):
 	"""Send APRS header information to APRS-IS."""
 	try:
 		if os.getenv("GPSD_ENABLE"):
-			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,GPSUsed".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,sats".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed,GPSUsed".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,GB,sats".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,0.1,0,0,1,0".format(cfg.call))
 		else:
-			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,GB".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.1,0,0,0.1,0,0,0.1,0".format(cfg.call))
 	except APRSConnectionError as err:
 		logging.warning(err)
 
@@ -558,11 +566,12 @@ async def main():
 		temp = get_temp()
 		cpuload = get_cpuload()
 		memused = get_memused()
+		diskused = get_diskused()
 		if os.getenv("GPSD_ENABLE"):
 			uSat, nSat = get_gpsd_sat()
-			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, uSat)
+			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>GPS Used</b>: {uSat}/{nSat}")
+			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>Disk Used</b>: {diskused / 10:.1f}GB\n<b>GPS Used</b>: {uSat}/{nSat}")
 			logging.info(telemetry)
 			uptime = get_uptime()
 			sats = f"sats={uSat}/{nSat}"
@@ -572,9 +581,9 @@ async def main():
 			await logs_to_telegram(f"<u>{cfg.call} Status-{seq}</u>\n\n{nowz}, {uptime}, {sats}")
 			logging.info(status)
 		else:
-			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused)
+			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB")
+			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB<b>Disk Used</b>: {diskused / 10:.1f}GB\n")
 			logging.info(telemetry)
 			uptime = get_uptime()
 			nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
