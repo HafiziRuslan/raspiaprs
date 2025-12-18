@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 21:27:44, +08)
+## [beta] - (Thu, 18-Dec-2025, 21:35:40, +08)
 
 ### 🚀 Features
 
@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(system): ensure cpu load average is integer
 - ♻️ refactor(system): use standard library for kernel version retrieval
 - 🐛 fix(system): correctly calculate used disk space
 - 🐛 fix(system): wrap shell command for disk usage
@@ -494,4 +495,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 21:28:13.842, +08
+generated using git-cliff at Thu, 18-Dec-2025, 21:36:10.080, +08
