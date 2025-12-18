@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 00:13:41.000, +08)
+## [beta] - (Thu, 18-Dec-2025, 17:58:03.000, +08)
 
 ### 🚀 Features
 
@@ -49,6 +49,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(metrics): calculate used memory correctly
 - 🐛 fix(telegram): prepend callsign to telegram log messages
 - 🐛 fix(telegram): remove unnecessary reply parameters from logs_to_telegram
 - 🐛 fix(gpsd): handle GPSD_ENABLE environment variable
@@ -481,4 +482,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 16:18:50.475, +08
+generated using git-cliff at Thu, 18-Dec-2025, 18:11:32.693, +08
