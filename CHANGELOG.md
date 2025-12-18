@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 18:38:33.000, +08)
+## [beta] - (Thu, 18-Dec-2025, 18:40:46.000, +08)
 
 ### 🚀 Features
 
@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(system): correct scaling factor for disk usage
 - 🐛 fix(metrics): calculate used memory correctly
 - 🐛 fix(telegram): prepend callsign to telegram log messages
 - 🐛 fix(telegram): remove unnecessary reply parameters from logs_to_telegram
@@ -255,6 +256,7 @@ All notable changes to this project will be documented in this file.
 
 ### 💼 Other
 
+- Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
 - Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
 - Merge branch 'master' of [RasPiAPRS](https://github.com/HafiziRuslan/RasPiAPRS)
 - run changelog on push
@@ -483,4 +485,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 18:39:21.066, +08
+generated using git-cliff at Thu, 18-Dec-2025, 18:41:16.396, +08
