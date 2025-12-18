@@ -319,7 +319,7 @@ def get_temp():
 def get_uptime():
 	"""Get system uptime in a human-readable format."""
 	try:
-		uptime_seconds = psutil.boot_time()
+		uptime_seconds = dt.datetime.now(dt.timezone.utc).timestamp() - psutil.boot_time()
 		uptime = dt.timedelta(seconds=uptime_seconds)
 		return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f')}"
 	except Exception as e:
