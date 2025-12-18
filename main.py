@@ -489,19 +489,19 @@ async def send_position(ais, cfg, seq):
 		cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
 		cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
 		cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
+	latstr = _lat_to_aprs(float(cur_lat))
+	lonstr = _lon_to_aprs(float(cur_lon))
+	altstr = _alt_to_aprs(float(cur_alt))
 	mmdvminfo = get_mmdvminfo()
 	osinfo = get_osinfo()
 	comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/RasPiAPRS"
 	timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
-	latstr = _lat_to_aprs(float(cur_lat))
-	lonstr = _lon_to_aprs(float(cur_lon))
-	altstr = _alt_to_aprs(float(cur_alt))
 	payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
 	packet = f"{cfg.call}>APP642:{payload}"
-	await logs_to_telegram(f"<u>{cfg.call} Position-{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
-	logging.info(packet)
 	try:
 		ais.sendall(packet)
+		logging.info(packet)
+		await logs_to_telegram(f"<u>{cfg.call} Position-{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
 	except APRSConnectionError as err:
 		logging.warning(err)
 
