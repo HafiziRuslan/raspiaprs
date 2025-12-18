@@ -275,7 +275,7 @@ def get_coordinates():
 def get_cpuload():
 	"""Get CPU load as a percentage of total capacity."""
 	try:
-		load5 = psutil.getloadavg()[1]
+		load5 = int(psutil.getloadavg()[1])
 		corecount = psutil.cpu_count()
 		return int((load5 / corecount) * 1000)
 	except Exception as e:
