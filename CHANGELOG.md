@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 19:02:17.000, +08)
+## [beta] - (Thu, 18-Dec-2025, 19:15:24.000, +08)
 
 ### 🚀 Features
 
@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(metrics): improve system metrics error logging
 - 🐛 fix(utils): correctly calculate used disk space
 - 🐛 fix(system): correct scaling factor for disk usage
 - 🐛 fix(metrics): calculate used memory correctly
@@ -486,4 +487,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 19:02:43.869, +08
+generated using git-cliff at Thu, 18-Dec-2025, 19:15:54.294, +08
