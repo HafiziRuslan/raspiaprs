@@ -23,7 +23,6 @@ from dotenv import set_key
 from gpsdclient import GPSDClient
 
 # Default paths for system files
-VERSION_FILE = "/proc/version"
 OS_RELEASE_FILE = "/etc/os-release"
 PISTAR_RELEASE_FILE = "/etc/pistar-release"
 WPSD_RELEASE_FILE = "/etc/WPSD-release"
@@ -310,7 +309,7 @@ def get_diskused():
 def get_temp():
 	"""Get CPU temperature in degC."""
 	try:
-		temperature = psutil.sensors_temperatures()["coretemp"][0].current
+		temperature = psutil.sensors_temperatures()["cpu_thermal"][0].current
 		return int(temperature / 100)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
@@ -345,13 +344,10 @@ def get_osinfo():
 		logging.warning("OS release file not found: %s", OS_RELEASE_FILE)
 	kernelver = ""
 	try:
-		with open(VERSION_FILE) as ver:
-			for line in ver:
-				parts = line.split()
-				if len(parts) >= 3:
-					kernelver = f"[{parts[0]} {parts[2]} ({parts[4].removeprefix('(').split('-')[0]})]"
-	except (IOError, IndexError):
-		logging.warning("Version file not found or unexpected format: %s", VERSION_FILE)
+		kernel = os.uname()
+		kernelver = f"[{kernel.sysname}{kernel.release}{kernel.version.split(' ')[0]} ({kernel.machine})]"
+	except Exception as e:
+		logging.error("Unexpected error: %s", e)
 	return f" {osname} {kernelver}"
 
 
