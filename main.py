@@ -290,7 +290,7 @@ def get_memused():
 		freeVmem = psutil.virtual_memory().free
 		buffVmem = psutil.virtual_memory().buffers
 		cacheVmem = psutil.virtual_memory().cached
-		return int((totalVmem - freeVmem - buffVmem - cacheVmem) / 100)
+		return int(((totalVmem - freeVmem - buffVmem - cacheVmem) / 1024 ** 2) * 10)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
@@ -300,7 +300,7 @@ def get_diskused():
 	"""Get used disk space in GB."""
 	try:
 		diskused = psutil.disk_usage("/").used
-		return int((diskused / 1024 / 1024 / 1024) * 10)
+		return int((diskused / 1024 ** 3) * 10)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
