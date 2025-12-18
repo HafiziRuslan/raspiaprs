@@ -317,7 +317,7 @@ def get_diskused():
 	"""Get used disk space in GB."""
 	try:
 		diskused = os.system("df --block-size=1 / | tail -1 | awk {'print $3'}")
-		return int(diskused / 1024 / 1024 / 1024) * 100
+		return int(diskused / 1024 / 1024 / 1024) * 10
 	except Exception:
 		return 0
 
