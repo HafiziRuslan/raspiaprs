@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 19:15:24.000, +08)
+## [beta] - (Thu, 18-Dec-2025, 19:28:04.000, +08)
 
 ### 🚀 Features
 
@@ -329,6 +329,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(system): improve disk usage metric retrieval
 - ♻️ refactor(system_info): simplify memory usage calculation
 - ♻️ refactor(main): simplify and improve code readability
 - 📝 docs(cliff config): update changelog template and commit parsers
@@ -487,4 +488,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 19:15:54.294, +08
+generated using git-cliff at Thu, 18-Dec-2025, 19:28:35.359, +08
