@@ -320,7 +320,7 @@ def get_memused():
 def get_diskused():
 	"""Get used disk space in GB."""
 	try:
-		diskused = subprocess.check_output(["df --block-size=1 / | tail -1 | awk {'print $3'}"], text=True).strip()
+		diskused = subprocess.check_output(["df --block-size=1 /", "|", "tail -1", "|", "awk {'print $3'}"], text=True).strip()
 		return int(diskused / 1024 / 1024 / 1024) * 10
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
