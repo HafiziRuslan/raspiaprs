@@ -284,7 +284,8 @@ def get_cpuload():
 		load5 = float(loadstr.split()[1])
 		corecount = os.cpu_count()
 		return int((load5 / corecount) * 1000)
-	except Exception:
+	except Exception as e:
+		logging.error("Unexpected error: %s", e)
 		return 0
 
 
@@ -310,15 +311,17 @@ def get_memused():
 					if len(parts) > 1:
 						cachemem = int(parts[1])
 		return int((totalmem - freemem - buffmem - cachemem) / 100)
-	except Exception:
+	except Exception as e:
+		logging.error("Unexpected error: %s", e)
 		return 0
 
 def get_diskused():
 	"""Get used disk space in GB."""
 	try:
-		diskused = subprocess.check_output("df --block-size=1 / | tail -1 | awk {'print $3'}", text=True).strip()
+		diskused = subprocess.check_output("df --block-size=1 / | tail -1 | awk {'print $3'}", shell=True, text=True)
 		return int(diskused / 1024 / 1024 / 1024) * 10
-	except Exception:
+	except Exception as e:
+		logging.error("Unexpected error: %s", e)
 		return 0
 
 
@@ -328,7 +331,8 @@ def get_temp():
 		with open(THERMAL_FILE) as tfd:
 			temperature = int(tfd.readline().strip())
 		return int(temperature / 100)
-	except Exception:
+	except Exception as e:
+		logging.error("Unexpected error: %s", e)
 		return 0
 
 
