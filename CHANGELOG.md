@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 17:58:03.000, +08)
+## [beta] - (Thu, 18-Dec-2025, 18:38:33.000, +08)
 
 ### 🚀 Features
 
+- ✨ feat(telemetry): add disk usage metric to aprs telemetry
 - ✨ feat(telegram): enhance logging with sequence numbers and reply parameters
 - ✨ feat(gpsd): enable gpsd functionality with environment variable
 - ✨ feat(gpsd): return both used and total satellites
@@ -482,4 +483,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 18:11:32.693, +08
+generated using git-cliff at Thu, 18-Dec-2025, 18:39:21.066, +08
