@@ -7,6 +7,7 @@ import datetime as dt
 import json
 import logging
 import os
+import psutil
 import random
 import subprocess
 import sys
@@ -22,12 +23,7 @@ from dotenv import set_key
 from gpsdclient import GPSDClient
 
 # Default paths for system files
-CPUINFO_FILE = "/proc/cpuinfo"
-LOADAVG_FILE = "/proc/loadavg"
-MEMINFO_FILE = "/proc/meminfo"
-UPTIME_FILE = "/proc/uptime"
 VERSION_FILE = "/proc/version"
-THERMAL_FILE = "/sys/class/thermal/thermal_zone0/temp"
 OS_RELEASE_FILE = "/etc/os-release"
 PISTAR_RELEASE_FILE = "/etc/pistar-release"
 WPSD_RELEASE_FILE = "/etc/WPSD-release"
@@ -280,10 +276,8 @@ def get_coordinates():
 def get_cpuload():
 	"""Get CPU load as a percentage of total capacity."""
 	try:
-		with open(LOADAVG_FILE) as lfd:
-			loadstr = lfd.readline()
-		load5 = float(loadstr.split()[1])
-		corecount = os.cpu_count()
+		load5 = psutil.getloadavg()[1]
+		corecount = psutil.cpu_count()
 		return int((load5 / corecount) * 1000)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
@@ -293,25 +287,11 @@ def get_cpuload():
 def get_memused():
 	"""Get used memory in MB."""
 	try:
-		with open(MEMINFO_FILE) as pfd:
-			for line in pfd:
-				if line.startswith("MemTotal"):
-					parts = line.split()
-					if len(parts) > 1:
-						totalmem = int(parts[1])
-				if line.startswith("MemFree"):
-					parts = line.split()
-					if len(parts) > 1:
-						freemem = int(parts[1])
-				if line.startswith("Buffers"):
-					parts = line.split()
-					if len(parts) > 1:
-						buffmem = int(parts[1])
-				if line.startswith("Cached"):
-					parts = line.split()
-					if len(parts) > 1:
-						cachemem = int(parts[1])
-		return int((totalmem - freemem - buffmem - cachemem) / 100)
+		totalVmem = psutil.virtual_memory().total
+		freeVmem = psutil.virtual_memory().free
+		buffVmem = psutil.virtual_memory().buffers
+		cacheVmem = psutil.virtual_memory().cached
+		return int((totalVmem - freeVmem - buffVmem - cacheVmem) / 100)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
@@ -320,8 +300,8 @@ def get_memused():
 def get_diskused():
 	"""Get used disk space in GB."""
 	try:
-		diskused = subprocess.check_output('df --block-size=1 / | tail -1 | awk {"print $3"}', shell=True, text=True).strip()
-		return int(diskused / 1024 / 1024 / 1024) * 10
+		diskused = psutil.disk_usage("/").used
+		return (diskused / 1024 / 1024 / 1024) * 10
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
@@ -330,12 +310,22 @@ def get_diskused():
 def get_temp():
 	"""Get CPU temperature in degC."""
 	try:
-		with open(THERMAL_FILE) as tfd:
-			temperature = int(tfd.readline().strip())
+		temperature = psutil.sensors_temperatures()["coretemp"][0].current
 		return int(temperature / 100)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
+
+
+def get_uptime():
+	"""Get system uptime in a human-readable format."""
+	try:
+		uptime_seconds = psutil.boot_time()
+		uptime = dt.timedelta(seconds=uptime_seconds)
+		return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f')}"
+	except Exception as e:
+		logging.error("Unexpected error: %s", e)
+		return ""
 
 
 def get_osinfo():
@@ -413,14 +403,6 @@ def get_dmrmaster():
 			if len(dmrmasters) > 0:
 				dmr_master = f" connected via [{', '.join(dmrmasters)}]"
 	return dmr_master
-
-
-def get_uptime():
-	"""Get system uptime in a human-readable format."""
-	with open(UPTIME_FILE) as upf:
-		uptime_seconds = float(upf.readline().split()[0])
-		uptime = dt.timedelta(seconds=uptime_seconds)
-	return f"up={humanize.precisedelta(uptime, minimum_unit='seconds', format='%0.0f')}"
 
 
 def get_mmdvminfo():
