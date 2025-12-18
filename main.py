@@ -293,6 +293,10 @@ def get_memused():
 	try:
 		with open(MEMINFO_FILE) as pfd:
 			for line in pfd:
+				if line.startswith("MemTotal"):
+					parts = line.split()
+					if len(parts) > 1:
+						totalmem = int(parts[1])
 				if line.startswith("MemFree"):
 					parts = line.split()
 					if len(parts) > 1:
@@ -307,7 +311,7 @@ def get_memused():
 						cachemem = int(parts[1])
 	except (IOError, ValueError):
 		return 0
-	return int((freemem + buffmem + cachemem) / 100)
+	return int((totalmem - freemem - buffmem - cachemem) / 100)
 
 
 def get_temp():
