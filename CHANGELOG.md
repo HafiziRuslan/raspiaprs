@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 21:56:48, +08)
+## [beta] - (Fri, 19-Dec-2025, 00:09:43, +08)
 
 ### 🚀 Features
 
@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- ♻️ refactor(reporting): optimize uptime and time calculation
 - 🐛 fix(system): calculate correct uptime duration
 - 🐛 fix(metrics): correct cpu load and temperature scaling
 - 🐛 fix(metrics): correct memory usage calculation units
@@ -499,4 +500,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 21:57:32.864, +08
+generated using git-cliff at Fri, 19-Dec-2025, 00:10:38.884, +08
