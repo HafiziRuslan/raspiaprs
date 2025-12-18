@@ -551,15 +551,15 @@ async def main():
 		cpuload = get_cpuload()
 		memused = get_memused()
 		diskused = get_diskused()
+		uptime = get_uptime()
+		nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
 		if os.getenv("GPSD_ENABLE"):
 			uSat, nSat = get_gpsd_sat()
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
 			ais.sendall(telemetry)
 			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>Disk Used</b>: {diskused / 10:.1f}GB\n<b>GPS Used</b>: {uSat}/{nSat}")
 			logging.info(telemetry)
-			uptime = get_uptime()
 			sats = f"sats={uSat}/{nSat}"
-			nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
 			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
 			ais.sendall(status)
 			await logs_to_telegram(f"<u>{cfg.call} Status-{seq}</u>\n\n{nowz}, {uptime}, {sats}")
@@ -569,9 +569,7 @@ async def main():
 			ais.sendall(telemetry)
 			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB<b>Disk Used</b>: {diskused / 10:.1f}GB\n")
 			logging.info(telemetry)
-			uptime = get_uptime()
-			nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
-			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime)
+			status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
 			ais.sendall(status)
 			await logs_to_telegram(f"<u>{cfg.call} Status-{seq}</u>\n\n{nowz}, {uptime}")
 			logging.info(status)
