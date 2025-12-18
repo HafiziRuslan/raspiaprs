@@ -275,7 +275,7 @@ def get_coordinates():
 def get_cpuload():
 	"""Get CPU load as a percentage of total capacity."""
 	try:
-		load5 = int(psutil.getloadavg()[1])
+		load5 = psutil.getloadavg()[1]
 		corecount = psutil.cpu_count()
 		return int((load5 / corecount) * 1000)
 	except Exception as e:
@@ -310,7 +310,7 @@ def get_temp():
 	"""Get CPU temperature in degC."""
 	try:
 		temperature = psutil.sensors_temperatures()["cpu_thermal"][0].current
-		return int(temperature / 100)
+		return int(temperature * 10)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
