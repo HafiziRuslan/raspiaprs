@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Thu, 18-Dec-2025, 21:42:11, +08)
+## [beta] - (Thu, 18-Dec-2025, 21:49:27, +08)
 
 ### 🚀 Features
 
@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- 🐛 fix(metrics): correct cpu load and temperature scaling
 - 🐛 fix(metrics): correct memory usage calculation units
 - 🐛 fix(data): ensure disk usage returns integer
 - 🐛 fix(system): ensure cpu load average is integer
@@ -497,4 +498,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 18-Dec-2025, 21:42:41.854, +08
+generated using git-cliff at Thu, 18-Dec-2025, 21:50:00.032, +08
