@@ -60,7 +60,7 @@ class Config(object):
 		alt = os.getenv("APRS_ALTITUDE", "0.0")
 
 		if os.getenv("GPSD_ENABLE"):
-			self.latitude, self.longitude, self.altitude = get_gpsd_position()
+			self.timestamp, self.latitude, self.longitude, self.altitude = get_gpsd_position()
 		else:
 			if lat == "0.0" and lon == "0.0":
 				self.latitude, self.longitude = get_coordinates()
@@ -204,13 +204,14 @@ class Sequence(object):
 def get_gpsd_position():
 	"""Get position from GPSD."""
 	if os.getenv("GPSD_ENABLE"):
+		timestamp = dt.datetime.now(dt.timezone.utc)
 		logging.info("Trying to figure out position using GPS")
 		try:
 			with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
 				for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
 					if result["class"] == "TPV":
 						logging.info("GPS fix acquired")
-						utc = result.get("time", dt.datetime.now(dt.timezone.utc))
+						utc = result.get("time", timestamp)
 						lat = result.get("lat", 0)
 						lon = result.get("lon", 0)
 						alt = result.get("alt", 0)
@@ -223,13 +224,13 @@ def get_gpsd_position():
 							Config.latitude = lat
 							Config.longitude = lon
 							Config.altitude = alt
-							return lat, lon, alt
+							return utc, lat, lon, alt
 					else:
 						logging.info("GPS Position unavailable")
-						return (0, 0, 0)
+						return (timestamp, 0, 0, 0)
 		except Exception as e:
 			logging.error("Error getting GPS data: %s", e)
-			return (0, 0, 0)
+			return (timestamp, 0, 0, 0)
 
 
 def get_gpsd_sat():
@@ -480,7 +481,7 @@ async def send_position(ais, cfg, seq):
 		return "/A={0:06.0f}".format(alt)
 
 	if os.getenv("GPSD_ENABLE"):
-		cur_lat, cur_lon, cur_alt = get_gpsd_position()
+		cur_time, cur_lat, cur_lon, cur_alt = get_gpsd_position()
 		if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
 			cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
 			cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
@@ -495,7 +496,8 @@ async def send_position(ais, cfg, seq):
 	mmdvminfo = get_mmdvminfo()
 	osinfo = get_osinfo()
 	comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/RasPiAPRS"
-	timestamp = dt.datetime.now(dt.timezone.utc).strftime("%d%H%Mz")
+	ztime = dt.datetime.now(dt.timezone.utc)
+	timestamp = cur_time.strftime("%d%H%Mz") if cur_time != None else ztime.strftime("%d%H%Mz")
 	payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
 	packet = f"{cfg.call}>APP642:{payload}"
 	try:
@@ -552,7 +554,8 @@ async def main():
 		memused = get_memused()
 		diskused = get_diskused()
 		uptime = get_uptime()
-		nowz = f"time={dt.datetime.now(dt.timezone.utc).strftime('%d%H%Mz')}"
+		cur_time = get_gpsd_position()[0] if os.getenv("GPSD_ENABLE") else dt.datetime.now(dt.timezone.utc)
+		nowz = f"time={cur_time.strftime('%d%H%Mz')}"
 		if os.getenv("GPSD_ENABLE"):
 			uSat, nSat = get_gpsd_sat()
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
