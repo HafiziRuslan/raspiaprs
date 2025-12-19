@@ -60,7 +60,7 @@ class Config(object):
 		alt = os.getenv("APRS_ALTITUDE", "0.0")
 
 		if os.getenv("GPSD_ENABLE"):
-			self.timestamp, self.latitude, self.longitude, self.altitude = get_gpsd_position()
+			self.timestamp, self.latitude, self.longitude, self.altitude = get_gpspos()
 		else:
 			if lat == "0.0" and lon == "0.0":
 				self.latitude, self.longitude = get_coordinates()
@@ -201,7 +201,7 @@ class Sequence(object):
 		return self._count
 
 
-def get_gpsd_position():
+def get_gpspos():
 	"""Get position from GPSD."""
 	if os.getenv("GPSD_ENABLE"):
 		timestamp = dt.datetime.now(dt.timezone.utc)
@@ -233,7 +233,7 @@ def get_gpsd_position():
 			return (timestamp, 0, 0, 0)
 
 
-def get_gpsd_sat():
+def get_gpssat():
 	"""Get satellite from GPSD."""
 	if os.getenv("GPSD_ENABLE"):
 		logging.info("Trying to figure out satellite using GPS")
@@ -481,7 +481,7 @@ async def send_position(ais, cfg, seq):
 		return "/A={0:06.0f}".format(alt)
 
 	if os.getenv("GPSD_ENABLE"):
-		cur_time, cur_lat, cur_lon, cur_alt = get_gpsd_position()
+		cur_time, cur_lat, cur_lon, cur_alt = get_gpspos()
 		if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
 			cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
 			cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
@@ -554,10 +554,10 @@ async def main():
 		memused = get_memused()
 		diskused = get_diskused()
 		uptime = get_uptime()
-		cur_time = get_gpsd_position()[0] if os.getenv("GPSD_ENABLE") else dt.datetime.now(dt.timezone.utc)
+		cur_time = get_gpspos()[0] if os.getenv("GPSD_ENABLE") else dt.datetime.now(dt.timezone.utc)
 		nowz = f"time={cur_time.strftime('%d%H%Mz')}"
 		if os.getenv("GPSD_ENABLE"):
-			uSat, nSat = get_gpsd_sat()
+			uSat, nSat = get_gpssat()
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
 			ais.sendall(telemetry)
 			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 10:.1f}%\n<b>RAM Used</b>: {memused / 10:.1f}MB\n<b>Disk Used</b>: {diskused / 10:.1f}GB\n<b>GPS Used</b>: {uSat}/{nSat}")
