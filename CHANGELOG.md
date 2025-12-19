@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Fri, 19-Dec-2025, 03:39:06, +08)
+## [beta] - (Fri, 19-Dec-2025, 18:41:08, +08)
 
 ### 🚀 Features
 
+- ✨ feat(gps): use gps time for position reports
 - ✨ feat(telemetry): add disk usage metric to aprs telemetry
 - ✨ feat(telegram): enhance logging with sequence numbers and reply parameters
 - ✨ feat(gpsd): enable gpsd functionality with environment variable
@@ -341,6 +342,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(gps): rename gpsd utility functions
 - ♻️ refactor(metrics): migrate system status checks to psutil
 - ♻️ refactor(metrics): restructure disk usage command
 - ♻️ refactor(system): improve disk usage metric retrieval
@@ -424,6 +426,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 🔧 chore(config): update default aprsis radius filter
 - 🔧 chore(config): add comprehensive gitignore
 - 🔧 chore(logging): improve logging configuration
 - chore(ci): remove unnecessary push trigger for changelog workflow
@@ -503,4 +506,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri, 19-Dec-2025, 16:19:05.395, +08
+generated using git-cliff at Fri, 19-Dec-2025, 18:42:32.943, +08
