@@ -69,7 +69,7 @@ class Config(object):
 				self.latitude, self.longitude, self.altitude = lat, lon, alt
 		self.server = os.getenv("APRSIS_SERVER", "rotate.aprs2.net")
 		self.port = int(os.getenv("APRSIS_PORT", 14580))
-		self.filter = os.getenv("APRSIS_FILTER", "m/50")
+		self.filter = os.getenv("APRSIS_FILTER", "m/10")
 
 		passcode = os.getenv("APRS_PASSCODE")
 		if passcode:
