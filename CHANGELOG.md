@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Fri, 19-Dec-2025, 18:42:33, +08)
+## [beta] - (Sun, 21-Dec-2025, 02:32:04, +08)
 
 ### 🚀 Features
 
@@ -342,6 +342,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(telemetry): increase precision of system metrics
 - ♻️ refactor(gps): rename gpsd utility functions
 - ♻️ refactor(metrics): migrate system status checks to psutil
 - ♻️ refactor(metrics): restructure disk usage command
@@ -506,4 +507,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 20-Dec-2025, 16:16:10.422, +08
+generated using git-cliff at Sun, 21-Dec-2025, 02:32:44.665, +08
