@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Sun, 21-Dec-2025, 02:32:04, +08)
+## [beta] - (Sun, 21-Dec-2025, 02:42:34, +08)
 
 ### 🚀 Features
 
@@ -427,6 +427,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 📦 build(version): bump version to 0.1-beta.3
 - 🔧 chore(config): update default aprsis radius filter
 - 🔧 chore(config): add comprehensive gitignore
 - 🔧 chore(logging): improve logging configuration
@@ -507,4 +508,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 21-Dec-2025, 02:32:44.665, +08
+generated using git-cliff at Sun, 21-Dec-2025, 02:42:58.585, +08
