@@ -1,20 +1,27 @@
 [project]
 name = "RasPiAPRS"
-version = "0.1-beta.2"
+version = "0.1-beta.3"
 description = "APRS telemetry for Pi-Star / WPSD / AllStarLink"
-keywords = ["amateur-radio", "aprs", "aprs-beacon", "mmdvm", "pi-star", "aprs-telemetry", "allstarlink", "wpsd"]
+keywords = [
+  "amateur-radio",
+  "aprs",
+  "aprs-beacon",
+  "mmdvm",
+  "pi-star",
+  "aprs-telemetry",
+  "allstarlink",
+  "wpsd",
+]
 readme = "README.md"
 license = "BSD-3-Clause"
 authors = [
-  {name = "Fred Cirera"},
-  {name = "Hafizi Ruslan", email = "9w2lgx@mhrtech.my"}
+  { name = "Fred Cirera", email = "github-fred@hidzz.com"},
+  { name = "Hafizi Ruslan", email = "9w2lgx@mhrtech.my" },
 ]
-maintainers = [
-  {name = "Hafizi Ruslan", email = "9w2lgx@mhrtech.my"}
-]
+maintainers = [{ name = "Hafizi Ruslan", email = "9w2lgx@mhrtech.my" }]
 classifiers = [
   "Development Status :: 4 - Beta",
-  "Programming Language :: Python"
+  "Programming Language :: Python",
 ]
 
 requires-python = ">=3.13"

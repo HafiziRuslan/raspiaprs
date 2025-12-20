@@ -9,6 +9,7 @@ The metrics are:-
 1. CPU Temperature
 2. CPU load average per 5 min
 3. Memory used
+4. Disk usage
 
 ## Installation (Pi-Star / WPSD / AllStarLink)
 
@@ -54,7 +55,7 @@ git pull --autostash
 ## Example
 
 This is the screenshoot from aprs.fi, of _CPU temperature_, _CPU load average_ and _Memory free_ from an Pi-Star node.
-![WSPR Picture](misc/metrics.png)
+![RasPiAPRS Picture](misc/metrics.png)
 
 ### Source
 
