@@ -311,7 +311,7 @@ def get_temp():
 	"""Get CPU temperature in degC."""
 	try:
 		temperature = psutil.sensors_temperatures()["cpu_thermal"][0].current
-		return int(temperature * 1000)
+		return int(temperature * 10)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
@@ -514,11 +514,11 @@ def send_header(ais, cfg):
 		if os.getenv("GPSD_ENABLE"):
 			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed,GPSUsed".format(cfg.call))
 			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,GB,sats".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.001,0,0,0.001,0,0,0.001,0,0,1,0".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0,0,1,0".format(cfg.call))
 		else:
 			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call))
 			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,GB".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.001,0,0,0.001,0,0,0.001,0,0,0.001,0".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(cfg.call))
 	except APRSConnectionError as err:
 		logging.warning(err)
 
@@ -560,7 +560,7 @@ async def main():
 			uSat, nSat = get_gpssat()
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 1000:.3f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB\n<b>GPS Used</b>: {uSat}/{nSat}")
+			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB\n<b>GPS Used</b>: {uSat}/{nSat}")
 			logging.info(telemetry)
 			sats = f"sats={uSat}/{nSat}"
 			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
@@ -570,7 +570,7 @@ async def main():
 		else:
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 1000:.3f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB<b>Disk Used</b>: {diskused / 1000:.3f}GB\n")
+			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f }MB<b>Disk Used</b>: {diskused / 1000:.3f} GB\n")
 			logging.info(telemetry)
 			status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
 			ais.sendall(status)
