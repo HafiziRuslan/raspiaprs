@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Sun, 21-Dec-2025, 13:07:00, +08)
+## [beta] - (Mon, 22-Dec-2025, 00:22:17, +08)
 
 ### 🚀 Features
 
@@ -344,6 +344,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
+- ♻️ refactor(telemetry): adjust cpu temperature scaling and precision
 - ♻️ refactor(telemetry): increase precision of system metrics
 - ♻️ refactor(gps): rename gpsd utility functions
 - ♻️ refactor(metrics): migrate system status checks to psutil
@@ -429,6 +430,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- 👷 ci(workflow): update merge schedule cron expression
 - 📦 build(version): bump version to 0.1-beta.3
 - 🔧 chore(config): update default aprsis radius filter
 - 🔧 chore(config): add comprehensive gitignore
@@ -510,4 +512,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 21-Dec-2025, 16:16:26.754, +08
+generated using git-cliff at Mon, 22-Dec-2025, 00:22:57.867, +08
