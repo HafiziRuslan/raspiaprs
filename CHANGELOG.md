@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Release
 
-### [beta] - (Mon, 22-Dec-2025, 03:20:40, +08)
+### [beta] - (Mon, 22-Dec-2025, 03:48:31, +08)
 
 #### 🚀 Features
 
@@ -427,6 +427,7 @@ All notable changes to this project will be documented in this file.
 
 #### ⚙️ Miscellaneous Tasks
 
+- [1a53f2e](https://github.com/HafiziRuslan/RasPiAPRS/commit/1a53f2e08369d2cf97f807419f7753e0c6fd7e74) chore(scripts): disable automatic git pull *by @HafiziRuslan on 2025-12-22T03:48:31+08:00*
 - [0c4bc70](https://github.com/HafiziRuslan/RasPiAPRS/commit/0c4bc700eb08b4b66a8d28d3f5471a836fbea7bc) chore(cliff): update date format in changelog template *by @HafiziRuslan on 2025-12-22T03:15:03+08:00*
 - [ccb5647](https://github.com/HafiziRuslan/RasPiAPRS/commit/ccb5647098b64f49dd77ea663782ee9a35829d1e) chore(cliff): enhance changelog template *by @HafiziRuslan on 2025-12-22T03:07:50+08:00*
 - [0238e7d](https://github.com/HafiziRuslan/RasPiAPRS/commit/0238e7d4cf7d10f20c0801b9dd2875031570032d) ci(workflow): update merge schedule cron expression *by @HafiziRuslan on 2025-12-22T00:13:02+08:00*
@@ -513,11 +514,11 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics
 
-- 482 commit(s) contributed to the release.
+- 483 commit(s) contributed to the release.
 - 2047 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
 ---
 
-generated using git-cliff at Mon, 22-Dec-2025, 03:21:14.059, +08
+generated using git-cliff at Mon, 22-Dec-2025, 03:49:02.195, +08
