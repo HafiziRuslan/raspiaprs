@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 date=$(date +'%F %T')
-git pull
+# git config --global --add safe.directory /home/pi-star/raspiaprs
+# git pull
 
 command_exists() {
   command -v "$1" >/dev/null 2>&1
