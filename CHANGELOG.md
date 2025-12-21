@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta] - (Sun, 21-Dec-2025, 11:19:53, +08)
+## [beta] - (Sun, 21-Dec-2025, 13:06:32, +08)
 
 ### 🚀 Features
 
@@ -51,6 +51,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- fix telegram precision error
 - fix telegram precision value
 - 🐛 fix(aprs): only log on successful position transmission
 - ♻️ refactor(reporting): optimize uptime and time calculation
@@ -509,4 +510,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 21-Dec-2025, 11:20:20.052, +08
+generated using git-cliff at Sun, 21-Dec-2025, 13:07:00.352, +08
