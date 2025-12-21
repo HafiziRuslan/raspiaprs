@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Release
 
-### [beta] - (Mon, 22-Dec-2025, 03:15:03, +08)
+### [beta] - (Mon, 22-Dec-2025, 03:20:40, +08)
 
 #### 🚀 Features
 
@@ -418,6 +418,7 @@ All notable changes to this project will be documented in this file.
 
 #### 🧪 Testing
 
+- [325a882](https://github.com/HafiziRuslan/RasPiAPRS/commit/325a8829ea5e11f59a69b1c016d2a76bd323cd78) chore(script): add git pull to main script *by @HafiziRuslan on 2025-12-22T03:20:40+08:00*
 - [b405cd0](https://github.com/HafiziRuslan/RasPiAPRS/commit/b405cd01f09d06a2ae617f58b7003063c1311f5b) ci(release): use latest version tag of deploy *by @HafiziRuslan on 2025-12-18T00:12:25+08:00*
 - [0a3cf62](https://github.com/HafiziRuslan/RasPiAPRS/commit/0a3cf623c18ff66a62758bb0b49fe9131f4db113) ci(release): add deploy job for beta tag *by @HafiziRuslan on 2025-12-18T00:10:00+08:00*
 - [b4ec3cf](https://github.com/HafiziRuslan/RasPiAPRS/commit/b4ec3cf0300a87986ff57106459f3705f84863c9) test(gps): simplify gps data retrieval *by @HafiziRuslan on 2025-12-11T18:54:06+08:00*
@@ -512,11 +513,11 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics
 
-- 481 commit(s) contributed to the release.
+- 482 commit(s) contributed to the release.
 - 2047 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
 ---
 
-generated using git-cliff at Mon, 22-Dec-2025, 03:15:35.791, +08
+generated using git-cliff at Mon, 22-Dec-2025, 03:21:14.059, +08
