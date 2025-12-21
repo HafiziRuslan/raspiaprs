@@ -8,7 +8,7 @@ on:
       - synchronize
       - auto_merge_enabled
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '0 9 * * mon'
 
 jobs:
   merge_schedule:
