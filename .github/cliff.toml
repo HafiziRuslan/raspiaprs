@@ -26,7 +26,7 @@ body = """
       {{ commit.message | split(pat="\n") | first | trim}}\
       {% if commit.remote.username %} *by @{{ commit.remote.username }}{% endif %}\
       {% if commit.remote.pr_number %} in #{{ commit.remote.pr_number }}{% endif %}\
-      {% if commit.author.timestamp %} on {{ commit.author.timestamp | date(timezone="Asia/Kuala_Lumpur") }}*{% endif %}\
+      {% if commit.author.timestamp %} on {{ commit.author.timestamp | date(format="%+", timezone="Asia/Kuala_Lumpur") }}*{% endif %}\
   {% endfor %}
 {% endfor %}
 ---\n
