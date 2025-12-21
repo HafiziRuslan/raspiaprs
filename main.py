@@ -560,7 +560,7 @@ async def main():
 			uSat, nSat = get_gpssat()
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 1000:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.1f}%\n<b>RAM Used</b>: {memused / 1000:.1f}MB\n<b>Disk Used</b>: {diskused / 1000:.1f}GB\n<b>GPS Used</b>: {uSat}/{nSat}")
+			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 1000:.001f}°C\n<b>CPU Load</b>: {cpuload / 1000:.001f}%\n<b>RAM Used</b>: {memused / 1000:.001f}MB\n<b>Disk Used</b>: {diskused / 1000:.001f}GB\n<b>GPS Used</b>: {uSat}/{nSat}")
 			logging.info(telemetry)
 			sats = f"sats={uSat}/{nSat}"
 			status = "{0}>APP642:>{1}, {2}, {3}".format(cfg.call, nowz, uptime, sats)
@@ -570,7 +570,7 @@ async def main():
 		else:
 			telemetry = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused)
 			ais.sendall(telemetry)
-			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 1000:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.1f}%\n<b>RAM Used</b>: {memused / 1000:.1f}MB<b>Disk Used</b>: {diskused / 1000:.1f}GB\n")
+			await logs_to_telegram(f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 1000:.001f}°C\n<b>CPU Load</b>: {cpuload / 1000:.001f}%\n<b>RAM Used</b>: {memused / 1000:.001f}MB<b>Disk Used</b>: {diskused / 1000:.001f}GB\n")
 			logging.info(telemetry)
 			status = "{0}>APP642:>{1}, {2}".format(cfg.call, nowz, uptime)
 			ais.sendall(status)
