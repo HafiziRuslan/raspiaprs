@@ -2,9 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Commit Statistics
+
+- 486 commit(s) contributed to the release.
+- 2048 day(s) passed between the first and last commit.
+- 0 commit(s) parsed as conventional.
+- 0 linked issue(s) detected in commits.
+
 ## Release
 
-### [beta] - (Mon, 22-Dec-2025, 19:03:31, +08)
+### [beta] - (Mon, 22-Dec-2025, 19:26:39, +08)
 
 #### 🚀 Features
 
@@ -269,19 +276,16 @@ All notable changes to this project will be documented in this file.
 - [c60070d](https://github.com/HafiziRuslan/RasPiAPRS/commit/c60070d377f96720fa1ca68da018b8c465b410c9) Fix send_header function: update EQNS parameter for improved precision *by @HafiziRuslan on 2025-08-14T13:59:42+08:00*
 - [a235329](https://github.com/HafiziRuslan/RasPiAPRS/commit/a2353296d951f841a0cf1c77df35691754fff95d) Fix formatting issue in default configuration: separate 'sleep' value from 'pip' *by @HafiziRuslan on 2025-08-14T05:55:25+08:00*
 - [2d2c250](https://github.com/HafiziRuslan/RasPiAPRS/commit/2d2c25030bc87582e2c5642d478374b3a43c735f) Fix logging message and adjust indentation in get_uptime function *by @HafiziRuslan on 2025-08-14T05:45:09+08:00*
-- [1511c96](https://github.com/HafiziRuslan/RasPiAPRS/commit/1511c965823e02d61939c35ca71f48de6761681f) Merge pull request #2 from 0x9900/fred/senderror *by @0x9900 on 2021-04-02T01:37:19+08:00*
 - [f624040](https://github.com/HafiziRuslan/RasPiAPRS/commit/f624040d774311b4c972cab33219693f35002d9b) fix connection error *by @0x9900 on 2021-04-02T01:31:58+08:00*
 
 #### 💼 Other
 
 - [7ca5fea](https://github.com/HafiziRuslan/RasPiAPRS/commit/7ca5feab8dadcc31d36ca8a00001e106c445d290) Make script executable *by @HafiziRuslan on 2025-12-19T03:38:27+08:00*
-- [2b93f8e](https://github.com/HafiziRuslan/RasPiAPRS/commit/2b93f8e6329171584cffaa79d136f7e8b81a5ae6) Merge branch 'master' of https://github.com/HafiziRuslan/RPi-APRS *by @HafiziRuslan on 2025-12-18T18:40:46+08:00*
 - [baaca4d](https://github.com/HafiziRuslan/RasPiAPRS/commit/baaca4daea8ec51adb2f4fd173d18d34f8699ac6) run changelog on push *by @HafiziRuslan on 2025-12-09T06:54:38+08:00*
 - [519de53](https://github.com/HafiziRuslan/RasPiAPRS/commit/519de532f31462fbe0373d2c060fe80a585d2e45) Update Python versions in pylint workflow *by @HafiziRuslan on 2025-12-04T03:29:29+08:00*
 - [adcdb56](https://github.com/HafiziRuslan/RasPiAPRS/commit/adcdb56936f31652a715b22b3cec7810aa269497) Set package-ecosystem to 'pip' in dependabot config *by @HafiziRuslan on 2025-12-04T02:55:55+08:00*
 - [19c5d22](https://github.com/HafiziRuslan/RasPiAPRS/commit/19c5d22c87a202a1bc7834f5feb5c93e7d282b0c) Delete .github/workflows/pylint.yml *by @HafiziRuslan on 2025-12-04T02:50:38+08:00*
 - [3b53229](https://github.com/HafiziRuslan/RasPiAPRS/commit/3b53229f7b7bec39129b6678934a371c5211e4d8) Add Pylint workflow for Python code analysis *by @HafiziRuslan on 2025-12-04T02:38:53+08:00*
-- [5ca1fd3](https://github.com/HafiziRuslan/RasPiAPRS/commit/5ca1fd34edc1a825a7333cb42a12c0ccdc9142a7) Merge pull request #2 from HafiziRuslan/virtual-env *by @HafiziRuslan in #2 on 2025-12-04T02:26:35+08:00*
 - [4cbc175](https://github.com/HafiziRuslan/RasPiAPRS/commit/4cbc175b872d0826a497706ba948b924fc988a72) Add GitHub Actions workflow to sync with GitLab *by @HafiziRuslan on 2025-10-21T15:40:39+08:00*
 - [4a9c89d](https://github.com/HafiziRuslan/RasPiAPRS/commit/4a9c89da076a76836b331971770be9a2eb967553) Add source reference to README: include link to aprstar repository *by @HafiziRuslan on 2025-08-26T17:30:20+08:00*
 - [3e7345d](https://github.com/HafiziRuslan/RasPiAPRS/commit/3e7345d3203a9c765bb617b96f00c1f64a204810) Add new LICENSE file: include BSD 2-Clause License with updated copyright information *by @HafiziRuslan on 2025-08-26T17:21:32+08:00*
@@ -323,7 +327,6 @@ All notable changes to this project will be documented in this file.
 - [5923696](https://github.com/HafiziRuslan/RasPiAPRS/commit/59236968d7988e3175c1ff8f461311abdaca09ff) Update send_position function: change tocall from "APRS" to "APP720" *by @HafiziRuslan on 2025-08-14T05:42:31+08:00*
 - [c19c957](https://github.com/HafiziRuslan/RasPiAPRS/commit/c19c957a22505209de76befba2efb1767f2f0d19) Refactor aprstar.py: streamline imports, enhance logging, and improve configuration handling *by @HafiziRuslan on 2025-08-14T03:31:23+08:00*
 - [657bdf6](https://github.com/HafiziRuslan/RasPiAPRS/commit/657bdf6629bfcbfa0f083be9f6287f1f40326d87) Refactor project structure: rename and update files for RPi-APRS, add configuration and service files *by @HafiziRuslan on 2025-08-14T03:24:06+08:00*
-- [11595f8](https://github.com/HafiziRuslan/RasPiAPRS/commit/11595f8dbae6a72ecf1ed4a184116c3f84107d2d) Merge pull request #3 from 0x9900/fred/senderror *by @0x9900 on 2021-06-01T00:00:16+08:00*
 - [328c107](https://github.com/HafiziRuslan/RasPiAPRS/commit/328c1070fea50ffddc9361a47d50806ad3a29f71) Python 3 *by @0x9900 on 2021-05-31T23:57:48+08:00*
 - [19c48bb](https://github.com/HafiziRuslan/RasPiAPRS/commit/19c48bbf1d437e733ebfaacd84dcc8621fddcc83) Hardening ais connections *by @0x9900 on 2020-06-14T10:33:58+08:00*
 - [99b2fa6](https://github.com/HafiziRuslan/RasPiAPRS/commit/99b2fa6775b57581e5f9a4a6357cf368139a1235) Let's make it less verbose *by @0x9900 on 2020-06-03T02:05:54+08:00*
@@ -428,6 +431,7 @@ All notable changes to this project will be documented in this file.
 
 #### ⚙️ Miscellaneous Tasks
 
+- [9c45e60](https://github.com/HafiziRuslan/RasPiAPRS/commit/9c45e605a7008daa01f42b002915780fe04b398c) chore(cliff): improve changelog layout and commit filtering *by @HafiziRuslan on 2025-12-22T19:26:39+08:00*
 - [94dc7fb](https://github.com/HafiziRuslan/RasPiAPRS/commit/94dc7fbbcdf30ef8c118ec87f16a7ad0268eff8d) chore(version): bump raspiaprs to 0.1b3 *by @HafiziRuslan on 2025-12-22T18:56:19+08:00*
 - [1a53f2e](https://github.com/HafiziRuslan/RasPiAPRS/commit/1a53f2e08369d2cf97f807419f7753e0c6fd7e74) chore(scripts): disable automatic git pull *by @HafiziRuslan on 2025-12-22T03:48:31+08:00*
 - [0c4bc70](https://github.com/HafiziRuslan/RasPiAPRS/commit/0c4bc700eb08b4b66a8d28d3f5471a836fbea7bc) chore(cliff): update date format in changelog template *by @HafiziRuslan on 2025-12-22T03:15:03+08:00*
@@ -476,7 +480,6 @@ All notable changes to this project will be documented in this file.
 - [9506102](https://github.com/HafiziRuslan/RasPiAPRS/commit/95061025377aa1ec3e7fe4b2376724cad16f5ca9) chore(ci): clean up obsolete and update workflow triggers *by @HafiziRuslan on 2025-12-09T03:29:25+08:00*
 - [2a9274e](https://github.com/HafiziRuslan/RasPiAPRS/commit/2a9274e3d3ff3312bbaed7a863e34e7bae6b966d) chore(ci): adjust changelog workflow configuration *by @HafiziRuslan on 2025-12-09T03:07:41+08:00*
 - [4f73179](https://github.com/HafiziRuslan/RasPiAPRS/commit/4f73179eb7945fb98f65dfbb3c29203018ef4afb) ci(workflows): add auto approve workflow for bots *by @HafiziRuslan on 2025-12-09T03:02:22+08:00*
-- [ce1af9a](https://github.com/HafiziRuslan/RasPiAPRS/commit/ce1af9ac55e218576a8c950edc582d81dc31f5c1) Merge pull request #3 from HafiziRuslan/changelog-ci-ae1c38 *by @HafiziRuslan in #3 on 2025-12-09T02:50:52+08:00*
 - [ae1c38e](https://github.com/HafiziRuslan/RasPiAPRS/commit/ae1c38ed31d5d068814908845ff28e5e766d8146) ci(workflow): use commit hash as fallback release version *by @HafiziRuslan on 2025-12-09T02:47:27+08:00*
 - [575bdab](https://github.com/HafiziRuslan/RasPiAPRS/commit/575bdab2192c94101f30ca66948740b7f2fd654d) chore(ci): update changelog workflow inputs *by @HafiziRuslan on 2025-12-09T02:42:53+08:00*
 - [19f15a3](https://github.com/HafiziRuslan/RasPiAPRS/commit/19f15a32518a4182efebc9def32fd3942f7271e1) chore(ci): enable manual release version input in changelog workflow *by @HafiziRuslan on 2025-12-09T02:36:24+08:00*
@@ -514,13 +517,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## Commit Statistics
-
-- 485 commit(s) contributed to the release.
-- 2048 day(s) passed between the first and last commit.
-- 0 commit(s) parsed as conventional.
-- 0 linked issue(s) detected in commits.
-
----
-
-generated using git-cliff at Mon, 22-Dec-2025, 19:04:04.628, +08
+generated using git-cliff at Mon, 22-Dec-2025, 19:27:09.914, +08
