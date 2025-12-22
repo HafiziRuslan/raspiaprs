@@ -60,7 +60,7 @@ class Config(object):
 		alt = os.getenv("APRS_ALTITUDE", "0.0")
 
 		if os.getenv("GPSD_ENABLE"):
-			self.timestamp, self.latitude, self.longitude, self.altitude = get_gpspos()
+			self.timestamp, self.latitude, self.longitude, self.altitude, self.speed, self.course = get_gpspos()
 		else:
 			if lat == "0.0" and lon == "0.0":
 				self.latitude, self.longitude = get_coordinates()
