@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Release
 
-### [beta] - (Mon, 22-Dec-2025, 18:56:19, +08)
+### [beta] - (Mon, 22-Dec-2025, 19:03:31, +08)
 
 #### 🚀 Features
 
@@ -53,6 +53,7 @@ All notable changes to this project will be documented in this file.
 
 #### 🐛 Bug Fixes
 
+- [97208c2](https://github.com/HafiziRuslan/RasPiAPRS/commit/97208c26567649dbf4450d474e65ae269255abde) fix(cpu): correct cpu load calculation scaling *by @HafiziRuslan on 2025-12-22T19:03:31+08:00*
 - [83ad8a9](https://github.com/HafiziRuslan/RasPiAPRS/commit/83ad8a9a6f1a6378c675aeec29782a7d7850d809) fix telegram precision error *by @HafiziRuslan on 2025-12-21T13:06:32+08:00*
 - [4f1234c](https://github.com/HafiziRuslan/RasPiAPRS/commit/4f1234c9237a0247a1bdd92f0b7848d9ff1782bd) fix telegram precision value *by @HafiziRuslan on 2025-12-21T11:19:53+08:00*
 - [98386f1](https://github.com/HafiziRuslan/RasPiAPRS/commit/98386f1ae625c857bab81953bd947214d4aa84b6) fix(aprs): only log on successful position transmission *by @HafiziRuslan on 2025-12-19T00:37:07+08:00*
@@ -515,11 +516,11 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics
 
-- 484 commit(s) contributed to the release.
+- 485 commit(s) contributed to the release.
 - 2048 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
 ---
 
-generated using git-cliff at Mon, 22-Dec-2025, 18:56:48.607, +08
+generated using git-cliff at Mon, 22-Dec-2025, 19:04:04.628, +08
