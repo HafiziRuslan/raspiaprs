@@ -11,26 +11,7 @@ All notable changes to this project will be documented in this file.
 # A Tera template to be rendered for each commit in the changelog.
 # See https://keats.github.io/tera/docs/#introduction
 body = """
-\n## Release
-{% if version %}\
-  \n### [{{ version | trim_start_matches(pat="v") }}] - ({{ timestamp | date(format="%a, %v, %T, %Z", timezone="Asia/Kuala_Lumpur") }})
-{% else %}\
-  \n### [unreleased]
-{% endif %}\
-{% for group, commits in commits | group_by(attribute="group") %}
-  #### {{ group | striptags | trim }}
-  {% for commit in commits | unique(attribute="message") | sort(attribute="author.timestamp") | reverse %}
-    - {% if commit.id %}[{{ commit.id | truncate(length=7, end="") }}]({{ self::remote_url() }}/commit/{{ commit.id }}) {% endif %}\
-      {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
-      {% if commit.breaking %}[**breaking**] {% endif %}\
-      {{ commit.message | split(pat="\n") | first | trim}}\
-      {% if commit.remote.username %} *by @{{ commit.remote.username }}{% endif %}\
-      {% if commit.remote.pr_number %} in #{{ commit.remote.pr_number }}{% endif %}\
-      {% if commit.author.timestamp %} on {{ commit.author.timestamp | date(format="%+", timezone="Asia/Kuala_Lumpur") }}*{% endif %}\
-  {% endfor %}
-{% endfor %}
----\n
-## Commit Statistics\n
+\n## Commit Statistics\n
 - {{ statistics.commit_count }} commit(s) contributed to the release.
 - {{ statistics.commits_timespan | default(value=0) }} day(s) passed between the first and last commit.
 - {{ statistics.conventional_commit_count }} commit(s) parsed as conventional.
@@ -42,7 +23,25 @@ body = """
 {%- endif %}
 {%- if statistics.days_passed_since_last_release %}
 	- {{ statistics.days_passed_since_last_release }} day(s) passed between releases.
-{%- endif %}\n
+{%- endif %}
+\n## Release
+{% if version %}\
+  \n### [{{ version | trim_start_matches(pat="v") }}] - ({{ timestamp | date(format="%a, %v, %T, %Z", timezone="Asia/Kuala_Lumpur") }})
+{% else %}\
+  \n### [unreleased]
+{% endif %}\
+{% for group, commits in commits | filter(attribute="merge_commit", value=false) | group_by(attribute="group") %}
+  #### {{ group | striptags | trim }}
+  {% for commit in commits | unique(attribute="message") | sort(attribute="author.timestamp") | reverse %}
+    - {% if commit.id %}[{{ commit.id | truncate(length=7, end="") }}]({{ self::remote_url() }}/commit/{{ commit.id }}) {% endif %}\
+      {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
+      {% if commit.breaking %}[**breaking**] {% endif %}\
+      {{ commit.message | split(pat="\n") | first | trim}}\
+      {% if commit.remote.username %} *by @{{ commit.remote.username }}{% endif %}\
+      {% if commit.remote.pr_number %} in #{{ commit.remote.pr_number }}{% endif %}\
+      {% if commit.author.timestamp %} on {{ commit.author.timestamp | date(format="%+", timezone="Asia/Kuala_Lumpur") }}*{% endif %}\
+  {% endfor %}
+{% endfor %}
 ---\n
 {%- macro remote_url() -%}
   https://github.com/{{ remote.github.owner }}/{{ remote.github.repo }}
@@ -105,6 +104,7 @@ commit_parsers = [
   { message = "chore|ci|build", group = "<!-- 7 -->⚙️ Miscellaneous Tasks" },
   { body = ".*security", group = "<!-- 8 -->🛡️ Security" },
   { message = "^revert", group = "<!-- 9 -->◀️ Revert" },
+  { body = ".*(M|m)erge branch.*", skip = true },
   { message = ".*", group = "<!-- 10 -->💼 Other" },
 ]
 # Exclude commits that are not matched by any commit parser.
