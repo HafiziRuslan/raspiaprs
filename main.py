@@ -215,22 +215,24 @@ def get_gpspos():
 						lat = result.get("lat", 0)
 						lon = result.get("lon", 0)
 						alt = result.get("alt", 0)
+						spd = result.get("speed", 0)
+						cse = result.get("magtrack", 0)
 						# acc = result.get("sep", 0)
 						if lat != 0 and lon != 0 and alt != 0:
-							logging.info("%s | GPS Position: %s, %s, %s", utc, lat, lon, alt)
+							logging.info("%s | GPS Position: %s, %s, %s, %s, %s", utc, lat, lon, alt, spd , cse)
 							set_key(".env", "APRS_LATITUDE", lat, quote_mode="never")
 							set_key(".env", "APRS_LONGITUDE", lon, quote_mode="never")
 							set_key(".env", "APRS_ALTITUDE", alt, quote_mode="never")
 							Config.latitude = lat
 							Config.longitude = lon
 							Config.altitude = alt
-							return utc, lat, lon, alt
+							return utc, lat, lon, alt, spd, cse
 					else:
 						logging.info("GPS Position unavailable")
-						return (timestamp, 0, 0, 0)
+						return (timestamp, 0, 0, 0, 0, 0)
 		except Exception as e:
 			logging.error("Error getting GPS data: %s", e)
-			return (timestamp, 0, 0, 0)
+			return (timestamp, 0, 0, 0, 0, 0)
 
 
 def get_gpssat():
@@ -480,12 +482,22 @@ async def send_position(ais, cfg, seq):
 		alt = max(-99999, alt)
 		return "/A={0:06.0f}".format(alt)
 
+	def _spd_to_aprs(spd):
+		spd /= 1.9438  # to knots
+		spd = min(999999, spd)
+		spd = max(-99999, spd)
+		return "{0:03.0f}".format(spd)
+
+	cse = "000"
+	spd = "000"
 	if os.getenv("GPSD_ENABLE"):
-		cur_time, cur_lat, cur_lon, cur_alt = get_gpspos()
+		cur_time, cur_lat, cur_lon, cur_alt, cur_spd, cur_cse = get_gpspos()
 		if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
 			cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
 			cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
 			cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
+			spd = _spd_to_aprs(float(cur_spd))
+			cse = cur_cse
 	else:
 		cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
 		cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
@@ -493,17 +505,18 @@ async def send_position(ais, cfg, seq):
 	latstr = _lat_to_aprs(float(cur_lat))
 	lonstr = _lon_to_aprs(float(cur_lon))
 	altstr = _alt_to_aprs(float(cur_alt))
+	extdatstr = f"{cse}/{spd}"
 	mmdvminfo = get_mmdvminfo()
 	osinfo = get_osinfo()
 	comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/RasPiAPRS"
 	ztime = dt.datetime.now(dt.timezone.utc)
 	timestamp = cur_time.strftime("%d%H%Mz") if cur_time != None else ztime.strftime("%d%H%Mz")
-	payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{altstr}{comment}"
+	payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{extdatstr}{altstr}{comment}"
 	packet = f"{cfg.call}>APP642:{payload}"
 	try:
 		ais.sendall(packet)
 		logging.info(packet)
-		await logs_to_telegram(f"<u>{cfg.call} Position-{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
+		await logs_to_telegram(f"<u>{cfg.call} Position-{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n\t<b>Speed</b>: {cur_spd}m/s\n\t<b>Course</b>: {cur_cse}\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
 	except APRSConnectionError as err:
 		logging.warning(err)
 
