@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics
 
+- 2 commit(s) contributed to the release.
+- 0 day(s) passed between the first and last commit.
+- 0 commit(s) parsed as conventional.
+- 0 linked issue(s) detected in commits.
+
+## Release
+
+### [beta4] - (Tue, 23-Dec-2025, 06:47:10, +08)
+
+#### 🚀 Features
+
+- [b966b7b](https://github.com/HafiziRuslan/RasPiAPRS/commit/b966b7b505b8dd31cbfdd22891af770db091d925) feat(gps): add speed and course to position reports *by @HafiziRuslan on 2025-12-23T06:47:10+08:00*
+
+#### ⚙️ Miscellaneous Tasks
+
+- [2fe2d84](https://github.com/HafiziRuslan/RasPiAPRS/commit/2fe2d849eca3ab4f0fb9beed797b391c7eee2449) chore(release): bump version to v0.1-beta.4 *by @HafiziRuslan on 2025-12-23T06:46:58+08:00*
+
+---
+## Commit Statistics
+
 - 486 commit(s) contributed to the release.
 - 2048 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
@@ -517,4 +537,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Mon, 22-Dec-2025, 19:27:09.914, +08
+generated using git-cliff at Tue, 23-Dec-2025, 06:47:47.304, +08
