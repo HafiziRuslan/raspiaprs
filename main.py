@@ -278,7 +278,7 @@ def get_cpuload():
 	try:
 		load5 = psutil.getloadavg()[1]
 		corecount = psutil.cpu_count()
-		return int((load5 / corecount) * 1000)
+		return int((load5 / corecount) * 100 * 1000)
 	except Exception as e:
 		logging.error("Unexpected error: %s", e)
 		return 0
