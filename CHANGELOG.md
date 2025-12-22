@@ -4,16 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 3 commit(s) contributed to the release.
+- 5 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
-## [beta4] - (Tue, 23-Dec-2025, 07:02:04, +08)
+## [beta4] - (Tue, 23-Dec-2025, 07:23:45, +08)
 
 ### 🚀 Features
 
+- [95d7c44](https://github.com/HafiziRuslan/RasPiAPRS/commit/95d7c44fa76809f3d840d1aa4989e7f04e1c1edd) feat(gps): include speed and course in data extraction *by @HafiziRuslan on 2025-12-23T07:23:45+08:00*
 - [b966b7b](https://github.com/HafiziRuslan/RasPiAPRS/commit/b966b7b505b8dd31cbfdd22891af770db091d925) feat(gps): add speed and course to position reports *by @HafiziRuslan on 2025-12-23T06:47:10+08:00*
+
+### 🐛 Bug Fixes
+
+- [3255cb8](https://github.com/HafiziRuslan/RasPiAPRS/commit/3255cb843e41f80207f2fdcbd2ad0d00bd4ac43d) fix(main): remove prefix and comma from timestamp *by @HafiziRuslan on 2025-12-23T07:23:13+08:00*
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -534,4 +539,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 23-Dec-2025, 07:02:35.317, +08
+generated using git-cliff at Tue, 23-Dec-2025, 07:24:20.855, +08
