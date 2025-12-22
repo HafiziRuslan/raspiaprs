@@ -2,38 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
-## Commit Statistics
+## Commit Statistics [beta4]
 
-- 2 commit(s) contributed to the release.
+- 3 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
-## Release
+## [beta4] - (Tue, 23-Dec-2025, 07:02:04, +08)
 
-### [beta4] - (Tue, 23-Dec-2025, 06:47:10, +08)
-
-#### 🚀 Features
+### 🚀 Features
 
 - [b966b7b](https://github.com/HafiziRuslan/RasPiAPRS/commit/b966b7b505b8dd31cbfdd22891af770db091d925) feat(gps): add speed and course to position reports *by @HafiziRuslan on 2025-12-23T06:47:10+08:00*
 
-#### ⚙️ Miscellaneous Tasks
+### ⚙️ Miscellaneous Tasks
 
+- [7df6495](https://github.com/HafiziRuslan/RasPiAPRS/commit/7df6495be779b2faca1145464cd6ff9686706936) chore(cliff): update changelog template layout *by @HafiziRuslan on 2025-12-23T07:02:04+08:00*
 - [2fe2d84](https://github.com/HafiziRuslan/RasPiAPRS/commit/2fe2d849eca3ab4f0fb9beed797b391c7eee2449) chore(release): bump version to v0.1-beta.4 *by @HafiziRuslan on 2025-12-23T06:46:58+08:00*
 
 ---
-## Commit Statistics
+## Commit Statistics [beta]
 
 - 486 commit(s) contributed to the release.
 - 2048 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
-## Release
+## [beta] - (Mon, 22-Dec-2025, 19:26:39, +08)
 
-### [beta] - (Mon, 22-Dec-2025, 19:26:39, +08)
-
-#### 🚀 Features
+### 🚀 Features
 
 - [8295a35](https://github.com/HafiziRuslan/RasPiAPRS/commit/8295a359584cec1ed719e61617186eaeb12b18b1) feat(gps): use gps time for position reports *by @HafiziRuslan on 2025-12-19T18:39:09+08:00*
 - [b55aac1](https://github.com/HafiziRuslan/RasPiAPRS/commit/b55aac1efeb360f2cd347fa4e2657889ce435bec) feat(telemetry): add disk usage metric to aprs telemetry *by @HafiziRuslan on 2025-12-18T18:38:33+08:00*
@@ -78,7 +75,7 @@ All notable changes to this project will be documented in this file.
 - [54b3759](https://github.com/HafiziRuslan/RasPiAPRS/commit/54b3759fcfdb109b389692814cff3fd511e88b5c) feat(readme): add disk usage metric *by @HafiziRuslan on 2025-08-27T21:37:32+08:00*
 - [07fb14d](https://github.com/HafiziRuslan/RasPiAPRS/commit/07fb14dbc8fdff83cbac550d3fef93c22d7a6e87) feat(telemetry): add disk usage to APRS telemetry *by @HafiziRuslan on 2025-08-27T21:36:55+08:00*
 
-#### 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - [97208c2](https://github.com/HafiziRuslan/RasPiAPRS/commit/97208c26567649dbf4450d474e65ae269255abde) fix(cpu): correct cpu load calculation scaling *by @HafiziRuslan on 2025-12-22T19:03:31+08:00*
 - [83ad8a9](https://github.com/HafiziRuslan/RasPiAPRS/commit/83ad8a9a6f1a6378c675aeec29782a7d7850d809) fix telegram precision error *by @HafiziRuslan on 2025-12-21T13:06:32+08:00*
@@ -298,7 +295,7 @@ All notable changes to this project will be documented in this file.
 - [2d2c250](https://github.com/HafiziRuslan/RasPiAPRS/commit/2d2c25030bc87582e2c5642d478374b3a43c735f) Fix logging message and adjust indentation in get_uptime function *by @HafiziRuslan on 2025-08-14T05:45:09+08:00*
 - [f624040](https://github.com/HafiziRuslan/RasPiAPRS/commit/f624040d774311b4c972cab33219693f35002d9b) fix connection error *by @0x9900 on 2021-04-02T01:31:58+08:00*
 
-#### 💼 Other
+### 💼 Other
 
 - [7ca5fea](https://github.com/HafiziRuslan/RasPiAPRS/commit/7ca5feab8dadcc31d36ca8a00001e106c445d290) Make script executable *by @HafiziRuslan on 2025-12-19T03:38:27+08:00*
 - [baaca4d](https://github.com/HafiziRuslan/RasPiAPRS/commit/baaca4daea8ec51adb2f4fd173d18d34f8699ac6) run changelog on push *by @HafiziRuslan on 2025-12-09T06:54:38+08:00*
@@ -364,7 +361,7 @@ All notable changes to this project will be documented in this file.
 - [d356232](https://github.com/HafiziRuslan/RasPiAPRS/commit/d356232e4bc6477b628d3af5ee993dae7fd91861) Adding FreeMemory metric *by @0x9900 on 2020-05-15T08:13:18+08:00*
 - [4de42c9](https://github.com/HafiziRuslan/RasPiAPRS/commit/4de42c9871d686e6e5c3a936b1c1acc2b81bfbaf) Initial version *by @0x9900 on 2020-05-15T04:56:39+08:00*
 
-#### 🚜 Refactor
+### 🚜 Refactor
 
 - [5a45092](https://github.com/HafiziRuslan/RasPiAPRS/commit/5a450928eb2a75622ecc02c6cec17dfa7d1cc6fc) refactor(telemetry): adjust cpu temperature scaling and precision *by @HafiziRuslan on 2025-12-22T00:22:17+08:00*
 - [75239aa](https://github.com/HafiziRuslan/RasPiAPRS/commit/75239aadc61235cc6488e080facfb0a99cbde3ec) refactor(telemetry): increase precision of system metrics *by @HafiziRuslan on 2025-12-21T02:32:04+08:00*
@@ -402,7 +399,7 @@ All notable changes to this project will be documented in this file.
 - [8d9e854](https://github.com/HafiziRuslan/RasPiAPRS/commit/8d9e854bc8afe5d060dff1a20f85c389133e58a7) Enhance modem information retrieval: update get_modem function and modify packet comment to include modem details *by @HafiziRuslan on 2025-08-15T04:43:09+08:00*
 - [540fb36](https://github.com/HafiziRuslan/RasPiAPRS/commit/540fb3684de4067d09a6f3e0ad96cca631de7afb) Enhance rpiaprs configuration: add altitude parameter and improve comments for clarity *by @HafiziRuslan on 2025-08-14T13:58:22+08:00*
 
-#### 📚 Documentation
+### 📚 Documentation
 
 - [fc6c4e6](https://github.com/HafiziRuslan/RasPiAPRS/commit/fc6c4e60c471942919583b25bc2dea3ba7420d4a) docs(cliff.toml): skip commits from github actions *by @HafiziRuslan on 2025-12-17T20:50:30+08:00*
 - [57367b5](https://github.com/HafiziRuslan/RasPiAPRS/commit/57367b58aee0642183f3c5c5efc5a3ae77924bee) docs(changelog): update changelog generation workflow *by @HafiziRuslan on 2025-12-17T20:23:56+08:00*
@@ -430,7 +427,7 @@ All notable changes to this project will be documented in this file.
 - [e8f0a5c](https://github.com/HafiziRuslan/RasPiAPRS/commit/e8f0a5cc598671a666bb1ee869fa80c24e09cb04) docs(readme): update service installation instructions *by @HafiziRuslan on 2025-09-02T21:19:01+08:00*
 - [b8b0dc1](https://github.com/HafiziRuslan/RasPiAPRS/commit/b8b0dc1325ea86bbd785cd549e703bd884ceb33d) Update README and rpiaprs.py: enhance documentation clarity and add default APRS-IS server settings *by @HafiziRuslan on 2025-08-20T14:01:00+08:00*
 
-#### ⚡ Performance
+### ⚡ Performance
 
 - [b6fb062](https://github.com/HafiziRuslan/RasPiAPRS/commit/b6fb062cb0e49bab30b80a5ec24d1243ac1c9a19) perf(aprs): reduce precision for some telegram values *by @HafiziRuslan on 2025-12-09T06:19:20+08:00*
 - [e4da69d](https://github.com/HafiziRuslan/RasPiAPRS/commit/e4da69db4ae46ad50556d8a8fbd1e3d16f00d23a) perf(aprs): reduce precision for some EQNS values *by @HafiziRuslan on 2025-12-09T06:16:22+08:00*
@@ -440,7 +437,7 @@ All notable changes to this project will be documented in this file.
 - [84911fc](https://github.com/HafiziRuslan/RasPiAPRS/commit/84911fc8271cd0142db099f5a1cdfa622316ad98) perf(disk, memory): optimize disk and memory usage calculation *by @HafiziRuslan on 2025-09-09T01:26:56+08:00*
 - [47cef97](https://github.com/HafiziRuslan/RasPiAPRS/commit/47cef9783adb364e14842edabdaf8f0e5f5e40f7) Implement code changes to enhance functionality and improve performance *by @HafiziRuslan on 2025-08-15T00:17:29+08:00*
 
-#### 🧪 Testing
+### 🧪 Testing
 
 - [325a882](https://github.com/HafiziRuslan/RasPiAPRS/commit/325a8829ea5e11f59a69b1c016d2a76bd323cd78) chore(script): add git pull to main script *by @HafiziRuslan on 2025-12-22T03:20:40+08:00*
 - [b405cd0](https://github.com/HafiziRuslan/RasPiAPRS/commit/b405cd01f09d06a2ae617f58b7003063c1311f5b) ci(release): use latest version tag of deploy *by @HafiziRuslan on 2025-12-18T00:12:25+08:00*
@@ -449,7 +446,7 @@ All notable changes to this project will be documented in this file.
 - [9800215](https://github.com/HafiziRuslan/RasPiAPRS/commit/980021522d54ff2115a617c5c176345ab793cc6b) test(gps): improve gpsd data handling *by @HafiziRuslan on 2025-12-11T18:51:42+08:00*
 - [5dae7f6](https://github.com/HafiziRuslan/RasPiAPRS/commit/5dae7f6969c22363ca647e695131c60e64f3ce9c) ci(release): update GitHub Actions versions *by @HafiziRuslan on 2025-12-10T18:28:46+08:00*
 
-#### ⚙️ Miscellaneous Tasks
+### ⚙️ Miscellaneous Tasks
 
 - [9c45e60](https://github.com/HafiziRuslan/RasPiAPRS/commit/9c45e605a7008daa01f42b002915780fe04b398c) chore(cliff): improve changelog layout and commit filtering *by @HafiziRuslan on 2025-12-22T19:26:39+08:00*
 - [94dc7fb](https://github.com/HafiziRuslan/RasPiAPRS/commit/94dc7fbbcdf30ef8c118ec87f16a7ad0268eff8d) chore(version): bump raspiaprs to 0.1b3 *by @HafiziRuslan on 2025-12-22T18:56:19+08:00*
@@ -531,10 +528,10 @@ All notable changes to this project will be documented in this file.
 - [d940085](https://github.com/HafiziRuslan/RasPiAPRS/commit/d94008562c2c0c0e959bb2a2c352a5eba24ad3aa) Remove aprstar.py file: eliminate unused code and dependencies *by @HafiziRuslan on 2025-08-14T12:23:17+08:00*
 - [973bb0a](https://github.com/HafiziRuslan/RasPiAPRS/commit/973bb0ad852e455b57d15e537120f73fa9b18cda) The symbol and symbol table can be speicified in the config *by @0x9900 on 2020-05-24T00:57:16+08:00*
 
-#### ◀️ Revert
+### ◀️ Revert
 
 - [7256ea7](https://github.com/HafiziRuslan/RasPiAPRS/commit/7256ea7477412d40292fa3c7416c801a1f0e3e21) revert to ec381c1 *by @HafiziRuslan on 2025-11-20T12:39:09+08:00*
 
 ---
 
-generated using git-cliff at Tue, 23-Dec-2025, 06:47:47.304, +08
+generated using git-cliff at Tue, 23-Dec-2025, 07:02:35.317, +08
