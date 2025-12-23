@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 9 commit(s) contributed to the release.
+- 10 commit(s) contributed to the release.
 - 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 1 day(s) passed between releases.
 
-## [beta4] - (Wed, 24-Dec-2025, 01:42:31, +08)
+## [beta4] - (Wed, 24-Dec-2025, 02:18:28, +08)
 
 ### 🚀 Features
 
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
+- [ca70d9b](https://github.com/HafiziRuslan/RasPiAPRS/commit/ca70d9b1daeeed6b7d28b2f11835643117d3580e) fix(main): await telemetry and status coroutines *by @HafiziRuslan on 2025-12-24T02:18:28+08:00*
 - [553f7cd](https://github.com/HafiziRuslan/RasPiAPRS/commit/553f7cd1347275beaad3e99467d994338a3eb0d1) fix(telemetry): update temperature unit label *by @HafiziRuslan on 2025-12-24T01:38:29+08:00*
 - [3255cb8](https://github.com/HafiziRuslan/RasPiAPRS/commit/3255cb843e41f80207f2fdcbd2ad0d00bd4ac43d) fix(main): remove prefix and comma from timestamp *by @HafiziRuslan on 2025-12-23T07:23:13+08:00*
 
@@ -547,4 +548,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 24-Dec-2025, 01:43:55.115, +08
+generated using git-cliff at Wed, 24-Dec-2025, 02:19:01.085, +08
