@@ -4,21 +4,29 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 5 commit(s) contributed to the release.
-- 0 day(s) passed between the first and last commit.
+- 9 commit(s) contributed to the release.
+- 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
+- 1 day(s) passed between releases.
 
-## [beta4] - (Tue, 23-Dec-2025, 07:23:45, +08)
+## [beta4] - (Wed, 24-Dec-2025, 01:42:31, +08)
 
 ### 🚀 Features
 
+- [5a3f9c5](https://github.com/HafiziRuslan/RasPiAPRS/commit/5a3f9c5baa79ad4569d5ba42658cd2b9e00d7574) feat(config): add smartbeaconing support *by @HafiziRuslan on 2025-12-24T01:40:02+08:00*
 - [95d7c44](https://github.com/HafiziRuslan/RasPiAPRS/commit/95d7c44fa76809f3d840d1aa4989e7f04e1c1edd) feat(gps): include speed and course in data extraction *by @HafiziRuslan on 2025-12-23T07:23:45+08:00*
 - [b966b7b](https://github.com/HafiziRuslan/RasPiAPRS/commit/b966b7b505b8dd31cbfdd22891af770db091d925) feat(gps): add speed and course to position reports *by @HafiziRuslan on 2025-12-23T06:47:10+08:00*
 
 ### 🐛 Bug Fixes
 
+- [553f7cd](https://github.com/HafiziRuslan/RasPiAPRS/commit/553f7cd1347275beaad3e99467d994338a3eb0d1) fix(telemetry): update temperature unit label *by @HafiziRuslan on 2025-12-24T01:38:29+08:00*
 - [3255cb8](https://github.com/HafiziRuslan/RasPiAPRS/commit/3255cb843e41f80207f2fdcbd2ad0d00bd4ac43d) fix(main): remove prefix and comma from timestamp *by @HafiziRuslan on 2025-12-23T07:23:13+08:00*
+
+### 🚜 Refactor
+
+- [4d19301](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d19301859d5578d538fd7635cdf52f84a01aa3e) refactor(telemetry): narrow scope of try-except blocks *by @HafiziRuslan on 2025-12-24T01:42:31+08:00*
+- [34ef9eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/34ef9eb04a55bcda8357869413c80fcc75d30775) refactor(telemetry): extract reporting functions *by @HafiziRuslan on 2025-12-24T01:37:58+08:00*
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -539,4 +547,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 23-Dec-2025, 07:24:20.855, +08
+generated using git-cliff at Wed, 24-Dec-2025, 01:43:55.115, +08
