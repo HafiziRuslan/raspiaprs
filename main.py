@@ -526,11 +526,11 @@ def send_header(ais, cfg):
 	try:
 		if os.getenv("GPSD_ENABLE"):
 			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed,GPSUsed".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,GB,sats".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB,sats".format(cfg.call))
 			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0,0,1,0".format(cfg.call))
 		else:
 			ais.sendall("{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call))
-			ais.sendall("{0}>APP642::{0:9s}:UNIT.degC,pcnt,MB,GB".format(cfg.call))
+			ais.sendall("{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call))
 			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(cfg.call))
 	except APRSConnectionError as err:
 		logging.warning(err)
