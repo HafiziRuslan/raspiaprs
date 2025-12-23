@@ -542,14 +542,14 @@ async def send_telemetry(ais, cfg, seq):
 	cpuload = get_cpuload()
 	memused = get_memused()
 	diskused = get_diskused()
+	if os.getenv("GPSD_ENABLE"):
+		uSat, nSat = get_gpssat()
+		telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
+		tgtel = f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB\n<b>GPS Used</b>: {uSat}/{nSat}"
+	else:
+		telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused)
+		tgtel = f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f }MB<b>Disk Used</b>: {diskused / 1000:.3f} GB\n"
 	try:
-		if os.getenv("GPSD_ENABLE"):
-			uSat, nSat = get_gpssat()
-			telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
-			tgtel = f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB\n<b>GPS Used</b>: {uSat}/{nSat}"
-		else:
-			telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused)
-			tgtel = f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f }MB<b>Disk Used</b>: {diskused / 1000:.3f} GB\n"
 		ais.sendall(telem)
 		await logs_to_telegram(tgtel)
 		logging.info(telem)
@@ -562,15 +562,15 @@ async def send_status(ais, cfg, seq):
 	cur_time = get_gpspos()[0] if os.getenv("GPSD_ENABLE") else dt.datetime.now(dt.timezone.utc)
 	nowz = cur_time.strftime('%d%H%Mz')
 	uptime = get_uptime()
+	if os.getenv("GPSD_ENABLE"):
+		uSat, nSat = get_gpssat()
+		sats = f"sats={uSat}/{nSat}"
+		status = "{0}>APP642:>{1}{2}, {3}".format(cfg.call, nowz, uptime, sats)
+		tgstat = f"<u>{cfg.call} Status-{seq}</u>\n\n{nowz}, {uptime}, {sats}"
+	else:
+		status = "{0}>APP642:>{1}{2}".format(cfg.call, nowz, uptime)
+		tgstat = f"<u>{cfg.call} Status-{seq}</u>\n\n{nowz}, {uptime}"
 	try:
-		if os.getenv("GPSD_ENABLE"):
-			uSat, nSat = get_gpssat()
-			sats = f"sats={uSat}/{nSat}"
-			status = "{0}>APP642:>{1}{2}, {3}".format(cfg.call, nowz, uptime, sats)
-			tgstat = f"<u>{cfg.call} Status-{seq}</u>\n\n{nowz}, {uptime}, {sats}"
-		else:
-			status = "{0}>APP642:>{1}{2}".format(cfg.call, nowz, uptime)
-			tgstat = f"<u>{cfg.call} Status-{seq}</u>\n\n{nowz}, {uptime}"
 		ais.sendall(status)
 		await logs_to_telegram(tgstat)
 		logging.info(status)
