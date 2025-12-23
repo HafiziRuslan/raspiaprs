@@ -604,8 +604,8 @@ async def main():
 			await send_position(ais, cfg, seq)
 		if seq % 6 == 1:
 			send_header(ais, cfg)
-		send_telemetry(ais, cfg, seq)
-		send_status(ais, cfg, seq)
+		await send_telemetry(ais, cfg, seq)
+		await send_status(ais, cfg, seq)
 		randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
 		logging.info("Sleeping for %d seconds", randsleep)
 		time.sleep(randsleep)
