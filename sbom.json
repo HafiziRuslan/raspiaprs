@@ -1,0 +1,181 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "serialNumber": "urn:uuid:4b770155-acfa-449a-93f4-f881510c0dfd",
+  "metadata": {
+    "timestamp": "2025-12-23T18:58:52.275636100Z",
+    "tools": [
+      {
+        "vendor": "Astral Software Inc.",
+        "name": "uv",
+        "version": "0.9.18"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "bom-ref": "raspiaprs-1@0.1b4",
+      "name": "raspiaprs",
+      "version": "0.1b4"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "anyio-2@4.12.0",
+      "name": "anyio",
+      "version": "4.12.0",
+      "purl": "pkg:pypi/anyio@4.12.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "aprslib-3@0.7.2",
+      "name": "aprslib",
+      "version": "0.7.2",
+      "purl": "pkg:pypi/aprslib@0.7.2"
+    },
+    {
+      "type": "library",
+      "bom-ref": "certifi-4@2025.11.12",
+      "name": "certifi",
+      "version": "2025.11.12",
+      "purl": "pkg:pypi/certifi@2025.11.12"
+    },
+    {
+      "type": "library",
+      "bom-ref": "gpsdclient-5@1.3.2",
+      "name": "gpsdclient",
+      "version": "1.3.2",
+      "purl": "pkg:pypi/gpsdclient@1.3.2"
+    },
+    {
+      "type": "library",
+      "bom-ref": "h11-6@0.16.0",
+      "name": "h11",
+      "version": "0.16.0",
+      "purl": "pkg:pypi/h11@0.16.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "httpcore-7@1.0.9",
+      "name": "httpcore",
+      "version": "1.0.9",
+      "purl": "pkg:pypi/httpcore@1.0.9"
+    },
+    {
+      "type": "library",
+      "bom-ref": "httpx-8@0.28.1",
+      "name": "httpx",
+      "version": "0.28.1",
+      "purl": "pkg:pypi/httpx@0.28.1"
+    },
+    {
+      "type": "library",
+      "bom-ref": "humanize-9@4.15.0",
+      "name": "humanize",
+      "version": "4.15.0",
+      "purl": "pkg:pypi/humanize@4.15.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "idna-10@3.11",
+      "name": "idna",
+      "version": "3.11",
+      "purl": "pkg:pypi/idna@3.11"
+    },
+    {
+      "type": "library",
+      "bom-ref": "psutil-11@7.1.3",
+      "name": "psutil",
+      "version": "7.1.3",
+      "purl": "pkg:pypi/psutil@7.1.3"
+    },
+    {
+      "type": "library",
+      "bom-ref": "python-dotenv-12@1.2.1",
+      "name": "python-dotenv",
+      "version": "1.2.1",
+      "purl": "pkg:pypi/python-dotenv@1.2.1"
+    },
+    {
+      "type": "library",
+      "bom-ref": "python-telegram-bot-13@22.5",
+      "name": "python-telegram-bot",
+      "version": "22.5",
+      "purl": "pkg:pypi/python-telegram-bot@22.5"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "anyio-2@4.12.0",
+      "dependsOn": [
+        "idna-10@3.11"
+      ]
+    },
+    {
+      "ref": "aprslib-3@0.7.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "certifi-4@2025.11.12",
+      "dependsOn": []
+    },
+    {
+      "ref": "gpsdclient-5@1.3.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "h11-6@0.16.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "httpcore-7@1.0.9",
+      "dependsOn": [
+        "certifi-4@2025.11.12",
+        "h11-6@0.16.0"
+      ]
+    },
+    {
+      "ref": "httpx-8@0.28.1",
+      "dependsOn": [
+        "anyio-2@4.12.0",
+        "certifi-4@2025.11.12",
+        "httpcore-7@1.0.9",
+        "idna-10@3.11"
+      ]
+    },
+    {
+      "ref": "humanize-9@4.15.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "idna-10@3.11",
+      "dependsOn": []
+    },
+    {
+      "ref": "psutil-11@7.1.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "python-dotenv-12@1.2.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "python-telegram-bot-13@22.5",
+      "dependsOn": [
+        "httpx-8@0.28.1"
+      ]
+    },
+    {
+      "ref": "raspiaprs-1@0.1b4",
+      "dependsOn": [
+        "aprslib-3@0.7.2",
+        "gpsdclient-5@1.3.2",
+        "humanize-9@4.15.0",
+        "psutil-11@7.1.3",
+        "python-dotenv-12@1.2.1",
+        "python-telegram-bot-13@22.5"
+      ]
+    }
+  ]
+}
