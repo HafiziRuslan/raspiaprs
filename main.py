@@ -518,7 +518,7 @@ async def send_position(ais, cfg, seq):
 		logging.info(packet)
 		await logs_to_telegram(f"<u>{cfg.call} Position #{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n\t<b>Speed</b>: {cur_spd}m/s\n\t<b>Course</b>: {cur_cse}\n<b>Comment</b>: {comment}", cur_lat, cur_lon)
 	except APRSConnectionError as err:
-		logging.warning(err)
+		logging.error(err)
 
 
 def send_header(ais, cfg):
@@ -533,7 +533,7 @@ def send_header(ais, cfg):
 			ais.sendall("{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call))
 			ais.sendall("{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(cfg.call))
 	except APRSConnectionError as err:
-		logging.warning(err)
+		logging.error(err)
 
 
 async def send_telemetry(ais, cfg, seq):
@@ -554,7 +554,7 @@ async def send_telemetry(ais, cfg, seq):
 		await logs_to_telegram(tgtel)
 		logging.info(telem)
 	except APRSConnectionError as err:
-		logging.warning(err)
+		logging.error(err)
 
 
 async def send_status(ais, cfg, seq):
@@ -575,7 +575,7 @@ async def send_status(ais, cfg, seq):
 		await logs_to_telegram(tgstat)
 		logging.info(status)
 	except APRSConnectionError as err:
-		logging.warning(err)
+		logging.error(err)
 
 
 def ais_connect(cfg):
@@ -586,8 +586,9 @@ def ais_connect(cfg):
 		try:
 			ais.connect()
 		except APRSConnectionError as err:
-			logging.warning(err)
+			logging.warning("APRS connection error: %s", err)
 			time.sleep(20)
+			continue
 		else:
 			ais.set_filter(cfg.filter)
 			return ais
