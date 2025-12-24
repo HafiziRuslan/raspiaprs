@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 16 commit(s) contributed to the release.
+- 17 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 2 day(s) passed between releases.
 
-## [beta4] - (Wed, 24-Dec-2025, 15:42:37, +08)
+## [beta4] - (Wed, 24-Dec-2025, 18:16:07, +08)
 
 ### 🚀 Features in beta4
 
@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [85847c8](https://github.com/HafiziRuslan/RasPiAPRS/commit/85847c8979822735855fb1c1c3d5e9376afe272b) refactor(main): simplify sleep calculation *by @HafiziRuslan on 2025-12-24T18:16:07+08:00*
 - [4d19301](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d19301859d5578d538fd7635cdf52f84a01aa3e) refactor(telemetry): narrow scope of try-except blocks *by @HafiziRuslan on 2025-12-24T01:42:31+08:00*
 - [34ef9eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/34ef9eb04a55bcda8357869413c80fcc75d30775) refactor(telemetry): extract reporting functions *by @HafiziRuslan on 2025-12-24T01:37:58+08:00*
 
@@ -558,4 +559,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 24-Dec-2025, 15:43:10.975, +08
+generated using git-cliff at Wed, 24-Dec-2025, 18:16:49.094, +08
