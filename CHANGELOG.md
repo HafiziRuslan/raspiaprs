@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 17 commit(s) contributed to the release.
+- 18 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 2 day(s) passed between releases.
 
-## [beta4] - (Wed, 24-Dec-2025, 18:16:07, +08)
+## [beta4] - (Thu, 25-Dec-2025, 05:55:47, +08)
 
 ### 🚀 Features in beta4
 
@@ -34,6 +34,10 @@ All notable changes to this project will be documented in this file.
 ### ⚡ Performance in beta4
 
 - [2f5dfc3](https://github.com/HafiziRuslan/RasPiAPRS/commit/2f5dfc32eab3c04d7e9138c942b8073f1a504965) chore(script): update git pull logic to use directory owner *by @HafiziRuslan on 2025-12-24T15:19:36+08:00*
+
+### 🎨 Styling in beta4
+
+- [cfea409](https://github.com/HafiziRuslan/RasPiAPRS/commit/cfea409b2a007c6209ed1fe4b5a5f1c2a14a2d14) style(logging): update telegram log message formatting *by @HafiziRuslan on 2025-12-25T05:55:47+08:00*
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
@@ -559,4 +563,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 24-Dec-2025, 18:16:49.094, +08
+generated using git-cliff at Thu, 25-Dec-2025, 05:56:15.118, +08
