@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 12 commit(s) contributed to the release.
-- 1 day(s) passed between the first and last commit.
+- 13 commit(s) contributed to the release.
+- 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
-- 1 day(s) passed between releases.
+- 2 day(s) passed between releases.
 
-## [beta4] - (Wed, 24-Dec-2025, 03:02:35, +08)
+## [beta4] - (Wed, 24-Dec-2025, 15:19:36, +08)
 
 ### 🚀 Features in beta4
 
@@ -29,6 +29,10 @@ All notable changes to this project will be documented in this file.
 
 - [4d19301](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d19301859d5578d538fd7635cdf52f84a01aa3e) refactor(telemetry): narrow scope of try-except blocks *by @HafiziRuslan on 2025-12-24T01:42:31+08:00*
 - [34ef9eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/34ef9eb04a55bcda8357869413c80fcc75d30775) refactor(telemetry): extract reporting functions *by @HafiziRuslan on 2025-12-24T01:37:58+08:00*
+
+### ⚡ Performance in beta4
+
+- [2f5dfc3](https://github.com/HafiziRuslan/RasPiAPRS/commit/2f5dfc32eab3c04d7e9138c942b8073f1a504965) chore(script): update git pull logic to use directory owner *by @HafiziRuslan on 2025-12-24T15:19:36+08:00*
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
@@ -550,4 +554,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 24-Dec-2025, 08:08:08.480, +08
+generated using git-cliff at Wed, 24-Dec-2025, 15:20:11.430, +08
