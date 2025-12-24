@@ -548,7 +548,7 @@ async def send_telemetry(ais, cfg, seq):
 		tgtel = f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB\n<b>GPS Used</b>: {uSat}/{nSat}"
 	else:
 		telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused)
-		tgtel = f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f }MB<b>Disk Used</b>: {diskused / 1000:.3f} GB\n"
+		tgtel = f"<u>{cfg.call} Telemetry-{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f}MB<b>Disk Used</b>: {diskused / 1000:.3f} GB\n"
 	try:
 		ais.sendall(telem)
 		await logs_to_telegram(tgtel)
@@ -606,7 +606,9 @@ async def main():
 			send_header(ais, cfg)
 		await send_telemetry(ais, cfg, seq)
 		await send_status(ais, cfg, seq)
-		randsleep = int(random.uniform(cfg.sleep - 30, cfg.sleep + 30))
+		randup = cfg.sleep + 30
+		randdn = cfg.sleep - 30
+		randsleep = int(random.uniform(randdn, randup))
 		logging.info("Sleeping for %d seconds", randsleep)
 		time.sleep(randsleep)
 
