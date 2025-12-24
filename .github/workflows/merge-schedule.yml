@@ -1,17 +1,12 @@
 name: 'Auto-Merge'
 
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - auto_merge_enabled
-  schedule:
-    - cron: '0 9 * * mon'
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   merge_schedule:
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
       - uses: gr2m/merge-schedule-action@master
