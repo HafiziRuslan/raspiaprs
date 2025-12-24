@@ -1,8 +1,13 @@
 #!/bin/bash
 set -e
 date=$(date +'%F %T')
-# git config --global --add safe.directory /home/pi-star/raspiaprs
-# git pull
+dir_own=$(stat -c '%U' .)
+
+# echo "$date - Mark directory as safe"
+# git config --global --add safe.directory .
+
+echo "$date - Updating files"
+sudo -u $dir_own git pull
 
 command_exists() {
   command -v "$1" >/dev/null 2>&1
