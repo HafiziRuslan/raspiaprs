@@ -41,15 +41,15 @@ body = """
       {% if commit.author.timestamp %} on {{ commit.author.timestamp | date(format="%+", timezone="Asia/Kuala_Lumpur") }}*{% endif %}\
   {% endfor %}
 {% endfor %}
----\n
-{%- macro remote_url() -%}
+---
+{% macro remote_url() -%}
   https://github.com/{{ remote.github.owner }}/{{ remote.github.repo }}
 {%- endmacro -%}
 """
 # A Tera template to be rendered at the end of the changelog.
 # See https://keats.github.io/tera/docs/#introduction
 footer = """
-\n\ngenerated using git-cliff at {{ now() | date(format="%a, %v, %T%.3f, %Z", timezone="Asia/Kuala_Lumpur", locale="en_MY") }}
+\ngenerated using git-cliff at {{ now() | date(format="%a, %v, %T%.3f, %Z", timezone="Asia/Kuala_Lumpur", locale="en_MY") }}
 """
 # Remove leading and trailing whitespaces from the changelog's body.
 trim = true
