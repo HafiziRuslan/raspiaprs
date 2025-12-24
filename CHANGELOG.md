@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 - 0 linked issue(s) detected in commits.
 - 1 day(s) passed between releases.
 
-## [beta4] - (Wed, 24-Dec-2025, 03:02:03, +08)
+## [beta4] - (Wed, 24-Dec-2025, 03:02:35, +08)
 
 ### 🚀 Features in beta4
 
@@ -550,4 +550,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 24-Dec-2025, 03:02:34.544, +08
+generated using git-cliff at Wed, 24-Dec-2025, 08:07:54.256, +08
