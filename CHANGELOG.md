@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 19 commit(s) contributed to the release.
+- 20 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 2 day(s) passed between releases.
 
-## [beta4] - (Thu, 25-Dec-2025, 06:07:44, +08)
+## [beta4] - (Thu, 25-Dec-2025, 06:42:38, +08)
 
 ### 🚀 Features in beta4
 
@@ -42,6 +42,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [f7afdac](https://github.com/HafiziRuslan/RasPiAPRS/commit/f7afdac0437a64fb2fb6062a321b8257c798bcc4) chore(scripts): remove mmcli location retrieval script *by @HafiziRuslan on 2025-12-25T06:42:38+08:00*
 - [60a9f42](https://github.com/HafiziRuslan/RasPiAPRS/commit/60a9f42d9601336714a4e60a9769e521e70237f9) ci(workflow): update auto-merge trigger logic *by @HafiziRuslan on 2025-12-24T15:42:37+08:00*
 - [e8d075b](https://github.com/HafiziRuslan/RasPiAPRS/commit/e8d075b247dd1c8d0c1e4fa5ca7a132e747442b2) build(deps): bump psutil from 7.1.3 to 7.2.0 *by @HafiziRuslan on 2025-12-24T15:37:30+08:00*
 - [3a104eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/3a104eb01428d601a082765a9d8c9bb7ac034cf9) chore(cliff): adjust changelog template whitespace *by @HafiziRuslan on 2025-12-24T15:23:51+08:00*
@@ -564,4 +565,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 25-Dec-2025, 06:08:14.499, +08
+generated using git-cliff at Thu, 25-Dec-2025, 06:43:06.233, +08
