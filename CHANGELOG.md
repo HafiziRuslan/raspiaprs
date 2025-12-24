@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 18 commit(s) contributed to the release.
+- 19 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 2 day(s) passed between releases.
 
-## [beta4] - (Thu, 25-Dec-2025, 05:55:47, +08)
+## [beta4] - (Thu, 25-Dec-2025, 06:07:44, +08)
 
 ### 🚀 Features in beta4
 
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [3c80f4c](https://github.com/HafiziRuslan/RasPiAPRS/commit/3c80f4c7d0d5565d7bdd84a3513ba6625a5bf45b) fix(aprs): improve error handling and logging *by @HafiziRuslan on 2025-12-25T06:07:44+08:00*
 - [a5c9076](https://github.com/HafiziRuslan/RasPiAPRS/commit/a5c9076babe25c7e19da4806c5efc89b08570537) chore(changelog): include version in group headers *by @HafiziRuslan on 2025-12-24T02:46:27+08:00*
 - [ca70d9b](https://github.com/HafiziRuslan/RasPiAPRS/commit/ca70d9b1daeeed6b7d28b2f11835643117d3580e) fix(main): await telemetry and status coroutines *by @HafiziRuslan on 2025-12-24T02:18:28+08:00*
 - [553f7cd](https://github.com/HafiziRuslan/RasPiAPRS/commit/553f7cd1347275beaad3e99467d994338a3eb0d1) fix(telemetry): update temperature unit label *by @HafiziRuslan on 2025-12-24T01:38:29+08:00*
@@ -563,4 +564,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 25-Dec-2025, 05:56:15.118, +08
+generated using git-cliff at Thu, 25-Dec-2025, 06:08:14.499, +08
