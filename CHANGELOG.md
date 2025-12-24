@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 13 commit(s) contributed to the release.
+- 14 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 2 day(s) passed between releases.
 
-## [beta4] - (Wed, 24-Dec-2025, 15:19:36, +08)
+## [beta4] - (Wed, 24-Dec-2025, 15:23:51, +08)
 
 ### 🚀 Features in beta4
 
@@ -36,11 +36,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [3a104eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/3a104eb01428d601a082765a9d8c9bb7ac034cf9) chore(cliff): adjust changelog template whitespace *by @HafiziRuslan on 2025-12-24T15:23:51+08:00*
 - [58e559f](https://github.com/HafiziRuslan/RasPiAPRS/commit/58e559f696c5b8fe86ccb41a6b10142297dd6199) build(deps): update humanize and add lock files *by @HafiziRuslan on 2025-12-24T03:02:03+08:00*
 - [7df6495](https://github.com/HafiziRuslan/RasPiAPRS/commit/7df6495be779b2faca1145464cd6ff9686706936) chore(cliff): update changelog template layout *by @HafiziRuslan on 2025-12-23T07:02:04+08:00*
 - [2fe2d84](https://github.com/HafiziRuslan/RasPiAPRS/commit/2fe2d849eca3ab4f0fb9beed797b391c7eee2449) chore(release): bump version to v0.1-beta.4 *by @HafiziRuslan on 2025-12-23T06:46:58+08:00*
 
 ---
+
 ## Commit Statistics [beta]
 
 - 486 commit(s) contributed to the release.
@@ -554,4 +556,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 24-Dec-2025, 15:20:11.430, +08
+generated using git-cliff at Wed, 24-Dec-2025, 15:24:24.870, +08
