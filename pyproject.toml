@@ -1,7 +1,7 @@
 [project]
 name = "RasPiAPRS"
 version = "0.1-beta.4"
-description = "APRS telemetry for Pi-Star / WPSD / AllStarLink"
+description = "APRS telemetry for Pi-Star/WPSD/AllStarLink"
 keywords = [
   "amateur-radio",
   "aprs",
@@ -13,7 +13,7 @@ keywords = [
   "wpsd",
 ]
 readme = "README.md"
-license = "BSD-3-Clause"
+license = "GPL-3.0-only"
 authors = [
   { name = "Fred Cirera", email = "github-fred@hidzz.com" },
   { name = "Hafizi Ruslan", email = "9w2lgx@mhrtech.my" },
