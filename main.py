@@ -238,21 +238,23 @@ def get_gpspos():
 def get_gpssat():
 	"""Get satellite from GPSD."""
 	if os.getenv("GPSD_ENABLE"):
+		timestamp = dt.datetime.now(dt.timezone.utc)
 		logging.info("Trying to figure out satellite using GPS")
 		try:
 			with GPSDClient(os.getenv("GPSD_HOST", "localhost"), int(os.getenv("GPSD_PORT", 2947)), 15) as client:
 				for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
 					if result["class"] == "SKY":
 						logging.info("GPS Satellite acquired")
+						utc = result.get("time", timestamp)
 						uSat = result.get("uSat", 0)
 						nSat = result.get("nSat", 0)
-						return uSat, nSat
+						return utc, uSat, nSat
 					else:
 						logging.info("GPS Satellite unavailable")
-						return (0, 0)
+						return (timestamp, 0, 0)
 		except Exception as e:
 			logging.error("Error getting GPS data: %s", e)
-			return (0, 0)
+			return (timestamp, 0, 0)
 
 
 def get_coordinates():
@@ -543,7 +545,7 @@ async def send_telemetry(ais, cfg, seq):
 	memused = get_memused()
 	diskused = get_diskused()
 	if os.getenv("GPSD_ENABLE"):
-		uSat, nSat = get_gpssat()
+		nowz, uSat, nSat = get_gpssat()
 		telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(cfg.call, seq, temp, cpuload, memused, diskused, uSat)
 		tgtel = f"<u>{cfg.call} Telemetry #{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB\n<b>GPS Used</b>: {uSat}/{nSat}"
 	else:
@@ -563,7 +565,7 @@ async def send_status(ais, cfg, seq):
 	nowz = cur_time.strftime('%d%H%Mz')
 	uptime = get_uptime()
 	if os.getenv("GPSD_ENABLE"):
-		uSat, nSat = get_gpssat()
+		nowz, uSat, nSat = get_gpssat()
 		sats = f"sats={uSat}/{nSat}"
 		status = "{0}>APP642:>{1}{2}, {3}".format(cfg.call, nowz, uptime, sats)
 		tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{nowz}, {uptime}, {sats}"
