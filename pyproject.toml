@@ -13,7 +13,7 @@ keywords = [
   "wpsd",
 ]
 readme = "README.md"
-license = "GPL-3.0-only"
+license = "GPL-3.0-only AND BSD-3-Clause"
 authors = [
   { name = "Fred Cirera", email = "github-fred@hidzz.com" },
   { name = "Hafizi Ruslan", email = "9w2lgx@mhrtech.my" },
