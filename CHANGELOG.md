@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 21 commit(s) contributed to the release.
+- 22 commit(s) contributed to the release.
 - 3 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 3 day(s) passed between releases.
 
-## [beta4] - (Thu, 25-Dec-2025, 10:11:38, +08)
+## [beta4] - (Thu, 25-Dec-2025, 10:16:24, +08)
 
 ### 🚀 Features in beta4
 
@@ -31,6 +31,10 @@ All notable changes to this project will be documented in this file.
 - [85847c8](https://github.com/HafiziRuslan/RasPiAPRS/commit/85847c8979822735855fb1c1c3d5e9376afe272b) refactor(main): simplify sleep calculation *by @HafiziRuslan on 2025-12-24T18:16:07+08:00*
 - [4d19301](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d19301859d5578d538fd7635cdf52f84a01aa3e) refactor(telemetry): narrow scope of try-except blocks *by @HafiziRuslan on 2025-12-24T01:42:31+08:00*
 - [34ef9eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/34ef9eb04a55bcda8357869413c80fcc75d30775) refactor(telemetry): extract reporting functions *by @HafiziRuslan on 2025-12-24T01:37:58+08:00*
+
+### 📚 Documentation in beta4
+
+- [f099d35](https://github.com/HafiziRuslan/RasPiAPRS/commit/f099d3594cb9cc30121b396e4a286d640f34d1f5) docs(license): add bsd-3-clause *by @HafiziRuslan on 2025-12-25T10:16:24+08:00*
 
 ### ⚡ Performance in beta4
 
@@ -566,4 +570,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 25-Dec-2025, 10:12:18.786, +08
+generated using git-cliff at Thu, 25-Dec-2025, 10:17:03.413, +08
