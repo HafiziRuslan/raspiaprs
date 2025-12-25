@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 24 commit(s) contributed to the release.
+- 26 commit(s) contributed to the release.
 - 3 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 3 day(s) passed between releases.
 
-## [beta4] - (Thu, 25-Dec-2025, 13:53:26, +08)
+## [beta4] - (Thu, 25-Dec-2025, 23:26:39, +08)
 
 ### 🚀 Features in beta4
 
@@ -44,10 +44,12 @@ All notable changes to this project will be documented in this file.
 
 ### 🎨 Styling in beta4
 
+- [1256cd4](https://github.com/HafiziRuslan/RasPiAPRS/commit/1256cd44cc2b0cbcd46a6ce1e499d35aa8554b28) style(formatting): standardize indentation and code formatting *by @HafiziRuslan on 2025-12-25T23:26:39+08:00*
 - [cfea409](https://github.com/HafiziRuslan/RasPiAPRS/commit/cfea409b2a007c6209ed1fe4b5a5f1c2a14a2d14) style(logging): update telegram log message formatting *by @HafiziRuslan on 2025-12-25T05:55:47+08:00*
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [f458dd8](https://github.com/HafiziRuslan/RasPiAPRS/commit/f458dd85264de702d31175900fac9f78ad5415ba) build(deps): bump psutil and update sbom *by @HafiziRuslan on 2025-12-25T23:26:13+08:00*
 - [9437440](https://github.com/HafiziRuslan/RasPiAPRS/commit/94374405b5a63e464c58e96edca50b950fd3c57f) chore(license): switch project license to gpl-3.0 *by @HafiziRuslan on 2025-12-25T10:11:38+08:00*
 - [f7afdac](https://github.com/HafiziRuslan/RasPiAPRS/commit/f7afdac0437a64fb2fb6062a321b8257c798bcc4) chore(scripts): remove mmcli location retrieval script *by @HafiziRuslan on 2025-12-25T06:42:38+08:00*
 - [60a9f42](https://github.com/HafiziRuslan/RasPiAPRS/commit/60a9f42d9601336714a4e60a9769e521e70237f9) ci(workflow): update auto-merge trigger logic *by @HafiziRuslan on 2025-12-24T15:42:37+08:00*
@@ -572,4 +574,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 25-Dec-2025, 13:55:30.891, +08
+generated using git-cliff at Thu, 25-Dec-2025, 23:27:09.112, +08
