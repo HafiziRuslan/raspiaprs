@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 05:58:46, +08)
+## [beta4] - (Sat, 27-Dec-2025, 06:05:05, +08)
 
-- 53 commit(s) contributed to the release.
+- 55 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [13c7952](https://github.com/HafiziRuslan/RasPiAPRS/commit/13c7952b6ec7da53850d0f20730db9fc8fd9a652) fix(flow): introduce delay in main execution loop *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:04:47+08:00*
 - [1c5271e](https://github.com/HafiziRuslan/RasPiAPRS/commit/1c5271e9e97373b7996396746fad5845d2196d1e) fix(core): prevent slow beaconing at zero speed *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:41:43+08:00*
 - [2875383](https://github.com/HafiziRuslan/RasPiAPRS/commit/287538352d77cc99c905004b9994f957bb6c02e1) refactor(core): simplify function sequence handling *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:17:04+08:00*
 - [378acdb](https://github.com/HafiziRuslan/RasPiAPRS/commit/378acdb2879808209a1150bd8b903ff6a3964668) fix(beaconing): cast smart beaconing speeds to integers *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:35:25+08:00*
@@ -74,6 +75,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [70628fa](https://github.com/HafiziRuslan/RasPiAPRS/commit/70628fae0c9096a457762ced7567c3158a619066) chore(config): add millisecond precision to log timestamps *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:05:05+08:00*
 - [4e5eae4](https://github.com/HafiziRuslan/RasPiAPRS/commit/4e5eae4e0ab8e1b6e781c1515bf005365c8ebb28) chore(dev): temporarily disable data sending *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:54:36+08:00*
 - [dd78d9d](https://github.com/HafiziRuslan/RasPiAPRS/commit/dd78d9d913f31638374f8c6911ef61e8e14c3cb3) build(cliff): enhance changelog template output *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:09:42+08:00*
 - [1077229](https://github.com/HafiziRuslan/RasPiAPRS/commit/1077229d79c2c28975264cfa4312fa8185648a94) chore(scripts): add autostash to git pull *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-26T16:32:10+08:00*
@@ -600,4 +602,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 05:59:18.207, +08
+generated using git-cliff at Sat, 27-Dec-2025, 06:05:41.019, +08
