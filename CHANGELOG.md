@@ -4,16 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 42 commit(s) contributed to the release.
+- 43 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 4 day(s) passed between releases.
 
-## [beta4] - (Sat, 27-Dec-2025, 04:15:38, +08)
+## [beta4] - (Sat, 27-Dec-2025, 04:31:26, +08)
 
 ### 🚀 Features in beta4
 
+- [04ca2a0](https://github.com/HafiziRuslan/RasPiAPRS/commit/04ca2a0a5d852e7fa91c2a39f0199d5903fb1247) feat(main): implement smart beaconing and timer *by @HafiziRuslan on 2025-12-27T04:31:26+08:00*
 - [0a75acc](https://github.com/HafiziRuslan/RasPiAPRS/commit/0a75acc08dab2ffaf651e4c7f57d4e70d77365c8) feat(beacon): implement smart beaconing symbol switching *by @HafiziRuslan on 2025-12-26T18:00:22+08:00*
 - [5a3f9c5](https://github.com/HafiziRuslan/RasPiAPRS/commit/5a3f9c5baa79ad4569d5ba42658cd2b9e00d7574) feat(config): add smartbeaconing support *by @HafiziRuslan on 2025-12-24T01:40:02+08:00*
 - [95d7c44](https://github.com/HafiziRuslan/RasPiAPRS/commit/95d7c44fa76809f3d840d1aa4989e7f04e1c1edd) feat(gps): include speed and course in data extraction *by @HafiziRuslan on 2025-12-23T07:23:45+08:00*
@@ -593,4 +594,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 04:16:28.785, +08
+generated using git-cliff at Sat, 27-Dec-2025, 04:32:04.559, +08
