@@ -179,7 +179,7 @@ class Config(object):
 
 
 class Sequence(object):
-    """Class to manage APRS sequence numbers."""
+    """Class to manage APRS sequence."""
 
     _count = 0
 
@@ -206,6 +206,38 @@ class Sequence(object):
 
     def __next__(self):
         self._count = (1 + self._count) % 999
+        self.flush()
+        return self._count
+
+
+class Timer(object):
+    """Class to manage APRS timer."""
+
+    _count = 0
+
+    def __init__(self):
+        self.timer_file = os.path.join("/tmp", "raspiaprs.tmr")
+        try:
+            with open(self.timer_file) as fds:
+                self._count = int(fds.readline())
+        except (IOError, ValueError):
+            self._count = 0
+
+    def flush(self):
+        try:
+            with open(self.timer_file, "w") as fds:
+                fds.write("{0:d}".format(self._count))
+        except IOError:
+            pass
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        return self.__next__()
+
+    def __next__(self):
+        self._count = 1 + self._count
         self.flush()
         return self._count
 
@@ -681,24 +713,26 @@ async def main():
     cfg = Config()
     ais = ais_connect(cfg)
     rate = cfg.sleep
-    # if os.getenv("SMARTBEACONING_ENABLE"):
-    #     spd = get_gpspos()[4]
-    #     fspd = os.getenv("SMARTBEACONING_FASTSPEED")
-    #     sspd = os.getenv("SMARTBEACONING_SLOWSPEED")
-    #     frate = int(os.getenv("SMARTBEACONING_FASTRATE"))
-    #     srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
-    #     if spd >= fspd:
-    #         rate = frate
-    #     if spd <= sspd:
-    #         rate = srate
-    #     if spd > sspd and spd < fspd:
-    #         rate = int(frate + srate / 2)
-    for seq in Sequence():
-        if seq % 2 == 1:
+    if os.getenv("SMARTBEACONING_ENABLE"):
+        spd = get_gpspos()[4]
+        fspd = os.getenv("SMARTBEACONING_FASTSPEED")
+        sspd = os.getenv("SMARTBEACONING_SLOWSPEED")
+        frate = int(os.getenv("SMARTBEACONING_FASTRATE"))
+        srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
+        if spd >= fspd:
+            rate = frate
+        if spd <= sspd:
+            rate = srate
+        if spd > sspd and spd < fspd:
+            rate = int(frate + srate / 2)
+    for tmr in Timer():
+        if tmr % rate == 1:
             await send_position(ais, cfg, seq)
-        if seq % 6 == 1:
-            send_header(ais, cfg)
-        await send_telemetry(ais, cfg, seq)
+        if tmr % cfg.sleep == 1:
+            for seq in Sequence():
+                if seq % 6 == 1:
+                    send_header(ais, cfg)
+                await send_telemetry(ais, cfg, seq)
         await send_status(ais, cfg, seq)
         logging.info("Sleeping for %d seconds", rate)
         time.sleep(rate)
