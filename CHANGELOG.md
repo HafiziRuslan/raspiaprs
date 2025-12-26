@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 44 commit(s) contributed to the release.
+- 45 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 4 day(s) passed between releases.
 
-## [beta4] - (Sat, 27-Dec-2025, 04:35:25, +08)
+## [beta4] - (Sat, 27-Dec-2025, 04:41:52, +08)
 
 ### 🚀 Features in beta4
 
@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation in beta4
 
+- [40b2529](https://github.com/HafiziRuslan/RasPiAPRS/commit/40b2529c8fc977993a32e0135e96b77ed9ebeef5) docs(APRS): add foundational specification documents *by @HafiziRuslan on 2025-12-27T04:41:52+08:00*
 - [6e88c90](https://github.com/HafiziRuslan/RasPiAPRS/commit/6e88c906d9c23f18a5346b2c2db85358d9335044) docs(aprs): remove redundant packet comment *by @HafiziRuslan on 2025-12-27T01:08:41+08:00*
 - [9e5130f](https://github.com/HafiziRuslan/RasPiAPRS/commit/9e5130fd0eae91926684fccab2eb061c9be9f6ea) docs(misc): add aprs protocol specification *by @HafiziRuslan on 2025-12-25T13:34:32+08:00*
 - [f099d35](https://github.com/HafiziRuslan/RasPiAPRS/commit/f099d3594cb9cc30121b396e4a286d640f34d1f5) docs(license): add bsd-3-clause *by @HafiziRuslan on 2025-12-25T10:16:24+08:00*
@@ -595,4 +596,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 04:36:03.583, +08
+generated using git-cliff at Sat, 27-Dec-2025, 04:42:36.015, +08
