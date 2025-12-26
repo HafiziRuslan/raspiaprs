@@ -587,7 +587,7 @@ async def send_position(ais, cfg, seq):
         ais.sendall(packet)
         logging.info(packet)
         await logs_to_telegram(
-            f"<u>{cfg.call} Position #{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
+            f"<u>{cfg.call} Position #{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
             cur_lat,
             cur_lon,
         )
@@ -692,7 +692,7 @@ async def main():
     #         rate = frate
     #     if spd <= sspd:
     #         rate = srate
-    #     if spd > 0:
+    #     if spd > sspd and spd < fspd:
     #         rate = int(frate + srate / 2)
     for seq in Sequence():
         if seq % 2 == 1:
