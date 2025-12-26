@@ -627,7 +627,7 @@ async def send_position(ais, cfg):
         logging.error(err)
 
 
-async def send_header(ais, cfg):
+def send_header(ais, cfg):
     """Send APRS header information to APRS-IS."""
     parm = "{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call)
     unit = "{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call)
@@ -642,7 +642,6 @@ async def send_header(ais, cfg):
         ais.sendall(parm)
         ais.sendall(unit)
         ais.sendall(eqns)
-        await send_status(ais, cfg)
     except APRSConnectionError as err:
         logging.error(err)
 
@@ -739,13 +738,13 @@ async def main():
             await send_position(ais, cfg)
         if tmr % cfg.sleep == 1:
             if tmr % 1800 == 1:
-                await send_header(ais, cfg)
+                send_header(ais, cfg)
             for seq in Sequence():
                 await send_telemetry(ais, cfg, seq)
-        if tmr == 1:
-            await send_position(ais, cfg)
-            await send_header(ais, cfg)
-            await send_telemetry(ais, cfg, seq)
+        # if tmr == 1:
+        #     await send_position(ais, cfg)
+        #     await send_header(ais, cfg)
+        #     await send_telemetry(ais, cfg, seq)
         # await send_status(ais, cfg)
         # logging.info("Sleeping for %d seconds", rate)
         # time.sleep(rate)
