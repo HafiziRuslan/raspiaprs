@@ -648,6 +648,7 @@ def send_header(ais, cfg):
 
 async def send_telemetry(ais, cfg, seq):
     """Send APRS telemetry information to APRS-IS."""
+    seq = Sequence()
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
@@ -740,10 +741,9 @@ async def main():
         if tmr % 1800 == 1:
             # send_header(ais, cfg)
             logging.info(f"header sent {tmr}/{rate}")
-        if tmr % 300 == 1:
-            for seq in Sequence():
-                # await send_telemetry(ais, cfg, seq)
-                logging.info(f"telemetry sent {tmr}/{rate}/{seq} {tmr%cfg.sleep}")
+        if tmr % cfg.sleep == 1:
+            # await send_telemetry(ais, cfg, seq)
+            logging.info(f"telemetry sent {tmr}/{rate} {tmr % cfg.sleep}")
         time.sleep(1)
         # if tmr == 1:
         #     await send_position(ais, cfg)
