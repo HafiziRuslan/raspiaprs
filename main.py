@@ -585,33 +585,19 @@ async def send_position(ais, cfg, seq):
 
 def send_header(ais, cfg):
     """Send APRS header information to APRS-IS."""
+    parm = "{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call)
+    unit = "{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call)
+    eqns = "{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(
+        cfg.call
+    )
     try:
         if os.getenv("GPSD_ENABLE"):
-            ais.sendall(
-                "{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed,GPSUsed".format(
-                    cfg.call
-                )
-            )
-            ais.sendall(
-                "{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB,sats".format(cfg.call)
-            )
-            ais.sendall(
-                "{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0,0,1,0".format(
-                    cfg.call
-                )
-            )
-        else:
-            ais.sendall(
-                "{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(
-                    cfg.call
-                )
-            )
-            ais.sendall("{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call))
-            ais.sendall(
-                "{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(
-                    cfg.call
-                )
-            )
+            parm += f",GPSUsed"
+            unit += f",sats"
+            eqns += f",0,1,0"
+        ais.sendall(parm)
+        ais.sendall(unit)
+        ais.sendall(eqns)
     except APRSConnectionError as err:
         logging.error(err)
 
@@ -622,17 +608,14 @@ async def send_telemetry(ais, cfg, seq):
     cpuload = get_cpuload()
     memused = get_memused()
     diskused = get_diskused()
+    telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
+        cfg.call, seq, temp, cpuload, memused, diskused
+    )
+    tgtel = f"<u>{cfg.call} Telemetry #{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f}MB<b>Disk Used</b>: {diskused / 1000:.3f} GB"
     if os.getenv("GPSD_ENABLE"):
         nowz, uSat, nSat = get_gpssat()
-        telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d},{:d}".format(
-            cfg.call, seq, temp, cpuload, memused, diskused, uSat
-        )
-        tgtel = f"<u>{cfg.call} Telemetry #{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB\n<b>GPS Used</b>: {uSat}/{nSat}"
-    else:
-        telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
-            cfg.call, seq, temp, cpuload, memused, diskused
-        )
-        tgtel = f"<u>{cfg.call} Telemetry #{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f}MB<b>Disk Used</b>: {diskused / 1000:.3f} GB\n"
+        telem += ",{:d}".format(uSat)
+        tgtel += f"\n<b>GPS Used</b>: {uSat}/{nSat}"
     try:
         ais.sendall(telem)
         await logs_to_telegram(tgtel)
@@ -648,13 +631,12 @@ async def send_status(ais, cfg, seq):
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = nowz.strftime("%d%H%Mz") if nowz != None else ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
+    status = "{0}>APP642:>{1}{2}".format(cfg.call, timestamp, uptime)
+    tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}"
     if os.getenv("GPSD_ENABLE"):
         sats = f"sats={uSat}/{nSat}"
-        status = "{0}>APP642:>{1}{2}, {3}".format(cfg.call, timestamp, uptime, sats)
-        tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}, {sats}"
-    else:
-        status = "{0}>APP642:>{1}{2}".format(cfg.call, timestamp, uptime)
-        tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}"
+        status += f", {sats}"
+        tgstat += f", {sats}"
     try:
         ais.sendall(status)
         await logs_to_telegram(tgstat)
