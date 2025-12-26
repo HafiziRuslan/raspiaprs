@@ -643,21 +643,18 @@ async def send_telemetry(ais, cfg, seq):
 
 async def send_status(ais, cfg, seq):
     """Send APRS status information to APRS-IS."""
-    cur_time = (
-        get_gpspos()[0]
-        if os.getenv("GPSD_ENABLE")
-        else dt.datetime.now(dt.timezone.utc)
-    )
-    nowz = cur_time.strftime("%d%H%Mz")
+    timez, uSat, nSat = get_gpssat()
+    nowz = timez.strftime("%d%H%Mz")
+    ztime = dt.datetime.now(dt.timezone.utc)
+    timestamp = nowz.strftime("%d%H%Mz") if nowz != None else ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
     if os.getenv("GPSD_ENABLE"):
-        nowz, uSat, nSat = get_gpssat()
         sats = f"sats={uSat}/{nSat}"
-        status = "{0}>APP642:>{1}{2}, {3}".format(cfg.call, nowz, uptime, sats)
-        tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{nowz}, {uptime}, {sats}"
+        status = "{0}>APP642:>{1}{2}, {3}".format(cfg.call, timestamp, uptime, sats)
+        tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}, {sats}"
     else:
-        status = "{0}>APP642:>{1}{2}".format(cfg.call, nowz, uptime)
-        tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{nowz}, {uptime}"
+        status = "{0}>APP642:>{1}{2}".format(cfg.call, timestamp, uptime)
+        tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}"
     try:
         ais.sendall(status)
         await logs_to_telegram(tgstat)
