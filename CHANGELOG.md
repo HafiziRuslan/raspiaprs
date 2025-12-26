@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 26 commit(s) contributed to the release.
-- 3 day(s) passed between the first and last commit.
+- 27 commit(s) contributed to the release.
+- 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
-- 3 day(s) passed between releases.
+- 4 day(s) passed between releases.
 
-## [beta4] - (Thu, 25-Dec-2025, 23:26:39, +08)
+## [beta4] - (Fri, 26-Dec-2025, 16:26:10, +08)
 
 ### 🚀 Features in beta4
 
@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [6c4eb0e](https://github.com/HafiziRuslan/RasPiAPRS/commit/6c4eb0e05779360848ceeb75c5d23bcdde0a4595) refactor(status): optimize status update logic *by @HafiziRuslan on 2025-12-26T16:26:10+08:00*
 - [3829071](https://github.com/HafiziRuslan/RasPiAPRS/commit/38290710b6a8e18f073969efeda13d87c2dcbbcc) refactor(gps): include timestamp in satellite data *by @HafiziRuslan on 2025-12-25T13:53:26+08:00*
 - [85847c8](https://github.com/HafiziRuslan/RasPiAPRS/commit/85847c8979822735855fb1c1c3d5e9376afe272b) refactor(main): simplify sleep calculation *by @HafiziRuslan on 2025-12-24T18:16:07+08:00*
 - [4d19301](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d19301859d5578d538fd7635cdf52f84a01aa3e) refactor(telemetry): narrow scope of try-except blocks *by @HafiziRuslan on 2025-12-24T01:42:31+08:00*
@@ -574,4 +575,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu, 25-Dec-2025, 23:27:09.112, +08
+generated using git-cliff at Fri, 26-Dec-2025, 16:26:41.199, +08
