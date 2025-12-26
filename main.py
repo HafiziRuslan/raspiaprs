@@ -725,7 +725,7 @@ async def main():
         if spd >= fspd:
             rate = frate
             logging.info("Fast beaconing enabled")
-        if spd <= sspd:
+        if spd <= sspd and spd != 0:
             rate = srate
             logging.info("Slow beaconing enabled")
         if spd > sspd and spd < fspd:
