@@ -721,10 +721,16 @@ async def main():
         srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
         if spd >= fspd:
             rate = frate
+            logging.info("Fast beaconing enabled")
         if spd <= sspd:
             rate = srate
+            logging.info("Slow beaconing enabled")
         if spd > sspd and spd < fspd:
             rate = int(frate + srate / 2)
+            logging.info("Mixed beaconing enabled")
+        if spd == 0:
+            rate = cfg.sleep
+            logging.info("Smart beaconing disabled")
     for tmr in Timer():
         if tmr % rate == 1:
             await send_position(ais, cfg)
@@ -734,8 +740,8 @@ async def main():
                     send_header(ais, cfg)
                 await send_telemetry(ais, cfg, seq)
         await send_status(ais, cfg)
-        logging.info("Sleeping for %d seconds", rate)
-        time.sleep(rate)
+        # logging.info("Sleeping for %d seconds", rate)
+        # time.sleep(rate)
 
 
 if __name__ == "__main__":
