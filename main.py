@@ -646,7 +646,7 @@ def send_header(ais, cfg):
         logging.error(err)
 
 
-async def send_telemetry(ais, cfg, seq):
+async def send_telemetry(ais, cfg):
     """Send APRS telemetry information to APRS-IS."""
     seq = Sequence()
     temp = get_temp()
