@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 05:54:36, +08)
+## [beta4] - (Sat, 27-Dec-2025, 05:58:46, +08)
 
-- 52 commit(s) contributed to the release.
+- 53 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -39,6 +39,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [11ccc13](https://github.com/HafiziRuslan/RasPiAPRS/commit/11ccc134da348f1e244c080633bc0410befef4bd) refactor(scheduling): adjust main loop timing and logging *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:58:46+08:00*
 - [047c932](https://github.com/HafiziRuslan/RasPiAPRS/commit/047c9328c321f568c5a9017d431f5cfc6bda5627) refactor(aprs): make send_header synchronous *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:49:57+08:00*
 - [b23e228](https://github.com/HafiziRuslan/RasPiAPRS/commit/b23e2282bafe631ba7c92f2f47b1cf2eac17e8d3) refactor(scheduling): improve transmission initialization and timing *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:34:43+08:00*
 - [ca76f93](https://github.com/HafiziRuslan/RasPiAPRS/commit/ca76f930225438bf611d39f76f6c9562a8264705) refactor(main): remove unused random import *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:15:38+08:00*
@@ -599,4 +600,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 05:55:13.307, +08
+generated using git-cliff at Sat, 27-Dec-2025, 05:59:18.207, +08
