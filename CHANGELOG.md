@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 36 commit(s) contributed to the release.
+- 38 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 4 day(s) passed between releases.
 
-## [beta4] - (Fri, 26-Dec-2025, 18:55:12, +08)
+## [beta4] - (Sat, 27-Dec-2025, 00:04:12, +08)
 
 ### 🚀 Features in beta4
 
@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [a6001b2](https://github.com/HafiziRuslan/RasPiAPRS/commit/a6001b29641ca55ef0abc46024aa2e3ceb7f3dbe) fix(aprs): fix speed and course data formatting *by @HafiziRuslan on 2025-12-27T00:04:12+08:00*
+- [72fe416](https://github.com/HafiziRuslan/RasPiAPRS/commit/72fe41640bd9e3aa6462ece78910b286a66ca8b4) fix(telemetry): fix telemetry message formatting *by @HafiziRuslan on 2025-12-26T23:54:26+08:00*
 - [dc9e0ce](https://github.com/HafiziRuslan/RasPiAPRS/commit/dc9e0ce91864c990b5ebe9e6924941fbfa3b0316) fix(status): handle null gps timestamp with fallback *by @HafiziRuslan on 2025-12-26T18:55:12+08:00*
 - [44fcfca](https://github.com/HafiziRuslan/RasPiAPRS/commit/44fcfcae01c393969a95fdd54cc61d6c26f96eff) fix(status): use gps time for status reports *by @HafiziRuslan on 2025-12-26T18:53:07+08:00*
 - [488cd4f](https://github.com/HafiziRuslan/RasPiAPRS/commit/488cd4fa4d9b1a39ce3ab77442ded1f396c87d27) fix(status): fix incorrect variable in timestamp check *by @HafiziRuslan on 2025-12-26T18:38:49+08:00*
@@ -584,4 +586,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri, 26-Dec-2025, 18:55:37.771, +08
+generated using git-cliff at Sat, 27-Dec-2025, 00:04:48.734, +08
