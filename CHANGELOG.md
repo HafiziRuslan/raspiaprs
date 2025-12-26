@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 06:20:15, +08)
+## [beta4] - (Sat, 27-Dec-2025, 06:29:06, +08)
 
-- 57 commit(s) contributed to the release.
+- 58 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [7d19a39](https://github.com/HafiziRuslan/RasPiAPRS/commit/7d19a390d86222aacec3f2e985f7719e009f8e5d) fix(timer): ensure timer counter wraps correctly *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:29:06+08:00*
 - [e82aa1d](https://github.com/HafiziRuslan/RasPiAPRS/commit/e82aa1d8a516cf3f4bab791c50c1cb0ca2075199) fix(logging): correct logging date format *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:20:15+08:00*
 - [13c7952](https://github.com/HafiziRuslan/RasPiAPRS/commit/13c7952b6ec7da53850d0f20730db9fc8fd9a652) fix(flow): introduce delay in main execution loop *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:04:47+08:00*
 - [1c5271e](https://github.com/HafiziRuslan/RasPiAPRS/commit/1c5271e9e97373b7996396746fad5845d2196d1e) fix(core): prevent slow beaconing at zero speed *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:41:43+08:00*
@@ -604,4 +605,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 06:20:48.078, +08
+generated using git-cliff at Sat, 27-Dec-2025, 06:29:44.706, +08
