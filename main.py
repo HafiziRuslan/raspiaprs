@@ -517,7 +517,6 @@ async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
 async def send_position(ais, cfg, seq):
     """Send APRS position packet to APRS-IS."""
 
-    # Build a simple APRS uncompressed position packet string instead of relying on aprslib.packets
     def _lat_to_aprs(lat):
         ns = "N" if lat >= 0 else "S"
         lat = abs(lat)
