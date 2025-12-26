@@ -736,14 +736,14 @@ async def main():
     for tmr in Timer():
         if tmr % rate == 1:
             # await send_position(ais, cfg)
-            logging.info("position sent")
+            logging.info(f"position sent {tmr}/{rate}")
+        if tmr % 1800 == 1:
+            # send_header(ais, cfg)
+            logging.info(f"header sent {tmr}/{rate}")
         if tmr % cfg.sleep == 1:
-            if tmr % 1800 == 1:
-                # send_header(ais, cfg)
-                logging.info("header sent")
             for seq in Sequence():
                 # await send_telemetry(ais, cfg, seq)
-                logging.info("telemetry sent")
+                logging.info(f"telemetry sent {tmr}/{rate}/{seq}")
         # if tmr == 1:
         #     await send_position(ais, cfg)
         #     await send_header(ais, cfg)
