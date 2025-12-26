@@ -569,7 +569,17 @@ async def send_position(ais, cfg, seq):
     timestamp = (
         cur_time.strftime("%d%H%Mz") if cur_time != None else ztime.strftime("%d%H%Mz")
     )
-    payload = f"/{timestamp}{latstr}{cfg.symbol_table}{lonstr}{cfg.symbol}{extdatstr}{altstr}{comment}"
+    symbt = cfg.symbol_table
+    symb = cfg.symbol
+    if os.getenv("SMARTBEACONING_ENABLE"):
+        sspd = os.getenv("SMARTBEACONING_SLOWSPEED")
+        if spd >= sspd:
+            symbt = "/"
+            symb = ">"
+        if spd >= "000" and spd <= sspd:
+            symbt = "\\"
+            symb = ">"
+    payload = f"/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}"
     packet = f"{cfg.call}>APP642:{payload}"
     try:
         ais.sendall(packet)
