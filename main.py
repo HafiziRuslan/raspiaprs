@@ -656,11 +656,11 @@ async def send_telemetry(ais, cfg):
     telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
         cfg.call, seq, temp, cpuload, memused, diskused
     )
-    tgtel = f"<u>{cfg.call} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB"
+    tgtel = f"<u>{cfg.call} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB"
     if os.getenv("GPSD_ENABLE"):
         nowz, uSat, nSat = get_gpssat()
         telem += ",{:d}".format(uSat)
-        tgtel += f"\n<b>GPS Used</b>: {uSat}/{nSat}"
+        tgtel += f"\n<b>GPS Used</b>: {uSat}\n<b>GPS Available</b>: {nSat}"
     try:
         ais.sendall(telem)
         await logs_to_telegram(tgtel)
@@ -716,42 +716,32 @@ async def main():
     cfg = Config()
     ais = ais_connect(cfg)
     rate = cfg.sleep
-    if os.getenv("SMARTBEACONING_ENABLE"):
-        spd = get_gpspos()[4]
-        fspd = int(os.getenv("SMARTBEACONING_FASTSPEED"))
-        sspd = int(os.getenv("SMARTBEACONING_SLOWSPEED"))
-        frate = int(os.getenv("SMARTBEACONING_FASTRATE"))
-        srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
-        if spd >= fspd:
-            rate = frate
-            logging.info("Fast beaconing enabled")
-        if spd <= sspd and spd != 0:
-            rate = srate
-            logging.info("Slow beaconing enabled")
-        if spd > sspd and spd < fspd:
-            rate = int(frate + srate / 2)
-            logging.info("Mixed beaconing enabled")
-        if spd == 0:
-            rate = cfg.sleep
-            logging.info("Smart beaconing disabled")
     for tmr in Timer():
+        if os.getenv("SMARTBEACONING_ENABLE"):
+            spd = get_gpspos()[4]
+            fspd = int(os.getenv("SMARTBEACONING_FASTSPEED"))
+            sspd = int(os.getenv("SMARTBEACONING_SLOWSPEED"))
+            frate = int(os.getenv("SMARTBEACONING_FASTRATE"))
+            srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
+            if spd >= fspd:
+                rate = frate
+                logging.info("Fast beaconing enabled")
+            if spd <= sspd and spd != 0:
+                rate = srate
+                logging.info("Slow beaconing enabled")
+            if spd > sspd and spd < fspd:
+                rate = int(frate + srate / 2)
+                logging.info("Mixed beaconing enabled")
+            if spd == 0:
+                rate = cfg.sleep
+                logging.info("Smart beaconing disabled")
         if tmr % rate == 1:
             await send_position(ais, cfg)
-            # logging.info(f"position sent {tmr}/{rate}")
         if tmr % 1800 == 1:
             send_header(ais, cfg)
-            # logging.info(f"header sent {tmr}/{rate}")
         if tmr % cfg.sleep == 1:
             await send_telemetry(ais, cfg)
-            # logging.info(f"telemetry sent {tmr}/{rate} {tmr % cfg.sleep}")
         time.sleep(1)
-        # if tmr == 1:
-        #     await send_position(ais, cfg)
-        #     await send_header(ais, cfg)
-        #     await send_telemetry(ais, cfg, seq)
-        # await send_status(ais, cfg)
-        # logging.info("Sleeping for %d seconds", rate)
-        # time.sleep(rate)
 
 
 if __name__ == "__main__":
