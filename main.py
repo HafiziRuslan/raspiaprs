@@ -35,7 +35,7 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 def configure_logging():
     logging.basicConfig(
         level=logging.INFO,
-        datefmt="%Y-%m-%dT%H:%M:%S.%03d",
+        datefmt="%Y-%m-%dT%H:%M:%S",
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
@@ -237,7 +237,7 @@ class Timer(object):
         return self.__next__()
 
     def __next__(self):
-        self._count = 1 + self._count
+        self._count = (1 + self._count) % 3600
         self.flush()
         return self._count
 
@@ -744,7 +744,7 @@ async def main():
             for seq in Sequence():
                 # await send_telemetry(ais, cfg, seq)
                 logging.info(f"telemetry sent {tmr}/{rate}/{seq}")
-    time.sleep(1)
+                time.sleep(1)
         # if tmr == 1:
         #     await send_position(ais, cfg)
         #     await send_header(ais, cfg)

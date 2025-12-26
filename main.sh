@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-date=$(date +'%FT%T.%N')
+date=$(date +'%FT%T')
 dir_own=$(stat -c '%U' .)
 
 # echo "$date - Mark directory as safe"
