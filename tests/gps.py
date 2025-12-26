@@ -27,8 +27,10 @@ def get_gpsd_position():
                     lat = result.get("lat", 0)
                     lon = result.get("lon", 0)
                     alt = result.get("alt", 0)
+                    spd = result.get("speed", 0)
+                    cse = result.get("magtrack", 0)
                     acc = result.get("sep", 0)
-                    return utc, lat, lon, alt, acc
+                    return utc, lat, lon, alt, spd, cse, acc
     except Exception as e:
         logging.error("Error getting GPS data: %s", e)
 
@@ -44,9 +46,10 @@ def get_gpsd_sat():
         ) as client:
             for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
                 if result["class"] == "SKY":
+                    utc = result.get("time", dt.datetime.now(dt.timezone.utc))
                     uSat = result.get("uSat", 0)
                     nSat = result.get("nSat", 0)
-                    return uSat, nSat
+                    return utc, uSat, nSat
     except Exception as e:
         logging.error("Error getting GPS data: %s", e)
 
