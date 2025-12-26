@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 07:03:17, +08)
+## [beta4] - (Sat, 27-Dec-2025, 07:05:20, +08)
 
-- 66 commit(s) contributed to the release.
+- 67 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [7b7afe6](https://github.com/HafiziRuslan/RasPiAPRS/commit/7b7afe6b70cf3530148882da43a395be4121fc4e) fix(telemetry): remove redundant seq argument *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:05:20+08:00*
 - [c29237a](https://github.com/HafiziRuslan/RasPiAPRS/commit/c29237a59b4cd190213fd90aaf53f9470ad59474) fix(operation): enable scheduled data transmissions *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:03:17+08:00*
 - [7d19a39](https://github.com/HafiziRuslan/RasPiAPRS/commit/7d19a390d86222aacec3f2e985f7719e009f8e5d) fix(timer): ensure timer counter wraps correctly *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:29:06+08:00*
 - [e82aa1d](https://github.com/HafiziRuslan/RasPiAPRS/commit/e82aa1d8a516cf3f4bab791c50c1cb0ca2075199) fix(logging): correct logging date format *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:20:15+08:00*
@@ -614,4 +615,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 07:03:54.656, +08
+generated using git-cliff at Sat, 27-Dec-2025, 07:05:53.282, +08
