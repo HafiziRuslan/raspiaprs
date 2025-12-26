@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 05:49:57, +08)
+## [beta4] - (Sat, 27-Dec-2025, 05:54:36, +08)
 
-- 51 commit(s) contributed to the release.
+- 52 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -73,6 +73,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [4e5eae4](https://github.com/HafiziRuslan/RasPiAPRS/commit/4e5eae4e0ab8e1b6e781c1515bf005365c8ebb28) chore(dev): temporarily disable data sending *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:54:36+08:00*
 - [dd78d9d](https://github.com/HafiziRuslan/RasPiAPRS/commit/dd78d9d913f31638374f8c6911ef61e8e14c3cb3) build(cliff): enhance changelog template output *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:09:42+08:00*
 - [1077229](https://github.com/HafiziRuslan/RasPiAPRS/commit/1077229d79c2c28975264cfa4312fa8185648a94) chore(scripts): add autostash to git pull *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-26T16:32:10+08:00*
 - [f458dd8](https://github.com/HafiziRuslan/RasPiAPRS/commit/f458dd85264de702d31175900fac9f78ad5415ba) build(deps): bump psutil and update sbom *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-25T23:26:13+08:00*
@@ -598,4 +599,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 05:50:33.175, +08
+generated using git-cliff at Sat, 27-Dec-2025, 05:55:13.307, +08
