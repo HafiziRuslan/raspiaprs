@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 06:12:47, +08)
+## [beta4] - (Sat, 27-Dec-2025, 06:20:15, +08)
 
-- 56 commit(s) contributed to the release.
+- 57 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [e82aa1d](https://github.com/HafiziRuslan/RasPiAPRS/commit/e82aa1d8a516cf3f4bab791c50c1cb0ca2075199) fix(logging): correct logging date format *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:20:15+08:00*
 - [13c7952](https://github.com/HafiziRuslan/RasPiAPRS/commit/13c7952b6ec7da53850d0f20730db9fc8fd9a652) fix(flow): introduce delay in main execution loop *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:04:47+08:00*
 - [1c5271e](https://github.com/HafiziRuslan/RasPiAPRS/commit/1c5271e9e97373b7996396746fad5845d2196d1e) fix(core): prevent slow beaconing at zero speed *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:41:43+08:00*
 - [2875383](https://github.com/HafiziRuslan/RasPiAPRS/commit/287538352d77cc99c905004b9994f957bb6c02e1) refactor(core): simplify function sequence handling *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:17:04+08:00*
@@ -603,4 +604,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 06:13:22.929, +08
+generated using git-cliff at Sat, 27-Dec-2025, 06:20:48.078, +08
