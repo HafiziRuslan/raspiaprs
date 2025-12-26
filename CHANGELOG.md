@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 06:49:35, +08)
+## [beta4] - (Sat, 27-Dec-2025, 06:51:57, +08)
 
-- 63 commit(s) contributed to the release.
+- 64 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -42,7 +42,7 @@ All notable changes to this project will be documented in this file.
 
 ### 💼 Other in beta4
 
-- [d8b3c76](https://github.com/HafiziRuslan/RasPiAPRS/commit/d8b3c76c9c975512b4708be6413d8f7f889220e4) debug telemetry *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:49:35+08:00*
+- [43eb35d](https://github.com/HafiziRuslan/RasPiAPRS/commit/43eb35d6a91525188efa053103948d9644ba54b8) debug telemetry *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:51:57+08:00*
 - [38c3fb0](https://github.com/HafiziRuslan/RasPiAPRS/commit/38c3fb078df63dec6d241bdad4bbf676a5dec24f) debug sleep *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:46:45+08:00*
 - [431d32e](https://github.com/HafiziRuslan/RasPiAPRS/commit/431d32e67299beee03869531b63456053fa93772) another timer debug *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:37:55+08:00*
 - [76547ff](https://github.com/HafiziRuslan/RasPiAPRS/commit/76547ff246668f71a6e5f40ad306ffa8dba45c24) debug tmr *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:34:45+08:00*
@@ -613,4 +613,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 06:50:11.493, +08
+generated using git-cliff at Sat, 27-Dec-2025, 06:52:34.184, +08
