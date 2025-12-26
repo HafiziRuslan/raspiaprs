@@ -544,8 +544,8 @@ async def send_position(ais, cfg, seq):
         spd = max(-99999, spd)
         return "{0:03.0f}".format(spd)
 
-    cse = "000"
-    spd = "000"
+    cse = f"{0:03.0f}"
+    spd = f"{0:03.0f}"
     if os.getenv("GPSD_ENABLE"):
         cur_time, cur_lat, cur_lon, cur_alt, cur_spd, cur_cse = get_gpspos()
         if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
@@ -576,7 +576,7 @@ async def send_position(ais, cfg, seq):
         if spd >= sspd:
             symbt = "/"
             symb = ">"
-        if spd >= "000" and spd <= sspd:
+        if spd > "000" and spd <= sspd:
             symbt = "\\"
             symb = ">"
     payload = f"/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}"
@@ -690,7 +690,7 @@ async def main():
     #         rate = frate
     #     if spd <= sspd:
     #         rate = srate
-    #     else:
+    #     if spd > 0:
     #         rate = int(frate + srate / 2)
     for seq in Sequence():
         if seq % 2 == 1:
