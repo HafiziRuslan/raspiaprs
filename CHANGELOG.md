@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 05:25:19, +08)
+## [beta4] - (Sat, 27-Dec-2025, 05:34:43, +08)
 
-- 48 commit(s) contributed to the release.
+- 49 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [b23e228](https://github.com/HafiziRuslan/RasPiAPRS/commit/b23e2282bafe631ba7c92f2f47b1cf2eac17e8d3) refactor(scheduling): improve transmission initialization and timing *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:34:43+08:00*
 - [ca76f93](https://github.com/HafiziRuslan/RasPiAPRS/commit/ca76f930225438bf611d39f76f6c9562a8264705) refactor(main): remove unused random import *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:15:38+08:00*
 - [901fd31](https://github.com/HafiziRuslan/RasPiAPRS/commit/901fd31be38d3c9d4a9e570ed40c010cf5c6d288) refactor(status): simplify timestamp and gps logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-26T18:51:35+08:00*
 - [bfa9150](https://github.com/HafiziRuslan/RasPiAPRS/commit/bfa91509c02987b2237e45d2515d6a17daf4289a) refactor(main): simplify sleep interval logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-26T18:01:47+08:00*
@@ -595,4 +596,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 05:25:54.181, +08
+generated using git-cliff at Sat, 27-Dec-2025, 05:35:15.799, +08
