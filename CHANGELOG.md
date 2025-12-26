@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 32 commit(s) contributed to the release.
+- 33 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 4 day(s) passed between releases.
 
-## [beta4] - (Fri, 26-Dec-2025, 18:25:09, +08)
+## [beta4] - (Fri, 26-Dec-2025, 18:38:49, +08)
 
 ### 🚀 Features in beta4
 
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [488cd4f](https://github.com/HafiziRuslan/RasPiAPRS/commit/488cd4fa4d9b1a39ce3ab77442ded1f396c87d27) fix(status): fix incorrect variable in timestamp check *by @HafiziRuslan on 2025-12-26T18:38:49+08:00*
 - [182b0cb](https://github.com/HafiziRuslan/RasPiAPRS/commit/182b0cbd9fe8e0356c313dcf62df02158385deef) fix(gps): fix speed logic for symbols *by @HafiziRuslan on 2025-12-26T18:25:09+08:00*
 - [3c80f4c](https://github.com/HafiziRuslan/RasPiAPRS/commit/3c80f4c7d0d5565d7bdd84a3513ba6625a5bf45b) fix(aprs): improve error handling and logging *by @HafiziRuslan on 2025-12-25T06:07:44+08:00*
 - [a5c9076](https://github.com/HafiziRuslan/RasPiAPRS/commit/a5c9076babe25c7e19da4806c5efc89b08570537) chore(changelog): include version in group headers *by @HafiziRuslan on 2025-12-24T02:46:27+08:00*
@@ -580,4 +581,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri, 26-Dec-2025, 18:25:36.361, +08
+generated using git-cliff at Fri, 26-Dec-2025, 18:39:16.426, +08
