@@ -639,7 +639,7 @@ async def send_status(ais, cfg, seq):
     timez, uSat, nSat = get_gpssat()
     nowz = timez.strftime("%d%H%Mz")
     ztime = dt.datetime.now(dt.timezone.utc)
-    timestamp = nowz.strftime("%d%H%Mz") if nowz != None else ztime.strftime("%d%H%Mz")
+    timestamp = nowz.strftime("%d%H%Mz") if timez != None else ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
     status = "{0}>APP642:>{1}{2}".format(cfg.call, timestamp, uptime)
     tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}"
