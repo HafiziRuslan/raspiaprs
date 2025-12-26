@@ -643,6 +643,7 @@ async def send_status(ais, cfg, seq):
     tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}"
     if os.getenv("GPSD_ENABLE"):
         timez, uSat, nSat = get_gpssat()
+        timestamp = timez
         sats = f"sats={uSat}/{nSat}"
         status += f", {sats}"
         tgstat += f", {sats}"
