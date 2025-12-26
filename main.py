@@ -545,7 +545,7 @@ async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
                 logging.error("Failed to send message to Telegram: %s", e)
 
 
-async def send_position(ais, cfg, seq):
+async def send_position(ais, cfg):
     """Send APRS position packet to APRS-IS."""
 
     def _lat_to_aprs(lat):
@@ -618,7 +618,7 @@ async def send_position(ais, cfg, seq):
         ais.sendall(packet)
         logging.info(packet)
         await logs_to_telegram(
-            f"<u>{cfg.call} Position #{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
+            f"<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
             cur_lat,
             cur_lon,
         )
@@ -654,7 +654,7 @@ async def send_telemetry(ais, cfg, seq):
     telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
         cfg.call, seq, temp, cpuload, memused, diskused
     )
-    tgtel = f"<u>{cfg.call} Telemetry #{seq}</u>\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB"
+    tgtel = f"<u>{cfg.call} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n\n<b>CPU Temp</b>: {temp / 10:.1f} °C\n<b>CPU Load</b>: {cpuload / 1000:.3f} %\n<b>RAM Used</b>: {memused / 1000:.3f} MB\n<b>Disk Used</b>: {diskused / 1000:.3f} GB"
     if os.getenv("GPSD_ENABLE"):
         nowz, uSat, nSat = get_gpssat()
         telem += ",{:d}".format(uSat)
@@ -667,13 +667,13 @@ async def send_telemetry(ais, cfg, seq):
         logging.error(err)
 
 
-async def send_status(ais, cfg, seq):
+async def send_status(ais, cfg):
     """Send APRS status information to APRS-IS."""
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
     status = "{0}>APP642:>{1}{2}".format(cfg.call, timestamp, uptime)
-    tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}"
+    tgstat = f"<u>{cfg.call} Status</u>\n\n{timestamp}, {uptime}"
     if os.getenv("GPSD_ENABLE"):
         timez, uSat, nSat = get_gpssat()
         timestamp = timez if timez != None else ztime.strftime("%d%H%Mz")
@@ -727,13 +727,13 @@ async def main():
             rate = int(frate + srate / 2)
     for tmr in Timer():
         if tmr % rate == 1:
-            await send_position(ais, cfg, seq)
+            await send_position(ais, cfg)
         if tmr % cfg.sleep == 1:
             for seq in Sequence():
                 if seq % 6 == 1:
                     send_header(ais, cfg)
                 await send_telemetry(ais, cfg, seq)
-        await send_status(ais, cfg, seq)
+        await send_status(ais, cfg)
         logging.info("Sleeping for %d seconds", rate)
         time.sleep(rate)
 
