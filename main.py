@@ -648,7 +648,7 @@ def send_header(ais, cfg):
 
 async def send_telemetry(ais, cfg):
     """Send APRS telemetry information to APRS-IS."""
-    seq = Sequence()._count
+    seq = Sequence().next()
     temp = get_temp()
     cpuload = get_cpuload()
     memused = get_memused()
