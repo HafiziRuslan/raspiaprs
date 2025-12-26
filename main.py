@@ -715,8 +715,8 @@ async def main():
     rate = cfg.sleep
     if os.getenv("SMARTBEACONING_ENABLE"):
         spd = get_gpspos()[4]
-        fspd = os.getenv("SMARTBEACONING_FASTSPEED")
-        sspd = os.getenv("SMARTBEACONING_SLOWSPEED")
+        fspd = int(os.getenv("SMARTBEACONING_FASTSPEED"))
+        sspd = int(os.getenv("SMARTBEACONING_SLOWSPEED"))
         frate = int(os.getenv("SMARTBEACONING_FASTRATE"))
         srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
         if spd >= fspd:
