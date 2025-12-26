@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 39 commit(s) contributed to the release.
+- 41 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 4 day(s) passed between releases.
 
-## [beta4] - (Sat, 27-Dec-2025, 01:08:41, +08)
+## [beta4] - (Sat, 27-Dec-2025, 03:37:13, +08)
 
 ### 🚀 Features in beta4
 
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [61fe035](https://github.com/HafiziRuslan/RasPiAPRS/commit/61fe03558fe9f490ee95bf5322cd4fb31495ea52) fix(logging): fix position label in telegram logs *by @HafiziRuslan on 2025-12-27T03:36:05+08:00*
 - [a6001b2](https://github.com/HafiziRuslan/RasPiAPRS/commit/a6001b29641ca55ef0abc46024aa2e3ceb7f3dbe) fix(aprs): fix speed and course data formatting *by @HafiziRuslan on 2025-12-27T00:04:12+08:00*
 - [72fe416](https://github.com/HafiziRuslan/RasPiAPRS/commit/72fe41640bd9e3aa6462ece78910b286a66ca8b4) fix(telemetry): fix telemetry message formatting *by @HafiziRuslan on 2025-12-26T23:54:26+08:00*
 - [dc9e0ce](https://github.com/HafiziRuslan/RasPiAPRS/commit/dc9e0ce91864c990b5ebe9e6924941fbfa3b0316) fix(status): handle null gps timestamp with fallback *by @HafiziRuslan on 2025-12-26T18:55:12+08:00*
@@ -58,6 +59,10 @@ All notable changes to this project will be documented in this file.
 
 - [1256cd4](https://github.com/HafiziRuslan/RasPiAPRS/commit/1256cd44cc2b0cbcd46a6ce1e499d35aa8554b28) style(formatting): standardize indentation and code formatting *by @HafiziRuslan on 2025-12-25T23:26:39+08:00*
 - [cfea409](https://github.com/HafiziRuslan/RasPiAPRS/commit/cfea409b2a007c6209ed1fe4b5a5f1c2a14a2d14) style(logging): update telegram log message formatting *by @HafiziRuslan on 2025-12-25T05:55:47+08:00*
+
+### 🧪 Testing in beta4
+
+- [87ad872](https://github.com/HafiziRuslan/RasPiAPRS/commit/87ad872146e7861b80861b5e2fc1e7b5a8f90529) test(gps): expand gps data fields in test utility *by @HafiziRuslan on 2025-12-27T03:37:13+08:00*
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
@@ -587,4 +592,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 01:09:22.443, +08
+generated using git-cliff at Sat, 27-Dec-2025, 03:37:50.720, +08
