@@ -679,6 +679,19 @@ async def main():
     """Main function to run the APRS reporting loop."""
     cfg = Config()
     ais = ais_connect(cfg)
+    rate = cfg.sleep
+    # if os.getenv("SMARTBEACONING_ENABLE"):
+    #     spd = get_gpspos()[4]
+    #     fspd = os.getenv("SMARTBEACONING_FASTSPEED")
+    #     sspd = os.getenv("SMARTBEACONING_SLOWSPEED")
+    #     frate = int(os.getenv("SMARTBEACONING_FASTRATE"))
+    #     srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
+    #     if spd >= fspd:
+    #         rate = frate
+    #     if spd <= sspd:
+    #         rate = srate
+    #     else:
+    #         rate = int(frate + srate / 2)
     for seq in Sequence():
         if seq % 2 == 1:
             await send_position(ais, cfg, seq)
@@ -686,11 +699,8 @@ async def main():
             send_header(ais, cfg)
         await send_telemetry(ais, cfg, seq)
         await send_status(ais, cfg, seq)
-        randup = cfg.sleep + 30
-        randdn = cfg.sleep - 30
-        randsleep = int(random.uniform(randdn, randup))
-        logging.info("Sleeping for %d seconds", randsleep)
-        time.sleep(randsleep)
+        logging.info("Sleeping for %d seconds", rate)
+        time.sleep(rate)
 
 
 if __name__ == "__main__":
