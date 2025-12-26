@@ -540,20 +540,21 @@ async def send_position(ais, cfg, seq):
 
     def _spd_to_aprs(spd):
         spd /= 1.9438  # to knots
-        spd = min(999999, spd)
-        spd = max(-99999, spd)
+        spd = min(999, spd)
+        spd = max(-999, spd)
         return "{0:03.0f}".format(spd)
 
-    cse = f"{0:03.0f}"
-    spd = f"{0:03.0f}"
+    def _cse_to_aprs(cse):
+        cse = min(0, cse)
+        cse = max(360, cse)
+        return "{0:03.0f}".format(cse)
+
     if os.getenv("GPSD_ENABLE"):
         cur_time, cur_lat, cur_lon, cur_alt, cur_spd, cur_cse = get_gpspos()
         if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
             cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
             cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
             cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
-            spd = _spd_to_aprs(float(cur_spd))
-            cse = cur_cse
     else:
         cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
         cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
@@ -561,7 +562,9 @@ async def send_position(ais, cfg, seq):
     latstr = _lat_to_aprs(float(cur_lat))
     lonstr = _lon_to_aprs(float(cur_lon))
     altstr = _alt_to_aprs(float(cur_alt))
-    extdatstr = f"{cse}/{spd}"
+    spdstr = _spd_to_aprs(float(cur_spd))
+    csestr = _cse_to_aprs(float(cur_cse))
+    extdatstr = f"{csestr}/{spdstr}"
     mmdvminfo = get_mmdvminfo()
     osinfo = get_osinfo()
     comment = f"{mmdvminfo}{osinfo} https://github.com/HafiziRuslan/RasPiAPRS"
@@ -573,10 +576,10 @@ async def send_position(ais, cfg, seq):
     symb = cfg.symbol
     if os.getenv("SMARTBEACONING_ENABLE"):
         sspd = os.getenv("SMARTBEACONING_SLOWSPEED")
-        if spd >= sspd:
+        if spdstr >= sspd:
             symbt = "/"
             symb = ">"
-        if spd > "000" and spd <= sspd:
+        if spdstr > "000" and spdstr <= sspd:
             symbt = "\\"
             symb = ">"
     payload = f"/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}"
@@ -585,7 +588,7 @@ async def send_position(ais, cfg, seq):
         ais.sendall(packet)
         logging.info(packet)
         await logs_to_telegram(
-            f"<u>{cfg.call} Position #{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt}m\n\t<b>Speed</b>: {cur_spd}m/s\n\t<b>Course</b>: {cur_cse}\n<b>Comment</b>: {comment}",
+            f"<u>{cfg.call} Position #{seq}</u>\n\n<b>Time</b>: {timestamp}\n<b>Pos</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
             cur_lat,
             cur_lon,
         )
