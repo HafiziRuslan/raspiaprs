@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 27 commit(s) contributed to the release.
+- 28 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 4 day(s) passed between releases.
 
-## [beta4] - (Fri, 26-Dec-2025, 16:26:10, +08)
+## [beta4] - (Fri, 26-Dec-2025, 16:32:10, +08)
 
 ### 🚀 Features in beta4
 
@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [1077229](https://github.com/HafiziRuslan/RasPiAPRS/commit/1077229d79c2c28975264cfa4312fa8185648a94) chore(scripts): add autostash to git pull *by @HafiziRuslan on 2025-12-26T16:32:10+08:00*
 - [f458dd8](https://github.com/HafiziRuslan/RasPiAPRS/commit/f458dd85264de702d31175900fac9f78ad5415ba) build(deps): bump psutil and update sbom *by @HafiziRuslan on 2025-12-25T23:26:13+08:00*
 - [9437440](https://github.com/HafiziRuslan/RasPiAPRS/commit/94374405b5a63e464c58e96edca50b950fd3c57f) chore(license): switch project license to gpl-3.0 *by @HafiziRuslan on 2025-12-25T10:11:38+08:00*
 - [f7afdac](https://github.com/HafiziRuslan/RasPiAPRS/commit/f7afdac0437a64fb2fb6062a321b8257c798bcc4) chore(scripts): remove mmcli location retrieval script *by @HafiziRuslan on 2025-12-25T06:42:38+08:00*
@@ -575,4 +576,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri, 26-Dec-2025, 16:26:41.199, +08
+generated using git-cliff at Fri, 26-Dec-2025, 16:32:39.848, +08
