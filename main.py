@@ -744,7 +744,7 @@ async def main():
         #     for seq in Sequence():
         #         # await send_telemetry(ais, cfg, seq)
         #         logging.info(f"telemetry sent {tmr}/{rate}/{seq} {tmr%cfg.sleep}")
-        #         time.sleep(1)
+    time.sleep(1)
         # if tmr == 1:
         #     await send_position(ais, cfg)
         #     await send_header(ais, cfg)
