@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 05:09:42, +08)
+## [beta4] - (Sat, 27-Dec-2025, 05:17:04, +08)
 
-- 46 commit(s) contributed to the release.
+- 47 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [2875383](https://github.com/HafiziRuslan/RasPiAPRS/commit/287538352d77cc99c905004b9994f957bb6c02e1) refactor(core): simplify function sequence handling *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:17:04+08:00*
 - [378acdb](https://github.com/HafiziRuslan/RasPiAPRS/commit/378acdb2879808209a1150bd8b903ff6a3964668) fix(beaconing): cast smart beaconing speeds to integers *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:35:25+08:00*
 - [61fe035](https://github.com/HafiziRuslan/RasPiAPRS/commit/61fe03558fe9f490ee95bf5322cd4fb31495ea52) fix(logging): fix position label in telegram logs *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T03:36:05+08:00*
 - [a6001b2](https://github.com/HafiziRuslan/RasPiAPRS/commit/a6001b29641ca55ef0abc46024aa2e3ceb7f3dbe) fix(aprs): fix speed and course data formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T00:04:12+08:00*
@@ -593,4 +594,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 05:10:13.925, +08
+generated using git-cliff at Sat, 27-Dec-2025, 05:17:39.222, +08
