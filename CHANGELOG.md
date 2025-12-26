@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 06:29:06, +08)
+## [beta4] - (Sat, 27-Dec-2025, 06:31:56, +08)
 
-- 58 commit(s) contributed to the release.
+- 59 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -39,6 +39,10 @@ All notable changes to this project will be documented in this file.
 - [ca70d9b](https://github.com/HafiziRuslan/RasPiAPRS/commit/ca70d9b1daeeed6b7d28b2f11835643117d3580e) fix(main): await telemetry and status coroutines *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-24T02:18:28+08:00*
 - [553f7cd](https://github.com/HafiziRuslan/RasPiAPRS/commit/553f7cd1347275beaad3e99467d994338a3eb0d1) fix(telemetry): update temperature unit label *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-24T01:38:29+08:00*
 - [3255cb8](https://github.com/HafiziRuslan/RasPiAPRS/commit/3255cb843e41f80207f2fdcbd2ad0d00bd4ac43d) fix(main): remove prefix and comma from timestamp *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-23T07:23:13+08:00*
+
+### 💼 Other in beta4
+
+- [b6af481](https://github.com/HafiziRuslan/RasPiAPRS/commit/b6af4813eecb7bda782695aa44bf18ad27f97830) debug value of tmr%cfg.sleep *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:31:56+08:00*
 
 ### 🚜 Refactor in beta4
 
@@ -605,4 +609,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 06:29:44.706, +08
+generated using git-cliff at Sat, 27-Dec-2025, 06:32:27.666, +08
