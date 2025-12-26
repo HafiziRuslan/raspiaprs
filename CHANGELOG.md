@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 06:05:05, +08)
+## [beta4] - (Sat, 27-Dec-2025, 06:12:47, +08)
 
-- 55 commit(s) contributed to the release.
+- 56 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -66,6 +66,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🎨 Styling in beta4
 
+- [cc061b1](https://github.com/HafiziRuslan/RasPiAPRS/commit/cc061b13eda0d15b146a93a1301dd6baeed53804) style(config): use nanosecond precision for timestamps *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:12:47+08:00*
 - [1256cd4](https://github.com/HafiziRuslan/RasPiAPRS/commit/1256cd44cc2b0cbcd46a6ce1e499d35aa8554b28) style(formatting): standardize indentation and code formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-25T23:26:39+08:00*
 - [cfea409](https://github.com/HafiziRuslan/RasPiAPRS/commit/cfea409b2a007c6209ed1fe4b5a5f1c2a14a2d14) style(logging): update telegram log message formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-25T05:55:47+08:00*
 
@@ -602,4 +603,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 06:05:41.019, +08
+generated using git-cliff at Sat, 27-Dec-2025, 06:13:22.929, +08
