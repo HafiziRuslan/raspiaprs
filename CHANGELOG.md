@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 05:41:43, +08)
+## [beta4] - (Sat, 27-Dec-2025, 05:49:57, +08)
 
-- 50 commit(s) contributed to the release.
+- 51 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -39,6 +39,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [047c932](https://github.com/HafiziRuslan/RasPiAPRS/commit/047c9328c321f568c5a9017d431f5cfc6bda5627) refactor(aprs): make send_header synchronous *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:49:57+08:00*
 - [b23e228](https://github.com/HafiziRuslan/RasPiAPRS/commit/b23e2282bafe631ba7c92f2f47b1cf2eac17e8d3) refactor(scheduling): improve transmission initialization and timing *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:34:43+08:00*
 - [ca76f93](https://github.com/HafiziRuslan/RasPiAPRS/commit/ca76f930225438bf611d39f76f6c9562a8264705) refactor(main): remove unused random import *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:15:38+08:00*
 - [901fd31](https://github.com/HafiziRuslan/RasPiAPRS/commit/901fd31be38d3c9d4a9e570ed40c010cf5c6d288) refactor(status): simplify timestamp and gps logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-26T18:51:35+08:00*
@@ -597,4 +598,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 05:42:18.652, +08
+generated using git-cliff at Sat, 27-Dec-2025, 05:50:33.175, +08
