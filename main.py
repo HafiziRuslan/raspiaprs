@@ -8,7 +8,6 @@ import json
 import logging
 import os
 import psutil
-import random
 import subprocess
 import sys
 import time
