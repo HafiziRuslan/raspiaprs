@@ -35,7 +35,7 @@ DMRGATEWAYLOGPREFIX = "DMRGateway"
 def configure_logging():
     logging.basicConfig(
         level=logging.INFO,
-        datefmt="%Y-%m-%dT%H:%M:%S.%f",
+        datefmt="%Y-%m-%dT%H:%M:%S.%N",
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
