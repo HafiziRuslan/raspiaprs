@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 07:17:32, +08)
+## [beta4] - (Sat, 27-Dec-2025, 07:39:26, +08)
 
-- 69 commit(s) contributed to the release.
+- 72 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -69,6 +69,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation in beta4
 
+- [5131739](https://github.com/HafiziRuslan/RasPiAPRS/commit/5131739904cf2a5218eb727d782504cae81fad43) docs(config): clarify aprs sleep variable description *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:35:47+08:00*
 - [40b2529](https://github.com/HafiziRuslan/RasPiAPRS/commit/40b2529c8fc977993a32e0135e96b77ed9ebeef5) docs(APRS): add foundational specification documents *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:41:52+08:00*
 - [6e88c90](https://github.com/HafiziRuslan/RasPiAPRS/commit/6e88c906d9c23f18a5346b2c2db85358d9335044) docs(aprs): remove redundant packet comment *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T01:08:41+08:00*
 - [9e5130f](https://github.com/HafiziRuslan/RasPiAPRS/commit/9e5130fd0eae91926684fccab2eb061c9be9f6ea) docs(misc): add aprs protocol specification *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-25T13:34:32+08:00*
@@ -76,6 +77,8 @@ All notable changes to this project will be documented in this file.
 
 ### ⚡ Performance in beta4
 
+- [f2ce5d4](https://github.com/HafiziRuslan/RasPiAPRS/commit/f2ce5d40f4859c93efd60dc5637b7fedbbb14215) perf(telemetry): optimize telemetry string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:39:26+08:00*
+- [ea1d546](https://github.com/HafiziRuslan/RasPiAPRS/commit/ea1d546260fa5bde8b36d82666cb9890e444ce66) perf(config): adjust slow beaconing rate default *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:29:39+08:00*
 - [2f5dfc3](https://github.com/HafiziRuslan/RasPiAPRS/commit/2f5dfc32eab3c04d7e9138c942b8073f1a504965) chore(script): update git pull logic to use directory owner *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-24T15:19:36+08:00*
 
 ### 🎨 Styling in beta4
@@ -617,4 +620,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 07:18:12.604, +08
+generated using git-cliff at Sat, 27-Dec-2025, 07:39:56.381, +08
