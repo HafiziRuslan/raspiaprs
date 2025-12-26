@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Commit Statistics [beta4]
 
-- 43 commit(s) contributed to the release.
+- 44 commit(s) contributed to the release.
 - 4 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 - 4 day(s) passed between releases.
 
-## [beta4] - (Sat, 27-Dec-2025, 04:31:26, +08)
+## [beta4] - (Sat, 27-Dec-2025, 04:35:25, +08)
 
 ### 🚀 Features in beta4
 
@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [378acdb](https://github.com/HafiziRuslan/RasPiAPRS/commit/378acdb2879808209a1150bd8b903ff6a3964668) fix(beaconing): cast smart beaconing speeds to integers *by @HafiziRuslan on 2025-12-27T04:35:25+08:00*
 - [61fe035](https://github.com/HafiziRuslan/RasPiAPRS/commit/61fe03558fe9f490ee95bf5322cd4fb31495ea52) fix(logging): fix position label in telegram logs *by @HafiziRuslan on 2025-12-27T03:36:05+08:00*
 - [a6001b2](https://github.com/HafiziRuslan/RasPiAPRS/commit/a6001b29641ca55ef0abc46024aa2e3ceb7f3dbe) fix(aprs): fix speed and course data formatting *by @HafiziRuslan on 2025-12-27T00:04:12+08:00*
 - [72fe416](https://github.com/HafiziRuslan/RasPiAPRS/commit/72fe41640bd9e3aa6462ece78910b286a66ca8b4) fix(telemetry): fix telemetry message formatting *by @HafiziRuslan on 2025-12-26T23:54:26+08:00*
@@ -594,4 +595,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 04:32:04.559, +08
+generated using git-cliff at Sat, 27-Dec-2025, 04:36:03.583, +08
