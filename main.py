@@ -735,12 +735,15 @@ async def main():
             logging.info("Smart beaconing disabled")
     for tmr in Timer():
         if tmr % rate == 1:
-            await send_position(ais, cfg)
+            # await send_position(ais, cfg)
+            logging.info("position sent")
         if tmr % cfg.sleep == 1:
             if tmr % 1800 == 1:
-                send_header(ais, cfg)
+                # send_header(ais, cfg)
+                logging.info("header sent")
             for seq in Sequence():
-                await send_telemetry(ais, cfg, seq)
+                # await send_telemetry(ais, cfg, seq)
+                logging.info("telemetry sent")
         # if tmr == 1:
         #     await send_position(ais, cfg)
         #     await send_header(ais, cfg)
