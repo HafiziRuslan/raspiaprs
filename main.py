@@ -636,14 +636,13 @@ async def send_telemetry(ais, cfg, seq):
 
 async def send_status(ais, cfg, seq):
     """Send APRS status information to APRS-IS."""
-    timez, uSat, nSat = get_gpssat()
-    nowz = timez.strftime("%d%H%Mz")
     ztime = dt.datetime.now(dt.timezone.utc)
-    timestamp = nowz.strftime("%d%H%Mz") if timez != None else ztime.strftime("%d%H%Mz")
+    timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
     status = "{0}>APP642:>{1}{2}".format(cfg.call, timestamp, uptime)
     tgstat = f"<u>{cfg.call} Status #{seq}</u>\n\n{timestamp}, {uptime}"
     if os.getenv("GPSD_ENABLE"):
+        timez, uSat, nSat = get_gpssat()
         sats = f"sats={uSat}/{nSat}"
         status += f", {sats}"
         tgstat += f", {sats}"
