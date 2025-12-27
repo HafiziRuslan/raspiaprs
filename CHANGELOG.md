@@ -2,13 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 07:39:26, +08)
+## [beta4] - (Sat, 27-Dec-2025, 09:11:44, +08)
 
-- 72 commit(s) contributed to the release.
-- 4 day(s) passed between the first and last commit.
+- 73 commit(s) contributed to the release.
+- 5 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
-- 4 day(s) passed between releases.
+- 5 day(s) passed between releases.
 
 ### 🚀 Features in beta4
 
@@ -93,6 +93,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [6cfe3d0](https://github.com/HafiziRuslan/RasPiAPRS/commit/6cfe3d0a286fe56a1269420fd16cb5bc03d7f30a) chore(logging): adjust logging levels for GPS and IP lookups *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T09:11:44+08:00*
 - [70628fa](https://github.com/HafiziRuslan/RasPiAPRS/commit/70628fae0c9096a457762ced7567c3158a619066) chore(config): add millisecond precision to log timestamps *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:05:05+08:00*
 - [4e5eae4](https://github.com/HafiziRuslan/RasPiAPRS/commit/4e5eae4e0ab8e1b6e781c1515bf005365c8ebb28) chore(dev): temporarily disable data sending *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:54:36+08:00*
 - [dd78d9d](https://github.com/HafiziRuslan/RasPiAPRS/commit/dd78d9d913f31638374f8c6911ef61e8e14c3cb3) build(cliff): enhance changelog template output *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:09:42+08:00*
@@ -620,4 +621,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 07:39:56.381, +08
+generated using git-cliff at Sat, 27-Dec-2025, 09:12:15.577, +08
