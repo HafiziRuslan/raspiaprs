@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 09:12:51, +08)
+## [beta4] - (Sat, 27-Dec-2025, 10:24:43, +08)
 
-- 74 commit(s) contributed to the release.
+- 75 commit(s) contributed to the release.
 - 5 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -53,6 +53,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [ee23ae0](https://github.com/HafiziRuslan/RasPiAPRS/commit/ee23ae00c2347eb21fa1bef5011d6ea6fe05597f) refactor(aprs): improve CSE boundary handling and initialization *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T10:24:43+08:00*
 - [900a5de](https://github.com/HafiziRuslan/RasPiAPRS/commit/900a5de3598787c5464b321a1daddccbfb0b775b) refactor(logging): enable warning level for common libraries *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T09:12:51+08:00*
 - [106f4da](https://github.com/HafiziRuslan/RasPiAPRS/commit/106f4da20f99424be2bbdf402c6068d29d08c826) refactor(telemetry): use proper method for sequence number *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:17:32+08:00*
 - [11ccc13](https://github.com/HafiziRuslan/RasPiAPRS/commit/11ccc134da348f1e244c080633bc0410befef4bd) refactor(scheduling): adjust main loop timing and logging *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:58:46+08:00*
@@ -622,4 +623,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 09:13:27.251, +08
+generated using git-cliff at Sat, 27-Dec-2025, 10:25:20.379, +08
