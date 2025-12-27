@@ -671,8 +671,8 @@ async def send_telemetry(ais, cfg):
         tgtel += f"\n<b>GPS Used</b>: {uSat}\n<b>GPS Available</b>: {nSat}"
     try:
         ais.sendall(telem)
-        await logs_to_telegram(tgtel)
         logging.info(telem)
+        await logs_to_telegram(tgtel)
         await send_status(ais, cfg)
     except APRSConnectionError as err:
         logging.error(err)
@@ -693,8 +693,8 @@ async def send_status(ais, cfg):
         tgstat += f", {sats}"
     try:
         ais.sendall(status)
-        await logs_to_telegram(tgstat)
         logging.info(status)
+        await logs_to_telegram(tgstat)
     except APRSConnectionError as err:
         logging.error(err)
 
