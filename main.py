@@ -580,8 +580,9 @@ async def send_position(ais, cfg):
         return "{0:03.0f}".format(spd)
 
     def _cse_to_aprs(cse):
-        cse = min(0, cse)
-        cse = max(360, cse)
+        cse = cse if cse else 0
+        cse = max(0, cse)
+        cse = min(360, cse)
         return "{0:03.0f}".format(cse)
 
     if os.getenv("GPSD_ENABLE"):
@@ -594,6 +595,8 @@ async def send_position(ais, cfg):
         cur_lat = os.getenv("APRS_LATITUDE", cfg.latitude)
         cur_lon = os.getenv("APRS_LONGITUDE", cfg.longitude)
         cur_alt = os.getenv("APRS_ALTITUDE", cfg.altitude)
+        cur_spd = 0
+        cur_cse = 0
     latstr = _lat_to_aprs(float(cur_lat))
     lonstr = _lon_to_aprs(float(cur_lon))
     altstr = _alt_to_aprs(float(cur_alt))
@@ -730,16 +733,16 @@ async def main():
             srate = int(os.getenv("SMARTBEACONING_SLOWRATE"))
             if spd >= fspd:
                 rate = frate
-                logging.info("Fast beaconing enabled")
+                logging.debug("Fast beaconing enabled")
             if spd <= sspd and spd != 0:
                 rate = srate
-                logging.info("Slow beaconing enabled")
+                logging.debug("Slow beaconing enabled")
             if spd > sspd and spd < fspd:
                 rate = int(frate + srate / 2)
-                logging.info("Mixed beaconing enabled")
+                logging.debug("Mixed beaconing enabled")
             if spd == 0:
                 rate = cfg.sleep
-                logging.info("Smart beaconing disabled")
+                logging.debug("Smart beaconing disabled")
         if tmr % rate == 1:
             await send_position(ais, cfg)
         if tmr % 1800 == 1:
