@@ -38,6 +38,11 @@ def configure_logging():
         datefmt="%Y-%m-%dT%H:%M:%S",
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
+    # logging.getLogger("hpack").setLevel(logging.WARNING)
+    # logging.getLogger("urllib3").setLevel(logging.WARNING)
+    # logging.getLogger("asyncio").setLevel(logging.WARNING)
+    logging.getLogger("telegram").setLevel(logging.WARNING)
+    # logging.getLogger("httpx").setLevel(logging.WARNING)
 
 
 # Configuration class to handle settings
@@ -246,7 +251,7 @@ def get_gpspos():
     """Get position from GPSD."""
     if os.getenv("GPSD_ENABLE"):
         timestamp = dt.datetime.now(dt.timezone.utc)
-        logging.info("Trying to figure out position using GPS")
+        logging.debug("Trying to figure out position using GPS")
         try:
             with GPSDClient(
                 os.getenv("GPSD_HOST", "localhost"),
@@ -255,7 +260,7 @@ def get_gpspos():
             ) as client:
                 for result in client.dict_stream(convert_datetime=True, filter=["TPV"]):
                     if result["class"] == "TPV":
-                        logging.info("GPS fix acquired")
+                        logging.debug("GPS fix acquired")
                         utc = result.get("time", timestamp)
                         lat = result.get("lat", 0)
                         lon = result.get("lon", 0)
@@ -264,7 +269,7 @@ def get_gpspos():
                         cse = result.get("magtrack", 0)
                         # acc = result.get("sep", 0)
                         if lat != 0 and lon != 0 and alt != 0:
-                            logging.info(
+                            logging.debug(
                                 "%s | GPS Position: %s, %s, %s, %s, %s",
                                 utc,
                                 lat,
@@ -281,7 +286,7 @@ def get_gpspos():
                             Config.altitude = alt
                             return utc, lat, lon, alt, spd, cse
                     else:
-                        logging.info("GPS Position unavailable")
+                        logging.warning("GPS Position unavailable")
                         return (timestamp, 0, 0, 0, 0, 0)
         except Exception as e:
             logging.error("Error getting GPS data: %s", e)
@@ -292,7 +297,7 @@ def get_gpssat():
     """Get satellite from GPSD."""
     if os.getenv("GPSD_ENABLE"):
         timestamp = dt.datetime.now(dt.timezone.utc)
-        logging.info("Trying to figure out satellite using GPS")
+        logging.debug("Trying to figure out satellite using GPS")
         try:
             with GPSDClient(
                 os.getenv("GPSD_HOST", "localhost"),
@@ -301,13 +306,13 @@ def get_gpssat():
             ) as client:
                 for result in client.dict_stream(convert_datetime=True, filter=["SKY"]):
                     if result["class"] == "SKY":
-                        logging.info("GPS Satellite acquired")
+                        logging.debug("GPS Satellite acquired")
                         utc = result.get("time", timestamp)
                         uSat = result.get("uSat", 0)
                         nSat = result.get("nSat", 0)
                         return utc, uSat, nSat
                     else:
-                        logging.info("GPS Satellite unavailable")
+                        logging.warning("GPS Satellite unavailable")
                         return (timestamp, 0, 0)
         except Exception as e:
             logging.error("Error getting GPS data: %s", e)
@@ -316,7 +321,7 @@ def get_gpssat():
 
 def get_coordinates():
     """Get approximate latitude and longitude using IP address lookup."""
-    logging.info("Trying to figure out the coordinate using your IP address")
+    logging.debug("Trying to figure out the coordinate using your IP address")
     url = "http://ip-api.com/json/"
     try:
         with urlopen(url) as response:
@@ -327,7 +332,7 @@ def get_coordinates():
         return (0, 0)
     else:
         try:
-            logging.info("IP-Position: %f, %f", data["lat"], data["lon"])
+            logging.debug("IP-Position: %f, %f", data["lat"], data["lon"])
             return data["lat"], data["lon"]
         except (KeyError, TypeError) as err:
             logging.error("Unexpected response format: %s", err)
