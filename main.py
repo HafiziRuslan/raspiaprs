@@ -414,7 +414,7 @@ def get_osinfo():
     kernelver = ""
     try:
         kernel = os.uname()
-        kernelver = f"[{kernel.sysname}{kernel.release}{kernel.version.split(' ')[0]} ({kernel.machine})]"
+        kernelver = f"[{kernel.sysname} {kernel.release}{kernel.version.split(' ')[0]} {kernel.machine}]"
     except Exception as e:
         logging.error("Unexpected error: %s", e)
     return f" {osname} {kernelver}"
