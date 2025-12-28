@@ -7,7 +7,7 @@ dir_own=$(stat -c '%U' .)
 # git config --global --add safe.directory .
 
 echo "$date - Updating files"
-sudo -u $dir_own git pull --autostash
+sudo -u $dir_own git pull --autostash -q
 
 command_exists() {
   command -v "$1" >/dev/null 2>&1
@@ -33,7 +33,7 @@ else
   echo " -> Activating virtual environment"
   source .venv/bin/activate
   echo "$date - Updating dependencies"
-  uv sync
+  uv sync -q
 fi
 
 echo "$date - Running main.py"
