@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 14:41:18, +08)
+## [beta4] - (Sun, 28-Dec-2025, 14:46:59, +08)
 
-- 92 commit(s) contributed to the release.
+- 93 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [71bd1a4](https://github.com/HafiziRuslan/RasPiAPRS/commit/71bd1a4b420669995e39dc4de5b2f207dd7ddaf3) fix(config): update relay path to include TCPIP prefix *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:46:59+08:00*
 - [d114847](https://github.com/HafiziRuslan/RasPiAPRS/commit/d11484771d5d28045367fba0be50038a196de203) fix(aprs): adjust path formatting for APRS packets *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:41:18+08:00*
 - [87934a7](https://github.com/HafiziRuslan/RasPiAPRS/commit/87934a72d9493c691da6ef1c33dc7aeb9ea6aa6a) fix(aprs): adjust packet formatting for path inclusion *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:36:30+08:00*
 - [02251af](https://github.com/HafiziRuslan/RasPiAPRS/commit/02251affddecdc2102b9ce22cccd85dbf15489c7) refactor(config): update MMDV callsign path formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:32:39+08:00*
@@ -640,4 +641,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 14:41:47.718, +08
+generated using git-cliff at Sun, 28-Dec-2025, 14:47:28.874, +08
