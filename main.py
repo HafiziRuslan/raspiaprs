@@ -38,7 +38,7 @@ def configure_logging():
     logging.basicConfig(
         level=logging.INFO,
         datefmt="%Y-%m-%dT%H:%M:%S",
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+        format="%(asctime)s - %(levelname)s - %(funcName)s - %(message)s",
     )
     logging.getLogger("aprslib").setLevel(logging.WARNING)
     logging.getLogger("asyncio").setLevel(logging.WARNING)
