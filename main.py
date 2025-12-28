@@ -40,12 +40,12 @@ def configure_logging():
         datefmt="%Y-%m-%dT%H:%M:%S",
         format="%(asctime)s - %(levelname)s - %(funcName)s - %(message)s",
     )
-    logging.getLogger("aprslib").setLevel(logging.WARNING)
-    logging.getLogger("asyncio").setLevel(logging.WARNING)
-    logging.getLogger("hpack").setLevel(logging.WARNING)
-    logging.getLogger("httpx").setLevel(logging.WARNING)
-    logging.getLogger("telegram").setLevel(logging.WARNING)
-    logging.getLogger("urllib3").setLevel(logging.WARNING)
+    # logging.getLogger("aprslib").setLevel(logging.WARNING)
+    # logging.getLogger("asyncio").setLevel(logging.WARNING)
+    # logging.getLogger("hpack").setLevel(logging.WARNING)
+    # logging.getLogger("httpx").setLevel(logging.WARNING)
+    # logging.getLogger("telegram").setLevel(logging.WARNING)
+    # logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 # Configuration class to handle settings
