@@ -473,7 +473,8 @@ def get_mmdvminfo():
     return (str(tx) + "MHz" + shift + cc) + ","
 
 
-def get_city_from_coordinates(latitude, longitude):
+def get_address_from_coordinates(latitude, longitude):
+    """Get address from coordinates."""
     geolocator = Nominatim(user_agent="raspiaprs-app")
     try:
         location = geolocator.reverse((latitude, longitude), exactly_one=True)
@@ -664,7 +665,7 @@ async def send_telemetry(ais, cfg):
 async def send_status(ais, cfg):
     """Send APRS status information to APRS-IS."""
     gridsquare = latlon_to_grid(float(cfg.latitude), float(cfg.longitude))
-    city = get_city_from_coordinates(float(cfg.latitude), float(cfg.longitude)).town
+    city = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).town
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
