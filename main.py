@@ -55,16 +55,6 @@ class Config(object):
         call = os.getenv("APRS_CALL", "N0CALL")
         ssid = os.getenv("APRS_SSID", "0")
         self.call = f"{call}-{ssid}"
-        if os.getenv("USE_MMDVM_CALL"):
-            with open(MMDVMHOST_FILE, "r") as mmh:
-                if "[General]" in mmh.readline():
-                    for line in mmh:
-                        if line.startswith("Callsign="):
-                            mmdvmcall = line.strip().split("=")[1]
-                            self.path = f">RELAY>{mmdvmcall}"
-                            break
-        else:
-            self.path = ""
         self.sleep = int(os.getenv("SLEEP", 600))
         self.symbol_table = os.getenv("APRS_SYMBOL_TABLE", "/")
         self.symbol = os.getenv("APRS_SYMBOL", "n")
@@ -565,12 +555,12 @@ async def send_position(ais, cfg):
             symbt = "\\"
             symb = ">"
     payload = f"/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}"
-    packet = f"{cfg.call}>APP642{cfg.path}:{payload}"
+    packet = f"{cfg.call}>APP642:{payload}"
     try:
         ais.sendall(packet)
         logging.info(packet)
         await logs_to_telegram(
-            f"<u>{cfg.call}>APP642{cfg.path} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
+            f"<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
             cur_lat,
             cur_lon,
         )
@@ -581,12 +571,10 @@ async def send_position(ais, cfg):
 
 def send_header(ais, cfg):
     """Send APRS header information to APRS-IS."""
-    parm = "{0}>APP642{1}::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(
-        cfg.call, cfg.path
-    )
-    unit = "{0}>APP642{1}::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call, cfg.path)
-    eqns = "{0}>APP642{1}::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(
-        cfg.call, cfg.path
+    parm = "{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call)
+    unit = "{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call)
+    eqns = "{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(
+        cfg.call
     )
     try:
         if os.getenv("GPSD_ENABLE"):
@@ -607,10 +595,10 @@ async def send_telemetry(ais, cfg):
     cpuload = get_cpuload()
     memused = get_memused()
     diskused = get_diskused()
-    telem = "{}>APP642{}:T#{:03d},{:d},{:d},{:d},{:d}".format(
-        cfg.call, cfg.path, seq, temp, cpuload, memused, diskused
+    telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
+        cfg.call, seq, temp, cpuload, memused, diskused
     )
-    tgtel = f"<u>{cfg.call}>APP642{cfg.path} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB"
+    tgtel = f"<u>{cfg.call} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB"
     if os.getenv("GPSD_ENABLE"):
         nowz, uSat, nSat = get_gpssat()
         telem += ",{:d}".format(uSat)
@@ -629,8 +617,8 @@ async def send_status(ais, cfg):
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
-    status = "{0}>APP642{1}:>{2}{3}".format(cfg.call, cfg.path, timestamp, uptime)
-    tgstat = f"<u>{cfg.call}>APP642{cfg.path} Status</u>\n\n{timestamp}, {uptime}"
+    status = "{0}>APP642:>{2}{3}".format(cfg.call, timestamp, uptime)
+    tgstat = f"<u>{cfg.call} Status</u>\n\n{timestamp}, {uptime}"
     if os.getenv("GPSD_ENABLE"):
         timez, uSat, nSat = get_gpssat()
         timestamp = timez if timez != None else ztime.strftime("%d%H%Mz")
