@@ -436,67 +436,74 @@ def get_dmrmaster():
     """Get connected DMR master from DMRGateway log files."""
     with open(MMDVMHOST_FILE, "r") as mmh:
         if "[DMR]" in mmh.readline():
-            dmr_enabled = "Enable=1" in next(mmh, "")
-            if dmr_enabled:
-                log_dmrgw_previous = os.path.join(
-                    MMDVMLOGPATH,
-                    f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log",
-                )
-                log_dmrgw_now = os.path.join(
-                    MMDVMLOGPATH,
-                    f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log",
-                )
+            for line in mmh:
+                if line.startswith("Enable="):
+                    dmr_enabled = bool(line.strip().split("=")[1])
+                    if dmr_enabled:
+                        log_dmrgw_previous = os.path.join(
+                            MMDVMLOGPATH,
+                            f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log",
+                        )
+                        log_dmrgw_now = os.path.join(
+                            MMDVMLOGPATH,
+                            f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log",
+                        )
 
-                dmr_master: str = ""
-                log_master_string = "Logged into the master successfully"
-                log_ref_string = "XLX, Linking"
-                # log_master_dc_string = "Closing DMR Network"
-                master_line: list[str] = []
-                # master_dc_line: list[str] = []
-                ref_line: list[str] = []
-                dmrmaster: list[str] = []
-                dmrmasters: list[str] = []
-                try:
-                    master_line = subprocess.check_output(
-                        ["grep", log_master_string, log_dmrgw_now], text=True
-                    ).splitlines()
-                    # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
-                    ref_line = subprocess.check_output(
-                        ["grep", log_ref_string, log_dmrgw_now], text=True
-                    ).splitlines()
-                    ref_line = ref_line[-1:] if ref_line else []
-                except subprocess.CalledProcessError:
-                    try:
-                        master_line = subprocess.check_output(
-                            ["grep", log_master_string, log_dmrgw_previous], text=True
-                        ).splitlines()
-                        # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_previous], text=True).splitlines()
-                        ref_line = subprocess.check_output(
-                            ["grep", log_ref_string, log_dmrgw_previous], text=True
-                        ).splitlines()
-                        ref_line = ref_line[-1:] if ref_line else []
-                    except subprocess.CalledProcessError:
-                        pass
-                master_line_count = len(master_line)
-                # master_dc_line_count = len(master_dc_line)
-                ref_line_count = len(ref_line)
-                for mascount in range(master_line_count):
-                    master = (
-                        master_line[mascount].split()[3].split(",")[0].replace("_", " ")
-                    )
-                    if master == "XLX":
-                        for refcount in range(ref_line_count):
-                            master = f"{ref_line[refcount].split()[7]} {ref_line[refcount].split()[8]}"
-                    dmrmaster.append(master)
-                    # for dccount in range(master_dc_line_count):
-                    # 	 master_dc = master_dc_line[dccount].split()[3].split(",")[0]
-                    # 	 if master_dc == "XLX":
-                    # 		 xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
-                    # 		 dmrmaster.pop(xlxdcid)
-                    # 	 dmrmaster.remove(master_dc)
-                dmrmasters = list(dict.fromkeys(dmrmaster))
-                if len(dmrmasters) > 0:
-                    dmr_master = f" connected via [{', '.join(dmrmasters)}]"
+                        dmr_master: str = ""
+                        log_master_string = "Logged into the master successfully"
+                        log_ref_string = "XLX, Linking"
+                        # log_master_dc_string = "Closing DMR Network"
+                        master_line: list[str] = []
+                        # master_dc_line: list[str] = []
+                        ref_line: list[str] = []
+                        dmrmaster: list[str] = []
+                        dmrmasters: list[str] = []
+                        try:
+                            master_line = subprocess.check_output(
+                                ["grep", log_master_string, log_dmrgw_now], text=True
+                            ).splitlines()
+                            # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
+                            ref_line = subprocess.check_output(
+                                ["grep", log_ref_string, log_dmrgw_now], text=True
+                            ).splitlines()
+                            ref_line = ref_line[-1:] if ref_line else []
+                        except subprocess.CalledProcessError:
+                            try:
+                                master_line = subprocess.check_output(
+                                    ["grep", log_master_string, log_dmrgw_previous],
+                                    text=True,
+                                ).splitlines()
+                                # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_previous], text=True).splitlines()
+                                ref_line = subprocess.check_output(
+                                    ["grep", log_ref_string, log_dmrgw_previous],
+                                    text=True,
+                                ).splitlines()
+                                ref_line = ref_line[-1:] if ref_line else []
+                            except subprocess.CalledProcessError:
+                                pass
+                        master_line_count = len(master_line)
+                        # master_dc_line_count = len(master_dc_line)
+                        ref_line_count = len(ref_line)
+                        for mascount in range(master_line_count):
+                            master = (
+                                master_line[mascount]
+                                .split()[3]
+                                .split(",")[0]
+                                .replace("_", " ")
+                            )
+                            if master == "XLX":
+                                for refcount in range(ref_line_count):
+                                    master = f"{ref_line[refcount].split()[7]} {ref_line[refcount].split()[8]}"
+                            dmrmaster.append(master)
+                            # for dccount in range(master_dc_line_count):
+                            # 	 master_dc = master_dc_line[dccount].split()[3].split(",")[0]
+                            # 	 if master_dc == "XLX":
+                            # 		 xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
+                            # 		 dmrmaster.pop(xlxdcid)
+                            # 	 dmrmaster.remove(master_dc)
+                        dmrmasters = list(dict.fromkeys(dmrmaster))
+                        if len(dmrmasters) > 0:
+                            dmr_master = f" connected via [{', '.join(dmrmasters)}]"
     return dmr_master
 
 
@@ -651,9 +658,13 @@ async def send_position(ais, cfg):
 
 def send_header(ais, cfg):
     """Send APRS header information to APRS-IS."""
-    parm = "{0}>APP642{1}::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call, cfg.path)
+    parm = "{0}>APP642{1}::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(
+        cfg.call, cfg.path
+    )
     unit = "{0}>APP642{1}::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call, cfg.path)
-    eqns = "{0}>APP642{1}::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(cfg.call, cfg.path)
+    eqns = "{0}>APP642{1}::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(
+        cfg.call, cfg.path
+    )
     try:
         if os.getenv("GPSD_ENABLE"):
             parm += f",GPSUsed"
