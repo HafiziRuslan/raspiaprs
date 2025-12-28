@@ -61,7 +61,7 @@ class Config(object):
                     for line in mmh:
                         if line.startswith("Callsign="):
                             mmdvmcall = line.strip().split("=")[1]
-                            self.path = f",{mmdvmcall},RELAY,qAR,{mmdvmcall}*"
+                            self.path = f">RELAY>{mmdvmcall}"
                             break
         else:
             self.path = ""
