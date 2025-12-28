@@ -2,13 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sat, 27-Dec-2025, 23:02:01, +08)
+## [beta4] - (Sun, 28-Dec-2025, 11:59:19, +08)
 
-- 78 commit(s) contributed to the release.
-- 5 day(s) passed between the first and last commit.
+- 79 commit(s) contributed to the release.
+- 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
-- 5 day(s) passed between releases.
+- 6 day(s) passed between releases.
 
 ### 🚀 Features in beta4
 
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [ac84907](https://github.com/HafiziRuslan/RasPiAPRS/commit/ac84907115207ccdacabafded2e85e2b03c47f46) fix(aprslib): improve APRS connection retry logic and filter application *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T11:59:19+08:00*
 - [af3b459](https://github.com/HafiziRuslan/RasPiAPRS/commit/af3b4594b1f423a4db58ebf32b55fd7fb234eb21) fix(logging): improve error reporting in APRS communication *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T23:02:01+08:00*
 - [21a9cd4](https://github.com/HafiziRuslan/RasPiAPRS/commit/21a9cd40f689e2d08e8981d690be543ad2c98906) fix(osinfo): adjust kernel version string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T10:29:13+08:00*
 - [1d85c17](https://github.com/HafiziRuslan/RasPiAPRS/commit/1d85c17688911166fccbae0b8e801f887b3953a4) fix(telemetry): correct sequence initialization for telemetry *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:11:40+08:00*
@@ -626,4 +627,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat, 27-Dec-2025, 23:02:32.254, +08
+generated using git-cliff at Sun, 28-Dec-2025, 11:59:51.574, +08
