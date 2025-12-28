@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Mon, 29-Dec-2025, 03:29:15, +08)
+## [beta4] - (Mon, 29-Dec-2025, 05:35:25, +08)
 
-- 106 commit(s) contributed to the release.
+- 107 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -69,6 +69,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [ba2083a](https://github.com/HafiziRuslan/RasPiAPRS/commit/ba2083a52a79c988d495bda16ecd75d3e7dc74cf) refactor(main): clean up imports and update string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T05:35:25+08:00*
 - [f608d5a](https://github.com/HafiziRuslan/RasPiAPRS/commit/f608d5a59da49283e811648ad80841936777f8a1) refactor(status): simplify status message formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:28:06+08:00*
 - [ff085a0](https://github.com/HafiziRuslan/RasPiAPRS/commit/ff085a02004aaae2208fb2e326f402929dfe4cd1) refactor(status): adjust status message formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:24:38+08:00*
 - [f7cfdeb](https://github.com/HafiziRuslan/RasPiAPRS/commit/f7cfdeb2ea6561aec07cf023008d5fd7948d94d8) refactor(location): rename function for address retrieval *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T02:58:13+08:00*
@@ -654,4 +655,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Mon, 29-Dec-2025, 03:29:47.984, +08
+generated using git-cliff at Mon, 29-Dec-2025, 05:36:07.174, +08
