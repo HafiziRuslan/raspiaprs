@@ -58,6 +58,15 @@ class Config(object):
         call = os.getenv("APRS_CALL", "N0CALL")
         ssid = os.getenv("APRS_SSID", "0")
         self.call = f"{call}-{ssid}"
+        if os.getenv("USE_MMDVM_CALL"):
+            with open(MMDVMHOST_FILE, "r") as mmh:
+                if "[General]" in mmh.readline():
+                    for line in mmh:
+                        if line.startswith("Callsign="):
+                            mmdvmcall = line.strip().split("=")[1]
+                            self.path = f",qAR,{mmdvmcall}"
+        else:
+            self.path = ""
         self.sleep = int(os.getenv("SLEEP", 600))
         self.symbol_table = os.getenv("APRS_SYMBOL_TABLE", "/")
         self.symbol = os.getenv("APRS_SYMBOL", "n")
@@ -426,66 +435,68 @@ def get_osinfo():
 def get_dmrmaster():
     """Get connected DMR master from DMRGateway log files."""
     with open(MMDVMHOST_FILE, "r") as mmh:
-        if "Enable=1" in mmh.read():
-            log_dmrgw_previous = os.path.join(
-                MMDVMLOGPATH,
-                f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log",
-            )
-            log_dmrgw_now = os.path.join(
-                MMDVMLOGPATH,
-                f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log",
-            )
+        if "[DMR]" in mmh.readline():
+            dmr_enabled = "Enable=1" in next(mmh, "")
+            if dmr_enabled:
+                log_dmrgw_previous = os.path.join(
+                    MMDVMLOGPATH,
+                    f"{DMRGATEWAYLOGPREFIX}-{(dt.datetime.now(dt.UTC) - dt.timedelta(days=1)).strftime('%Y-%m-%d')}.log",
+                )
+                log_dmrgw_now = os.path.join(
+                    MMDVMLOGPATH,
+                    f"{DMRGATEWAYLOGPREFIX}-{dt.datetime.now(dt.UTC).strftime('%Y-%m-%d')}.log",
+                )
 
-            dmr_master: str = ""
-            log_master_string = "Logged into the master successfully"
-            log_ref_string = "XLX, Linking"
-            # log_master_dc_string = "Closing DMR Network"
-            master_line: list[str] = []
-            # master_dc_line: list[str] = []
-            ref_line: list[str] = []
-            dmrmaster: list[str] = []
-            dmrmasters: list[str] = []
-            try:
-                master_line = subprocess.check_output(
-                    ["grep", log_master_string, log_dmrgw_now], text=True
-                ).splitlines()
-                # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
-                ref_line = subprocess.check_output(
-                    ["grep", log_ref_string, log_dmrgw_now], text=True
-                ).splitlines()
-                ref_line = ref_line[-1:] if ref_line else []
-            except subprocess.CalledProcessError:
+                dmr_master: str = ""
+                log_master_string = "Logged into the master successfully"
+                log_ref_string = "XLX, Linking"
+                # log_master_dc_string = "Closing DMR Network"
+                master_line: list[str] = []
+                # master_dc_line: list[str] = []
+                ref_line: list[str] = []
+                dmrmaster: list[str] = []
+                dmrmasters: list[str] = []
                 try:
                     master_line = subprocess.check_output(
-                        ["grep", log_master_string, log_dmrgw_previous], text=True
+                        ["grep", log_master_string, log_dmrgw_now], text=True
                     ).splitlines()
-                    # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_previous], text=True).splitlines()
+                    # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_now], text=True).splitlines()
                     ref_line = subprocess.check_output(
-                        ["grep", log_ref_string, log_dmrgw_previous], text=True
+                        ["grep", log_ref_string, log_dmrgw_now], text=True
                     ).splitlines()
                     ref_line = ref_line[-1:] if ref_line else []
                 except subprocess.CalledProcessError:
-                    pass
-            master_line_count = len(master_line)
-            # master_dc_line_count = len(master_dc_line)
-            ref_line_count = len(ref_line)
-            for mascount in range(master_line_count):
-                master = (
-                    master_line[mascount].split()[3].split(",")[0].replace("_", " ")
-                )
-                if master == "XLX":
-                    for refcount in range(ref_line_count):
-                        master = f"{ref_line[refcount].split()[7]} {ref_line[refcount].split()[8]}"
-                dmrmaster.append(master)
-                # for dccount in range(master_dc_line_count):
-                # 	 master_dc = master_dc_line[dccount].split()[3].split(",")[0]
-                # 	 if master_dc == "XLX":
-                # 		 xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
-                # 		 dmrmaster.pop(xlxdcid)
-                # 	 dmrmaster.remove(master_dc)
-            dmrmasters = list(dict.fromkeys(dmrmaster))
-            if len(dmrmasters) > 0:
-                dmr_master = f" connected via [{', '.join(dmrmasters)}]"
+                    try:
+                        master_line = subprocess.check_output(
+                            ["grep", log_master_string, log_dmrgw_previous], text=True
+                        ).splitlines()
+                        # master_dc_line = subprocess.check_output(["grep", log_master_dc_string, log_dmrgw_previous], text=True).splitlines()
+                        ref_line = subprocess.check_output(
+                            ["grep", log_ref_string, log_dmrgw_previous], text=True
+                        ).splitlines()
+                        ref_line = ref_line[-1:] if ref_line else []
+                    except subprocess.CalledProcessError:
+                        pass
+                master_line_count = len(master_line)
+                # master_dc_line_count = len(master_dc_line)
+                ref_line_count = len(ref_line)
+                for mascount in range(master_line_count):
+                    master = (
+                        master_line[mascount].split()[3].split(",")[0].replace("_", " ")
+                    )
+                    if master == "XLX":
+                        for refcount in range(ref_line_count):
+                            master = f"{ref_line[refcount].split()[7]} {ref_line[refcount].split()[8]}"
+                    dmrmaster.append(master)
+                    # for dccount in range(master_dc_line_count):
+                    # 	 master_dc = master_dc_line[dccount].split()[3].split(",")[0]
+                    # 	 if master_dc == "XLX":
+                    # 		 xlxdcid = dmrmaster.index(re.search(r"^XLX.+", dmrmaster[dccount])[0])
+                    # 		 dmrmaster.pop(xlxdcid)
+                    # 	 dmrmaster.remove(master_dc)
+                dmrmasters = list(dict.fromkeys(dmrmaster))
+                if len(dmrmasters) > 0:
+                    dmr_master = f" connected via [{', '.join(dmrmasters)}]"
     return dmr_master
 
 
@@ -577,7 +588,7 @@ async def send_position(ais, cfg):
         return "/A={0:06.0f}".format(alt)
 
     def _spd_to_aprs(spd):
-        spd /= 1.9438  # to knots
+        spd /= 0.51444  # to knots
         spd = min(999, spd)
         spd = max(-999, spd)
         return "{0:03.0f}".format(spd)
@@ -624,12 +635,12 @@ async def send_position(ais, cfg):
             symbt = "\\"
             symb = ">"
     payload = f"/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}"
-    packet = f"{cfg.call}>APP642:{payload}"
+    packet = f"{cfg.call}>APP642{cfg.path}:{payload}"
     try:
         ais.sendall(packet)
         logging.info(packet)
         await logs_to_telegram(
-            f"<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
+            f"<u>{cfg.call}>APP642{cfg.path} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
             cur_lat,
             cur_lon,
         )
@@ -640,11 +651,9 @@ async def send_position(ais, cfg):
 
 def send_header(ais, cfg):
     """Send APRS header information to APRS-IS."""
-    parm = "{0}>APP642::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call)
-    unit = "{0}>APP642::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call)
-    eqns = "{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(
-        cfg.call
-    )
+    parm = "{0}>APP642{1}::{0:9s}:PARM.CPUTemp,CPULoad,RAMUsed,DiskUsed".format(cfg.call, cfg.path)
+    unit = "{0}>APP642{1}::{0:9s}:UNIT.deg.C,pcnt,MB,GB".format(cfg.call, cfg.path)
+    eqns = "{0}>APP642{1}::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0".format(cfg.call, cfg.path)
     try:
         if os.getenv("GPSD_ENABLE"):
             parm += f",GPSUsed"
@@ -664,10 +673,10 @@ async def send_telemetry(ais, cfg):
     cpuload = get_cpuload()
     memused = get_memused()
     diskused = get_diskused()
-    telem = "{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}".format(
-        cfg.call, seq, temp, cpuload, memused, diskused
+    telem = "{}>APP642{}:T#{:03d},{:d},{:d},{:d},{:d}".format(
+        cfg.call, cfg.path, seq, temp, cpuload, memused, diskused
     )
-    tgtel = f"<u>{cfg.call} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB"
+    tgtel = f"<u>{cfg.call}>APP642{cfg.path} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB"
     if os.getenv("GPSD_ENABLE"):
         nowz, uSat, nSat = get_gpssat()
         telem += ",{:d}".format(uSat)
@@ -686,8 +695,8 @@ async def send_status(ais, cfg):
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
-    status = "{0}>APP642:>{1}{2}".format(cfg.call, timestamp, uptime)
-    tgstat = f"<u>{cfg.call} Status</u>\n\n{timestamp}, {uptime}"
+    status = "{0}>APP642{1}:>{2}{3}".format(cfg.call, cfg.path, timestamp, uptime)
+    tgstat = f"<u>{cfg.call}>APP642{cfg.path} Status</u>\n\n{timestamp}, {uptime}"
     if os.getenv("GPSD_ENABLE"):
         timez, uSat, nSat = get_gpssat()
         timestamp = timez if timez != None else ztime.strftime("%d%H%Mz")
