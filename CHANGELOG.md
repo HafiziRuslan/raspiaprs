@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 14:27:13, +08)
+## [beta4] - (Sun, 28-Dec-2025, 14:32:39, +08)
 
-- 89 commit(s) contributed to the release.
+- 90 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [02251af](https://github.com/HafiziRuslan/RasPiAPRS/commit/02251affddecdc2102b9ce22cccd85dbf15489c7) refactor(config): update MMDV callsign path formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:32:39+08:00*
 - [edb27d3](https://github.com/HafiziRuslan/RasPiAPRS/commit/edb27d36fcbe21653e943716ec1e2337e6f543cd) fix(dmr): improve DMR master detection logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:24:40+08:00*
 - [b9ccc40](https://github.com/HafiziRuslan/RasPiAPRS/commit/b9ccc40a54123130e16e8c1f831cab9aa3a47168) fix(ais): remove unused consumer call *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T12:53:33+08:00*
 - [ac84907](https://github.com/HafiziRuslan/RasPiAPRS/commit/ac84907115207ccdacabafded2e85e2b03c47f46) fix(aprslib): improve APRS connection retry logic and filter application *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T11:59:19+08:00*
@@ -637,4 +638,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 14:27:46.127, +08
+generated using git-cliff at Sun, 28-Dec-2025, 14:33:07.052, +08
