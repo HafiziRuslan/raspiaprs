@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 14:46:59, +08)
+## [beta4] - (Sun, 28-Dec-2025, 14:58:12, +08)
 
-- 93 commit(s) contributed to the release.
+- 94 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -63,6 +63,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [a8674e3](https://github.com/HafiziRuslan/RasPiAPRS/commit/a8674e3a39a781b646221ea45c10249726f43999) refactor(config): update MMDVMDaemon path construction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:58:12+08:00*
 - [075acfe](https://github.com/HafiziRuslan/RasPiAPRS/commit/075acfe9c897890039835ecf33d6ec0a71002150) refactor(main): remove DMR gateway logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:27:13+08:00*
 - [670e3d6](https://github.com/HafiziRuslan/RasPiAPRS/commit/670e3d67148d3dfabaaef4c59e22e220e2d3626b) refactor(logging): enhance log format and suppress noisy libraries *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:09:14+08:00*
 - [1a7f7d4](https://github.com/HafiziRuslan/RasPiAPRS/commit/1a7f7d4ad4341e32dee7aad63c7b62b955b16c9d) refactor(logging): adjust log format to include function name *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T13:10:00+08:00*
@@ -641,4 +642,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 14:47:28.874, +08
+generated using git-cliff at Sun, 28-Dec-2025, 14:58:39.477, +08
