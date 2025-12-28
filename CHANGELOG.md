@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Mon, 29-Dec-2025, 03:28:06, +08)
+## [beta4] - (Mon, 29-Dec-2025, 03:29:15, +08)
 
-- 105 commit(s) contributed to the release.
+- 106 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [a36d062](https://github.com/HafiziRuslan/RasPiAPRS/commit/a36d06216020fe7fcb32fbad42a390e731271a8e) fix(status): remove unnecessary formatting from status message *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:29:15+08:00*
 - [26600de](https://github.com/HafiziRuslan/RasPiAPRS/commit/26600de657d4d95bc694cc709ef5197692e5c67a) fix(telemetry): improve status text generation for location *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:19:56+08:00*
 - [0732446](https://github.com/HafiziRuslan/RasPiAPRS/commit/0732446707cf52910c82a67eaef9193e058c4a0a) fix(aprs): improve connection retry logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T19:37:29+08:00*
 - [71bd1a4](https://github.com/HafiziRuslan/RasPiAPRS/commit/71bd1a4b420669995e39dc4de5b2f207dd7ddaf3) fix(config): update relay path to include TCPIP prefix *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:46:59+08:00*
@@ -653,4 +654,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Mon, 29-Dec-2025, 03:28:39.917, +08
+generated using git-cliff at Mon, 29-Dec-2025, 03:29:47.984, +08
