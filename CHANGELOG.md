@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Mon, 29-Dec-2025, 03:19:56, +08)
+## [beta4] - (Mon, 29-Dec-2025, 03:24:38, +08)
 
-- 103 commit(s) contributed to the release.
+- 104 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -68,6 +68,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [ff085a0](https://github.com/HafiziRuslan/RasPiAPRS/commit/ff085a02004aaae2208fb2e326f402929dfe4cd1) refactor(status): adjust status message formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:24:38+08:00*
 - [f7cfdeb](https://github.com/HafiziRuslan/RasPiAPRS/commit/f7cfdeb2ea6561aec07cf023008d5fd7948d94d8) refactor(location): rename function for address retrieval *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T02:58:13+08:00*
 - [936ec2c](https://github.com/HafiziRuslan/RasPiAPRS/commit/936ec2c3862e8344f7fc806da840b4bdfd302940) refactor(status): simplify status string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T15:42:04+08:00*
 - [7a0ff7d](https://github.com/HafiziRuslan/RasPiAPRS/commit/7a0ff7d4c9a6a9eaa6790b6786e7a1c616225b5c) refactor(config): update MMDVM path construction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T15:01:26+08:00*
@@ -651,4 +652,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Mon, 29-Dec-2025, 03:20:39.798, +08
+generated using git-cliff at Mon, 29-Dec-2025, 03:25:22.858, +08
