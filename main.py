@@ -6,6 +6,8 @@ import asyncio
 import datetime as dt
 import json
 import logging
+import logging.config
+import logging.handlers
 import os
 import psutil
 import subprocess
@@ -36,14 +38,14 @@ def configure_logging():
     logging.basicConfig(
         level=logging.INFO,
         datefmt="%Y-%m-%dT%H:%M:%S",
-        format="%(asctime)s - %(levelname)s - %(message)s",
+        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
-    logging.getLogger("hpack").setLevel(logging.WARNING)
-    logging.getLogger("urllib3").setLevel(logging.WARNING)
+    logging.getLogger("aprslib").setLevel(logging.WARNING)
     logging.getLogger("asyncio").setLevel(logging.WARNING)
-    logging.getLogger("telegram").setLevel(logging.WARNING)
+    logging.getLogger("hpack").setLevel(logging.WARNING)
     logging.getLogger("httpx").setLevel(logging.WARNING)
-    logging.getLogger("aprslib").setLevel(logging.DEBUG)
+    logging.getLogger("telegram").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 # Configuration class to handle settings
