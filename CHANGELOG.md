@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 19:37:29, +08)
+## [beta4] - (Mon, 29-Dec-2025, 02:34:10, +08)
 
-- 98 commit(s) contributed to the release.
+- 99 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features in beta4
 
+- [1de2a1f](https://github.com/HafiziRuslan/RasPiAPRS/commit/1de2a1f2d18bddcb71077b7356fddf0bbae957de) feat(main): implement latitude/longitude to Maidenhead grid conversion *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T02:34:10+08:00*
 - [606df20](https://github.com/HafiziRuslan/RasPiAPRS/commit/606df20aaae6a451d39b2b21f54a4048aff1cc41) feat(aprs): allow using MMDVM callsign as APRS route *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:01:45+08:00*
 - [5443caa](https://github.com/HafiziRuslan/RasPiAPRS/commit/5443caa6c2dab648c5df9f23a1a69bd10aa79c01) feat(beaconing): implement zero speed handling and improve logging *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:25:19+08:00*
 - [04ca2a0](https://github.com/HafiziRuslan/RasPiAPRS/commit/04ca2a0a5d852e7fa91c2a39f0199d5903fb1247) feat(main): implement smart beaconing and timer *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:31:26+08:00*
@@ -646,4 +647,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 19:37:58.995, +08
+generated using git-cliff at Mon, 29-Dec-2025, 02:34:53.615, +08
