@@ -665,11 +665,17 @@ async def send_telemetry(ais, cfg):
 async def send_status(ais, cfg):
     """Send APRS status information to APRS-IS."""
     gridsquare = latlon_to_grid(float(cfg.latitude), float(cfg.longitude))
-    city = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).town
+    town = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get(
+        "town", ""
+    )
+    city = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get(
+        "city", ""
+    )
+    nearAdd = town if town else city
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
-    statustext = f"near {city}, {timestamp}, {uptime}"
+    statustext = f"near {nearAdd}, {timestamp}, {uptime}"
     status = "{}>APP642:>{}{}{} {}".format(
         cfg.call, gridsquare, cfg.symbol_table, cfg.symbol, statustext
     )
