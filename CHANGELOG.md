@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Mon, 29-Dec-2025, 02:34:10, +08)
+## [beta4] - (Mon, 29-Dec-2025, 02:56:18, +08)
 
-- 99 commit(s) contributed to the release.
+- 101 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features in beta4
 
+- [fce254e](https://github.com/HafiziRuslan/RasPiAPRS/commit/fce254e2eb363ef9446159c5368cd022f97b90d1) feat(deps): add geographiclib and geopy dependencies *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T02:56:18+08:00*
+- [044c0ab](https://github.com/HafiziRuslan/RasPiAPRS/commit/044c0ab72cfd69de89a43a0cdbadedef26710e2a) feat(location): add city lookup for APRS status *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T02:55:41+08:00*
 - [1de2a1f](https://github.com/HafiziRuslan/RasPiAPRS/commit/1de2a1f2d18bddcb71077b7356fddf0bbae957de) feat(main): implement latitude/longitude to Maidenhead grid conversion *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T02:34:10+08:00*
 - [606df20](https://github.com/HafiziRuslan/RasPiAPRS/commit/606df20aaae6a451d39b2b21f54a4048aff1cc41) feat(aprs): allow using MMDVM callsign as APRS route *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:01:45+08:00*
 - [5443caa](https://github.com/HafiziRuslan/RasPiAPRS/commit/5443caa6c2dab648c5df9f23a1a69bd10aa79c01) feat(beaconing): implement zero speed handling and improve logging *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:25:19+08:00*
@@ -647,4 +649,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Mon, 29-Dec-2025, 02:34:53.615, +08
+generated using git-cliff at Mon, 29-Dec-2025, 02:56:52.634, +08
