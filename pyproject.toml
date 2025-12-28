@@ -38,3 +38,21 @@ dependencies = [
 [project.urls]
 repository = "https://github.com/HafiziRuslan/raspiaprs"
 changelog = "https://github.com/HafiziRuslan/raspiaprs/blob/master/CHANGELOG.md"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.analyze]
+detect-string-imports = true
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
+line-ending = "lf"
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+default-section = "first-party"
+force-single-line = true
