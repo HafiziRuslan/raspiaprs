@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 15:01:26, +08)
+## [beta4] - (Sun, 28-Dec-2025, 15:16:25, +08)
 
-- 95 commit(s) contributed to the release.
+- 96 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -113,6 +113,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [656200f](https://github.com/HafiziRuslan/RasPiAPRS/commit/656200fef40f456a68424c752725362c5dcd6436) chore(config): remove unused APRS path logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T15:16:25+08:00*
 - [339de49](https://github.com/HafiziRuslan/RasPiAPRS/commit/339de49bfee44098b9eb6e05c2f796a2a836b1ce) chore(logging): temporarily silence external library warnings *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:06:50+08:00*
 - [cae3045](https://github.com/HafiziRuslan/RasPiAPRS/commit/cae3045b369f3ca639e441e7fb10f7377877cfb6) chore(config): remove whitespace around '=' in default env file *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T12:09:53+08:00*
 - [6cfe3d0](https://github.com/HafiziRuslan/RasPiAPRS/commit/6cfe3d0a286fe56a1269420fd16cb5bc03d7f30a) chore(logging): adjust logging levels for GPS and IP lookups *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T09:11:44+08:00*
@@ -643,4 +644,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 15:01:59.400, +08
+generated using git-cliff at Sun, 28-Dec-2025, 15:16:54.938, +08
