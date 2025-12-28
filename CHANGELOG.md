@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 14:06:50, +08)
+## [beta4] - (Sun, 28-Dec-2025, 14:09:14, +08)
 
-- 86 commit(s) contributed to the release.
+- 87 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -58,6 +58,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [670e3d6](https://github.com/HafiziRuslan/RasPiAPRS/commit/670e3d67148d3dfabaaef4c59e22e220e2d3626b) refactor(logging): enhance log format and suppress noisy libraries *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:09:14+08:00*
 - [1a7f7d4](https://github.com/HafiziRuslan/RasPiAPRS/commit/1a7f7d4ad4341e32dee7aad63c7b62b955b16c9d) refactor(logging): adjust log format to include function name *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T13:10:00+08:00*
 - [2b1702c](https://github.com/HafiziRuslan/RasPiAPRS/commit/2b1702ca0d3e1f3ecb53971dd888f38615a0bb1c) refactor(logging): enhance logging format and suppress noisy libraries *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T12:33:45+08:00*
 - [f622919](https://github.com/HafiziRuslan/RasPiAPRS/commit/f6229197fa4972e8fc3dd7b06c9f9e778ba374c1) refactor(telemetry): reorder logging and telegram calls *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T10:32:20+08:00*
@@ -634,4 +635,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 14:07:20.704, +08
+generated using git-cliff at Sun, 28-Dec-2025, 14:09:40.624, +08
