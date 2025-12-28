@@ -639,17 +639,17 @@ def ais_connect(cfg):
         "Connecting to APRS-IS server %s:%d as %s", cfg.server, cfg.port, cfg.call
     )
     ais = aprslib.IS(cfg.call, passwd=cfg.passcode, host=cfg.server, port=cfg.port)
-    if ais._connected is False:
-        for _ in range(5):
-            try:
-                ais.connect()
-            except APRSConnectionError as err:
-                logging.warning("APRS connection error: %s", err)
-                time.sleep(20)
-                continue
-            else:
-                ais.set_filter(cfg.filter)
-                return ais
+    # if ais._connected is False:
+    for _ in range(5):
+        try:
+            ais.connect()
+        except APRSConnectionError as err:
+            logging.warning("APRS connection error: %s", err)
+            time.sleep(20)
+            continue
+        else:
+        #     ais.set_filter(cfg.filter)
+            return ais
     logging.error("Connection error, exiting")
     sys.exit(getattr(os, "EX_NOHOST", 1))
 
