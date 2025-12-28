@@ -293,6 +293,32 @@ def get_gpspos():
             return (timestamp, 0, 0, 0, 0, 0)
 
 
+def latlon_to_grid(lat, lon, precision=6):
+    """Convert position to grid square."""
+    # Shift coordinates to positive values
+    lon += 180
+    lat += 90
+
+    # First pair: Fields (A-R)
+    field_lon = int(lon // 20)
+    field_lat = int(lat // 10)
+    grid = chr(field_lon + ord("A")) + chr(field_lat + ord("A"))
+
+    if precision >= 4:
+        # Second pair: Squares (0-9)
+        square_lon = int((lon % 20) // 2)
+        square_lat = int((lat % 10) // 1)
+        grid += str(square_lon) + str(square_lat)
+
+    if precision >= 6:
+        # Third pair: Sub-squares (a-x)
+        subsq_lon = int(((lon % 2) / 2) * 24)
+        subsq_lat = int(((lat % 1) / 1) * 24)
+        grid += chr(subsq_lon + ord("A")) + chr(subsq_lat + ord("A"))
+
+    return grid
+
+
 def get_gpssat():
     """Get satellite from GPSD."""
     if os.getenv("GPSD_ENABLE"):
@@ -513,6 +539,12 @@ async def send_position(ais, cfg):
         spd = max(-999, spd)
         return "{0:03.0f}".format(spd)
 
+    def _spd_to_kph(spd):
+        spd *= 3.6  # to kmh
+        spd = min(999, spd)
+        spd = max(-999, spd)
+        return "{0:03.0f}".format(spd)
+
     def _cse_to_aprs(cse):
         cse = cse if cse else 0
         cse = max(0, cse)
@@ -560,7 +592,7 @@ async def send_position(ais, cfg):
         ais.sendall(packet)
         logging.info(packet)
         await logs_to_telegram(
-            f"<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
+            f"<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {cur_spd} m/s / {_spd_to_kph(cur_spd)} km/h / {_spd_to_aprs(cur_spd)} knots\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}",
             cur_lat,
             cur_lon,
         )
@@ -614,11 +646,15 @@ async def send_telemetry(ais, cfg):
 
 async def send_status(ais, cfg):
     """Send APRS status information to APRS-IS."""
+    gridsquare = latlon_to_grid(float(cfg.latitude), float(cfg.longitude))
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
-    status = "{}>APP642:>{}{}".format(cfg.call, timestamp, uptime)
-    tgstat = f"<u>{cfg.call} Status</u>\n\n{timestamp}, {uptime}"
+    statustext = f"{timestamp}, {uptime}"
+    status = "{}>APP642:>{}{}{} {}".format(
+        cfg.call, gridsquare, cfg.symbol_table, cfg.symbol, statustext
+    )
+    tgstat = f"<u>{cfg.call} Status</u>\n{gridsquare}{cfg.symbol_table}{cfg.symbol} {statustext}"
     if os.getenv("GPSD_ENABLE"):
         timez, uSat, nSat = get_gpssat()
         timestamp = timez if timez != None else ztime.strftime("%d%H%Mz")
@@ -648,7 +684,7 @@ def ais_connect(cfg):
             time.sleep(20)
             continue
         else:
-        #     ais.set_filter(cfg.filter)
+            # ais.set_filter(cfg.filter)
             return ais
     logging.error("Connection error, exiting")
     sys.exit(getattr(os, "EX_NOHOST", 1))
