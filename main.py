@@ -617,7 +617,7 @@ async def send_status(ais, cfg):
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
-    status = "{0}>APP642:>{2}{3}".format(cfg.call, timestamp, uptime)
+    status = "{}>APP642:>{}{}".format(cfg.call, timestamp, uptime)
     tgstat = f"<u>{cfg.call} Status</u>\n\n{timestamp}, {uptime}"
     if os.getenv("GPSD_ENABLE"):
         timez, uSat, nSat = get_gpssat()
