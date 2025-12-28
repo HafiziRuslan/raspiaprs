@@ -718,7 +718,6 @@ def ais_connect(cfg):
                 continue
             else:
                 ais.set_filter(cfg.filter)
-                ais.consumer(lambda x: None, raw=True)
                 return ais
     logging.error("Connection error, exiting")
     sys.exit(getattr(os, "EX_NOHOST", 1))
