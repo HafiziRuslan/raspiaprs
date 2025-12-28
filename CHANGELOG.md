@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 15:16:25, +08)
+## [beta4] - (Sun, 28-Dec-2025, 15:42:04, +08)
 
-- 96 commit(s) contributed to the release.
+- 97 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -63,6 +63,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [936ec2c](https://github.com/HafiziRuslan/RasPiAPRS/commit/936ec2c3862e8344f7fc806da840b4bdfd302940) refactor(status): simplify status string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T15:42:04+08:00*
 - [7a0ff7d](https://github.com/HafiziRuslan/RasPiAPRS/commit/7a0ff7d4c9a6a9eaa6790b6786e7a1c616225b5c) refactor(config): update MMDVM path construction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T15:01:26+08:00*
 - [a8674e3](https://github.com/HafiziRuslan/RasPiAPRS/commit/a8674e3a39a781b646221ea45c10249726f43999) refactor(config): update MMDVMDaemon path construction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:58:12+08:00*
 - [075acfe](https://github.com/HafiziRuslan/RasPiAPRS/commit/075acfe9c897890039835ecf33d6ec0a71002150) refactor(main): remove DMR gateway logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T14:27:13+08:00*
@@ -644,4 +645,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 15:16:54.938, +08
+generated using git-cliff at Sun, 28-Dec-2025, 15:42:33.263, +08
