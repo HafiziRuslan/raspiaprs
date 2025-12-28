@@ -6,11 +6,13 @@ import asyncio
 import datetime as dt
 import json
 import logging
-import logging.config
-import logging.handlers
+
+# import logging.config
+# import logging.handlers
 import os
 import psutil
-import subprocess
+
+# import subprocess
 import sys
 import time
 from urllib.request import urlopen
@@ -22,6 +24,7 @@ import telegram
 from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
 from gpsdclient import GPSDClient
+from geopy.geocoders import Nominatim
 
 # Default paths for system files
 OS_RELEASE_FILE = "/etc/os-release"
@@ -470,6 +473,20 @@ def get_mmdvminfo():
     return (str(tx) + "MHz" + shift + cc) + ","
 
 
+def get_city_from_coordinates(latitude, longitude):
+    geolocator = Nominatim(user_agent="raspiaprs-app")
+    try:
+        location = geolocator.reverse((latitude, longitude), exactly_one=True)
+        if location:
+            address = location.raw["address"]
+            return address
+        else:
+            return None
+    except Exception as e:
+        logging.error("Error getting address: %s", e)
+        return None
+
+
 async def logs_to_telegram(tg_message: str, lat: float = 0, lon: float = 0):
     """Send log message to Telegram channel."""
     if os.getenv("TELEGRAM_ENABLE"):
@@ -647,10 +664,11 @@ async def send_telemetry(ais, cfg):
 async def send_status(ais, cfg):
     """Send APRS status information to APRS-IS."""
     gridsquare = latlon_to_grid(float(cfg.latitude), float(cfg.longitude))
+    city = get_city_from_coordinates(float(cfg.latitude), float(cfg.longitude)).town
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
-    statustext = f"{timestamp}, {uptime}"
+    statustext = f"near {city}, {timestamp}, {uptime}"
     status = "{}>APP642:>{}{}{} {}".format(
         cfg.call, gridsquare, cfg.symbol_table, cfg.symbol, statustext
     )
