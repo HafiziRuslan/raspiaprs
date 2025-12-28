@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 11:59:19, +08)
+## [beta4] - (Sun, 28-Dec-2025, 12:09:53, +08)
 
-- 79 commit(s) contributed to the release.
+- 80 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -99,6 +99,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta4
 
+- [cae3045](https://github.com/HafiziRuslan/RasPiAPRS/commit/cae3045b369f3ca639e441e7fb10f7377877cfb6) chore(config): remove whitespace around '=' in default env file *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T12:09:53+08:00*
 - [6cfe3d0](https://github.com/HafiziRuslan/RasPiAPRS/commit/6cfe3d0a286fe56a1269420fd16cb5bc03d7f30a) chore(logging): adjust logging levels for GPS and IP lookups *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T09:11:44+08:00*
 - [70628fa](https://github.com/HafiziRuslan/RasPiAPRS/commit/70628fae0c9096a457762ced7567c3158a619066) chore(config): add millisecond precision to log timestamps *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:05:05+08:00*
 - [4e5eae4](https://github.com/HafiziRuslan/RasPiAPRS/commit/4e5eae4e0ab8e1b6e781c1515bf005365c8ebb28) chore(dev): temporarily disable data sending *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T05:54:36+08:00*
@@ -627,4 +628,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 11:59:51.574, +08
+generated using git-cliff at Sun, 28-Dec-2025, 12:10:21.366, +08
