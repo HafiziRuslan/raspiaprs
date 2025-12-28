@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 12:17:31, +08)
+## [beta4] - (Sun, 28-Dec-2025, 12:33:45, +08)
 
-- 81 commit(s) contributed to the release.
+- 82 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -56,6 +56,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [2b1702c](https://github.com/HafiziRuslan/RasPiAPRS/commit/2b1702ca0d3e1f3ecb53971dd888f38615a0bb1c) refactor(logging): enhance logging format and suppress noisy libraries *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T12:33:45+08:00*
 - [f622919](https://github.com/HafiziRuslan/RasPiAPRS/commit/f6229197fa4972e8fc3dd7b06c9f9e778ba374c1) refactor(telemetry): reorder logging and telegram calls *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T10:32:20+08:00*
 - [ee23ae0](https://github.com/HafiziRuslan/RasPiAPRS/commit/ee23ae00c2347eb21fa1bef5011d6ea6fe05597f) refactor(aprs): improve CSE boundary handling and initialization *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T10:24:43+08:00*
 - [900a5de](https://github.com/HafiziRuslan/RasPiAPRS/commit/900a5de3598787c5464b321a1daddccbfb0b775b) refactor(logging): enable warning level for common libraries *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T09:12:51+08:00*
@@ -629,4 +630,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 12:18:00.398, +08
+generated using git-cliff at Sun, 28-Dec-2025, 12:34:14.097, +08
