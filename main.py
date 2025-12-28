@@ -675,11 +675,9 @@ async def send_status(ais, cfg):
     ztime = dt.datetime.now(dt.timezone.utc)
     timestamp = ztime.strftime("%d%H%Mz")
     uptime = get_uptime()
-    statustext = f"near {nearAdd}, {timestamp}, {uptime}"
-    status = "{}>APP642:>{}{}{} {}".format(
-        cfg.call, gridsquare, cfg.symbol, cfg.symbol_table, statustext
-    )
-    tgstat = f"<u>{cfg.call} Status</u>\n{gridsquare}{cfg.symbol}{cfg.symbol_table} {statustext}"
+    statustext = f"[{gridsquare}] near {nearAdd}, {timestamp}, {uptime}"
+    status = "{}>APP642:>{}{}{} {}".format(cfg.call, statustext)
+    tgstat = f"<u>{cfg.call} Status</u>\n{statustext}"
     if os.getenv("GPSD_ENABLE"):
         timez, uSat, nSat = get_gpssat()
         timestamp = timez if timez != None else ztime.strftime("%d%H%Mz")
