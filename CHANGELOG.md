@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Sun, 28-Dec-2025, 12:09:53, +08)
+## [beta4] - (Sun, 28-Dec-2025, 12:17:31, +08)
 
-- 80 commit(s) contributed to the release.
+- 81 commit(s) contributed to the release.
 - 6 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -83,6 +83,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚡ Performance in beta4
 
+- [a29b4fc](https://github.com/HafiziRuslan/RasPiAPRS/commit/a29b4fc7a77313d42dfb7023839ccce5204d6b2a) perf(ci): suppress git and uv output in main script *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T12:17:31+08:00*
 - [f2ce5d4](https://github.com/HafiziRuslan/RasPiAPRS/commit/f2ce5d40f4859c93efd60dc5637b7fedbbb14215) perf(telemetry): optimize telemetry string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:39:26+08:00*
 - [ea1d546](https://github.com/HafiziRuslan/RasPiAPRS/commit/ea1d546260fa5bde8b36d82666cb9890e444ce66) perf(config): adjust slow beaconing rate default *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:29:39+08:00*
 - [2f5dfc3](https://github.com/HafiziRuslan/RasPiAPRS/commit/2f5dfc32eab3c04d7e9138c942b8073f1a504965) chore(script): update git pull logic to use directory owner *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-24T15:19:36+08:00*
@@ -628,4 +629,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun, 28-Dec-2025, 12:10:21.366, +08
+generated using git-cliff at Sun, 28-Dec-2025, 12:18:00.398, +08
