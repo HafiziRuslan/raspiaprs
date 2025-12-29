@@ -9,7 +9,6 @@ import logging
 # import logging.config
 # import logging.handlers
 import os
-# import subprocess
 import sys
 import time
 from urllib.request import urlopen
@@ -21,7 +20,7 @@ import psutil
 import telegram
 from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
-from geopy.geocoders import Nominatim
+# from geopy.geocoders import Nominatim
 from gpsdclient import GPSDClient
 
 # Default paths for system files
@@ -275,6 +274,26 @@ def get_gpspos():
 			return (timestamp, 0, 0, 0, 0, 0)
 
 
+def get_coordinates():
+	"""Get approximate latitude and longitude using IP address lookup."""
+	logging.debug('Trying to figure out the coordinate using your IP address')
+	url = 'http://ip-api.com/json/'
+	try:
+		with urlopen(url) as response:
+			_data = response.read()
+			data = json.loads(_data.decode())
+	except Exception as err:
+		logging.error('Failed to fetch coordinates from %s: %s', url, err)
+		return (0, 0)
+	else:
+		try:
+			logging.debug('IP-Position: %f, %f', data['lat'], data['lon'])
+			return data['lat'], data['lon']
+		except (KeyError, TypeError) as err:
+			logging.error('Unexpected response format: %s', err)
+			return (0, 0)
+
+
 def latlon_to_grid(lat, lon, precision=6):
 	"""Convert position to grid square."""
 	# Shift coordinates to positive values
@@ -301,6 +320,21 @@ def latlon_to_grid(lat, lon, precision=6):
 	return grid
 
 
+# def get_address_from_coordinates(latitude, longitude):
+# 	"""Get address from coordinates."""
+# 	geolocator = Nominatim(user_agent='raspiaprs-app')
+# 	try:
+# 		location = geolocator.reverse((latitude, longitude), exactly_one=True)
+# 		if location:
+# 			address = location.raw['address']
+# 			return address
+# 		else:
+# 			return None
+# 	except Exception as e:
+# 		logging.error('Error getting address: %s', e)
+# 		return None
+
+
 def get_gpssat():
 	"""Get satellite from GPSD."""
 	if os.getenv('GPSD_ENABLE'):
@@ -321,26 +355,6 @@ def get_gpssat():
 		except Exception as e:
 			logging.error('Error getting GPS data: %s', e)
 			return (timestamp, 0, 0)
-
-
-def get_coordinates():
-	"""Get approximate latitude and longitude using IP address lookup."""
-	logging.debug('Trying to figure out the coordinate using your IP address')
-	url = 'http://ip-api.com/json/'
-	try:
-		with urlopen(url) as response:
-			_data = response.read()
-			data = json.loads(_data.decode())
-	except Exception as err:
-		logging.error('Failed to fetch coordinates from %s: %s', url, err)
-		return (0, 0)
-	else:
-		try:
-			logging.debug('IP-Position: %f, %f', data['lat'], data['lon'])
-			return data['lat'], data['lon']
-		except (KeyError, TypeError) as err:
-			logging.error('Unexpected response format: %s', err)
-			return (0, 0)
 
 
 def get_cpuload():
@@ -444,21 +458,6 @@ def get_mmdvminfo():
 		shift = f' (+{round(rx - tx, 6)}MHz)'
 	cc = f' CC{color_code}' if dmr_enabled else ''
 	return (str(tx) + 'MHz' + shift + cc) + ','
-
-
-def get_address_from_coordinates(latitude, longitude):
-	"""Get address from coordinates."""
-	geolocator = Nominatim(user_agent='raspiaprs-app')
-	try:
-		location = geolocator.reverse((latitude, longitude), exactly_one=True)
-		if location:
-			address = location.raw['address']
-			return address
-		else:
-			return None
-	except Exception as e:
-		logging.error('Error getting address: %s', e)
-		return None
 
 
 async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0):
@@ -615,13 +614,13 @@ async def send_telemetry(ais, cfg):
 async def send_status(ais, cfg):
 	"""Send APRS status information to APRS-IS."""
 	gridsquare = latlon_to_grid(float(cfg.latitude), float(cfg.longitude))
-	town = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get('town', '')
-	city = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get('city', '')
-	nearAdd = town if town else city
+	# town = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get('town', '')
+	# city = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get('city', '')
+	# nearAdd = town if town else city
 	ztime = dt.datetime.now(dt.timezone.utc)
 	timestamp = ztime.strftime('%d%H%Mz')
 	uptime = get_uptime()
-	statustext = f'[{gridsquare}] near {nearAdd}, {timestamp}, {uptime}'
+	statustext = f'[{gridsquare}] {timestamp}, {uptime}'
 	status = '{}>APP642:>{}'.format(cfg.call, statustext)
 	tgstat = f'<u>{cfg.call} Status</u>\n{statustext}'
 	if os.getenv('GPSD_ENABLE'):
