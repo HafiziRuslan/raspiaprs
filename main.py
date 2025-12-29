@@ -319,7 +319,6 @@ def latlon_to_grid(lat, lon, precision=6):
 
 	return grid
 
-
 # def get_address_from_coordinates(latitude, longitude):
 # 	"""Get address from coordinates."""
 # 	geolocator = Nominatim(user_agent='raspiaprs-app')
@@ -625,10 +624,15 @@ async def send_status(ais, cfg):
 	tgstat = f'<u>{cfg.call} Status</u>\n{statustext}'
 	if os.getenv('GPSD_ENABLE'):
 		timez, uSat, nSat = get_gpssat()
-		timestamp = timez if timez is not None else ztime.strftime('%d%H%Mz')
-		sats = f'sats={uSat}/{nSat}'
-		status += f', {sats}'
-		tgstat += f', {sats}'
+		if uSat != 0:
+			timestamp = timez if timez is not None else ztime.strftime('%d%H%Mz')
+			sats = f'GPS Sat: {uSat}/{nSat}'
+			status += f', {sats}'
+			tgstat += f', {sats}'
+		else:
+			sats = f'GPS Sat: {uSat}'
+			status += f', {sats}'
+			tgstat += f', {sats}'
 	try:
 		ais.sendall(status)
 		logging.info(status)
