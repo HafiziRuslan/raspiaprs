@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Mon, 29-Dec-2025, 16:57:17, +08)
+## [beta4] - (Tue, 30-Dec-2025, 07:30:23, +08)
 
-- 108 commit(s) contributed to the release.
+- 110 commit(s) contributed to the release.
 - 7 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -25,6 +25,8 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [5ad7661](https://github.com/HafiziRuslan/RasPiAPRS/commit/5ad766178e76f8f9e90af6bc26f7fef622c229f6) fix(gps): improve satellite status reporting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T07:30:23+08:00*
+- [f1c83b9](https://github.com/HafiziRuslan/RasPiAPRS/commit/f1c83b9ce82aecbe95a10e5a7c49d3451b1e333a) refactor(uptime): change uptime output format *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T07:24:48+08:00*
 - [a36d062](https://github.com/HafiziRuslan/RasPiAPRS/commit/a36d06216020fe7fcb32fbad42a390e731271a8e) fix(status): remove unnecessary formatting from status message *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:29:15+08:00*
 - [26600de](https://github.com/HafiziRuslan/RasPiAPRS/commit/26600de657d4d95bc694cc709ef5197692e5c67a) fix(telemetry): improve status text generation for location *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:19:56+08:00*
 - [0732446](https://github.com/HafiziRuslan/RasPiAPRS/commit/0732446707cf52910c82a67eaef9193e058c4a0a) fix(aprs): improve connection retry logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T19:37:29+08:00*
@@ -656,4 +658,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Mon, 29-Dec-2025, 16:57:57.929, +08
+generated using git-cliff at Tue, 30-Dec-2025, 07:31:54.889, +08
