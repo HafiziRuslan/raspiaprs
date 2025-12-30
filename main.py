@@ -638,16 +638,15 @@ async def send_status(ais, cfg):
 	status = '{}>APP642:>{}'.format(cfg.call, statustext)
 	tgstat = f'<u>{cfg.call} Status</u>\n{statustext}'
 	if os.getenv('GPSD_ENABLE'):
+		sats = ', GPSsat:'
 		timez, uSat, nSat = get_gpssat()
 		if uSat != 0:
 			timestamp = timez if timez is not None else ztime.strftime('%d%H%Mz')
-			sats = f'GPS Sat: {uSat}/{nSat}'
-			status += f', {sats}'
-			tgstat += f', {sats}'
+			sats += f'{uSat}/{nSat}'
 		else:
-			sats = f'GPS Sat: {uSat}'
-			status += f', {sats}'
-			tgstat += f', {sats}'
+			sats += uSat
+		status += sats
+		tgstat += sats
 	try:
 		ais.sendall(status)
 		logging.info(status)
