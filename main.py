@@ -570,7 +570,7 @@ async def send_position(ais, cfg):
 			symb = '('
 	payload = f'/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}'
 	posit = f'{cfg.call}>APP642:{payload}'
-	tgpos = f'<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} meter (Height above Ellipsoid)\n\t<b>Speed</b>:\n\t\tm/s: {"{0:0.0f}".format(float(cur_spd))} meter per second\n\t\tkm/h: {"{0:0.0f}".format(float(spdkmh))} kilometer per hour\n\t\tkn: {"{0:0.0f}".format(float(spdstr))} knot\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}'
+	tgpos = f'<u>{cfg.call} Position</u>\n\nTime: <b>{timestamp}</b>\nPosition:\n\tLatitude: <b>{cur_lat}</b>\n\tLongitude: <b>{cur_lon}</b>\n\tAltitude: <b>{cur_alt} m</b> (Height above Ellipsoid)\n\tSpeed: <b>{"{0:0.0f}".format(float(cur_spd))} m/s</b> | <b>{"{0:0.0f}".format(float(spdkmh))} km/h</b> | <b>{"{0:0.0f}".format(float(spdstr))} kn</b>\n\tCourse: <b>{cur_cse} °</b>\nComment: <b>{comment}</b>'
 	try:
 		ais.sendall(posit)
 		logging.info(posit)
@@ -605,11 +605,11 @@ async def send_telemetry(ais, cfg):
 	memused = get_memused()
 	diskused = get_diskused()
 	telem = '{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}'.format(cfg.call, seq, temp, cpuload, memused, diskused)
-	tgtel = f'<u>{cfg.call} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB'
+	tgtel = f'<u>{cfg.call} Telemetry</u>\n\nSequence: <b>#{seq}</b>\nCPU Temp: <b>{temp / 10:.1f} °C</b>\nCPU Load: <b>{cpuload / 1000:.1f}%</b>\nRAM Used: <b>{memused / 1000:.1f} MB</b>\nDisk Used: <b>{diskused / 1000:.1f} GB</b>'
 	if os.getenv('GPSD_ENABLE'):
 		_, uSat, nSat = get_gpssat()
 		telem += ',{:d}'.format(uSat)
-		tgtel += f'\n<b>GPS Used</b>: {uSat}\n<b>GPS Available</b>: {nSat}'
+		tgtel += f'\nGPS Used: <b>{uSat}</b>\nGPS Available: <b>{nSat}</b>'
 	try:
 		ais.sendall(telem)
 		logging.info(telem)
@@ -637,7 +637,7 @@ async def send_status(ais, cfg):
 	uptime = get_uptime()
 	statustext = f'[{gridsquare}] {timestamp}, {uptime}'
 	status = '{}>APP642:>{}'.format(cfg.call, statustext)
-	tgstat = f'<u>{cfg.call} Status</u>\n{statustext}'
+	tgstat = f'<u>{cfg.call} Status</u>\n<b>{statustext}</b>'
 	if os.getenv('GPSD_ENABLE'):
 		sats = ', GPSsat: '
 		timez, uSat, nSat = get_gpssat()
