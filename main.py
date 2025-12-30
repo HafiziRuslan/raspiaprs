@@ -9,6 +9,7 @@ import logging
 # import logging.config
 # import logging.handlers
 import os
+import random
 import sys
 import time
 from urllib.request import urlopen
@@ -695,10 +696,10 @@ async def main():
 				rate = srate
 				logging.debug('Slow beaconing enabled')
 			if spd > sspd and spd < fspd:
-				rate = int(frate + srate / 2)
+				rate = random.randint(srate, frate)
 				logging.debug('Mixed beaconing enabled')
 			if spd == 0:
-				rate = 2500
+				rate = 1800
 				logging.debug('Smart beaconing disabled')
 		if tmr % rate == 1:
 			await send_position(ais, cfg)
