@@ -670,6 +670,7 @@ def ais_connect(cfg):
 			continue
 		else:
 			# ais.set_filter(cfg.filter)
+			logging.info('Connected to APRS-IS server %s:%d as %s', cfg.server, cfg.port, cfg.call)
 			return ais
 	logging.error('Connection error, exiting')
 	sys.exit(getattr(os, 'EX_NOHOST', 1))
