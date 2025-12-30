@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 19:30:24, +08)
+## [beta4] - (Tue, 30-Dec-2025, 19:45:19, +08)
 
-- 125 commit(s) contributed to the release.
+- 126 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [de9bad5](https://github.com/HafiziRuslan/RasPiAPRS/commit/de9bad5c9710933fa013b7574b7eb3efaec49f13) style(output): improve position report speed formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:45:19+08:00*
 - [fb7bbd8](https://github.com/HafiziRuslan/RasPiAPRS/commit/fb7bbd8224edfaf0a1bd1a82ac2e2d2728e7cf58) refactor(status): streamline gps satellite status formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:22:31+08:00*
 - [84b03b4](https://github.com/HafiziRuslan/RasPiAPRS/commit/84b03b40d048220bbff5c9a1c2a718830b4c13a1) fix(aprs): prevent division by zero errors *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:16:35+08:00*
 - [9925e85](https://github.com/HafiziRuslan/RasPiAPRS/commit/9925e85e8706edeb7311ffb07f12afae21810080) refactor(logging): clarify aprs connection error messages *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:40:33+08:00*
@@ -673,4 +674,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 19:30:49.170, +08
+generated using git-cliff at Tue, 30-Dec-2025, 19:45:44.532, +08
