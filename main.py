@@ -682,11 +682,11 @@ async def main():
 				rate = int(frate + srate / 2)
 				logging.debug('Mixed beaconing enabled')
 			if spd == 0:
-				rate = cfg.sleep
+				rate = 2500
 				logging.debug('Smart beaconing disabled')
 		if tmr % rate == 1:
 			await send_position(ais, cfg)
-		if tmr % 1800 == 1:
+		if tmr % 3000 == 1:
 			send_header(ais, cfg)
 		if tmr % cfg.sleep == 1:
 			await send_telemetry(ais, cfg)
