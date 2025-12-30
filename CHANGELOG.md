@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 18:38:02, +08)
+## [beta4] - (Tue, 30-Dec-2025, 18:40:33, +08)
 
-- 118 commit(s) contributed to the release.
+- 119 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [9925e85](https://github.com/HafiziRuslan/RasPiAPRS/commit/9925e85e8706edeb7311ffb07f12afae21810080) refactor(logging): clarify aprs connection error messages *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:40:33+08:00*
 - [8552841](https://github.com/HafiziRuslan/RasPiAPRS/commit/8552841f540a201b302def8af832a6c362bbb65f) fix(beaconing): ensure speed values are integers *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:38:02+08:00*
 - [41e8f52](https://github.com/HafiziRuslan/RasPiAPRS/commit/41e8f5235d1c12833900360596034197e26ebc16) fix(beaconing): use numeric speed for comparison *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:13:55+08:00*
 - [09f78dc](https://github.com/HafiziRuslan/RasPiAPRS/commit/09f78dc4eb39aa590b8f8f1936c8dc63aedcc0c1) fix(beaconing): adjust symbols for smart beaconing *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T14:51:24+08:00*
@@ -666,4 +667,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 18:38:36.347, +08
+generated using git-cliff at Tue, 30-Dec-2025, 18:41:04.770, +08
