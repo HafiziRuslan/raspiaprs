@@ -620,13 +620,13 @@ async def send_telemetry(ais, cfg):
 
 async def send_status(ais, cfg):
 	"""Send APRS status information to APRS-IS."""
-	if os.getenv('GPSD_ENABLE', ''):
-			_, lat, lon, *_ = get_gpspos()
-			# fallback to config if GPS provided invalid coords
-			if not (isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and lat != 0 and lon != 0):
-					lat, lon = cfg.latitude, cfg.longitude
-	else:
+	if os.getenv('GPSD_ENABLE'):
+		_, lat, lon, *_ = get_gpspos()
+		# fallback to config if GPS provided invalid coords
+		if not (isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and lat != 0 and lon != 0):
 			lat, lon = cfg.latitude, cfg.longitude
+	else:
+		lat, lon = cfg.latitude, cfg.longitude
 	gridsquare = latlon_to_grid(lat, lon)
 	# town = get_address_from_coordinates(lat, lon).get('town', '')
 	# city = get_address_from_coordinates(lat, lon).get('city', '')
