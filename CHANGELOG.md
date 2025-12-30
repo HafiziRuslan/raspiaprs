@@ -2,13 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 07:30:23, +08)
+## [beta4] - (Tue, 30-Dec-2025, 09:24:20, +08)
 
-- 110 commit(s) contributed to the release.
-- 7 day(s) passed between the first and last commit.
+- 111 commit(s) contributed to the release.
+- 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
-- 7 day(s) passed between releases.
+- 8 day(s) passed between releases.
 
 ### 🚀 Features in beta4
 
@@ -110,6 +110,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚡ Performance in beta4
 
+- [44d7103](https://github.com/HafiziRuslan/RasPiAPRS/commit/44d71030d45ccc1463e6b188faea01f866c524f3) perf(beaconing): increase header send interval *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T09:24:20+08:00*
 - [a29b4fc](https://github.com/HafiziRuslan/RasPiAPRS/commit/a29b4fc7a77313d42dfb7023839ccce5204d6b2a) perf(ci): suppress git and uv output in main script *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-28T12:17:31+08:00*
 - [f2ce5d4](https://github.com/HafiziRuslan/RasPiAPRS/commit/f2ce5d40f4859c93efd60dc5637b7fedbbb14215) perf(telemetry): optimize telemetry string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:39:26+08:00*
 - [ea1d546](https://github.com/HafiziRuslan/RasPiAPRS/commit/ea1d546260fa5bde8b36d82666cb9890e444ce66) perf(config): adjust slow beaconing rate default *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:29:39+08:00*
@@ -658,4 +659,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 07:31:54.889, +08
+generated using git-cliff at Tue, 30-Dec-2025, 09:24:44.959, +08
