@@ -638,7 +638,7 @@ async def send_status(ais, cfg):
 	status = '{}>APP642:>{}'.format(cfg.call, statustext)
 	tgstat = f'<u>{cfg.call} Status</u>\n{statustext}'
 	if os.getenv('GPSD_ENABLE'):
-		sats = ', GPSsat:'
+		sats = ', GPSsat: '
 		timez, uSat, nSat = get_gpssat()
 		if uSat != 0:
 			timestamp = timez if timez is not None else ztime.strftime('%d%H%Mz')
