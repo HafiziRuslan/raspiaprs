@@ -253,7 +253,7 @@ def get_gpspos():
 						utc = result.get('time', timestamp)
 						lat = result.get('lat', 0)
 						lon = result.get('lon', 0)
-						alt = result.get('alt', 0)
+						alt = result.get('altHAE', 0)
 						spd = result.get('speed', 0)
 						cse = result.get('magtrack', 0)
 						# acc = result.get("sep", 0)
@@ -272,6 +272,13 @@ def get_gpspos():
 		except Exception as e:
 			logging.error('Error getting GPS data: %s', e)
 			return (timestamp, 0, 0, 0, 0, 0)
+
+
+def _kn_to_kmh(spd):
+	spd *= 3.6 if spd else 0  # mps to kmh
+	spd = max(0, spd)
+	spd = min(999, spd)
+	return '{0:03.0f}'.format(spd)
 
 
 def get_coordinates():
@@ -319,7 +326,7 @@ def latlon_to_grid(lat, lon, precision=6):
 
 	return grid
 
-
+# TODO: read address from Nominator local cache
 # def get_address_from_coordinates(latitude, longitude):
 # 	"""Get address from coordinates."""
 # 	geolocator = Nominatim(user_agent='raspiaprs-app')
@@ -504,27 +511,21 @@ async def send_position(ais, cfg):
 		return f'{deg:03d}{minutes:05.2f}{ew}'
 
 	def _alt_to_aprs(alt):
-		alt /= 0.3048  # to feet
+		alt /= 0.3048 if alt else 0 # m to ft
+		alt = max(-999999, alt)
 		alt = min(999999, alt)
-		alt = max(-99999, alt)
 		return '/A={0:06.0f}'.format(alt)
 
 	def _spd_to_aprs(spd):
-		spd /= 0.51444  # to knots
+		spd /= 0.51444 if spd else 0  # mps to knots
+		spd = max(0, spd)
 		spd = min(999, spd)
-		spd = max(-999, spd)
-		return '{0:03.0f}'.format(spd)
-
-	def _spd_to_kph(spd):
-		spd *= 3.6  # to kmh
-		spd = min(999, spd)
-		spd = max(-999, spd)
 		return '{0:03.0f}'.format(spd)
 
 	def _cse_to_aprs(cse):
-		cse = cse if cse else 0
+		cse %= 360 if cse else 0
 		cse = max(0, cse)
-		cse = min(360, cse)
+		cse = min(359, cse)
 		return '{0:03.0f}'.format(cse)
 
 	if os.getenv('GPSD_ENABLE'):
@@ -544,6 +545,7 @@ async def send_position(ais, cfg):
 	altstr = _alt_to_aprs(float(cur_alt))
 	spdstr = _spd_to_aprs(float(cur_spd))
 	csestr = _cse_to_aprs(float(cur_cse))
+	spdkmh = _kn_to_kmh(float(cur_spd))
 	extdatstr = f'{csestr}/{spdstr}'
 	mmdvminfo = get_mmdvminfo()
 	osinfo = get_osinfo()
@@ -554,15 +556,19 @@ async def send_position(ais, cfg):
 	symb = cfg.symbol
 	if os.getenv('SMARTBEACONING_ENABLE'):
 		sspd = os.getenv('SMARTBEACONING_SLOWSPEED')
-		if spdstr >= sspd:
+		fspd = int(os.getenv('SMARTBEACONING_FASTSPEED'))
+		if spdkmh >= fspd:
 			symbt = '\\'
 			symb = '>'
-		if spdstr > '000' and spdstr <= sspd:
+		if spdkmh > sspd and spdkmh < fspd:
+			symbt = '/'
+			symb = '>'
+		if spdkmh > '000' and spdkmh <= sspd:
 			symbt = '/'
 			symb = '('
 	payload = f'/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}'
 	posit = f'{cfg.call}>APP642:{payload}'
-	tgpos = f'<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {f"{0:.0f}".format(cur_spd)} m/s / {f"{0:.0f}".format(_spd_to_kph(float(cur_spd)))} km/h / {f"{0:.0f}".format(spdstr)} knots\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}'
+	tgpos = f'<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} meter (Height Above Ellipsoid)\n\t<b>Speed</b>:\n\t\tmps: {cur_spd} meter per second\n\t\tkmh: {spdkmh} kilometer per hour\n\t\tkn: {spdstr} knots\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}'
 	try:
 		ais.sendall(posit)
 		logging.info(posit)
@@ -613,9 +619,16 @@ async def send_telemetry(ais, cfg):
 
 async def send_status(ais, cfg):
 	"""Send APRS status information to APRS-IS."""
-	gridsquare = latlon_to_grid(float(cfg.latitude), float(cfg.longitude))
-	# town = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get('town', '')
-	# city = get_address_from_coordinates(float(cfg.latitude), float(cfg.longitude)).get('city', '')
+	if os.getenv('GPSD_ENABLE', ''):
+			utc, lat, lon, *_ = get_gpspos()
+			# fallback to config if GPS provided invalid coords
+			if not (isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and lat != 0 and lon != 0):
+					lat, lon = cfg.latitude, cfg.longitude
+	else:
+			lat, lon = cfg.latitude, cfg.longitude
+	gridsquare = latlon_to_grid(lat, lon)
+	# town = get_address_from_coordinates(lat, lon).get('town', '')
+	# city = get_address_from_coordinates(lat, lon).get('city', '')
 	# nearAdd = town if town else city
 	ztime = dt.datetime.now(dt.timezone.utc)
 	timestamp = ztime.strftime('%d%H%Mz')
@@ -668,7 +681,7 @@ async def main():
 	rate = cfg.sleep
 	for tmr in Timer():
 		if os.getenv('SMARTBEACONING_ENABLE'):
-			spd = get_gpspos()[4]
+			spd = _kn_to_kmh(get_gpspos()[4])
 			fspd = int(os.getenv('SMARTBEACONING_FASTSPEED'))
 			sspd = int(os.getenv('SMARTBEACONING_SLOWSPEED'))
 			frate = int(os.getenv('SMARTBEACONING_FASTRATE'))
