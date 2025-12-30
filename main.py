@@ -511,19 +511,19 @@ async def send_position(ais, cfg):
 		return f'{deg:03d}{minutes:05.2f}{ew}'
 
 	def _alt_to_aprs(alt):
-		alt /= 0.3048 if alt else 0  # m to ft
+		alt = alt / 0.3048 if alt else 0  # m to ft
 		alt = max(-999999, alt)
 		alt = min(999999, alt)
 		return '/A={0:06.0f}'.format(alt)
 
 	def _spd_to_aprs(spd):
-		spd /= 0.51444 if spd else 0  # mps to knots
+		spd = spd / 0.51444 if spd else 0  # mps to knots
 		spd = max(0, spd)
 		spd = min(999, spd)
 		return '{0:03.0f}'.format(spd)
 
 	def _cse_to_aprs(cse):
-		cse %= 360 if cse else 0
+		cse = cse % 360 if cse else 0
 		cse = max(0, cse)
 		cse = min(359, cse)
 		return '{0:03.0f}'.format(cse)
