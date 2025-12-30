@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 19:25:53, +08)
+## [beta4] - (Tue, 30-Dec-2025, 19:30:24, +08)
 
-- 124 commit(s) contributed to the release.
+- 125 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -77,6 +77,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [88d108f](https://github.com/HafiziRuslan/RasPiAPRS/commit/88d108f4011774bf5dec2b91776c5e54077b7039) refactor(utils): rename commented coordinate function *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:30:24+08:00*
 - [3ad21d6](https://github.com/HafiziRuslan/RasPiAPRS/commit/3ad21d683c4757db9e930b33e184346fe8d9e8e4) refactor(aprs): simplify gpsd environment check *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:25:53+08:00*
 - [187cce3](https://github.com/HafiziRuslan/RasPiAPRS/commit/187cce317f34e54b9385831ab3c05c415793368f) refactor(gps): cleanup unused time variables *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:16:45+08:00*
 - [dfc7156](https://github.com/HafiziRuslan/RasPiAPRS/commit/dfc7156c91c2476ceb3ab9a726873a671e8d7ceb) refactor(main): clean up unused imports and logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T16:57:17+08:00*
@@ -672,4 +673,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 19:26:23.625, +08
+generated using git-cliff at Tue, 30-Dec-2025, 19:30:49.170, +08
