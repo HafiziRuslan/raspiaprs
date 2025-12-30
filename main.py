@@ -327,7 +327,8 @@ def latlon_to_grid(lat, lon, precision=6):
 	return grid
 
 # TODO: read address from Nominator local cache
-# def get_address_from_coordinates(latitude, longitude):
+#
+# def get_add_from_pos(latitude, longitude):
 # 	"""Get address from coordinates."""
 # 	geolocator = Nominatim(user_agent='raspiaprs-app')
 # 	try:
@@ -628,8 +629,8 @@ async def send_status(ais, cfg):
 	else:
 		lat, lon = cfg.latitude, cfg.longitude
 	gridsquare = latlon_to_grid(lat, lon)
-	# town = get_address_from_coordinates(lat, lon).get('town', '')
-	# city = get_address_from_coordinates(lat, lon).get('city', '')
+	# town = get_add_from_pos(lat, lon).get('town', '')
+	# city = get_add_from_pos(lat, lon).get('city', '')
 	# nearAdd = town if town else city
 	ztime = dt.datetime.now(dt.timezone.utc)
 	timestamp = ztime.strftime('%d%H%Mz')
