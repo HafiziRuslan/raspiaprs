@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 21:03:08, +08)
+## [beta4] - (Wed, 31-Dec-2025, 00:01:19, +08)
 
-- 127 commit(s) contributed to the release.
+- 128 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -131,6 +131,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🎨 Styling in beta4
 
+- [ed7085d](https://github.com/HafiziRuslan/RasPiAPRS/commit/ed7085d6dbc084ce7271adf1e6ddd7578a343669) style(telegram): adjust message output style *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T00:01:19+08:00*
 - [e5f4c0c](https://github.com/HafiziRuslan/RasPiAPRS/commit/e5f4c0c606b84ac73ce43d9f9f1fdbffbcf1a67e) style(status): add space after gpssat label *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:23:53+08:00*
 - [c44e0f9](https://github.com/HafiziRuslan/RasPiAPRS/commit/c44e0f9f88646c7e136223264ceba2557349d449) style(formatting): add blank line after function definition *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T14:53:28+08:00*
 - [cc061b1](https://github.com/HafiziRuslan/RasPiAPRS/commit/cc061b13eda0d15b146a93a1301dd6baeed53804) style(config): use nanosecond precision for timestamps *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:12:47+08:00*
@@ -675,4 +676,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 21:03:45.801, +08
+generated using git-cliff at Wed, 31-Dec-2025, 00:01:52.053, +08
