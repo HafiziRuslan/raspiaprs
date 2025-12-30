@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Wed, 31-Dec-2025, 00:01:19, +08)
+## [beta4] - (Wed, 31-Dec-2025, 00:35:04, +08)
 
-- 128 commit(s) contributed to the release.
+- 129 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -79,6 +79,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [8efc3d9](https://github.com/HafiziRuslan/RasPiAPRS/commit/8efc3d9f508c1a4850c7280e411c8f7000a650c6) refactor(timing): adjust beacon rate calculation *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T00:35:04+08:00*
 - [88d108f](https://github.com/HafiziRuslan/RasPiAPRS/commit/88d108f4011774bf5dec2b91776c5e54077b7039) refactor(utils): rename commented coordinate function *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:30:24+08:00*
 - [3ad21d6](https://github.com/HafiziRuslan/RasPiAPRS/commit/3ad21d683c4757db9e930b33e184346fe8d9e8e4) refactor(aprs): simplify gpsd environment check *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T19:25:53+08:00*
 - [187cce3](https://github.com/HafiziRuslan/RasPiAPRS/commit/187cce317f34e54b9385831ab3c05c415793368f) refactor(gps): cleanup unused time variables *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:16:45+08:00*
@@ -676,4 +677,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 31-Dec-2025, 00:01:52.053, +08
+generated using git-cliff at Wed, 31-Dec-2025, 00:38:48.941, +08
