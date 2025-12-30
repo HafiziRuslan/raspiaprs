@@ -319,6 +319,7 @@ def latlon_to_grid(lat, lon, precision=6):
 
 	return grid
 
+
 # def get_address_from_coordinates(latitude, longitude):
 # 	"""Get address from coordinates."""
 # 	geolocator = Nominatim(user_agent='raspiaprs-app')
