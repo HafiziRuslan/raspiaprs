@@ -570,7 +570,7 @@ async def send_position(ais, cfg):
 			symb = '('
 	payload = f'/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}'
 	posit = f'{cfg.call}>APP642:{payload}'
-	tgpos = f'<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} meter (Height Above Ellipsoid)\n\t<b>Speed</b>:\n\t\tmps: {cur_spd} meter per second\n\t\tkmh: {spdkmh} kilometer per hour\n\t\tkn: {spdstr} knots\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}'
+	tgpos = f'<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} meter (Height above Ellipsoid)\n\t<b>Speed</b>:\n\t\tm/s: {"{0:0.0f}".format(cur_spd)} meter per second\n\t\tkm/h: {"{0:0.0f}".format(spdkmh)} kilometer per hour\n\t\tkn: {"{0:0.0f}".format(spdstr)} knot\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}'
 	try:
 		ais.sendall(posit)
 		logging.info(posit)
