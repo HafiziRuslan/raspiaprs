@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 18:16:45, +08)
+## [beta4] - (Tue, 30-Dec-2025, 18:38:02, +08)
 
-- 117 commit(s) contributed to the release.
+- 118 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [8552841](https://github.com/HafiziRuslan/RasPiAPRS/commit/8552841f540a201b302def8af832a6c362bbb65f) fix(beaconing): ensure speed values are integers *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:38:02+08:00*
 - [41e8f52](https://github.com/HafiziRuslan/RasPiAPRS/commit/41e8f5235d1c12833900360596034197e26ebc16) fix(beaconing): use numeric speed for comparison *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:13:55+08:00*
 - [09f78dc](https://github.com/HafiziRuslan/RasPiAPRS/commit/09f78dc4eb39aa590b8f8f1936c8dc63aedcc0c1) fix(beaconing): adjust symbols for smart beaconing *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T14:51:24+08:00*
 - [5ad7661](https://github.com/HafiziRuslan/RasPiAPRS/commit/5ad766178e76f8f9e90af6bc26f7fef622c229f6) fix(gps): improve satellite status reporting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T07:30:23+08:00*
@@ -665,4 +666,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 18:17:14.994, +08
+generated using git-cliff at Tue, 30-Dec-2025, 18:38:36.347, +08
