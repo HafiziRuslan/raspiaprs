@@ -576,7 +576,7 @@ async def send_position(ais, cfg):
 		await logs_to_telegram(tgpos, cur_lat, cur_lon)
 		await send_status(ais, cfg)
 	except APRSConnectionError as err:
-		logging.error('Position error: %s', err)
+		logging.error('APRS connection error at position: %s', err)
 
 
 def send_header(ais, cfg):
@@ -593,7 +593,7 @@ def send_header(ais, cfg):
 		ais.sendall(unit)
 		ais.sendall(eqns)
 	except APRSConnectionError as err:
-		logging.error('Header error: %s', err)
+		logging.error('APRS connection error at header: %s', err)
 
 
 async def send_telemetry(ais, cfg):
@@ -615,7 +615,7 @@ async def send_telemetry(ais, cfg):
 		await logs_to_telegram(tgtel)
 		await send_status(ais, cfg)
 	except APRSConnectionError as err:
-		logging.error('Telemetry error: %s', err)
+		logging.error('APRS connection error at telemetry: %s', err)
 
 
 async def send_status(ais, cfg):
@@ -653,7 +653,7 @@ async def send_status(ais, cfg):
 		logging.info(status)
 		await logs_to_telegram(tgstat)
 	except APRSConnectionError as err:
-		logging.error('Status error: %s', err)
+		logging.error('APRS connection error at status: %s', err)
 
 
 def ais_connect(cfg):
