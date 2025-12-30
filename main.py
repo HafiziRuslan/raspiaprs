@@ -511,7 +511,7 @@ async def send_position(ais, cfg):
 		return f'{deg:03d}{minutes:05.2f}{ew}'
 
 	def _alt_to_aprs(alt):
-		alt /= 0.3048 if alt else 0 # m to ft
+		alt /= 0.3048 if alt else 0  # m to ft
 		alt = max(-999999, alt)
 		alt = min(999999, alt)
 		return '/A={0:06.0f}'.format(alt)
@@ -605,7 +605,7 @@ async def send_telemetry(ais, cfg):
 	telem = '{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}'.format(cfg.call, seq, temp, cpuload, memused, diskused)
 	tgtel = f'<u>{cfg.call} Telemetry</u>\n\n<b>Sequence</b>: #{seq}\n<b>CPU Temp</b>: {temp / 10:.1f}°C\n<b>CPU Load</b>: {cpuload / 1000:.3f}%\n<b>RAM Used</b>: {memused / 1000:.3f}MB\n<b>Disk Used</b>: {diskused / 1000:.3f}GB'
 	if os.getenv('GPSD_ENABLE'):
-		nowz, uSat, nSat = get_gpssat()
+		_, uSat, nSat = get_gpssat()
 		telem += ',{:d}'.format(uSat)
 		tgtel += f'\n<b>GPS Used</b>: {uSat}\n<b>GPS Available</b>: {nSat}'
 	try:
@@ -620,7 +620,7 @@ async def send_telemetry(ais, cfg):
 async def send_status(ais, cfg):
 	"""Send APRS status information to APRS-IS."""
 	if os.getenv('GPSD_ENABLE', ''):
-			utc, lat, lon, *_ = get_gpspos()
+			_, lat, lon, *_ = get_gpspos()
 			# fallback to config if GPS provided invalid coords
 			if not (isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and lat != 0 and lon != 0):
 					lat, lon = cfg.latitude, cfg.longitude
