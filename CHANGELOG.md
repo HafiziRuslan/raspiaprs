@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 18:13:55, +08)
+## [beta4] - (Tue, 30-Dec-2025, 18:16:45, +08)
 
-- 116 commit(s) contributed to the release.
+- 117 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -73,6 +73,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta4
 
+- [187cce3](https://github.com/HafiziRuslan/RasPiAPRS/commit/187cce317f34e54b9385831ab3c05c415793368f) refactor(gps): cleanup unused time variables *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T18:16:45+08:00*
 - [dfc7156](https://github.com/HafiziRuslan/RasPiAPRS/commit/dfc7156c91c2476ceb3ab9a726873a671e8d7ceb) refactor(main): clean up unused imports and logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T16:57:17+08:00*
 - [ba2083a](https://github.com/HafiziRuslan/RasPiAPRS/commit/ba2083a52a79c988d495bda16ecd75d3e7dc74cf) refactor(main): clean up imports and update string formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T05:35:25+08:00*
 - [f608d5a](https://github.com/HafiziRuslan/RasPiAPRS/commit/f608d5a59da49283e811648ad80841936777f8a1) refactor(status): simplify status message formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:28:06+08:00*
@@ -664,4 +665,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 18:14:28.520, +08
+generated using git-cliff at Tue, 30-Dec-2025, 18:17:14.994, +08
