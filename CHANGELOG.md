@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta4] - (Tue, 30-Dec-2025, 09:24:20, +08)
+## [beta4] - (Tue, 30-Dec-2025, 14:53:28, +08)
 
-- 111 commit(s) contributed to the release.
+- 115 commit(s) contributed to the release.
 - 8 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta4
 
+- [09f78dc](https://github.com/HafiziRuslan/RasPiAPRS/commit/09f78dc4eb39aa590b8f8f1936c8dc63aedcc0c1) fix(beaconing): adjust symbols for smart beaconing *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T14:51:24+08:00*
 - [5ad7661](https://github.com/HafiziRuslan/RasPiAPRS/commit/5ad766178e76f8f9e90af6bc26f7fef622c229f6) fix(gps): improve satellite status reporting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T07:30:23+08:00*
 - [f1c83b9](https://github.com/HafiziRuslan/RasPiAPRS/commit/f1c83b9ce82aecbe95a10e5a7c49d3451b1e333a) refactor(uptime): change uptime output format *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T07:24:48+08:00*
 - [a36d062](https://github.com/HafiziRuslan/RasPiAPRS/commit/a36d06216020fe7fcb32fbad42a390e731271a8e) fix(status): remove unnecessary formatting from status message *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-29T03:29:15+08:00*
@@ -102,6 +103,8 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation in beta4
 
+- [6a328e9](https://github.com/HafiziRuslan/RasPiAPRS/commit/6a328e924336d3ee3449dee4f6769f331ce8caa5) docs(symbols): add comprehensive reference for aprs symbols *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T14:48:52+08:00*
+- [7f21c5d](https://github.com/HafiziRuslan/RasPiAPRS/commit/7f21c5df4d7672bfe4a8ca8c9b1ab18930c2c877) docs(aprs): add aprs symbol specification *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T14:24:47+08:00*
 - [5131739](https://github.com/HafiziRuslan/RasPiAPRS/commit/5131739904cf2a5218eb727d782504cae81fad43) docs(config): clarify aprs sleep variable description *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T07:35:47+08:00*
 - [40b2529](https://github.com/HafiziRuslan/RasPiAPRS/commit/40b2529c8fc977993a32e0135e96b77ed9ebeef5) docs(APRS): add foundational specification documents *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T04:41:52+08:00*
 - [6e88c90](https://github.com/HafiziRuslan/RasPiAPRS/commit/6e88c906d9c23f18a5346b2c2db85358d9335044) docs(aprs): remove redundant packet comment *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T01:08:41+08:00*
@@ -118,6 +121,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🎨 Styling in beta4
 
+- [c44e0f9](https://github.com/HafiziRuslan/RasPiAPRS/commit/c44e0f9f88646c7e136223264ceba2557349d449) style(formatting): add blank line after function definition *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-30T14:53:28+08:00*
 - [cc061b1](https://github.com/HafiziRuslan/RasPiAPRS/commit/cc061b13eda0d15b146a93a1301dd6baeed53804) style(config): use nanosecond precision for timestamps *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-27T06:12:47+08:00*
 - [1256cd4](https://github.com/HafiziRuslan/RasPiAPRS/commit/1256cd44cc2b0cbcd46a6ce1e499d35aa8554b28) style(formatting): standardize indentation and code formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-25T23:26:39+08:00*
 - [cfea409](https://github.com/HafiziRuslan/RasPiAPRS/commit/cfea409b2a007c6209ed1fe4b5a5f1c2a14a2d14) style(logging): update telegram log message formatting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-25T05:55:47+08:00*
@@ -659,4 +663,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Tue, 30-Dec-2025, 09:24:44.959, +08
+generated using git-cliff at Tue, 30-Dec-2025, 14:54:22.805, +08
