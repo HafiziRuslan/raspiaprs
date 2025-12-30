@@ -554,11 +554,11 @@ async def send_position(ais, cfg):
 	if os.getenv('SMARTBEACONING_ENABLE'):
 		sspd = os.getenv('SMARTBEACONING_SLOWSPEED')
 		if spdstr >= sspd:
-			symbt = '/'
-			symb = '>'
-		if spdstr > '000' and spdstr <= sspd:
 			symbt = '\\'
 			symb = '>'
+		if spdstr > '000' and spdstr <= sspd:
+			symbt = '/'
+			symb = '('
 	payload = f'/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}'
 	posit = f'{cfg.call}>APP642:{payload}'
 	tgpos = f'<u>{cfg.call} Position</u>\n\n<b>Time</b>: {timestamp}\n<b>Position</b>:\n\t<b>Latitude</b>: {cur_lat}\n\t<b>Longitude</b>: {cur_lon}\n\t<b>Altitude</b>: {cur_alt} m\n\t<b>Speed</b>: {f"{0:.0f}".format(cur_spd)} m/s / {f"{0:.0f}".format(_spd_to_kph(float(cur_spd)))} km/h / {f"{0:.0f}".format(spdstr)} knots\n\t<b>Course</b>: {cur_cse} deg\n<b>Comment</b>: {comment}'
