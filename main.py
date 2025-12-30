@@ -555,15 +555,16 @@ async def send_position(ais, cfg):
 	symbt = cfg.symbol_table
 	symb = cfg.symbol
 	if os.getenv('SMARTBEACONING_ENABLE'):
-		sspd = os.getenv('SMARTBEACONING_SLOWSPEED')
+		sspd = int(os.getenv('SMARTBEACONING_SLOWSPEED'))
 		fspd = int(os.getenv('SMARTBEACONING_FASTSPEED'))
-		if spdkmh >= fspd:
+		kmhspd = int(spdkmh)
+		if kmhspd >= fspd:
 			symbt = '\\'
 			symb = '>'
-		if spdkmh > sspd and spdkmh < fspd:
+		if kmhspd > sspd and kmhspd < fspd:
 			symbt = '/'
 			symb = '>'
-		if spdkmh > '000' and spdkmh <= sspd:
+		if kmhspd > 0 and kmhspd <= sspd:
 			symbt = '/'
 			symb = '('
 	payload = f'/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}'
@@ -681,7 +682,7 @@ async def main():
 	rate = cfg.sleep
 	for tmr in Timer():
 		if os.getenv('SMARTBEACONING_ENABLE'):
-			spd = _kn_to_kmh(get_gpspos()[4])
+			spd = int(_kn_to_kmh(get_gpspos()[4]))
 			fspd = int(os.getenv('SMARTBEACONING_FASTSPEED'))
 			sspd = int(os.getenv('SMARTBEACONING_SLOWSPEED'))
 			frate = int(os.getenv('SMARTBEACONING_FASTRATE'))
