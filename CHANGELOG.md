@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Thu,  1-Jan-2026, 01:28:54, +08)
+## [beta5] - (Thu,  1-Jan-2026, 01:34:43, +08)
 
-- 18 commit(s) contributed to the release.
+- 19 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta5
 
+- [8607dbb](https://github.com/HafiziRuslan/RasPiAPRS/commit/8607dbb34f254ce7e1ab1b0d94b74f33677509dc) chore(licensing): change license to bsd-3-clause *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:34:43+08:00*
 - [ae5d33d](https://github.com/HafiziRuslan/RasPiAPRS/commit/ae5d33dc963e570f34d78dde9f5fc97877991c99) ci(release): remove redundant workflow_run trigger *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:22:24+08:00*
 - [7903d35](https://github.com/HafiziRuslan/RasPiAPRS/commit/7903d3522a93c7dc5cdb9dab61431273a29d0a97) chore(automation): configure dependency automation tools *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:08:41+08:00*
 - [a850558](https://github.com/HafiziRuslan/RasPiAPRS/commit/a8505582735e3e1bbe31343c7b0036a261398285) chore(version): bump raspiaprs version to 0.1b5 *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T18:52:15+08:00*
@@ -714,4 +715,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu,  1-Jan-2026, 01:29:25.151, +08
+generated using git-cliff at Thu,  1-Jan-2026, 01:35:10.446, +08
