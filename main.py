@@ -9,6 +9,7 @@ import logging
 # import logging.config
 # import logging.handlers
 import os
+import pickle
 import random
 import sys
 import time
@@ -29,6 +30,10 @@ OS_RELEASE_FILE = '/etc/os-release'
 PISTAR_RELEASE_FILE = '/etc/pistar-release'
 WPSD_RELEASE_FILE = '/etc/WPSD-release'
 MMDVMHOST_FILE = '/etc/mmdvmhost'
+# Temporary files path
+SEQUENCE_FILE = '/tmp/raspiaprs/sequence'
+TIMER_FILE = '/tmp/raspiaprs/timer'
+CACHE_FILE = '/tmp/raspiaprs/nominatim_cache'
 
 
 # Set up logging
@@ -183,7 +188,7 @@ class Sequence(object):
 	_count = 0
 
 	def __init__(self):
-		self.sequence_file = os.path.join('/tmp', 'raspiaprs.seq')
+		self.sequence_file = SEQUENCE_FILE
 		try:
 			with open(self.sequence_file) as fds:
 				self._count = int(fds.readline())
@@ -215,7 +220,7 @@ class Timer(object):
 	_count = 0
 
 	def __init__(self):
-		self.timer_file = os.path.join('/tmp', 'raspiaprs.tmr')
+		self.timer_file = TIMER_FILE
 		try:
 			with open(self.timer_file) as fds:
 				self._count = int(fds.readline())
@@ -328,16 +333,29 @@ def latlon_to_grid(lat, lon, precision=6):
 	return grid
 
 
-# TODO: read address from Nominator local cache
-def get_add_from_pos(latitude, longitude):
-	"""Get address from coordinates."""
+def get_add_from_pos(lat, lon):
+	"""Get address from coordinates, using a local cache."""
+	if os.path.exists(CACHE_FILE):
+		with open(CACHE_FILE, 'rb') as cache_file:
+			cache = pickle.load(cache_file)
+	else:
+		cache = {}
+	coord_key = f"{lat:.2f},{lon:.2f}"
+	if coord_key in cache:
+		logging.debug('Address found in cache: %s', coord_key)
+		return cache[coord_key]
 	geolocator = Nominatim(user_agent='raspiaprs0.1b5')
 	try:
-		location = geolocator.reverse((latitude, longitude), exactly_one=True)
+		location = geolocator.reverse((lat, lon), exactly_one=True)
 		if location:
 			address = location.raw['address']
+			cache[coord_key] = address
+			with open(CACHE_FILE, 'wb') as cache_file:
+				pickle.dump(cache, cache_file)
+			logging.debug('Address fetched and cached: %s', coord_key)
 			return address
 		else:
+			logging.warning('No address found: %s', coord_key)
 			return None
 	except Exception as e:
 		logging.error('Error getting address: %s', e)
