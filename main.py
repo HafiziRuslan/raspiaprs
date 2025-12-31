@@ -651,18 +651,18 @@ async def send_status(ais, cfg):
 	gridsquare = latlon_to_grid(lat, lon)
 	address = get_add_from_pos(lat, lon)
 	if address:
-		if address['suburb'] != None:
-			area = address['suburb']
-		elif address['town'] != None:
-			area = address['town']
-		elif address['city'] != None:
-			area = address['city']
-		elif address['district'] != None:
-			area = address['district']
-		else:
-			area = ''
-		cc = address['country_code'].upper()
-		nearAdd = f' near {area} ({cc}),'
+	  try:
+	    area = address['suburb']
+	  except KeyError:
+	    area = address['town']
+	  except KeyError:
+	    area = address['city']
+	  except KeyError:
+	    area = address['district']
+	  else:
+	    area = ''
+	  cc = address['country_code'].upper()
+	  nearAdd = f' near {area} ({cc}),'
 	else:
 		nearAdd = ''
 	ztime = dt.datetime.now(dt.timezone.utc)
