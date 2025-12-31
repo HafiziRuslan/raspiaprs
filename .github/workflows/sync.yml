@@ -1,4 +1,6 @@
 name: 'Sync Repo'
+permissions:
+  contents: read
 
 on:
   workflow_run:
