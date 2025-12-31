@@ -2,15 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Wed, 31-Dec-2025, 19:52:41, +08)
+## [beta5] - (Wed, 31-Dec-2025, 23:35:25, +08)
 
-- 5 commit(s) contributed to the release.
+- 7 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
 ### 🚀 Features in beta5
 
+- [592d867](https://github.com/HafiziRuslan/RasPiAPRS/commit/592d86712a51ce70fcd05647aad282f5c7b85b19) chore(logging): add commented log handler option *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:35:25+08:00*
+- [ccb602e](https://github.com/HafiziRuslan/RasPiAPRS/commit/ccb602ed2fe529ab13a6e5fc3508a72a37d1df1f) feat(geodata): prioritize suburb when determining location area *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:32:04+08:00*
 - [4a3072d](https://github.com/HafiziRuslan/RasPiAPRS/commit/4a3072da116e6a8db498054f0fadf1ff1df43942) feat(location): implement reverse geocoding for status updates *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:13:14+08:00*
 
 ### 🚜 Refactor in beta5
@@ -701,4 +703,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 31-Dec-2025, 19:53:08.369, +08
+generated using git-cliff at Wed, 31-Dec-2025, 23:36:05.554, +08
