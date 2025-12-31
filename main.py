@@ -31,9 +31,9 @@ PISTAR_RELEASE_FILE = '/etc/pistar-release'
 WPSD_RELEASE_FILE = '/etc/WPSD-release'
 MMDVMHOST_FILE = '/etc/mmdvmhost'
 # Temporary files path
-SEQUENCE_FILE = '/tmp/raspiaprs/sequence'
-TIMER_FILE = '/tmp/raspiaprs/timer'
-CACHE_FILE = '/tmp/raspiaprs/nominatim_cache'
+SEQUENCE_FILE = '/tmp/raspiaprs.seq'
+TIMER_FILE = '/tmp/raspiaprs.tmr'
+CACHE_FILE = '/tmp/nominatim_cache.pkl'
 
 
 # Set up logging
