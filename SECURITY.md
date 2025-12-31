@@ -1,0 +1,14 @@
+\# Security Policy
+
+\## Supported Versions
+
+We actively support the following versions:
+
+\- Version 0.1-beta.x (Latest)
+
+\## Reporting a Vulnerability
+
+If you discover a security vulnerability, please report it by emailing owner@mhrtech.my. Include as much detail as possible to help us address the issue promptly
+
+We aim to respond within 48 hours and resolve critical issues within 7 days
+
