@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Thu,  1-Jan-2026, 01:19:29, +08)
+## [beta5] - (Thu,  1-Jan-2026, 01:22:51, +08)
 
-- 10 commit(s) contributed to the release.
+- 12 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [b95e8ca](https://github.com/HafiziRuslan/RasPiAPRS/commit/b95e8ca0e89fa4390790e5f9371d640ee30b5453) Potential fix for code scanning alert no. 5: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:22:51+08:00*
 - [4d9d64c](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d9d64cfa682af014d4f29beb8b675f40df109c2) Potential fix for code scanning alert no. 4: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:19:29+08:00*
 
 ### 🚜 Refactor in beta5
@@ -27,6 +28,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta5
 
+- [ae5d33d](https://github.com/HafiziRuslan/RasPiAPRS/commit/ae5d33dc963e570f34d78dde9f5fc97877991c99) ci(release): remove redundant workflow_run trigger *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:22:24+08:00*
 - [7903d35](https://github.com/HafiziRuslan/RasPiAPRS/commit/7903d3522a93c7dc5cdb9dab61431273a29d0a97) chore(automation): configure dependency automation tools *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:08:41+08:00*
 - [a850558](https://github.com/HafiziRuslan/RasPiAPRS/commit/a8505582735e3e1bbe31343c7b0036a261398285) chore(version): bump raspiaprs version to 0.1b5 *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T18:52:15+08:00*
 - [e33f0e0](https://github.com/HafiziRuslan/RasPiAPRS/commit/e33f0e0443e67918f4031f5a4d85632fa76cc5f8) build(deps): update psutil to 7.2.1 *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T17:12:11+08:00*
@@ -709,4 +711,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu,  1-Jan-2026, 01:19:59.778, +08
+generated using git-cliff at Thu,  1-Jan-2026, 01:23:14.995, +08
