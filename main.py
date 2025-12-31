@@ -43,6 +43,7 @@ def configure_logging():
 		datefmt='%Y-%m-%dT%H:%M:%S',
 		format='%(asctime)s - %(levelname)s - %(name)s.%(funcName)s - %(message)s',
 	)
+	# logging.handlers.TimedRotatingFileHandler(filename, when='midnight')
 	logging.getLogger('aprslib').setLevel(logging.WARNING)
 	logging.getLogger('asyncio').setLevel(logging.WARNING)
 	logging.getLogger('hpack').setLevel(logging.WARNING)
