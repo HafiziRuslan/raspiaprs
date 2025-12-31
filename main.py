@@ -343,7 +343,7 @@ def get_add_from_pos(lat, lon):
 		cache = {}
 	coord_key = f"{lat:.2f},{lon:.2f}"
 	if coord_key in cache:
-		logging.debug('Address found in cache: %s', coord_key)
+		logging.debug('Address found in cache for requested coordinates')
 		return cache[coord_key]
 	geolocator = Nominatim(user_agent='raspiaprs0.1b5')
 	try:
