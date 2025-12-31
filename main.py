@@ -346,7 +346,7 @@ def get_add_from_pos(lat, lon):
 		return cache[coord_key]
 	geolocator = Nominatim(user_agent='raspiaprs0.1b5')
 	try:
-		location = geolocator.reverse((lat, lon), exactly_one=True)
+		location = geolocator.reverse((lat, lon), exactly_one=True, namedetails=True, addressdetails=True)
 		if location:
 			address = location.raw['address']
 			cache[coord_key] = address
@@ -650,7 +650,9 @@ async def send_status(ais, cfg):
 	gridsquare = latlon_to_grid(lat, lon)
 	address = get_add_from_pos(lat, lon)
 	if address:
-		if address['town'] != None:
+		if address['suburb'] != None:
+			area = address['suburb']
+		elif address['town'] != None:
 			area = address['town']
 		elif address['city'] != None:
 			area = address['city']
