@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Wed, 31-Dec-2025, 19:45:34, +08)
+## [beta5] - (Wed, 31-Dec-2025, 19:52:41, +08)
 
-- 4 commit(s) contributed to the release.
+- 5 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [92e00bc](https://github.com/HafiziRuslan/RasPiAPRS/commit/92e00bc9ba52c72c95173d263775ec8601605d31) refactor(paths): simplify temporary file paths *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:52:41+08:00*
 - [c3f243c](https://github.com/HafiziRuslan/RasPiAPRS/commit/c3f243ce73f15a57bbfcde9ec8daa93469717460) perf(nominatim): implement local cache for address lookups *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:45:34+08:00*
 
 ### ⚙️ Miscellaneous Tasks in beta5
@@ -700,4 +701,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 31-Dec-2025, 19:46:07.856, +08
+generated using git-cliff at Wed, 31-Dec-2025, 19:53:08.369, +08
