@@ -356,7 +356,7 @@ def get_add_from_pos(lat, lon):
 			logging.debug('Address fetched and cached for requested coordinates')
 			return address
 		else:
-			logging.warning('No address found: %s', coord_key)
+			logging.warning('No address found for provided coordinates')
 			return None
 	except Exception as e:
 		logging.error('Error getting address: %s', e)
