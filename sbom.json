@@ -2,9 +2,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
   "version": 1,
-  "serialNumber": "urn:uuid:2bcde561-aabe-4b59-ae92-a3d0a8caf91d",
+  "serialNumber": "urn:uuid:83b7df38-82ec-450b-bd47-d268998b15a6",
   "metadata": {
-    "timestamp": "2025-12-31T09:10:25.918118800Z",
+    "timestamp": "2025-12-31T10:36:49.988080000Z",
     "tools": [
       {
         "vendor": "Astral Software Inc.",
@@ -14,9 +14,9 @@
     ],
     "component": {
       "type": "library",
-      "bom-ref": "raspiaprs-1@0.1b4",
+      "bom-ref": "raspiaprs-1@0.1b5",
       "name": "raspiaprs",
-      "version": "0.1b4"
+      "version": "0.1b5"
     }
   },
   "components": [
@@ -191,7 +191,7 @@
       ]
     },
     {
-      "ref": "raspiaprs-1@0.1b4",
+      "ref": "raspiaprs-1@0.1b5",
       "dependsOn": [
         "aprslib-3@0.7.2",
         "geopy-6@2.4.1",
