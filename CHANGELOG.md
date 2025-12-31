@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Thu,  1-Jan-2026, 01:08:41, +08)
+## [beta5] - (Thu,  1-Jan-2026, 01:19:29, +08)
 
-- 9 commit(s) contributed to the release.
+- 10 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 - [592d867](https://github.com/HafiziRuslan/RasPiAPRS/commit/592d86712a51ce70fcd05647aad282f5c7b85b19) chore(logging): add commented log handler option *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:35:25+08:00*
 - [ccb602e](https://github.com/HafiziRuslan/RasPiAPRS/commit/ccb602ed2fe529ab13a6e5fc3508a72a37d1df1f) feat(geodata): prioritize suburb when determining location area *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:32:04+08:00*
 - [4a3072d](https://github.com/HafiziRuslan/RasPiAPRS/commit/4a3072da116e6a8db498054f0fadf1ff1df43942) feat(location): implement reverse geocoding for status updates *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:13:14+08:00*
+
+### 🐛 Bug Fixes in beta5
+
+- [4d9d64c](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d9d64cfa682af014d4f29beb8b675f40df109c2) Potential fix for code scanning alert no. 4: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:19:29+08:00*
 
 ### 🚜 Refactor in beta5
 
@@ -705,4 +709,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu,  1-Jan-2026, 01:09:14.917, +08
+generated using git-cliff at Thu,  1-Jan-2026, 01:19:59.778, +08
