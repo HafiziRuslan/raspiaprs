@@ -434,7 +434,7 @@ def get_uptime():
 	try:
 		uptime_seconds = dt.datetime.now(dt.timezone.utc).timestamp() - psutil.boot_time()
 		uptime = dt.timedelta(seconds=uptime_seconds)
-		return f'uptime: {humanize.precisedelta(uptime, minimum_unit="minutes", format="%0.0f")}'
+		return f'up: {humanize.precisedelta(uptime, minimum_unit="minutes", format="%0.0f")}'
 	except Exception as e:
 		logging.error('Unexpected error: %s', e)
 		return ''
@@ -672,7 +672,7 @@ async def send_status(ais, cfg):
 	status = '{}>APP642:>{}'.format(cfg.call, statustext)
 	tgstat = f'<u>{cfg.call} Status</u>\n<b>{statustext}</b>'
 	if os.getenv('GPSD_ENABLE'):
-		sats = ', GPSsat: '
+		sats = ', gps: '
 		timez, uSat, nSat = get_gpssat()
 		if uSat != 0:
 			timestamp = timez if timez is not None else ztime.strftime('%d%H%Mz')
