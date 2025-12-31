@@ -21,7 +21,7 @@ import psutil
 import telegram
 from aprslib.exceptions import ConnectionError as APRSConnectionError
 from dotenv import set_key
-# from geopy.geocoders import Nominatim
+from geopy.geocoders import Nominatim
 from gpsdclient import GPSDClient
 
 # Default paths for system files
@@ -327,21 +327,21 @@ def latlon_to_grid(lat, lon, precision=6):
 
 	return grid
 
+
 # TODO: read address from Nominator local cache
-#
-# def get_add_from_pos(latitude, longitude):
-# 	"""Get address from coordinates."""
-# 	geolocator = Nominatim(user_agent='raspiaprs-app')
-# 	try:
-# 		location = geolocator.reverse((latitude, longitude), exactly_one=True)
-# 		if location:
-# 			address = location.raw['address']
-# 			return address
-# 		else:
-# 			return None
-# 	except Exception as e:
-# 		logging.error('Error getting address: %s', e)
-# 		return None
+def get_add_from_pos(latitude, longitude):
+	"""Get address from coordinates."""
+	geolocator = Nominatim(user_agent='raspiaprs0.1b5')
+	try:
+		location = geolocator.reverse((latitude, longitude), exactly_one=True)
+		if location:
+			address = location.raw['address']
+			return address
+		else:
+			return None
+	except Exception as e:
+		logging.error('Error getting address: %s', e)
+		return None
 
 
 def get_gpssat():
@@ -630,13 +630,24 @@ async def send_status(ais, cfg):
 	else:
 		lat, lon = cfg.latitude, cfg.longitude
 	gridsquare = latlon_to_grid(lat, lon)
-	# town = get_add_from_pos(lat, lon).get('town', '')
-	# city = get_add_from_pos(lat, lon).get('city', '')
-	# nearAdd = town if town else city
+	address = get_add_from_pos(lat, lon)
+	if address:
+		if address['town'] != None:
+			area = address['town']
+		elif address['city'] != None:
+			area = address['city']
+		elif address['district'] != None:
+			area = address['district']
+		else:
+			area = ''
+		cc = address['country_code'].upper()
+		nearAdd = f' near {area} ({cc}),'
+	else:
+		nearAdd = ''
 	ztime = dt.datetime.now(dt.timezone.utc)
 	timestamp = ztime.strftime('%d%H%Mz')
 	uptime = get_uptime()
-	statustext = f'[{gridsquare}] {timestamp}, {uptime}'
+	statustext = f'{timestamp}[{gridsquare}]{nearAdd} {uptime}'
 	status = '{}>APP642:>{}'.format(cfg.call, statustext)
 	tgstat = f'<u>{cfg.call} Status</u>\n<b>{statustext}</b>'
 	if os.getenv('GPSD_ENABLE'):
