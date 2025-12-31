@@ -353,7 +353,7 @@ def get_add_from_pos(lat, lon):
 			cache[coord_key] = address
 			with open(CACHE_FILE, 'wb') as cache_file:
 				pickle.dump(cache, cache_file)
-			logging.debug('Address fetched and cached: %s', coord_key)
+			logging.debug('Address fetched and cached for requested coordinates')
 			return address
 		else:
 			logging.warning('No address found: %s', coord_key)
