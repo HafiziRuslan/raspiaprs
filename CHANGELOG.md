@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Thu,  1-Jan-2026, 01:28:04, +08)
+## [beta5] - (Thu,  1-Jan-2026, 01:28:54, +08)
 
-- 16 commit(s) contributed to the release.
+- 18 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [7fcbc03](https://github.com/HafiziRuslan/RasPiAPRS/commit/7fcbc034a081b459b117cdaa5ee83c802d33f9ff) Potential fix for code scanning alert no. 2: Workflow does not contain permissions *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:27:18+08:00*
 - [7305ce5](https://github.com/HafiziRuslan/RasPiAPRS/commit/7305ce55b1f429903658dd2aef439c9372b4c437) Potential fix for code scanning alert no. 6: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:26:25+08:00*
 - [88abe18](https://github.com/HafiziRuslan/RasPiAPRS/commit/88abe186366f9d82ff973cb9642fdaa091e47d43) Potential fix for code scanning alert no. 3: Workflow does not contain permissions *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:24:37+08:00*
 - [b95e8ca](https://github.com/HafiziRuslan/RasPiAPRS/commit/b95e8ca0e89fa4390790e5f9371d640ee30b5453) Potential fix for code scanning alert no. 5: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:22:51+08:00*
@@ -713,4 +714,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu,  1-Jan-2026, 01:28:28.678, +08
+generated using git-cliff at Thu,  1-Jan-2026, 01:29:25.151, +08
