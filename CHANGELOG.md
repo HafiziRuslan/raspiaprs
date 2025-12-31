@@ -2,15 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Wed, 31-Dec-2025, 17:14:41, +08)
+## [beta5] - (Wed, 31-Dec-2025, 18:52:15, +08)
 
-- 1 commit(s) contributed to the release.
+- 2 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
 
 ### ⚙️ Miscellaneous Tasks in beta5
 
+- [a850558](https://github.com/HafiziRuslan/RasPiAPRS/commit/a8505582735e3e1bbe31343c7b0036a261398285) chore(version): bump raspiaprs version to 0.1b5 *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T18:52:15+08:00*
 - [e33f0e0](https://github.com/HafiziRuslan/RasPiAPRS/commit/e33f0e0443e67918f4031f5a4d85632fa76cc5f8) build(deps): update psutil to 7.2.1 *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T17:12:11+08:00*
 
 ---
@@ -691,4 +692,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 31-Dec-2025, 17:15:14.423, +08
+generated using git-cliff at Wed, 31-Dec-2025, 19:09:51.408, +08
