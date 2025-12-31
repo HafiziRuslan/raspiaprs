@@ -59,6 +59,8 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Update Tag
         uses: richardsimko/update-tag@latest
