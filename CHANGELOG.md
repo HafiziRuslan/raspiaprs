@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Wed, 31-Dec-2025, 19:13:14, +08)
+## [beta5] - (Wed, 31-Dec-2025, 19:45:34, +08)
 
-- 3 commit(s) contributed to the release.
+- 4 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features in beta5
 
 - [4a3072d](https://github.com/HafiziRuslan/RasPiAPRS/commit/4a3072da116e6a8db498054f0fadf1ff1df43942) feat(location): implement reverse geocoding for status updates *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:13:14+08:00*
+
+### 🚜 Refactor in beta5
+
+- [c3f243c](https://github.com/HafiziRuslan/RasPiAPRS/commit/c3f243ce73f15a57bbfcde9ec8daa93469717460) perf(nominatim): implement local cache for address lookups *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:45:34+08:00*
 
 ### ⚙️ Miscellaneous Tasks in beta5
 
@@ -696,4 +700,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Wed, 31-Dec-2025, 19:13:43.083, +08
+generated using git-cliff at Wed, 31-Dec-2025, 19:46:07.856, +08
