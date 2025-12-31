@@ -648,7 +648,7 @@ async def send_status(ais, cfg):
 		else:
 			sats += uSat
 		status += sats
-		tgstat += sats
+		tgstat += f'<b>{sats}</b>'
 	try:
 		ais.sendall(status)
 		logging.info(status)
