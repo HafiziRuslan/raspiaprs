@@ -2,14 +2,14 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
   "version": 1,
-  "serialNumber": "urn:uuid:42531233-e4f8-49b5-aa0b-9d1ae5343908",
+  "serialNumber": "urn:uuid:2bcde561-aabe-4b59-ae92-a3d0a8caf91d",
   "metadata": {
-    "timestamp": "2025-12-28T18:43:12.474881700Z",
+    "timestamp": "2025-12-31T09:10:25.918118800Z",
     "tools": [
       {
         "vendor": "Astral Software Inc.",
         "name": "uv",
-        "version": "0.9.18"
+        "version": "0.9.21"
       }
     ],
     "component": {
@@ -99,10 +99,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "psutil-13@7.2.0",
+      "bom-ref": "psutil-13@7.2.1",
       "name": "psutil",
-      "version": "7.2.0",
-      "purl": "pkg:pypi/psutil@7.2.0"
+      "version": "7.2.1",
+      "purl": "pkg:pypi/psutil@7.2.1"
     },
     {
       "type": "library",
@@ -177,7 +177,7 @@
       "dependsOn": []
     },
     {
-      "ref": "psutil-13@7.2.0",
+      "ref": "psutil-13@7.2.1",
       "dependsOn": []
     },
     {
@@ -197,7 +197,7 @@
         "geopy-6@2.4.1",
         "gpsdclient-7@1.3.2",
         "humanize-11@4.15.0",
-        "psutil-13@7.2.0",
+        "psutil-13@7.2.1",
         "python-dotenv-14@1.2.1",
         "python-telegram-bot-15@22.5"
       ]
