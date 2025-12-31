@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Thu,  1-Jan-2026, 01:22:51, +08)
+## [beta5] - (Thu,  1-Jan-2026, 01:25:47, +08)
 
-- 12 commit(s) contributed to the release.
+- 14 commit(s) contributed to the release.
 - 0 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [88abe18](https://github.com/HafiziRuslan/RasPiAPRS/commit/88abe186366f9d82ff973cb9642fdaa091e47d43) Potential fix for code scanning alert no. 3: Workflow does not contain permissions *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:24:37+08:00*
 - [b95e8ca](https://github.com/HafiziRuslan/RasPiAPRS/commit/b95e8ca0e89fa4390790e5f9371d640ee30b5453) Potential fix for code scanning alert no. 5: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:22:51+08:00*
 - [4d9d64c](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d9d64cfa682af014d4f29beb8b675f40df109c2) Potential fix for code scanning alert no. 4: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:19:29+08:00*
 
@@ -711,4 +712,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu,  1-Jan-2026, 01:23:14.995, +08
+generated using git-cliff at Thu,  1-Jan-2026, 01:26:11.265, +08
