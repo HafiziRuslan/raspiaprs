@@ -263,22 +263,21 @@ def get_gpspos():
 						alt = result.get('altHAE', 0)
 						spd = result.get('speed', 0)
 						cse = result.get('magtrack', 0)
-						acc = result.get("sep", 0)
 						if lat != 0 and lon != 0 and alt != 0:
-							logging.debug('%s | GPS Position: %s, %s, %s, %s, %s, %s', utc, lat, lon, alt, spd, cse, acc)
+							logging.debug('%s | GPS Position: %s, %s, %s, %s, %s', utc, lat, lon, alt, spd, cse)
 							set_key('.env', 'APRS_LATITUDE', lat, quote_mode='never')
 							set_key('.env', 'APRS_LONGITUDE', lon, quote_mode='never')
 							set_key('.env', 'APRS_ALTITUDE', alt, quote_mode='never')
 							Config.latitude = lat
 							Config.longitude = lon
 							Config.altitude = alt
-							return utc, lat, lon, alt, spd, cse, acc
+							return utc, lat, lon, alt, spd, cse
 					else:
 						logging.warning('GPS Position unavailable')
-						return (timestamp, 0, 0, 0, 0, 0, 0)
+						return (timestamp, 0, 0, 0, 0, 0)
 		except Exception as e:
 			logging.error('Error getting GPS data: %s', e)
-			return (timestamp, 0, 0, 0, 0, 0, 0)
+			return (timestamp, 0, 0, 0, 0, 0)
 
 
 def _mps_to_kmh(spd):
@@ -488,7 +487,7 @@ def get_mmdvminfo():
 	return (str(tx) + 'MHz' + shift + cc) + ','
 
 
-async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0, cse: float=0, acc: float=0):
+async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0, cse: float=0):
 	"""Send log message to Telegram channel."""
 	if os.getenv('TELEGRAM_ENABLE'):
 		tgbot = telegram.Bot(os.getenv('TELEGRAM_TOKEN'))
@@ -508,8 +507,7 @@ async def logs_to_telegram(tg_message: str, lat: float=0, lon: float=0, cse: flo
 						message_thread_id=int(os.getenv('TELEGRAM_TOPIC_ID')),
 						latitude=lat,
 						longitude=lon,
-						heading=cse,
-						horizontal_accuracy=acc
+						heading=cse
 					)
 					logging.info('Sent location to Telegram: %s/%s/%s', botloc.chat_id, botloc.message_thread_id, botloc.message_id)
 			except Exception as e:
@@ -552,7 +550,7 @@ async def send_position(ais, cfg):
 		return '{0:03.0f}'.format(cse)
 
 	if os.getenv('GPSD_ENABLE'):
-		cur_time, cur_lat, cur_lon, cur_alt, cur_spd, cur_cse, cur_acc = get_gpspos()
+		cur_time, cur_lat, cur_lon, cur_alt, cur_spd, cur_cse = get_gpspos()
 		if cur_lat == 0 and cur_lon == 0 and cur_alt == 0:
 			cur_lat = os.getenv('APRS_LATITUDE', cfg.latitude)
 			cur_lon = os.getenv('APRS_LONGITUDE', cfg.longitude)
@@ -563,7 +561,6 @@ async def send_position(ais, cfg):
 		cur_alt = os.getenv('APRS_ALTITUDE', cfg.altitude)
 		cur_spd = 0
 		cur_cse = 0
-		cur_acc = 0
 	latstr = _lat_to_aprs(float(cur_lat))
 	lonstr = _lon_to_aprs(float(cur_lon))
 	altstr = _alt_to_aprs(float(cur_alt))
@@ -597,7 +594,7 @@ async def send_position(ais, cfg):
 	try:
 		ais.sendall(posit)
 		logging.info(posit)
-		await logs_to_telegram(tgpos, cur_lat, cur_lon, int(csestr), int(cur_acc))
+		await logs_to_telegram(tgpos, cur_lat, cur_lon, int(csestr))
 		await send_status(ais, cfg)
 	except APRSConnectionError as err:
 		logging.error('APRS connection error at position: %s', err)
