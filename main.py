@@ -590,7 +590,7 @@ async def send_position(ais, cfg):
 			symb = '('
 	payload = f'/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}'
 	posit = f'{cfg.call}>APP642:{payload}'
-	tgpos = f'<u>{cfg.call} Position</u>\n\nTime: <b>{timestamp}</b>\nPosition:\n\tLatitude: <b>{cur_lat}</b>\n\tLongitude: <b>{cur_lon}</b>\n\tAltitude: <b>{cur_alt} m</b> (Height above Ellipsoid)\n\tSpeed: <b>{"{0:0.0f}".format(float(cur_spd))} m/s</b> | <b>{"{0:0.0f}".format(float(spdkmh))} km/h</b> | <b>{"{0:0.0f}".format(float(spdstr))} kn</b>\n\tCourse: <b>{cur_cse} °</b>\nComment: <b>{comment}</b>'
+	tgpos = f'<u>{cfg.call} Position</u>\n\nTime: <b>{timestamp}</b>\nPosition:\n\tLatitude: <b>{cur_lat}</b>\n\tLongitude: <b>{cur_lon}</b>\n\tAltitude: <b>{cur_alt} m</b> (Height above Ellipsoid)\n\tSpeed: <b>{int(cur_spd)} m/s</b> | <b>{int(spdkmh)} km/h</b> | <b>{int(spdstr)} kn</b>\n\tCourse: <b>{int(cur_cse)} °</b>\nComment: <b>{comment}</b>'
 	try:
 		ais.sendall(posit)
 		logging.info(posit)
