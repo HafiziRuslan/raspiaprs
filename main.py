@@ -255,7 +255,7 @@ def get_gpspos():
 		try:
 			with GPSDClient(os.getenv('GPSD_HOST', 'localhost'), int(os.getenv('GPSD_PORT', 2947)), 15) as client:
 				for result in client.dict_stream(convert_datetime=True, filter=['TPV']):
-					if result['class'] == 'TPV':
+					if result['class'] == 'TPV' and (result['mode'] != 0 or result['mode'] != 1):
 						logging.debug('GPS fix acquired')
 						utc = result.get('time', timestamp)
 						lat = result.get('lat', 0)
