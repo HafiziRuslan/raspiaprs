@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 04:03:45, +08)
+## [beta5] - (Fri,  2-Jan-2026, 04:13:10, +08)
 
-- 29 commit(s) contributed to the release.
+- 30 commit(s) contributed to the release.
 - 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [b9bea71](https://github.com/HafiziRuslan/RasPiAPRS/commit/b9bea71a2af4e547c2b6f05d92ac763193cbb257) refactor(gps): remove gps accuracy tracking *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T04:13:10+08:00*
 - [e16804f](https://github.com/HafiziRuslan/RasPiAPRS/commit/e16804f5dd0e9deef72732ecd2f415bb8154c7ef) refactor(utils): clarify speed conversion function name *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:45:51+08:00*
 - [4d07055](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d070556d464ba52cc26a6eb686091f36b6e0f52) refactor(output): simplify number formatting in position message *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T02:05:30+08:00*
 - [7844426](https://github.com/HafiziRuslan/RasPiAPRS/commit/7844426e084282e3953db420c827e6758711d651) refactor(location): simplify address area extraction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:37:15+08:00*
@@ -735,4 +736,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 04:04:16.511, +08
+generated using git-cliff at Fri,  2-Jan-2026, 04:13:38.397, +08
