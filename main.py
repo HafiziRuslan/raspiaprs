@@ -281,7 +281,7 @@ def get_gpspos():
 			return (timestamp, 0, 0, 0, 0, 0)
 
 
-def _kn_to_kmh(spd):
+def _mps_to_kmh(spd):
 	spd *= 3.6 if spd else 0  # mps to kmh
 	spd = max(0, spd)
 	spd = min(999, spd)
@@ -566,7 +566,7 @@ async def send_position(ais, cfg):
 	altstr = _alt_to_aprs(float(cur_alt))
 	spdstr = _spd_to_aprs(float(cur_spd))
 	csestr = _cse_to_aprs(float(cur_cse))
-	spdkmh = _kn_to_kmh(float(cur_spd))
+	spdkmh = _mps_to_kmh(float(cur_spd))
 	extdatstr = f'{csestr}/{spdstr}'
 	mmdvminfo = get_mmdvminfo()
 	osinfo = get_osinfo()
@@ -707,7 +707,7 @@ async def main():
 	rate = cfg.sleep
 	for tmr in Timer():
 		if os.getenv('SMARTBEACONING_ENABLE'):
-			spd = int(_kn_to_kmh(get_gpspos()[4]))
+			spd = int(_mps_to_kmh(get_gpspos()[4]))
 			fspd = int(os.getenv('SMARTBEACONING_FASTSPEED'))
 			sspd = int(os.getenv('SMARTBEACONING_SLOWSPEED'))
 			frate = int(os.getenv('SMARTBEACONING_FASTRATE'))
