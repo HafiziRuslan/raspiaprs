@@ -2,12 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Thu,  1-Jan-2026, 03:45:59, +08)
+## [beta5] - (Fri,  2-Jan-2026, 01:37:15, +08)
 
-- 21 commit(s) contributed to the release.
-- 0 day(s) passed between the first and last commit.
+- 23 commit(s) contributed to the release.
+- 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
+- 1 day(s) passed between releases.
 
 ### 🚀 Features in beta5
 
@@ -17,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [fa1d60b](https://github.com/HafiziRuslan/RasPiAPRS/commit/fa1d60b4acf855903b4f0a46ad861067a98bfb40) fix(rate-calc): ensure valid range for rate randomization *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:35:22+08:00*
 - [7fcbc03](https://github.com/HafiziRuslan/RasPiAPRS/commit/7fcbc034a081b459b117cdaa5ee83c802d33f9ff) Potential fix for code scanning alert no. 2: Workflow does not contain permissions *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:27:18+08:00*
 - [7305ce5](https://github.com/HafiziRuslan/RasPiAPRS/commit/7305ce55b1f429903658dd2aef439c9372b4c437) Potential fix for code scanning alert no. 6: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:26:25+08:00*
 - [88abe18](https://github.com/HafiziRuslan/RasPiAPRS/commit/88abe186366f9d82ff973cb9642fdaa091e47d43) Potential fix for code scanning alert no. 3: Workflow does not contain permissions *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:24:37+08:00*
@@ -25,6 +27,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [7844426](https://github.com/HafiziRuslan/RasPiAPRS/commit/7844426e084282e3953db420c827e6758711d651) refactor(location): simplify address area extraction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:37:15+08:00*
 - [1cae69a](https://github.com/HafiziRuslan/RasPiAPRS/commit/1cae69a8c2779b8eae2283a96e0a830f513dbccb) refactor(address): simplify logic for determining location area *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T00:14:42+08:00*
 - [92e00bc](https://github.com/HafiziRuslan/RasPiAPRS/commit/92e00bc9ba52c72c95173d263775ec8601605d31) refactor(paths): simplify temporary file paths *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:52:41+08:00*
 - [c3f243c](https://github.com/HafiziRuslan/RasPiAPRS/commit/c3f243ce73f15a57bbfcde9ec8daa93469717460) perf(nominatim): implement local cache for address lookups *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:45:34+08:00*
@@ -723,4 +726,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Thu,  1-Jan-2026, 03:46:35.821, +08
+generated using git-cliff at Fri,  2-Jan-2026, 01:37:50.882, +08
