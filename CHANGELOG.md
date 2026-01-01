@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 01:37:15, +08)
+## [beta5] - (Fri,  2-Jan-2026, 01:45:15, +08)
 
-- 23 commit(s) contributed to the release.
+- 24 commit(s) contributed to the release.
 - 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -35,6 +35,10 @@ All notable changes to this project will be documented in this file.
 ### 📚 Documentation in beta5
 
 - [fe22bf6](https://github.com/HafiziRuslan/RasPiAPRS/commit/fe22bf6efef70cee20f38bc98ac84554b7e0e299) docs(policy): add security policy document *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T03:45:59+08:00*
+
+### ⚡ Performance in beta5
+
+- [9196644](https://github.com/HafiziRuslan/RasPiAPRS/commit/91966444b616cdca4d1916d3188e1d241c43917d) perf(runtime): decrease script restart delay *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:45:15+08:00*
 
 ### 🎨 Styling in beta5
 
@@ -726,4 +730,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 01:37:50.882, +08
+generated using git-cliff at Fri,  2-Jan-2026, 01:45:44.062, +08
