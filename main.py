@@ -728,7 +728,7 @@ async def main():
 				rate = srate
 				logging.debug('Slow beaconing enabled')
 			if spd > sspd and spd < fspd:
-				rate = random.randint(srate, frate)
+				rate = random.randint(min(srate, frate), max(srate, frate))
 				logging.debug('Mixed beaconing enabled')
 			if spd == 0:
 				rate = 1800
