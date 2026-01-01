@@ -39,6 +39,6 @@ fi
 echo "$date - Running main.py"
 while true; do
   uv run -s ./main.py
-  echo "$date - Script exited. Waiting for 45 seconds before the next run."
-  sleep 45
+  echo "$date - Script exited. Re-running in 30 seconds."
+  sleep 30
 done
