@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 01:45:15, +08)
+## [beta5] - (Fri,  2-Jan-2026, 02:05:30, +08)
 
-- 24 commit(s) contributed to the release.
+- 25 commit(s) contributed to the release.
 - 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [4d07055](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d070556d464ba52cc26a6eb686091f36b6e0f52) refactor(output): simplify number formatting in position message *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T02:05:30+08:00*
 - [7844426](https://github.com/HafiziRuslan/RasPiAPRS/commit/7844426e084282e3953db420c827e6758711d651) refactor(location): simplify address area extraction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:37:15+08:00*
 - [1cae69a](https://github.com/HafiziRuslan/RasPiAPRS/commit/1cae69a8c2779b8eae2283a96e0a830f513dbccb) refactor(address): simplify logic for determining location area *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T00:14:42+08:00*
 - [92e00bc](https://github.com/HafiziRuslan/RasPiAPRS/commit/92e00bc9ba52c72c95173d263775ec8601605d31) refactor(paths): simplify temporary file paths *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:52:41+08:00*
@@ -730,4 +731,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 01:45:44.062, +08
+generated using git-cliff at Fri,  2-Jan-2026, 02:05:59.975, +08
