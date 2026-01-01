@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 02:05:30, +08)
+## [beta5] - (Fri,  2-Jan-2026, 03:58:20, +08)
 
-- 25 commit(s) contributed to the release.
+- 28 commit(s) contributed to the release.
 - 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -12,12 +12,14 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features in beta5
 
+- [e840ba0](https://github.com/HafiziRuslan/RasPiAPRS/commit/e840ba0e293e6d2d7bdda88152cb56af811fc1f5) feat(telegram): include accuracy and heading in location reports *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:58:20+08:00*
 - [592d867](https://github.com/HafiziRuslan/RasPiAPRS/commit/592d86712a51ce70fcd05647aad282f5c7b85b19) chore(logging): add commented log handler option *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:35:25+08:00*
 - [ccb602e](https://github.com/HafiziRuslan/RasPiAPRS/commit/ccb602ed2fe529ab13a6e5fc3508a72a37d1df1f) feat(geodata): prioritize suburb when determining location area *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:32:04+08:00*
 - [4a3072d](https://github.com/HafiziRuslan/RasPiAPRS/commit/4a3072da116e6a8db498054f0fadf1ff1df43942) feat(location): implement reverse geocoding for status updates *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T19:13:14+08:00*
 
 ### 🐛 Bug Fixes in beta5
 
+- [bc70c01](https://github.com/HafiziRuslan/RasPiAPRS/commit/bc70c01860bd5b23bdab89835bafe24d07981373) fix(gps): check fix mode before processing TPV reports *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:43:12+08:00*
 - [fa1d60b](https://github.com/HafiziRuslan/RasPiAPRS/commit/fa1d60b4acf855903b4f0a46ad861067a98bfb40) fix(rate-calc): ensure valid range for rate randomization *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:35:22+08:00*
 - [7fcbc03](https://github.com/HafiziRuslan/RasPiAPRS/commit/7fcbc034a081b459b117cdaa5ee83c802d33f9ff) Potential fix for code scanning alert no. 2: Workflow does not contain permissions *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:27:18+08:00*
 - [7305ce5](https://github.com/HafiziRuslan/RasPiAPRS/commit/7305ce55b1f429903658dd2aef439c9372b4c437) Potential fix for code scanning alert no. 6: Clear-text logging of sensitive information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:26:25+08:00*
@@ -27,6 +29,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [e16804f](https://github.com/HafiziRuslan/RasPiAPRS/commit/e16804f5dd0e9deef72732ecd2f415bb8154c7ef) refactor(utils): clarify speed conversion function name *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:45:51+08:00*
 - [4d07055](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d070556d464ba52cc26a6eb686091f36b6e0f52) refactor(output): simplify number formatting in position message *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T02:05:30+08:00*
 - [7844426](https://github.com/HafiziRuslan/RasPiAPRS/commit/7844426e084282e3953db420c827e6758711d651) refactor(location): simplify address area extraction *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:37:15+08:00*
 - [1cae69a](https://github.com/HafiziRuslan/RasPiAPRS/commit/1cae69a8c2779b8eae2283a96e0a830f513dbccb) refactor(address): simplify logic for determining location area *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T00:14:42+08:00*
@@ -731,4 +734,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 02:05:59.975, +08
+generated using git-cliff at Fri,  2-Jan-2026, 03:59:14.133, +08
