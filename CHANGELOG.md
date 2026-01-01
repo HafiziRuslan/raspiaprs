@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 04:13:10, +08)
+## [beta5] - (Fri,  2-Jan-2026, 04:17:03, +08)
 
-- 30 commit(s) contributed to the release.
+- 31 commit(s) contributed to the release.
 - 1 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [2c39fdc](https://github.com/HafiziRuslan/RasPiAPRS/commit/2c39fdc0ea941075ecd090a11781df658ea38422) docs(security): update security policy contact information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T04:17:03+08:00*
 - [a409ef8](https://github.com/HafiziRuslan/RasPiAPRS/commit/a409ef8f2488c9a0b2f7c1f769ef0af31bd21400) fix(gps): include accuracy in debug logging *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T04:03:45+08:00*
 - [bc70c01](https://github.com/HafiziRuslan/RasPiAPRS/commit/bc70c01860bd5b23bdab89835bafe24d07981373) fix(gps): check fix mode before processing TPV reports *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:43:12+08:00*
 - [fa1d60b](https://github.com/HafiziRuslan/RasPiAPRS/commit/fa1d60b4acf855903b4f0a46ad861067a98bfb40) fix(rate-calc): ensure valid range for rate randomization *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T01:35:22+08:00*
@@ -736,4 +737,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 04:13:38.397, +08
+generated using git-cliff at Fri,  2-Jan-2026, 04:17:33.608, +08
