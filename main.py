@@ -265,7 +265,7 @@ def get_gpspos():
 						cse = result.get('magtrack', 0)
 						acc = result.get("sep", 0)
 						if lat != 0 and lon != 0 and alt != 0:
-							logging.debug('%s | GPS Position: %s, %s, %s, %s, %s', utc, lat, lon, alt, spd, cse, acc)
+							logging.debug('%s | GPS Position: %s, %s, %s, %s, %s, %s', utc, lat, lon, alt, spd, cse, acc)
 							set_key('.env', 'APRS_LATITUDE', lat, quote_mode='never')
 							set_key('.env', 'APRS_LONGITUDE', lon, quote_mode='never')
 							set_key('.env', 'APRS_ALTITUDE', alt, quote_mode='never')
