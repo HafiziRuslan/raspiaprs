@@ -260,7 +260,7 @@ def get_gpspos():
 						utc = result.get('time', timestamp)
 						lat = result.get('lat', 0)
 						lon = result.get('lon', 0)
-						alt = result.get('altHAE', 0)
+						alt = result.get('alt', 0)
 						spd = result.get('speed', 0)
 						cse = result.get('magtrack', 0) or result.get('track', 0)
 						if lat != 0 and lon != 0 and alt != 0:
@@ -590,7 +590,7 @@ async def send_position(ais, cfg):
 			symb = '('
 	payload = f'/{timestamp}{latstr}{symbt}{lonstr}{symb}{extdatstr}{altstr}{comment}'
 	posit = f'{cfg.call}>APP642:{payload}'
-	tgpos = f'<u>{cfg.call} Position</u>\n\nTime: <b>{timestamp}</b>\nPosition:\n\tLatitude: <b>{cur_lat}</b>\n\tLongitude: <b>{cur_lon}</b>\n\tAltitude: <b>{cur_alt} m</b> (Height above Ellipsoid)\n\tSpeed: <b>{int(cur_spd)} m/s</b> | <b>{int(spdkmh)} km/h</b> | <b>{int(spdstr)} kn</b>\n\tCourse: <b>{int(cur_cse)} °</b>\nComment: <b>{comment}</b>'
+	tgpos = f'<u>{cfg.call} Position</u>\n\nTime: <b>{timestamp}</b>\nPosition:\n\tLatitude: <b>{cur_lat}</b>\n\tLongitude: <b>{cur_lon}</b>\n\tAltitude: <b>{cur_alt}m</b>\n\tSpeed: <b>{int(cur_spd)}m/s</b> | <b>{int(spdkmh)}km/h</b> | <b>{int(spdstr)}kn</b>\n\tCourse: <b>{int(cur_cse)}°</b>\nComment: <b>{comment}</b>'
 	try:
 		ais.sendall(posit)
 		logging.info(posit)
