@@ -433,7 +433,7 @@ def get_uptime():
 	try:
 		uptime_seconds = dt.datetime.now(dt.timezone.utc).timestamp() - psutil.boot_time()
 		uptime = dt.timedelta(seconds=uptime_seconds)
-		return f'up: {humanize.precisedelta(uptime, minimum_unit="minutes", format="%0.0f")}'
+		return f'up: {humanize.naturaldelta(uptime, minimum_unit="minutes")}'
 	except Exception as e:
 		logging.error('Unexpected error: %s', e)
 		return ''
