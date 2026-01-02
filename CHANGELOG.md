@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 11:49:03, +08)
+## [beta5] - (Fri,  2-Jan-2026, 14:09:14, +08)
 
-- 33 commit(s) contributed to the release.
+- 34 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -55,6 +55,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks in beta5
 
+- [df47789](https://github.com/HafiziRuslan/RasPiAPRS/commit/df47789cddea2a7ec6cc137fe59f7b0eb89ea2ae) chore(beaconing): adjust inactive rate and enhance debug logs *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T14:09:14+08:00*
 - [8607dbb](https://github.com/HafiziRuslan/RasPiAPRS/commit/8607dbb34f254ce7e1ab1b0d94b74f33677509dc) chore(licensing): change license to bsd-3-clause *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:34:43+08:00*
 - [ae5d33d](https://github.com/HafiziRuslan/RasPiAPRS/commit/ae5d33dc963e570f34d78dde9f5fc97877991c99) ci(release): remove redundant workflow_run trigger *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:22:24+08:00*
 - [7903d35](https://github.com/HafiziRuslan/RasPiAPRS/commit/7903d3522a93c7dc5cdb9dab61431273a29d0a97) chore(automation): configure dependency automation tools *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T01:08:41+08:00*
@@ -739,4 +740,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 11:49:36.089, +08
+generated using git-cliff at Fri,  2-Jan-2026, 14:09:47.795, +08
