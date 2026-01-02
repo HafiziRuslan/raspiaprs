@@ -41,7 +41,7 @@ def configure_logging():
 	logging.basicConfig(
 		level=logging.INFO,
 		datefmt='%Y-%m-%dT%H:%M:%S',
-		format='%(asctime)s - %(levelname)s - %(name)s.%(funcName)s - %(message)s',
+		format='%(asctime)s | %(levelname)s | %(name)s.%(funcName)s | %(message)s',
 	)
 	# logging.handlers.TimedRotatingFileHandler(filename, when='midnight')
 	logging.getLogger('aprslib').setLevel(logging.WARNING)
@@ -714,16 +714,16 @@ async def main():
 			srate = int(os.getenv('SMARTBEACONING_SLOWRATE'))
 			if spd >= fspd:
 				rate = frate
-				logging.debug('Fast beaconing enabled')
+				logging.debug('Fast beaconing enabled; speed: %d, rate: %d', spd, rate)
 			if spd <= sspd and spd != 0:
 				rate = srate
-				logging.debug('Slow beaconing enabled')
+				logging.debug('Slow beaconing enabled; speed: %d, rate: %d', spd, rate)
 			if spd > sspd and spd < fspd:
 				rate = random.randint(min(srate, frate), max(srate, frate))
-				logging.debug('Mixed beaconing enabled')
+				logging.debug('Mixed beaconing enabled; speed: %d, rate: %d', spd, rate)
 			if spd == 0:
-				rate = 1800
-				logging.debug('Smart beaconing disabled')
+				rate = 900
+				logging.debug('Smart beaconing disabled; speed: %d, rate: %d', spd, rate)
 		if tmr % rate == 1:
 			await send_position(ais, cfg)
 		if tmr % 3000 == 1:
