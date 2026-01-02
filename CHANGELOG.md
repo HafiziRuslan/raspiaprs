@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sat,  3-Jan-2026, 06:03:24, +08)
+## [beta5] - (Sat,  3-Jan-2026, 06:14:30, +08)
 
-- 42 commit(s) contributed to the release.
+- 44 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -38,6 +38,8 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [5a37be9](https://github.com/HafiziRuslan/RasPiAPRS/commit/5a37be9bcb8185397864323d0ca08d3436d4e75d) refactor(telemetry): use binary units for size reporting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T06:14:30+08:00*
+- [eea7adf](https://github.com/HafiziRuslan/RasPiAPRS/commit/eea7adf0fd12f6d990a3e1e73fae452080bd4836) refactor(telemetry): standardize memory usage reporting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T06:13:24+08:00*
 - [66bbbde](https://github.com/HafiziRuslan/RasPiAPRS/commit/66bbbded6dc10c9f821f7a1b517f81c9b7c6580f) refactor(reporting): allow finer granularity for uptime display *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T06:03:24+08:00*
 - [306fcd5](https://github.com/HafiziRuslan/RasPiAPRS/commit/306fcd50b6aaf86412fde8bd45b97cd5c5f71ccf) refactor(telemetry): standardize disk usage handling *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:46:29+08:00*
 - [f86d9eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/f86d9eb9899388f45f82151f7c978cfaf6e8cec8) refactor(utils): use natural delta for uptime display *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T03:16:36+08:00*
@@ -748,4 +750,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat,  3-Jan-2026, 06:04:53.360, +08
+generated using git-cliff at Sat,  3-Jan-2026, 06:15:02.226, +08
