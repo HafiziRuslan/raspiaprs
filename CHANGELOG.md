@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 11:44:26, +08)
+## [beta5] - (Fri,  2-Jan-2026, 11:49:03, +08)
 
-- 32 commit(s) contributed to the release.
+- 33 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [fa5a682](https://github.com/HafiziRuslan/RasPiAPRS/commit/fa5a682000994b451961a5bd0f2e015538c92e74) fix(gps): prioritize magnetic track for course data *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T11:49:03+08:00*
 - [01ad099](https://github.com/HafiziRuslan/RasPiAPRS/commit/01ad099876055865eda3581ac9cce142b4844146) fix(gps): use correct key for course data *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T11:44:26+08:00*
 - [2c39fdc](https://github.com/HafiziRuslan/RasPiAPRS/commit/2c39fdc0ea941075ecd090a11781df658ea38422) docs(security): update security policy contact information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T04:17:03+08:00*
 - [a409ef8](https://github.com/HafiziRuslan/RasPiAPRS/commit/a409ef8f2488c9a0b2f7c1f769ef0af31bd21400) fix(gps): include accuracy in debug logging *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T04:03:45+08:00*
@@ -738,4 +739,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 11:45:25.639, +08
+generated using git-cliff at Fri,  2-Jan-2026, 11:49:36.089, +08
