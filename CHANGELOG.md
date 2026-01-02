@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 15:02:37, +08)
+## [beta5] - (Fri,  2-Jan-2026, 22:03:59, +08)
 
-- 35 commit(s) contributed to the release.
+- 37 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features in beta5
 
+- [51bd574](https://github.com/HafiziRuslan/RasPiAPRS/commit/51bd5745ea65ec7de1187fc16211b7fb45e2993b) feat(config): add smartbeaconing parameters for turn detection *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T22:03:59+08:00*
 - [e840ba0](https://github.com/HafiziRuslan/RasPiAPRS/commit/e840ba0e293e6d2d7bdda88152cb56af811fc1f5) feat(telegram): include accuracy and heading in location reports *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:58:20+08:00*
 - [592d867](https://github.com/HafiziRuslan/RasPiAPRS/commit/592d86712a51ce70fcd05647aad282f5c7b85b19) chore(logging): add commented log handler option *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:35:25+08:00*
 - [ccb602e](https://github.com/HafiziRuslan/RasPiAPRS/commit/ccb602ed2fe529ab13a6e5fc3508a72a37d1df1f) feat(geodata): prioritize suburb when determining location area *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:32:04+08:00*
@@ -19,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [8be7552](https://github.com/HafiziRuslan/RasPiAPRS/commit/8be755291c8a1b5c8c35d06bc2c373ab5c3a55a4) fix(beaconing): correct speed threshold boundary logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T22:03:17+08:00*
 - [6886389](https://github.com/HafiziRuslan/RasPiAPRS/commit/688638989e2405f93bbb27d5bb31611cfe76bd71) fix(gps): use correct key for altitude retrieval *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T15:02:37+08:00*
 - [fa5a682](https://github.com/HafiziRuslan/RasPiAPRS/commit/fa5a682000994b451961a5bd0f2e015538c92e74) fix(gps): prioritize magnetic track for course data *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T11:49:03+08:00*
 - [01ad099](https://github.com/HafiziRuslan/RasPiAPRS/commit/01ad099876055865eda3581ac9cce142b4844146) fix(gps): use correct key for course data *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T11:44:26+08:00*
@@ -741,4 +743,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 15:06:38.059, +08
+generated using git-cliff at Fri,  2-Jan-2026, 22:07:30.221, +08
