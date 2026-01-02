@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sat,  3-Jan-2026, 05:46:29, +08)
+## [beta5] - (Sat,  3-Jan-2026, 05:57:52, +08)
 
-- 39 commit(s) contributed to the release.
+- 41 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [788ed0a](https://github.com/HafiziRuslan/RasPiAPRS/commit/788ed0a7e0e8f73f7978b724b1620dd6d02d9b29) fix(telemetry): adjust disk usage reporting unit *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:57:52+08:00*
+- [28358dd](https://github.com/HafiziRuslan/RasPiAPRS/commit/28358dd626479ce6e219728b7cc5e3c45b905a0f) fix(utils): use singular unit for uptime calculation *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:50:52+08:00*
 - [8be7552](https://github.com/HafiziRuslan/RasPiAPRS/commit/8be755291c8a1b5c8c35d06bc2c373ab5c3a55a4) fix(beaconing): correct speed threshold boundary logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T22:03:17+08:00*
 - [6886389](https://github.com/HafiziRuslan/RasPiAPRS/commit/688638989e2405f93bbb27d5bb31611cfe76bd71) fix(gps): use correct key for altitude retrieval *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T15:02:37+08:00*
 - [fa5a682](https://github.com/HafiziRuslan/RasPiAPRS/commit/fa5a682000994b451961a5bd0f2e015538c92e74) fix(gps): prioritize magnetic track for course data *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T11:49:03+08:00*
@@ -745,4 +747,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat,  3-Jan-2026, 05:46:57.466, +08
+generated using git-cliff at Sat,  3-Jan-2026, 05:58:25.776, +08
