@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sat,  3-Jan-2026, 06:14:30, +08)
+## [beta5] - (Sat,  3-Jan-2026, 06:19:38, +08)
 
-- 44 commit(s) contributed to the release.
+- 45 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -38,6 +38,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [790da33](https://github.com/HafiziRuslan/RasPiAPRS/commit/790da33f410b2a33546052a7b6c894b1c67bcf56) refactor(gps): standardize gps status terminology *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T06:19:38+08:00*
 - [5a37be9](https://github.com/HafiziRuslan/RasPiAPRS/commit/5a37be9bcb8185397864323d0ca08d3436d4e75d) refactor(telemetry): use binary units for size reporting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T06:14:30+08:00*
 - [eea7adf](https://github.com/HafiziRuslan/RasPiAPRS/commit/eea7adf0fd12f6d990a3e1e73fae452080bd4836) refactor(telemetry): standardize memory usage reporting *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T06:13:24+08:00*
 - [66bbbde](https://github.com/HafiziRuslan/RasPiAPRS/commit/66bbbded6dc10c9f821f7a1b517f81c9b7c6580f) refactor(reporting): allow finer granularity for uptime display *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T06:03:24+08:00*
@@ -750,4 +751,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat,  3-Jan-2026, 06:15:02.226, +08
+generated using git-cliff at Sat,  3-Jan-2026, 06:29:19.632, +08
