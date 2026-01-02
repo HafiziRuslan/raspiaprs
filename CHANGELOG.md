@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 14:09:14, +08)
+## [beta5] - (Fri,  2-Jan-2026, 15:02:37, +08)
 
-- 34 commit(s) contributed to the release.
+- 35 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [6886389](https://github.com/HafiziRuslan/RasPiAPRS/commit/688638989e2405f93bbb27d5bb31611cfe76bd71) fix(gps): use correct key for altitude retrieval *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T15:02:37+08:00*
 - [fa5a682](https://github.com/HafiziRuslan/RasPiAPRS/commit/fa5a682000994b451961a5bd0f2e015538c92e74) fix(gps): prioritize magnetic track for course data *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T11:49:03+08:00*
 - [01ad099](https://github.com/HafiziRuslan/RasPiAPRS/commit/01ad099876055865eda3581ac9cce142b4844146) fix(gps): use correct key for course data *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T11:44:26+08:00*
 - [2c39fdc](https://github.com/HafiziRuslan/RasPiAPRS/commit/2c39fdc0ea941075ecd090a11781df658ea38422) docs(security): update security policy contact information *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T04:17:03+08:00*
@@ -740,4 +741,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 14:09:47.795, +08
+generated using git-cliff at Fri,  2-Jan-2026, 15:06:38.059, +08
