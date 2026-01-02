@@ -262,7 +262,7 @@ def get_gpspos():
 						lon = result.get('lon', 0)
 						alt = result.get('altHAE', 0)
 						spd = result.get('speed', 0)
-						cse = result.get('magtrack', 0)
+						cse = result.get('track', 0)
 						if lat != 0 and lon != 0 and alt != 0:
 							logging.debug('%s | GPS Position: %s, %s, %s, %s, %s', utc, lat, lon, alt, spd, cse)
 							set_key('.env', 'APRS_LATITUDE', lat, quote_mode='never')
