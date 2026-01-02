@@ -579,10 +579,10 @@ async def send_position(ais, cfg):
 		sspd = int(os.getenv('SMARTBEACONING_SLOWSPEED'))
 		fspd = int(os.getenv('SMARTBEACONING_FASTSPEED'))
 		kmhspd = int(spdkmh)
-		if kmhspd >= fspd:
+		if kmhspd > fspd:
 			symbt = '\\'
 			symb = '>'
-		if kmhspd > sspd and kmhspd < fspd:
+		if kmhspd > sspd and kmhspd <= fspd:
 			symbt = '/'
 			symb = '>'
 		if kmhspd > 0 and kmhspd <= sspd:
@@ -712,15 +712,15 @@ async def main():
 			sspd = int(os.getenv('SMARTBEACONING_SLOWSPEED'))
 			frate = int(os.getenv('SMARTBEACONING_FASTRATE'))
 			srate = int(os.getenv('SMARTBEACONING_SLOWRATE'))
-			if spd >= fspd:
+			if spd > fspd:
 				rate = frate
 				logging.debug('Fast beaconing enabled; speed: %d, rate: %d', spd, rate)
-			if spd <= sspd and spd != 0:
-				rate = srate
-				logging.debug('Slow beaconing enabled; speed: %d, rate: %d', spd, rate)
-			if spd > sspd and spd < fspd:
+			if spd > sspd and spd <= fspd:
 				rate = random.randint(min(srate, frate), max(srate, frate))
 				logging.debug('Mixed beaconing enabled; speed: %d, rate: %d', spd, rate)
+			if spd > 0 and spd <= sspd:
+				rate = srate
+				logging.debug('Slow beaconing enabled; speed: %d, rate: %d', spd, rate)
 			if spd == 0:
 				rate = 900
 				logging.debug('Smart beaconing disabled; speed: %d, rate: %d', spd, rate)
