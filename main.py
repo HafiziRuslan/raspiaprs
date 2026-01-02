@@ -607,7 +607,7 @@ def send_header(ais, cfg):
 	eqns = '{0}>APP642::{0:9s}:EQNS.0,0.1,0,0,0.001,0,0,0.001,0,0,0.001,0'.format(cfg.call)
 	try:
 		if os.getenv('GPSD_ENABLE'):
-			parm += ',GPSUsed'
+			parm += ',GPSLock'
 			unit += ',sats'
 			eqns += ',0,1,0'
 		ais.sendall(parm)
@@ -631,7 +631,7 @@ async def send_telemetry(ais, cfg):
 	if os.getenv('GPSD_ENABLE'):
 		_, uSat, nSat = get_gpssat()
 		telem += ',{:d}'.format(uSat)
-		tgtel += f'\nGPS Used: <b>{uSat}</b>\nGPS Available: <b>{nSat}</b>'
+		tgtel += f'\nGPS Lock: <b>{uSat}</b>\nGPS Seen: <b>{nSat}</b>'
 	try:
 		ais.sendall(telem)
 		logging.info(telem)
