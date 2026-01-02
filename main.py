@@ -627,7 +627,7 @@ async def send_telemetry(ais, cfg):
 	telemmemused = int(memused / 1.0000E+6)
 	telemdiskused = int(diskused / 1.0000E+6)
 	telem = '{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}'.format(cfg.call, seq, temp, cpuload, telemmemused, telemdiskused)
-	tgtel = f'<u>{cfg.call} Telemetry</u>\n\nSequence: <b>#{seq}</b>\nCPU Temp: <b>{temp / 10:.1f} °C</b>\nCPU Load: <b>{cpuload / 1000:.1f}%</b>\nRAM Used: <b>{humanize.naturalsize(memused, gnu=True)}</b>\nDisk Used: <b>{humanize.naturalsize(diskused, gnu=True)}</b>'
+	tgtel = f'<u>{cfg.call} Telemetry</u>\n\nSequence: <b>#{seq}</b>\nCPU Temp: <b>{temp / 10:.1f} °C</b>\nCPU Load: <b>{cpuload / 1000:.1f}%</b>\nRAM Used: <b>{humanize.naturalsize(memused, binary=True)}</b>\nDisk Used: <b>{humanize.naturalsize(diskused, binary=True)}</b>'
 	if os.getenv('GPSD_ENABLE'):
 		_, uSat, nSat = get_gpssat()
 		telem += ',{:d}'.format(uSat)
