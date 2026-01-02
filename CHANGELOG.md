@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Fri,  2-Jan-2026, 22:03:59, +08)
+## [beta5] - (Sat,  3-Jan-2026, 03:16:36, +08)
 
-- 37 commit(s) contributed to the release.
+- 38 commit(s) contributed to the release.
 - 2 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -36,6 +36,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor in beta5
 
+- [f86d9eb](https://github.com/HafiziRuslan/RasPiAPRS/commit/f86d9eb9899388f45f82151f7c978cfaf6e8cec8) refactor(utils): use natural delta for uptime display *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T03:16:36+08:00*
 - [b9bea71](https://github.com/HafiziRuslan/RasPiAPRS/commit/b9bea71a2af4e547c2b6f05d92ac763193cbb257) refactor(gps): remove gps accuracy tracking *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T04:13:10+08:00*
 - [e16804f](https://github.com/HafiziRuslan/RasPiAPRS/commit/e16804f5dd0e9deef72732ecd2f415bb8154c7ef) refactor(utils): clarify speed conversion function name *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:45:51+08:00*
 - [4d07055](https://github.com/HafiziRuslan/RasPiAPRS/commit/4d070556d464ba52cc26a6eb686091f36b6e0f52) refactor(output): simplify number formatting in position message *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T02:05:30+08:00*
@@ -743,4 +744,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Fri,  2-Jan-2026, 22:07:30.221, +08
+generated using git-cliff at Sat,  3-Jan-2026, 03:17:08.546, +08
