@@ -409,10 +409,10 @@ def get_memused():
 
 
 def get_diskused():
-	"""Get used disk space in GB."""
+	"""Get used disk space in bits."""
 	try:
 		diskused = psutil.disk_usage('/').used
-		return int((diskused / 1024 ** 3) * 1000)
+		return diskused
 	except Exception as e:
 		logging.error('Unexpected error: %s', e)
 		return 0
@@ -624,8 +624,8 @@ async def send_telemetry(ais, cfg):
 	cpuload = get_cpuload()
 	memused = get_memused()
 	diskused = get_diskused()
-	telem = '{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}'.format(cfg.call, seq, temp, cpuload, memused, diskused)
-	tgtel = f'<u>{cfg.call} Telemetry</u>\n\nSequence: <b>#{seq}</b>\nCPU Temp: <b>{temp / 10:.1f} °C</b>\nCPU Load: <b>{cpuload / 1000:.1f}%</b>\nRAM Used: <b>{memused / 1000:.1f} MB</b>\nDisk Used: <b>{diskused / 1000:.1f} GB</b>'
+	telem = '{}>APP642:T#{:03d},{:d},{:d},{:d},{:d}'.format(cfg.call, seq, temp, cpuload, memused, diskused / 1.0000E+9)
+	tgtel = f'<u>{cfg.call} Telemetry</u>\n\nSequence: <b>#{seq}</b>\nCPU Temp: <b>{temp / 10:.1f} °C</b>\nCPU Load: <b>{cpuload / 1000:.1f}%</b>\nRAM Used: <b>{memused / 1000:.1f} MB</b>\nDisk Used: <b>{humanize.naturalsize(diskused, gnu=True)}</b>'
 	if os.getenv('GPSD_ENABLE'):
 		_, uSat, nSat = get_gpssat()
 		telem += ',{:d}'.format(uSat)
