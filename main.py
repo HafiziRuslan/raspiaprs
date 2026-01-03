@@ -619,7 +619,7 @@ def send_header(ais, cfg):
 	except APRSConnectionError as err:
 		logging.error('APRS connection error at header: %s', err)
 		ais = ais_connect(cfg)
-		await send_header(ais, cfg)
+		send_header(ais, cfg)
 
 
 async def send_telemetry(ais, cfg):
