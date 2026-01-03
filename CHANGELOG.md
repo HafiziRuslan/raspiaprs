@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sat,  3-Jan-2026, 21:09:55, +08)
+## [beta5] - (Sun,  4-Jan-2026, 00:43:59, +08)
 
-- 48 commit(s) contributed to the release.
+- 49 commit(s) contributed to the release.
 - 3 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features in beta5
 
+- [d29ca30](https://github.com/HafiziRuslan/RasPiAPRS/commit/d29ca30f2141964e349e531140cd74ff615e6d85) feat(gps): return detailed used and unused satellite counts *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-04T00:43:59+08:00*
 - [51bd574](https://github.com/HafiziRuslan/RasPiAPRS/commit/51bd5745ea65ec7de1187fc16211b7fb45e2993b) feat(config): add smartbeaconing parameters for turn detection *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T22:03:59+08:00*
 - [e840ba0](https://github.com/HafiziRuslan/RasPiAPRS/commit/e840ba0e293e6d2d7bdda88152cb56af811fc1f5) feat(telegram): include accuracy and heading in location reports *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T03:58:20+08:00*
 - [592d867](https://github.com/HafiziRuslan/RasPiAPRS/commit/592d86712a51ce70fcd05647aad282f5c7b85b19) chore(logging): add commented log handler option *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2025-12-31T23:35:25+08:00*
@@ -754,4 +755,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat,  3-Jan-2026, 21:10:26.045, +08
+generated using git-cliff at Sun,  4-Jan-2026, 00:44:27.475, +08
