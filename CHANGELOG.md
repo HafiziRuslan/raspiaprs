@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sun,  4-Jan-2026, 00:47:08, +08)
+## [beta5] - (Sun,  4-Jan-2026, 00:48:21, +08)
 
-- 50 commit(s) contributed to the release.
+- 51 commit(s) contributed to the release.
 - 3 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -68,6 +68,10 @@ All notable changes to this project will be documented in this file.
 
 - [d2c4845](https://github.com/HafiziRuslan/RasPiAPRS/commit/d2c48450c75310cb9712953b3fe894da8480f063) style(formatting): standardize python code style *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T21:00:49+08:00*
 - [fbd0acf](https://github.com/HafiziRuslan/RasPiAPRS/commit/fbd0acf18d72a804cedad0e663fa59973522f12c) style(output): shorten status output labels *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-01T02:09:27+08:00*
+
+### 🧪 Testing in beta5
+
+- [626f3dd](https://github.com/HafiziRuslan/RasPiAPRS/commit/626f3dd590547fe9fac3c6dc77c1ff409a14acc2) test(gps): use correct python length function *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-04T00:48:21+08:00*
 
 ### ⚙️ Miscellaneous Tasks in beta5
 
@@ -756,4 +760,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun,  4-Jan-2026, 00:47:37.520, +08
+generated using git-cliff at Sun,  4-Jan-2026, 00:48:46.721, +08
