@@ -2,13 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sat,  3-Jan-2026, 06:19:38, +08)
+## [beta5] - (Sat,  3-Jan-2026, 20:56:28, +08)
 
-- 45 commit(s) contributed to the release.
-- 2 day(s) passed between the first and last commit.
+- 46 commit(s) contributed to the release.
+- 3 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
-- 2 day(s) passed between releases.
+- 3 day(s) passed between releases.
 
 ### 🚀 Features in beta5
 
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [41bb00f](https://github.com/HafiziRuslan/RasPiAPRS/commit/41bb00f951df165174a2d318f94e8514a1767983) fix(aprs): retry sending data after connection loss *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T20:56:28+08:00*
 - [788ed0a](https://github.com/HafiziRuslan/RasPiAPRS/commit/788ed0a7e0e8f73f7978b724b1620dd6d02d9b29) fix(telemetry): adjust disk usage reporting unit *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:57:52+08:00*
 - [28358dd](https://github.com/HafiziRuslan/RasPiAPRS/commit/28358dd626479ce6e219728b7cc5e3c45b905a0f) fix(utils): use singular unit for uptime calculation *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:50:52+08:00*
 - [8be7552](https://github.com/HafiziRuslan/RasPiAPRS/commit/8be755291c8a1b5c8c35d06bc2c373ab5c3a55a4) fix(beaconing): correct speed threshold boundary logic *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-02T22:03:17+08:00*
@@ -751,4 +752,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat,  3-Jan-2026, 06:29:19.632, +08
+generated using git-cliff at Sat,  3-Jan-2026, 20:56:57.224, +08
