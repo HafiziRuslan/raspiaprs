@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sun,  4-Jan-2026, 00:43:59, +08)
+## [beta5] - (Sun,  4-Jan-2026, 00:47:08, +08)
 
-- 49 commit(s) contributed to the release.
+- 50 commit(s) contributed to the release.
 - 3 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [043c1ac](https://github.com/HafiziRuslan/RasPiAPRS/commit/043c1acfa1832ce901169699c5325310ecd8148a) test(gps): use proper python boolean constant *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-04T00:47:08+08:00*
 - [9b72e26](https://github.com/HafiziRuslan/RasPiAPRS/commit/9b72e264bb8090c6bf4e92dd45a23cff0a7e5cdb) fix(connection): remove unnecessary await on recursive call *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T21:09:55+08:00*
 - [41bb00f](https://github.com/HafiziRuslan/RasPiAPRS/commit/41bb00f951df165174a2d318f94e8514a1767983) fix(aprs): retry sending data after connection loss *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T20:56:28+08:00*
 - [788ed0a](https://github.com/HafiziRuslan/RasPiAPRS/commit/788ed0a7e0e8f73f7978b724b1620dd6d02d9b29) fix(telemetry): adjust disk usage reporting unit *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:57:52+08:00*
@@ -755,4 +756,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sun,  4-Jan-2026, 00:44:27.475, +08
+generated using git-cliff at Sun,  4-Jan-2026, 00:47:37.520, +08
