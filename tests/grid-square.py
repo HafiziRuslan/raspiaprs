@@ -10,12 +10,12 @@ def latlon_to_grid(lat, lon, precision=10):
 	Convert latitude and longitude to Maidenhead Grid Square.
 
 	Args:
-	    lat (float): Latitude in decimal degrees (-90 to 90)
-	    lon (float): Longitude in decimal degrees (-180 to 180)
-	    precision (int): Number of characters in the grid (2, 4, 6, 8, or 10)
+		lat (float): Latitude in decimal degrees (-90 to 90)
+		lon (float): Longitude in decimal degrees (-180 to 180)
+		precision (int): Number of characters in the grid (2, 4, 6, 8, or 10)
 
 	Returns:
-	    str: Maidenhead grid square string.
+		str: Maidenhead grid square string.
 	"""
 	# Validate inputs
 	if not (-90 <= lat <= 90):

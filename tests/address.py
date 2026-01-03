@@ -8,11 +8,11 @@ def get_address_from_coordinates(latitude, longitude):
 	Get the address from latitude and longitude using Nominatim.
 
 	Args:
-	    latitude (float): The latitude of the location.
-	    longitude (float): The longitude of the location.
+		latitude (float): The latitude of the location.
+		longitude (float): The longitude of the location.
 
 	Returns:
-	    str: The formatted address string, or None if not found.
+		str: The formatted address string, or None if not found.
 	"""
 	geolocator = Nominatim(user_agent='raspiaprs-app')
 	try:

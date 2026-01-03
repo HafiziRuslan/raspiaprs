@@ -20,8 +20,8 @@ def get_gpsd_position():
 					lon = result.get('lon', 0)
 					alt = result.get('alt', 0)
 					spd = result.get('speed', 0)
-					cse = result.get('magtrack', 0)
-					acc = result.get('sep', 0)
+					cse = result.get('magtrack', 0) or result.get('track', 0)
+					acc = result.get('sep', 0) or result.get('cep', 0)
 					return utc, lat, lon, alt, spd, cse, acc
 	except Exception as e:
 		logging.error('Error getting GPS data: %s', e)
@@ -37,7 +37,13 @@ def get_gpsd_sat():
 					utc = result.get('time', dt.datetime.now(dt.timezone.utc))
 					uSat = result.get('uSat', 0)
 					nSat = result.get('nSat', 0)
-					return utc, uSat, nSat
+					sats = result.get('satellites', [])
+					for sat in sats:
+						if sat.get('used') == true:
+							uSats = sat.length()
+						else:
+							nSats = sats.length()
+					return utc, uSat, nSat, uSats, nSats
 	except Exception as e:
 		logging.error('Error getting GPS data: %s', e)
 
