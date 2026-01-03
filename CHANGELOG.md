@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [beta5] - (Sat,  3-Jan-2026, 21:00:49, +08)
+## [beta5] - (Sat,  3-Jan-2026, 21:09:55, +08)
 
-- 47 commit(s) contributed to the release.
+- 48 commit(s) contributed to the release.
 - 3 day(s) passed between the first and last commit.
 - 0 commit(s) parsed as conventional.
 - 0 linked issue(s) detected in commits.
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes in beta5
 
+- [9b72e26](https://github.com/HafiziRuslan/RasPiAPRS/commit/9b72e264bb8090c6bf4e92dd45a23cff0a7e5cdb) fix(connection): remove unnecessary await on recursive call *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T21:09:55+08:00*
 - [41bb00f](https://github.com/HafiziRuslan/RasPiAPRS/commit/41bb00f951df165174a2d318f94e8514a1767983) fix(aprs): retry sending data after connection loss *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T20:56:28+08:00*
 - [788ed0a](https://github.com/HafiziRuslan/RasPiAPRS/commit/788ed0a7e0e8f73f7978b724b1620dd6d02d9b29) fix(telemetry): adjust disk usage reporting unit *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:57:52+08:00*
 - [28358dd](https://github.com/HafiziRuslan/RasPiAPRS/commit/28358dd626479ce6e219728b7cc5e3c45b905a0f) fix(utils): use singular unit for uptime calculation *by [@HafiziRuslan](https://github.com/HafiziRuslan) on 2026-01-03T05:50:52+08:00*
@@ -753,4 +754,4 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-generated using git-cliff at Sat,  3-Jan-2026, 21:01:17.868, +08
+generated using git-cliff at Sat,  3-Jan-2026, 21:10:26.045, +08
