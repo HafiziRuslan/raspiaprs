@@ -40,9 +40,9 @@ def get_gpsd_sat():
 					sats = result.get('satellites', [])
 					for sat in sats:
 						if sat.get('used') == True:
-							uSats = sat.length()
+							uSats = len(sat)
 						else:
-							nSats = sats.length()
+							nSats = len(sats)
 					return utc, uSat, nSat, uSats, nSats
 	except Exception as e:
 		logging.error('Error getting GPS data: %s', e)
